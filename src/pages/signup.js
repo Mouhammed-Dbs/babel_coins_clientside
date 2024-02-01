@@ -32,7 +32,6 @@ export default function Signup() {
           email: inputEmail,
         }
       );
-      setLoading(false)
       const result = res.data;
       if(!result.error){
         setAccount({
@@ -43,12 +42,14 @@ export default function Signup() {
           error:result.error
         })
         setShowSteps(1);
+        setLoading(false)
       }else{
         setLoading(false)
         setAccount({error:result.error,msg:result.msg})
         console.log(result.msg)
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };

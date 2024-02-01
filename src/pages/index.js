@@ -11,9 +11,10 @@ import Canva from "@/components/utils/Canva.js";
 import screenIs from "../screen.js";
 
 export default function Home() {
+  const [idUser, setIdUser] = useState(null);
   const router = useRouter();
   const styleSwiperSlider = {
-   // width: "140px",
+    // width: "140px",
     height: "fit-content",
     top: "5%",
     marginRight: "5px",
@@ -37,6 +38,9 @@ export default function Home() {
     "ali",
     "ahmad",
   ];
+  useEffect(() => {
+    setIdUser(localStorage.getItem("babel-coins-user-id"));
+  }, []);
 
   return (
     <div className="mx-auto">
@@ -46,12 +50,22 @@ export default function Home() {
           <br />
           on your personal Account or Website.
         </h1>
-        <div className="flex justify-center mt-6">
-          <Button onClick={()=>{router.push('signup')}} className='bg-orange font-bold rounded-full text-white'>
+        <div className={`${!idUser ? "flex" : "hidden"} justify-center mt-6`}>
+          <Button
+            onClick={() => {
+              router.push("signup");
+            }}
+            className="bg-orange font-bold rounded-full text-white"
+          >
             <TbMoneybag />
             Create Account
           </Button>
-          <Button onClick={()=>{router.push('login')}} className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary">
+          <Button
+            onClick={() => {
+              router.push("login");
+            }}
+            className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
+          >
             <MdLogin />
             Login
           </Button>
@@ -67,7 +81,11 @@ export default function Home() {
             }}
           >
             {data.map((value, index) => (
-              <SwiperSlide style={{width:'140px',height:'fit-content'}} className="shadow-lg mx-3 top-[5%]" key={index}>
+              <SwiperSlide
+                style={{ width: "140px", height: "fit-content" }}
+                className="shadow-lg mx-3 top-[5%]"
+                key={index}
+              >
                 <Slide coinPair="BTC/USD" price="500$">
                   {value}
                 </Slide>

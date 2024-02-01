@@ -7,7 +7,6 @@ export default function Balance() {
   const router = useRouter();
   const [coins, setCoins] = useState([
     { name: "USDT", network: "TRC20", address: "afopnwqefpnqpfn" },
-    { name: "LTC", network: "Litcoin", address: "tefwnwqefpnqpfn" },
   ]);
   return (
     <div className="container m-auto h-screen">

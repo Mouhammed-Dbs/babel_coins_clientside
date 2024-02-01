@@ -4,17 +4,43 @@ import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
 import { FaLock } from "react-icons/fa6";
 import MyInput from "@/components/utils/Input";
-
+import axios
+ from "axios";
+import { useRouter } from "next/router";
 export default function Signup() {
+  const [loading,setLoading] = useState(false)
+  const [resLogin,setResLogin] = useState({msg:'',error:false})
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
+  const router = useRouter()
+
   const onChangeEmail = (event) => {
     setInputEmail(event.target.value);
   };
   const onChangePass = (event) => {
     setInputPass(event.target.value);
   };
-  
+
+  const login = async (event)=>{
+    event.preventDefault();
+    try {
+      setLoading(true)
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/users/login?email=${inputEmail}&password=${inputPass}`
+      );
+      const result = res.data;
+      setResLogin({msg:result.msg,error:result.error})
+      if(!result.error){
+        localStorage.setItem("babel-coins-user-id",result.data._id)
+        router.push('/balance')
+      }else{
+        setLoading(false)
+      }
+    } catch (error) {
+      setLoading(false)
+      console.log(error);
+    }
+  }
   return (
     <div className="text-white mt-10">
       <Card
@@ -26,7 +52,7 @@ export default function Signup() {
             <h1 className="text-center text-2xl">Login</h1>
         </CardHeader>
         <CardBody>
-          <form onSubmit={()=>{}} className='contents'>
+          <form onSubmit={login} className='contents'>
             <h1 className="text-center text-xs mb-2">
             Please check that you are visiting correct URL
             </h1>
@@ -45,12 +71,13 @@ export default function Signup() {
               withLink={{nameLink:'forget password?',href:''}}/>
             <Button
               type="submit"
-              isDisabled={!(inputEmail && inputPass)}
+              isDisabled={!(inputEmail && inputPass) || loading}
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
-              Login
+              {loading ?  'login..' : 'Login'}
             </Button>
           </form>
+          <p className={`text-red-900 font-bold text-xs mt-2 text-center ${resLogin.error? 'block':'hidden'}`}>{resLogin.msg}</p>
         </CardBody>
       </Card>
       <div className="flex w-fit m-auto mt-6">
