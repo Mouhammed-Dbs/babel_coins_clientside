@@ -2,7 +2,6 @@ import { FaMoon } from "react-icons/fa";
 import { IoIosSunny } from "react-icons/io";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import screenIs from '../screen.js';
-import { usePathname } from 'next/navigation';
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import {
@@ -10,7 +9,6 @@ import {
     NavbarBrand,
     NavbarContent,
     NavbarItem,
-    Link,
     Button,
     NavbarMenuToggle,
     NavbarMenu,
@@ -23,6 +21,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router.js";
+import Link from "next/link.js";
 
 export default function Navbare() {
     let currentRoute = useRouter().asPath
