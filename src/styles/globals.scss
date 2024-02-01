@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer{
+  :root{
+    --primary-color: rgb(97, 56, 244);
+    --secondary-color:rgb(0, 229, 243);
+    --neutral-color:rgb(25, 25, 25);
+    --orange-color:rgb(255, 179, 15);
+    --bg-orange-color:rgb(255, 179, 15);
+    --color-text-white: rgb(255, 255, 255);
+    --color-text-muted: rgb(199,210,254);
+    --bg-primary-color: rgb(97, 56, 244);
+  }
+  
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+// *,::before, ::after{
+//   --tw-ring-shadow: ;
+// }
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
