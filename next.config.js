@@ -6,7 +6,12 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['payeer.com'],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'payeer.com',
+      port: '',
+      pathname: '/**',
+    }],
   },
   env:{
     BASE_API_URL: process.env.NODE_ENV === "development" ? 'https://api.babelcoins.com'  : 'https://api.babelcoins.com'
