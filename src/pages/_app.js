@@ -8,15 +8,12 @@ import StaticLayout from "@/layouts/StaticLayout";
 import { useRouter } from "next/router";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "600" });
 
-export const AppContext = React.createContext();
-
 export default function App({ Component, pageProps }) {
   // const currentRoute = usePathname();
   const currentRoute = useRouter().asPath;
   const namePage = currentRoute.charAt(1).toUpperCase() + currentRoute.slice(2);
   return (
     <Providers>
-      <AppContext.Provider>
         <Head>
           <title>{currentRoute == "/" ? "Babel Coins" : namePage}</title>
           <link rel="icon" href="/images/logo.svg" sizes="32x32" />
@@ -35,7 +32,6 @@ export default function App({ Component, pageProps }) {
             </StaticLayout>
           )}
         </main>
-      </AppContext.Provider>
     </Providers>
   );
 }
