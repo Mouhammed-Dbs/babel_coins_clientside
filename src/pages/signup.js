@@ -41,6 +41,7 @@ export default function Signup() {
           msg:result.msg,
           error:result.error
         })
+        localStorage.setItem("babel-coins-user-id",result.data._id)
         setShowSteps(1);
         setLoading(false)
       }else{
