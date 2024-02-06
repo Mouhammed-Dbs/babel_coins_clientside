@@ -13,15 +13,15 @@ import screenIs from "../screen.js";
 export default function Home() {
   const [idUser, setIdUser] = useState(null);
   const router = useRouter();
-  const styleSwiperSlider = {
-    // width: "140px",
-    height: "fit-content",
-    top: "5%",
-    marginRight: "5px",
-    margin: "20px",
-    borderRadius: "13px",
-    //boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19)",
-  };
+  // const styleSwiperSlider = {
+  //   // width: "140px",
+  //   height: "fit-content",
+  //   top: "5%",
+  //   marginRight: "5px",
+  //   margin: "20px",
+  //   borderRadius: "13px",
+  //   //boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19)",
+  // };
   const data = [
     "ali",
     "ahmad",
@@ -83,7 +83,7 @@ export default function Home() {
             {data.map((value, index) => (
               <SwiperSlide
                 style={{ width: "140px", height: "fit-content" }}
-                className="shadow-lg mx-3 top-[5%]"
+                className="shadow-lg mx-3 top-[5%] rounded-xl"
                 key={index}
               >
                 <Slide coinPair="BTC/USD" price="500$">
@@ -112,7 +112,7 @@ export default function Home() {
 
       <div className="section3 h-screen pt-20 pb-20 bg-primary dark:dark:bg-cyan-200">
         <div className="relative">
-          <p className="absolute">adFSGHDGDSFHHHHHHHHHHHHHHHHDDDDDDDDH</p>
+          <p className="absolute">exam</p>
           <Card
             isBlurred
             className="absolute w-screen rounded-none bg-opacity-0"
@@ -179,12 +179,13 @@ function Slide({ coinPair, price, inc, loss }) {
         </div>
       </CardHeader>
       <Divider />
-      <CardBody className="p-0 pt-3 pb-3">
+      <CardBody className="p-0 py-2">
         <Canva
-          value={[400, 210, 700, 270, 530, 1000, 610, 800, 210, 300]}
+          vstep={0.11}
+          value={[400, 210, 700, 270, 530, 1200, 610, 800, 210, 300]}
           color="green"
           width="140px"
-          height="60px"
+          height="70px"
         ></Canva>
       </CardBody>
       <Divider />
@@ -230,7 +231,8 @@ function RowCard() {
           <Canva
             value={[400, 210, 700, 270, 530, 1000, 610, 800, 210, 700]}
             color="red"
-            step={0.14}
+            hstep={0.14}
+            vstep={0.11}
           ></Canva>
           <Button
             size={data ? "md" : "sm"}
