@@ -12,7 +12,7 @@ export default function MainLayout(props) {
     <>
       <main className="w-screen flex text-md">
         <Sidebar>
-          <SidebarItem text="Balance" icon={<LuWallet size={20} />} />
+          <SidebarItem text="Balance" icon={<LuWallet size={20} />} active />
           <SidebarItem text="Add" icon={<IoAddCircleSharp size={20} />} />
           <SidebarItem text="Transfer" icon={<IoIosSend size={20} />} />
           <SidebarItem text="Trade" icon={<PiChartLineUpBold size={20} />} />
