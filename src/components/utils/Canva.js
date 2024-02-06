@@ -14,7 +14,7 @@ export default function Canva(props){
             ctx.strokeStyle = props.color
             ctx.shadowOffsetX = 7;
             ctx.shadowOffsetY = 7;
-            ctx.shadowBlur    = 12;
+            ctx.shadowBlur    = 10;
             ctx.shadowColor   = props.color
             ctx.beginPath()
             

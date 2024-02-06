@@ -23,7 +23,7 @@ import Image from "next/image";
 import { useRouter } from "next/router.js";
 import Link from "next/link.js";
 
-export default function Navbare() {
+export default function HomeNavbare() {
     let currentRoute = useRouter().asPath
     const [ mounted, setMounted ] = useState(false)
     const { theme, setTheme } = useTheme()

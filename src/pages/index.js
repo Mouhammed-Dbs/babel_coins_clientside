@@ -5,6 +5,7 @@ import { Button, Divider } from "@nextui-org/react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { LuWallet } from "react-icons/lu";
 import { TbMoneybag } from "react-icons/tb";
 import { MdLogin } from "react-icons/md";
 import Canva from "@/components/utils/Canva.js";
@@ -13,15 +14,6 @@ import screenIs from "../screen.js";
 export default function Home() {
   const [idUser, setIdUser] = useState(null);
   const router = useRouter();
-  // const styleSwiperSlider = {
-  //   // width: "140px",
-  //   height: "fit-content",
-  //   top: "5%",
-  //   marginRight: "5px",
-  //   margin: "20px",
-  //   borderRadius: "13px",
-  //   //boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19)",
-  // };
   const data = [
     "ali",
     "ahmad",
@@ -50,25 +42,39 @@ export default function Home() {
           <br />
           on your personal Account or Website.
         </h1>
-        <div className={`${!idUser ? "flex" : "hidden"} justify-center mt-6`}>
-          <Button
-            onClick={() => {
-              router.push("signup");
-            }}
-            className="bg-orange font-bold rounded-full text-white"
-          >
-            <TbMoneybag />
-            Create Account
-          </Button>
-          <Button
-            onClick={() => {
-              router.push("login");
-            }}
-            className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
-          >
-            <MdLogin />
-            Login
-          </Button>
+        <div className="flex justify-center mt-6">
+          {!idUser ? (
+            <div>
+              <Button
+                onClick={() => {
+                  router.push("signup");
+                }}
+                className="bg-orange font-bold rounded-full text-white"
+              >
+                <TbMoneybag />
+                Create Account
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push("login");
+                }}
+                className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
+              >
+                <MdLogin />
+                Login
+              </Button>
+            </div>
+          ) : (
+            <Button
+                onClick={() => {
+                  router.push("account");
+                }}
+                className="bg-orange font-bold rounded-full text-white"
+              >
+                <LuWallet />
+                My Account
+              </Button>
+          )}
         </div>
         <div className="mx-2 md:mx-8">
           <Swiper
