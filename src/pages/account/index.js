@@ -37,7 +37,7 @@ export default function Balance() {
   return (
     // <MyCoins>
     <div className="container m-auto">
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-center md:justify-start">
         {coins.map((coin) => (
           <div
             key={coin.currencyName}
