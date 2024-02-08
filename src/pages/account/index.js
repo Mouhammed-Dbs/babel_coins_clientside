@@ -37,7 +37,7 @@ export default function Balance() {
   return (
     // <MyCoins>
     <div className="container m-auto">
-      <div className="flex">
+      <div className="flex flex-wrap">
         {coins.map((coin) => (
           <div
             key={coin.currencyName}
@@ -60,7 +60,7 @@ export default function Balance() {
             <div className="grid grid-cols-2 gap-3 mt-4">
               <Button
                 onClick={() =>
-                  router.push({ pathname: "/deposit", query: { ...coin } })
+                  router.push({ pathname: "/account/add", query: { ...coin } })
                 }
                 className="text-primary px-2 border-1 border-primary rounded-full h-9 hover:bg-primary hover:text-white"
               >

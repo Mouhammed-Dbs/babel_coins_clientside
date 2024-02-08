@@ -9,8 +9,14 @@ import axios from "axios";
 
 export default function Signup() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false)
-  const [account, setAccount] = useState({accountName:null,secretCode:null,password:null,msg:null,error:false})
+  const [loading, setLoading] = useState(false);
+  const [account, setAccount] = useState({
+    accountName: null,
+    secretCode: null,
+    password: null,
+    msg: null,
+    error: false,
+  });
   const [showSteps, setShowSteps] = useState(0);
   const [inputEmail, setInputEmail] = useState("");
   const [inputCode, setInputCode] = useState("");
@@ -25,7 +31,7 @@ export default function Signup() {
   const goToConfirm = async (event) => {
     event.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await axios.post(
         `${process.env.BASE_API_URL}/users/create-new-account`,
         {
@@ -33,24 +39,24 @@ export default function Signup() {
         }
       );
       const result = res.data;
-      if(!result.error){
+      if (!result.error) {
         setAccount({
-          accountName:result.data.accountName,
-          secretCode:result.data.secretCode,
-          password:result.data.password,
-          msg:result.msg,
-          error:result.error
-        })
-        localStorage.setItem("babel-coins-user-id",result.data._id)
+          accountName: result.data.accountName,
+          secretCode: result.data.secretCode,
+          password: result.data.password,
+          msg: result.msg,
+          error: result.error,
+        });
+        localStorage.setItem("babel-coins-user-id", result.data._id);
         setShowSteps(1);
-        setLoading(false)
-      }else{
-        setLoading(false)
-        setAccount({error:result.error,msg:result.msg})
-        console.log(result.msg)
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setAccount({ error: result.error, msg: result.msg });
+        console.log(result.msg);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error);
     }
   };
@@ -152,7 +158,7 @@ export default function Signup() {
               isDisabled={loading}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
-              {loading ? 'Creating' : 'Create Account'}
+              {loading ? "Creating" : "Create Account"}
             </Button>
           </form>
           <form
@@ -190,7 +196,7 @@ export default function Signup() {
               </div>
               <Button
                 type="submit"
-                isDisabled={true}//{inputCode.length != 6}
+                isDisabled={true} //{inputCode.length != 6}
                 onClick={goToStep2WithConfirm}
                 className="w-full h-8 text-sm font-bold rounded-full bg-orange text-white self-end mb-1"
               >
@@ -246,7 +252,9 @@ export default function Signup() {
             />
             <Button
               type="submit"
-              isDisabled={!(account.accountName && account.secretCode && account.password)}
+              isDisabled={
+                !(account.accountName && account.secretCode && account.password)
+              }
               onClick={goToStep3}
               className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
@@ -292,7 +300,7 @@ export default function Signup() {
               }}
             />
             <Button
-              onClick={()=>router.push('/balance')}
+              onClick={() => router.push("/account")}
               type="submit"
               isDisabled={false}
               className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
@@ -301,7 +309,13 @@ export default function Signup() {
               <GrFormNextLink />
             </Button>
           </form>
-          <p className={`text-red-900 font-bold text-xs mt-2 text-center ${account.error? 'block':'hidden'}`}>{account.msg}</p>
+          <p
+            className={`text-red-900 font-bold text-xs mt-2 text-center ${
+              account.error ? "block" : "hidden"
+            }`}
+          >
+            {account.msg}
+          </p>
         </CardBody>
       </Card>
       <div className="flex w-fit m-auto mt-6">

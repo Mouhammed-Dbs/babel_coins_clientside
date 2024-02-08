@@ -4,15 +4,14 @@ import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
 import { FaLock } from "react-icons/fa6";
 import MyInput from "@/components/utils/Input";
-import axios
- from "axios";
+import axios from "axios";
 import { useRouter } from "next/router";
 export default function Signup() {
-  const [loading,setLoading] = useState(false)
-  const [resLogin,setResLogin] = useState({msg:'',error:false})
+  const [loading, setLoading] = useState(false);
+  const [resLogin, setResLogin] = useState({ msg: "", error: false });
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const onChangeEmail = (event) => {
     setInputEmail(event.target.value);
@@ -21,26 +20,26 @@ export default function Signup() {
     setInputPass(event.target.value);
   };
 
-  const login = async (event)=>{
+  const login = async (event) => {
     event.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await axios.get(
         `${process.env.BASE_API_URL}/users/login?email=${inputEmail}&password=${inputPass}`
       );
       const result = res.data;
-      setResLogin({msg:result.msg,error:result.error})
-      if(!result.error){
-        localStorage.setItem("babel-coins-user-id",result.data._id)
-        router.push('/balance')
-      }else{
-        setLoading(false)
+      setResLogin({ msg: result.msg, error: result.error });
+      if (!result.error) {
+        localStorage.setItem("babel-coins-user-id", result.data._id);
+        router.push("/account");
+      } else {
+        setLoading(false);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error);
     }
-  }
+  };
   return (
     <div className="text-white mt-10">
       <Card
@@ -49,44 +48,68 @@ export default function Signup() {
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
         <CardHeader className="justify-center">
-            <h1 className="text-center text-2xl">Login</h1>
+          <h1 className="text-center text-2xl">Login</h1>
         </CardHeader>
         <CardBody>
-          <form onSubmit={login} className='contents'>
+          <form onSubmit={login} className="contents">
             <h1 className="text-center text-xs mb-2">
-            Please check that you are visiting correct URL
+              Please check that you are visiting correct URL
             </h1>
-            <a className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed"><FaLock className="mr-1"/>https://babel.com</a>
+            <a className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed">
+              <FaLock className="mr-1" />
+              https://babel.com
+            </a>
             <MyInput
-              className='mt-3'
+              className="mt-3"
               handleChange={onChangeEmail}
               value={inputEmail}
-              item={{name:'email',type:'email',placeholder:'example@gmail.com',label:'Email'}} 
-              withLink={{nameLink:'forget login?',href:''}}/>
+              item={{
+                name: "email",
+                type: "email",
+                placeholder: "example@gmail.com",
+                label: "Email",
+              }}
+              withLink={{ nameLink: "forget login?", href: "" }}
+            />
             <MyInput
-              className='mt-3'
+              className="mt-3"
               handleChange={onChangePass}
               value={inputPass}
-              item={{name:'password',type:'text',placeholder:'password',label:'Password'}} 
-              withLink={{nameLink:'forget password?',href:''}}/>
+              item={{
+                name: "password",
+                type: "text",
+                placeholder: "password",
+                label: "Password",
+              }}
+              withLink={{ nameLink: "forget password?", href: "" }}
+            />
             <Button
               type="submit"
               isDisabled={!(inputEmail && inputPass) || loading}
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
-              {loading ?  'login..' : 'Login'}
+              {loading ? "login.." : "Login"}
             </Button>
           </form>
-          <p className={`text-red-900 font-bold text-xs mt-2 text-center ${resLogin.error? 'block':'hidden'}`}>{resLogin.msg}</p>
+          <p
+            className={`text-red-900 font-bold text-xs mt-2 text-center ${
+              resLogin.error ? "block" : "hidden"
+            }`}
+          >
+            {resLogin.msg}
+          </p>
         </CardBody>
       </Card>
       <div className="flex w-fit m-auto mt-6">
         <p className="text-sm opacity-75 text-white">
           {`Don't have an account?`}
         </p>
-        <Link href={'signup'} className="flex items-center text-sm text-orange ml-2 hover:underline">
-            <TbMoneybag className="mr-1"/>
-            Create account
+        <Link
+          href={"signup"}
+          className="flex items-center text-sm text-orange ml-2 hover:underline"
+        >
+          <TbMoneybag className="mr-1" />
+          Create account
         </Link>
       </div>
     </div>

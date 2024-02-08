@@ -2,6 +2,7 @@ import { LuWallet } from "react-icons/lu";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { useContext, createContext, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const SidebarContext = createContext();
 
@@ -10,7 +11,7 @@ export default function Sidebar({ children }) {
 
   return (
     <aside className="h-screen uppercase">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+      <nav className="h-full flex flex-col bg-white dark:bg-black border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-center items-center">
           <p
             className={`overflow-hidden transition-all uppercase ${
@@ -25,7 +26,7 @@ export default function Sidebar({ children }) {
               width={28}
               height={28}
               alt=""
-              src={"images/logo.svg"}
+              src={"/images/logo.svg"}
             />
           )}
         </div>
@@ -36,7 +37,7 @@ export default function Sidebar({ children }) {
         <div className="border-t flex justify-center p-3">
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg hover:bg-gray-100"
+            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700"
           >
             {expanded ? (
               <IoIosArrowDropleft size={20} />
@@ -52,9 +53,14 @@ export default function Sidebar({ children }) {
 
 export function SidebarItem({ icon, text, active, alert }) {
   const { expanded } = useContext(SidebarContext);
-
+  const router = useRouter();
   return (
     <li
+      onClick={() => {
+        // text.toLowerCase() !== "balance"
+        //   ? router.replace(router.asPath + "/" + text.toLowerCase())
+        //   : router.replace("/account");
+      }}
       className={`
         relative flex items-center py-2 px-3 my-1
         text-sm rounded-md cursor-pointer
@@ -62,7 +68,7 @@ export function SidebarItem({ icon, text, active, alert }) {
         ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-            : "hover:bg-indigo-50 text-gray-600"
+            : "hover:bg-indigo-50 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400"
         }
     `}
     >

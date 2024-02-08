@@ -1,3 +1,4 @@
+"use client";
 import Navbar from "@/components/MainNavbar";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
 import { LuWallet } from "react-icons/lu";
@@ -6,14 +7,24 @@ import { IoIosSend } from "react-icons/io";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export default function MainLayout(props) {
+  const currentRoute = useRouter().asPath.slice(1);
   return (
     <>
       <main className="w-screen flex text-md">
         <Sidebar>
-          <SidebarItem text="Balance" icon={<LuWallet size={20} />} active />
-          <SidebarItem text="Add" icon={<IoAddCircleSharp size={20} />} />
+          <SidebarItem
+            text="Balance"
+            icon={<LuWallet size={20} />}
+            active={currentRoute === "account"}
+          />
+          <SidebarItem
+            text="Add"
+            icon={<IoAddCircleSharp size={20} />}
+            active={currentRoute.includes("account/add")}
+          />
           <SidebarItem text="Transfer" icon={<IoIosSend size={20} />} />
           <SidebarItem text="Trade" icon={<PiChartLineUpBold size={20} />} />
           <SidebarItem
