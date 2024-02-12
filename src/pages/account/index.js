@@ -47,7 +47,7 @@ export default function Balance() {
               key={coin.currencyName}
               className="relative w-64 h-min mt-2 mr-2 p-4 bg-neutral-100 dark:bg-default-100 text-center rounded-md shadow-lg"
             >
-              <div className="absolute bg-neutral-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute bg-neutral-100 dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Image
                   className="p-1"
                   src={`/images/coins/${coin.currencyName}.png`}
