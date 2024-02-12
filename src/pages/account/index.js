@@ -36,42 +36,51 @@ export default function Balance() {
   }, []);
   return (
     // <MyCoins>
-    <div className="container m-auto">
-      <div className="flex flex-wrap justify-center md:justify-start">
-        {coins.map((coin) => (
-          <div
-            key={coin.currencyName}
-            className="w-64 mt-10 mx-2 p-6 bg-neutral-100 dark:bg-default-100 text-center rounded-lg shadow-lg"
-          >
-            <div className="flex justify-between">
-              <Image
-                className="rounded-full w-12 h-12 self-center"
-                src={"https://payeer.com/static/trade/icons/tether.png"}
-                width={50}
-                height={50}
-                alt=""
-              ></Image>
-              <div className="w-full">
-                <h1 className="text-xl">{coin.currencyName}</h1>
-                <h1 className="text-sm">{coin.network}</h1>
-                <h1 className="font-bold text-xl">{coin.balance}</h1>
+    <div className="m-auto">
+      <div className="w-full text-center">
+        <h1 className="w-fit m-auto my-4 text-xl font-bold border-b-1 border-black dark:border-white">
+          All Accounts
+        </h1>
+        <div className="w-fit no-scrollbar m-auto mb-14 pt-7 pb-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center overflow-y-scroll h-screen">
+          {coins.map((coin) => (
+            <div
+              key={coin.currencyName}
+              className="relative w-64 h-min mt-2 mr-2 p-4 bg-neutral-100 dark:bg-default-100 text-center rounded-md shadow-lg"
+            >
+              <div className="absolute bg-neutral-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <Image
+                  className="p-1"
+                  src={`/images/coins/${coin.currencyName}.png`}
+                  width={50}
+                  height={50}
+                  alt=""
+                ></Image>
+              </div>
+
+              <div className="w-full mt-2">
+                <h1 className="text-lg">{coin.currencyName}</h1>
+                <h1 className="text-xs">{coin.network}</h1>
+                <h1 className="font-bold text-lg">{coin.balance}</h1>
+              </div>
+              <div className="grid grid-cols-2 gap-3 mt-1">
+                <Button
+                  onClick={() =>
+                    router.push({
+                      pathname: "/account/add",
+                      query: { ...coin },
+                    })
+                  }
+                  className="text-primary text-xs mr-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"
+                >
+                  Deposit
+                </Button>
+                <Button className="text-primary text-xs ml-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white">
+                  Withdrawal
+                </Button>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <Button
-                onClick={() =>
-                  router.push({ pathname: "/account/add", query: { ...coin } })
-                }
-                className="text-primary px-2 border-1 border-primary rounded-full h-9 hover:bg-primary hover:text-white"
-              >
-                Deposit
-              </Button>
-              <Button className="text-primary px-2 border-1 border-primary rounded-full h-9 hover:bg-primary hover:text-white">
-                Withdrawal
-              </Button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
     // </MyCoins>

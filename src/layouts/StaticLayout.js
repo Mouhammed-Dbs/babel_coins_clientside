@@ -12,22 +12,36 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import screenIs from "@/screen";
+import { useEffect, useState } from "react";
 
-export default function SignupLayout(props) {
+export default function StaticLayout(props) {
+  const [screenSize, setScreenSize] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
   return (
     <div className="h-screen relative bg-white overflow-hidden">
-      <div
-        style={{
-          position: "absolute",
-          width: "55%",
-          height: "1000px",
-          background:
-            "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
-          backgroundRepeat: "no-repeat",
-          top: "-60%",
-          left: "-15%",
-        }}
-      ></div>
+      {screenSize && (
+        <div
+          style={{
+            position: "absolute",
+            width: "55%",
+            height: "1000px",
+            background:
+              "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
+            backgroundRepeat: "no-repeat",
+            top: "-250px",
+            left: "-15%",
+          }}
+        ></div>
+      )}
       <div
         style={{
           position: "absolute",
@@ -36,7 +50,7 @@ export default function SignupLayout(props) {
           background:
             "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
           backgroundRepeat: "no-repeat",
-          left: "40%",
+          left: screenSize ? "40%" : "",
         }}
       ></div>
       <Card

@@ -13,12 +13,14 @@ export default function MainLayout(props) {
   const currentRoute = useRouter().asPath.slice(1);
   return (
     <>
-      <main className="w-screen flex text-md">
+      <main className="w-screen flex text-md fixed">
         <Sidebar>
           <SidebarItem
             text="Balance"
             icon={<LuWallet size={20} />}
-            active={currentRoute === "account"}
+            active={
+              currentRoute === "account" || currentRoute === "account/messages"
+            }
           />
           <SidebarItem
             text="Add"

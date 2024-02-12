@@ -1,4 +1,3 @@
-import { LuWallet } from "react-icons/lu";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { useContext, createContext, useState } from "react";
 import Image from "next/image";
@@ -12,7 +11,10 @@ export default function Sidebar({ children }) {
   return (
     <aside className="h-screen uppercase">
       <nav className="h-full flex flex-col bg-white dark:bg-black border-r shadow-sm">
-        <div className="p-4 pb-2 flex justify-center items-center">
+        <div
+          className="p-4 pb-2 flex justify-center items-center border-b-1"
+          style={{ height: "var(--navbar-height)" }}
+        >
           <p
             className={`overflow-hidden transition-all uppercase ${
               expanded ? "w-fit" : "w-0 hidden"
@@ -32,7 +34,7 @@ export default function Sidebar({ children }) {
         </div>
 
         <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
+          <ul className="flex-1 mt-3 px-3">{children}</ul>
         </SidebarContext.Provider>
         <div className="border-t flex justify-center p-3">
           <button
@@ -67,7 +69,7 @@ export function SidebarItem({ icon, text, active, alert }) {
         transition-colors group
         ${
           active
-            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+            ? "bg-primary text-white"
             : "hover:bg-indigo-50 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400"
         }
     `}
