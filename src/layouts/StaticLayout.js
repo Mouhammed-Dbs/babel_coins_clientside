@@ -29,18 +29,31 @@ export default function StaticLayout(props) {
   return (
     <div className="h-screen relative bg-white overflow-hidden">
       {screenSize && (
-        <div
-          style={{
-            position: "absolute",
-            width: "55%",
-            height: "1000px",
-            background:
-              "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
-            backgroundRepeat: "no-repeat",
-            top: "-250px",
-            left: "-15%",
-          }}
-        ></div>
+        <>
+          <div
+            style={{
+              position: "absolute",
+              width: "55%",
+              height: "1000px",
+              background:
+                "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
+              backgroundRepeat: "no-repeat",
+              top: "-250px",
+              left: "-15%",
+            }}
+          ></div>
+          <div
+            style={{
+              position: "absolute",
+              width: "55%",
+              height: "1000px",
+              backgroundColor: "rgba(68, 70, 207,0.8)",
+              backgroundRepeat: "no-repeat",
+              top: "750px",
+              left: "-15%",
+            }}
+          ></div>
+        </>
       )}
       <div
         style={{
