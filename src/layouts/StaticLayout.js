@@ -17,7 +17,10 @@ import { useEffect, useState } from "react";
 
 export default function StaticLayout(props) {
   const [screenSize, setScreenSize] = useState(false);
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    setMounted(true);
+    setScreenSize(screenIs("md"));
     const handleResize = () => {
       setScreenSize(screenIs("md"));
     };
@@ -26,35 +29,37 @@ export default function StaticLayout(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
+  if (!mounted) return null;
+
   return (
     <div className="h-screen relative bg-white overflow-hidden">
-      {screenSize && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              width: "55%",
-              height: "1000px",
-              background:
-                "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
-              backgroundRepeat: "no-repeat",
-              top: "-250px",
-              left: "-15%",
-            }}
-          ></div>
-          <div
-            style={{
-              position: "absolute",
-              width: "55%",
-              height: "1000px",
-              backgroundColor: "rgba(68, 70, 207,0.8)",
-              backgroundRepeat: "no-repeat",
-              top: "750px",
-              left: "-15%",
-            }}
-          ></div>
-        </>
-      )}
+      <div
+        className={`${screenSize ? "block" : "hidden"}`}
+        style={{
+          position: "absolute",
+          width: "55%",
+          height: "1000px",
+          background:
+            "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
+          backgroundRepeat: "no-repeat",
+          top: "-250px",
+          left: "-15%",
+        }}
+      ></div>
+      <div
+        className={`${screenSize ? "block" : "hidden"}`}
+        style={{
+          position: "absolute",
+          width: "55%",
+          height: "1000px",
+          backgroundColor: "rgba(68, 70, 207,0.8)",
+          backgroundRepeat: "no-repeat",
+          top: "750px",
+          left: "-15%",
+        }}
+      ></div>
+
       <div
         style={{
           position: "absolute",
