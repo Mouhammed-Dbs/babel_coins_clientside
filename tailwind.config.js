@@ -67,7 +67,7 @@ module.exports = {
           },
           colors: {
             primary: "#6138f4",
-            background: "#191919",
+            background: "#18181b",
             secondary: "#00e5f3",
           },
         },
@@ -89,7 +89,7 @@ module.exports = {
           },
           colors: {
             primary: "#6138f4",
-            background: "#dddddd",
+            background: "#d4d4d8",
             secondary: "#00e5f3",
           },
         },

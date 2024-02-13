@@ -45,7 +45,7 @@ export default function Balance() {
           {coins.map((coin) => (
             <div
               key={coin.currencyName}
-              className="relative w-64 h-min mt-2 mr-2 p-4 bg-neutral-100 dark:bg-default-100 text-center rounded-md shadow-lg"
+              className="relative w-64 h-min mt-3 mr-2 p-4 bg-neutral-100 dark:bg-default-100 text-center rounded-md shadow-sm"
             >
               <div className="absolute bg-neutral-100 dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Image
@@ -56,13 +56,13 @@ export default function Balance() {
                   alt=""
                 ></Image>
               </div>
-
+              <div className="absolute bg-default-300 dark:bg-default-50 rounded-full w-14 h-14 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2/3"></div>
               <div className="w-full mt-2">
                 <h1 className="text-lg">{coin.currencyName}</h1>
                 <h1 className="text-xs">{coin.network}</h1>
                 <h1 className="font-bold text-lg">{coin.balance}</h1>
               </div>
-              <div className="grid grid-cols-2 gap-3 mt-1">
+              <div className="grid grid-cols-2 gap-3 mt-1 mb-2">
                 <Button
                   onClick={() =>
                     router.push({
