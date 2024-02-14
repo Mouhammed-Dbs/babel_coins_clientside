@@ -7,7 +7,7 @@ const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(false);
-
+  const router = useRouter();
   return (
     <aside className="h-screen uppercase">
       <nav className="h-full flex flex-col bg-white dark:bg-black border-r shadow-sm">
@@ -16,6 +16,7 @@ export default function Sidebar({ children }) {
           style={{ height: "var(--navbar-height)" }}
         >
           <p
+            onClick={() => router.push("/")}
             className={`overflow-hidden transition-all uppercase ${
               expanded ? "w-fit" : "w-0 hidden"
             }`}
@@ -24,6 +25,7 @@ export default function Sidebar({ children }) {
           </p>
           {!expanded && (
             <Image
+              onClick={() => router.push("/")}
               className="transition-all"
               width={28}
               height={28}
@@ -93,7 +95,7 @@ export function SidebarItem({ icon, text, active, alert }) {
       {!expanded && (
         <div
           className={`
-          absolute left-full rounded-md px-2 py-1 ml-6
+          absolute left-full rounded-md px-2 py-1 ml-6 z-10
           bg-indigo-100 text-indigo-800 text-sm
           invisible opacity-20 -translate-x-3 transition-all
           group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
