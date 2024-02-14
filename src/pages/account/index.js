@@ -38,7 +38,7 @@ export default function Balance() {
     // <MyCoins>
     <div className="container m-auto">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto my-4">
-        <h1 className="w-fit text-xl font-bold border-b-1 border-black dark:border-white">
+        <h1 className="w-fit text-xl ml-4 md:ml-0 font-bold border-b-1 border-black dark:border-white">
           BALANCE
         </h1>
       </div>
@@ -47,7 +47,7 @@ export default function Balance() {
         <h1 className="w-fit m-auto my-4 text-xl font-bold border-b-1 border-black dark:border-white">
           All Accounts
         </h1>
-        <div className="w-fit h-screen no-scrollbar m-auto pt-7 pb-[180px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center overflow-y-scroll">
+        <div className="w-fit h-screen no-scrollbar m-auto pt-7 pb-[300px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center overflow-y-scroll">
           {coins.map((coin) => (
             <div
               key={coin.currencyName}
