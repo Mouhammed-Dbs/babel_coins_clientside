@@ -1,11 +1,8 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MyCoins } from "@/components/context/BalanceContext";
-
-// export const BalanceContext = createContext();
 
 export default function Balance() {
   const router = useRouter();
@@ -35,7 +32,6 @@ export default function Balance() {
     getCoins();
   }, []);
   return (
-    // <MyCoins>
     <div className="container m-auto">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
         <h1 className="w-fit text-xl ml-4 md:ml-0 font-bold border-b-1 border-black dark:border-white">
@@ -95,6 +91,5 @@ export default function Balance() {
         </div>
       </div>
     </div>
-    // </MyCoins>
   );
 }

@@ -16,6 +16,10 @@
     scrollbar-width: none;
     /* Firefox */
   }
+
+  .grid-template-columns {
+    grid-template-columns: repeat(2, auto);
+  }
 }
 
 @layer{
@@ -50,7 +54,6 @@ body {
   margin: 0;
   font-size: 16px;
 }
-
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {}

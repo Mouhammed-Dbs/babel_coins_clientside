@@ -73,7 +73,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="text-white mt-5">
+    <div className="text-white mt-20 md:mt-5">
       <h1 className="text-center text-2xl">Create Your Account</h1>
       <Card
         isBlurred

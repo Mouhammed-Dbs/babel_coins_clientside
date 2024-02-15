@@ -41,7 +41,7 @@ export default function Signup() {
     }
   };
   return (
-    <div className="text-white mt-10">
+    <div className="text-white mt-20 md:mt-8">
       <Card
         isBlurred
         className="w-min m-auto mt-3 p-8 pb-2 pt-2 text-white"
