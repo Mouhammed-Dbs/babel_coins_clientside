@@ -51,11 +51,10 @@ export default function StaticLayout(props) {
           }}
         ></div>
         <div
-          className={`${screenSize ? "block" : "hidden"}`}
+          className={`h-screen ${screenSize ? "block" : "hidden"}`}
           style={{
             position: "absolute",
             width: "55%",
-            height: "1000px",
             backgroundColor: "rgba(68, 70, 207,0.8)",
             backgroundRepeat: "no-repeat",
             top: "750px",
@@ -63,10 +62,10 @@ export default function StaticLayout(props) {
           }}
         ></div>
         <div
+          className="h-screen"
           style={{
             position: "absolute",
             width: "1000px",
-            height: "1000px",
             background:
               "radial-gradient(closest-side, #392193, rgba(68, 70, 207,0.8))",
             backgroundRepeat: "no-repeat",

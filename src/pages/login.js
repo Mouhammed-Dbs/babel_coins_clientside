@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
 import { FaLock } from "react-icons/fa6";
-import MyInput from "@/components/utils/Input";
+import MyInput from "@/components/utils/MyInput";
 import axios from "axios";
 import { useRouter } from "next/router";
 export default function Signup() {
@@ -60,6 +60,7 @@ export default function Signup() {
               https://babel.com
             </a>
             <MyInput
+              textColor="text-white"
               className="mt-3"
               handleChange={onChangeEmail}
               value={inputEmail}
@@ -72,6 +73,7 @@ export default function Signup() {
               withLink={{ nameLink: "forget login?", href: "" }}
             />
             <MyInput
+              textColor="text-white"
               className="mt-3"
               handleChange={onChangePass}
               value={inputPass}

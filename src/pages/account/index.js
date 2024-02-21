@@ -32,30 +32,37 @@ export default function Balance() {
     getCoins();
   }, []);
   return (
-    <div className="container m-auto">
+    <div className="container h-screen m-auto no-scrollbar overflow-y-scroll">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
-        <h1 className="w-fit text-xl ml-4 md:ml-0 font-bold border-b-1 border-black dark:border-white">
-          BALANCE
-        </h1>
+        <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
+            BALANCE
+          </h1>
+        </div>
+        <p className="text-xs opacity-75 mt-1 ml-4 md:ml-0">
+          Available accounts
+        </p>
       </div>
 
-      <div className="w-fit h-screen pb-[300px] ml-10 md:m-auto md:w-full text-center no-scrollbar overflow-y-scroll">
+      <div className="w-fit h-screen pb-[300px] ml-10 md:m-auto md:w-full text-center">
         <div className="w-full">
-          <h1 className="w-fit m-auto my-4 text-xl font-bold border-b-1 border-black dark:border-white">
-            All Accounts
-          </h1>
+          <div className="w-fit m-auto my-4 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to--default-300 dark:bg-default-50 pb-[2px]">
+            <h1 className="w-fit text-xl font-bold bg-slate-50 dark:bg-default-50">
+              All Accounts
+            </h1>
+          </div>
         </div>
 
         <div className="w-fit m-auto pt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {coins.map((coin) => (
             <div
               key={coin.currencyName}
-              className="relative w-64 h-min mt-2 mr-2 p-4 bg-neutral-100 dark:bg-default-100 text-center rounded-md shadow-sm"
+              className="relative w-64 h-min mt-2 mr-2 p-4 bg-white dark:bg-default-100 text-center rounded-md shadow-md"
             >
-              <div className="absolute overflow-hidden bg-default-300 dark:bg-default-50 rounded-full w-16 h-16 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="absolute w-full h-1/2 top-1/2 bg-neutral-100 dark:bg-default-100"></div>
+              <div className="absolute shadow-inner overflow-hidden bg-slate-50 dark:bg-default-50 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="absolute w-full h-1/2 top-1/2 bg-white dark:bg-default-100"></div>
               </div>
-              <div className="absolute bg-neutral-100 dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute bg-white dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Image
                   className="p-1"
                   src={`/images/coins/${coin.currencyName}.png`}

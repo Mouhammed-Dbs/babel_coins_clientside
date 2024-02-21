@@ -1,4 +1,4 @@
-import MyInput from "@/components/utils/Input";
+import MyInput from "@/components/utils/MyInput";
 import {
   Button,
   Card,
@@ -26,6 +26,7 @@ export default function Contacts() {
         <CardBody className="grid md:grid-template-columns md:gap-x-4">
           <form className="w-full">
             <MyInput
+              textColor="text-white"
               className="w-full md:w-72"
               handleChange={(e) => setNameValue(e.target.value)}
               value={nameValue}
@@ -37,6 +38,7 @@ export default function Contacts() {
               }}
             />
             <MyInput
+              textColor="text-white"
               className="mt-3 w-full md:w-72"
               handleChange={(e) => setEmailValue(e.target.value)}
               value={emailValue}

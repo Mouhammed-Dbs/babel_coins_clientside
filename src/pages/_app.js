@@ -7,7 +7,7 @@ import Head from "next/head";
 import StaticLayout from "@/layouts/StaticLayout";
 import { useRouter } from "next/router";
 import MainLayout from "@/layouts/MainLayout";
-const montserrat = Montserrat({ subsets: ["latin"], weight: "600" });
+const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 export default function App({ Component, pageProps }) {
   // const currentRoute = usePathname();

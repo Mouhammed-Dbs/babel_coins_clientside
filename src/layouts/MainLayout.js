@@ -19,7 +19,9 @@ export default function MainLayout(props) {
             text="Balance"
             icon={<LuWallet size={20} />}
             active={
-              currentRoute === "account" || currentRoute === "account/messages"
+              currentRoute === "account" ||
+              currentRoute === "account/messages" ||
+              currentRoute === "account/settings"
             }
           />
           <SidebarItem
@@ -35,7 +37,7 @@ export default function MainLayout(props) {
           />
           <SidebarItem text="History" icon={<FaHistory size={20} />} />
         </Sidebar>
-        <div className="w-full">
+        <div className="w-full bg-slate-50 dark:bg-default-50">
           <Navbar />
           {props.children}
         </div>

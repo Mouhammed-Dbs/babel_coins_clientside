@@ -2,7 +2,7 @@ import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
-import MyInput from "@/components/utils/Input";
+import MyInput from "@/components/utils/MyInput";
 
 export default function Signup() {
   const [inputEmail, setInputEmail] = useState("");
@@ -14,7 +14,6 @@ export default function Signup() {
     setInputSecret(event.target.value);
   };
 
-
   return (
     <div className="text-white mt-10">
       <Card
@@ -23,20 +22,32 @@ export default function Signup() {
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
         <CardHeader className="justify-center">
-            <h1 className="text-center text-2xl">Recovery</h1>
+          <h1 className="text-center text-2xl">Recovery</h1>
         </CardHeader>
         <CardBody>
-          <form onSubmit={()=>{}} className='contents'>
-            <MyInput 
-              item={{name:'email',type:'email',placeholder:'example@gmail.com',label:'Email'}}
+          <form onSubmit={() => {}} className="contents">
+            <MyInput
+              item={{
+                name: "email",
+                type: "email",
+                placeholder: "example@gmail.com",
+                label: "Email",
+              }}
               handleChange={onChangeEmail}
-              value={inputEmail}/>
-            <MyInput 
-              className='mt-3'
+              value={inputEmail}
+            />
+            <MyInput
+              className="mt-3"
               handleChange={onChangeSecret}
               value={inputSecret}
-              item={{name:'text',type:'number',placeholder:'000000',label:'Secret code'}} 
-              withLink={{nameLink:'forget your secret code?',href:''}}/>
+              item={{
+                name: "text",
+                type: "number",
+                placeholder: "000000",
+                label: "Secret code",
+              }}
+              withLink={{ nameLink: "forget your secret code?", href: "" }}
+            />
             <Button
               type="submit"
               isDisabled={!(inputEmail && inputSecret)}
@@ -51,8 +62,8 @@ export default function Signup() {
   );
 }
 
-
-{/* <div className="relative">
+{
+  /* <div className="relative">
               <input
                 onChange={onChangeEmail}
                 className="peer/email w-64 self-center text-white placeholder-slate-300 mt-6 rounded-lg border-2 text-xs border-white-500 p-2 bg-inherit focus:outline-none focus:border-cyan-300"
@@ -78,4 +89,5 @@ export default function Signup() {
               >
                 Secret code
               </label>
-            </div> */}
+            </div> */
+}

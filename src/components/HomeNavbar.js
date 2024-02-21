@@ -65,8 +65,16 @@ export default function HomeNavbare() {
           className="cursor-pointer"
           onClick={() => router.replace("/")}
         >
-          <Image src={"/images/logo.svg"} alt="" width={25} height={25}></Image>
-          <h1 className="self-center text-xl ml-2 font-bold">Babel coins</h1>
+          <Image
+            className="h-6 w-6 md:h-8 md:w-8"
+            src={"/images/logo.svg"}
+            alt=""
+            width={25}
+            height={25}
+          ></Image>
+          <h1 className="self-center text-lg md:text-xl ml-2 font-bold">
+            Babel coins
+          </h1>
         </NavbarBrand>
       </NavbarContent>
 

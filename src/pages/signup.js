@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MdLogin } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
 import { useRouter } from "next/router";
-import MyInput from "@/components/utils/Input";
+import MyInput from "@/components/utils/MyInput";
 import Link from "next/link";
 import axios from "axios";
 
@@ -11,10 +11,10 @@ export default function Signup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [account, setAccount] = useState({
-    accountName: null,
-    secretCode: null,
-    password: null,
-    msg: null,
+    accountName: "",
+    secretCode: "",
+    password: "",
+    msg: "",
     error: false,
   });
   const [showSteps, setShowSteps] = useState(0);
@@ -137,6 +137,7 @@ export default function Signup() {
               You can create an account in one minute!
             </h1>
             <MyInput
+              textColor="text-white"
               handleChange={onChangeEmail}
               value={inputEmail}
               item={{
@@ -169,6 +170,7 @@ export default function Signup() {
               Check your email and enter confirmation code
             </h1>
             <MyInput
+              textColor="text-white"
               item={{
                 name: "email",
                 type: "email",
@@ -218,6 +220,7 @@ export default function Signup() {
           >
             <p className="text-center my-2">Please save it in a save place</p>
             <MyInput
+              textColor="text-white"
               value={account?.password}
               readOnly
               className="mt-3"
@@ -229,6 +232,7 @@ export default function Signup() {
               }}
             />
             <MyInput
+              textColor="text-white"
               value={account?.secretCode}
               readOnly
               className="mt-3"
@@ -240,6 +244,7 @@ export default function Signup() {
               }}
             />
             <MyInput
+              textColor="text-white"
               value={account?.accountName}
               readOnly
               className="mt-3"
@@ -271,6 +276,7 @@ export default function Signup() {
           >
             <p className="text-center my-2">Please save it in a save place</p>
             <MyInput
+              textColor="text-white"
               readOnly
               item={{
                 name: "firstname",
@@ -280,6 +286,7 @@ export default function Signup() {
               }}
             />
             <MyInput
+              textColor="text-white"
               readOnly
               className={"mt-3"}
               item={{
@@ -290,6 +297,7 @@ export default function Signup() {
               }}
             />
             <MyInput
+              textColor="text-white"
               readOnly
               className={"mt-3"}
               item={{

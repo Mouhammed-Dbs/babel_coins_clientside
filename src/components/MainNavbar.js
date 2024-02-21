@@ -41,7 +41,7 @@ export default function MainNavbare() {
 
   return (
     <Navbar
-      className="backdrop-blur-md bg-white/75 dark:bg-black/50"
+      className="backdrop-blur-md bg-white/65 dark:bg-black/50"
       isBlurred={false}
       onMenuOpenChange={setIsMenuOpen}
     >
@@ -191,6 +191,11 @@ export default function MainNavbare() {
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
               <DropdownItem
+                onClick={() =>
+                  router.asPath != "/account/settings"
+                    ? router.push("account/settings")
+                    : null
+                }
                 startContent={
                   <IoMdSettings
                     className="text-gray-400 hover:cursor-pointer"

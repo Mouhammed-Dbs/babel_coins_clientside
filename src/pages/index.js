@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div className="mx-auto">
       <div className="section1 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-xl md:text-2xl">
           Send, Exchange or Accept fiat and Cryptocurrency
           <br />
           on your personal Account or Website.
@@ -66,14 +66,14 @@ export default function Home() {
             </div>
           ) : (
             <Button
-                onClick={() => {
-                  router.push("account");
-                }}
-                className="bg-orange font-bold rounded-full text-white"
-              >
-                <LuWallet />
-                My Account
-              </Button>
+              onClick={() => {
+                router.push("account");
+              }}
+              className="bg-orange font-bold rounded-full text-white"
+            >
+              <LuWallet />
+              My Account
+            </Button>
           )}
         </div>
         <div className="mx-2 md:mx-8">
@@ -100,7 +100,7 @@ export default function Home() {
           </Swiper>
         </div>
       </div>
-      <div className="section2 bg-neutral-100 dark:bg-default-50 p-6 pt-28 pb-24">
+      <div className="section2 bg-neutral-100 dark:bg-default-50 p-6 pt-20 md:pt-28 pb-24">
         <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 text-sm md:text-base lg:text-lg opacity-40 pl-4">
           <h6>Name Coin</h6>
           <h6>Last Price</h6>
