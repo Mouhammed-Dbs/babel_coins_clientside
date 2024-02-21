@@ -62,7 +62,7 @@ export default function MainNavbare() {
               }`}
               size={25}
               onClick={() => {
-                router.push("account/messages");
+                router.push("/account/messages");
               }}
             />
           </Button>
@@ -193,7 +193,7 @@ export default function MainNavbare() {
               <DropdownItem
                 onClick={() =>
                   router.asPath != "/account/settings"
-                    ? router.push("account/settings")
+                    ? router.push("/account/settings")
                     : null
                 }
                 startContent={
