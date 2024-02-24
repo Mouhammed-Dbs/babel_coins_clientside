@@ -56,7 +56,7 @@ export default function Balance() {
         <div className="w-fit m-auto pt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {coins.map((coin) => (
             <div
-              key={coin.currencyName}
+              key={coin.network}
               className="relative w-64 h-min mt-2 mr-2 p-4 bg-white dark:bg-default-100 text-center rounded-md shadow-md"
             >
               <div className="absolute shadow-inner overflow-hidden bg-slate-50 dark:bg-default-50 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -65,7 +65,7 @@ export default function Balance() {
               <div className="absolute bg-white dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Image
                   className="p-1"
-                  src={`/images/coins/${coin.currencyName}.png`}
+                  src={`/images/coins/${coin.network}.png`}
                   width={50}
                   height={50}
                   alt=""
@@ -73,8 +73,7 @@ export default function Balance() {
               </div>
 
               <div className="w-full mt-3">
-                <h1 className="text-lg">{coin.currencyName}</h1>
-                <h1 className="text-xs">{coin.network}</h1>
+                <h1 className="text-lg">{coin.network}</h1>
                 <h1 className="font-bold text-lg">{coin.balance}</h1>
               </div>
               <div className="grid grid-cols-2 gap-3 mt-1 mb-2">

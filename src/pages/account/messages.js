@@ -4,7 +4,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 export default function Messages(props) {
   const router = useRouter();
   return (
-    <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-24">
+    <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
@@ -15,7 +15,7 @@ export default function Messages(props) {
           The actual information in the personal news
         </p>
       </div>
-      <div className="ml-4 mt-6 md:m-auto md:mt-10 w-3/4 md:w-[520px] lg:w-[790px] pb-3 text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] pb-3 text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         <div className="flex p-3 py-5">
           <h3 className="text-primary w-2/5">DATE</h3>
           <h3 className="text-primary w-3/5">NEWS LIST</h3>

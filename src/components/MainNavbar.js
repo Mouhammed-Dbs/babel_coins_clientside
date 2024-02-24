@@ -67,8 +67,8 @@ export default function MainNavbare() {
             />
           </Button>
         </NavbarItem>
-        <Spacer x={1} />
-        <NavbarItem className="flex items-center hover:cursor-pointer">
+        <Spacer className="hidden md:block" x={1} />
+        <NavbarItem className="hidden md:flex items-center hover:cursor-pointer">
           <Dropdown size="sm" className="min-w-28 rounded-sm">
             <DropdownTrigger>
               <Button className="min-w-fit p-0">
@@ -140,8 +140,8 @@ export default function MainNavbare() {
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
-        <Spacer x={1} />
-        <NavbarItem>
+        <Spacer className="hidden md:block" x={1} />
+        <NavbarItem className="hidden md:block">
           <Dropdown className="min-w-28 rounded-md">
             <DropdownTrigger>
               <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-primary">
@@ -155,8 +155,8 @@ export default function MainNavbare() {
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
-        <Spacer x={1} />
-        <NavbarItem className="sm:flex">
+        <Spacer className="hidden md:block" x={1} />
+        <NavbarItem>
           <Switch
             isSelected={theme === "dark"}
             size="sm"
@@ -167,8 +167,8 @@ export default function MainNavbare() {
             }}
           ></Switch>
         </NavbarItem>
-        <Spacer x={1} />
-        <NavbarItem>
+        <Spacer className="hidden md:block" x={1} />
+        <NavbarItem className="hidden md:block">
           <Button className="min-w-fit p-0">
             <MdOutlineSupportAgent
               className="hover:cursor-pointer"
@@ -177,7 +177,7 @@ export default function MainNavbare() {
             />
           </Button>
         </NavbarItem>
-        <Spacer x={1} />
+        <Spacer className="hidden md:block" x={1} />
         <NavbarItem>
           <Dropdown size="sm" className="min-w-28 rounded-sm">
             <DropdownTrigger>
@@ -244,9 +244,15 @@ export default function MainNavbare() {
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
-        <Spacer x={1} />
+        <Spacer className="hidden md:block" x={1} />
         <NavbarItem>
-          <Button className="min-w-fit p-0">
+          <Button
+            onClick={() => {
+              localStorage.removeItem("babel-coins-user-id");
+              router.replace("/");
+            }}
+            className="min-w-fit p-0"
+          >
             {" "}
             <IoMdPower
               className="hover:cursor-pointer"

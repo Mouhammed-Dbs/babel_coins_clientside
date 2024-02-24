@@ -10,6 +10,8 @@ export default function MyInput({
   readOnly = false,
   textColor,
   color,
+  selectedBorderColor,
+  selectedLabelColor,
 }) {
   const { name, type, placeholder, label } = item;
   return (
