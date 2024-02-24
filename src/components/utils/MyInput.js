@@ -15,7 +15,7 @@ export default function MyInput({
 }) {
   const { name, type, placeholder, label } = item;
   return (
-    <div className={`relative w-64 ${className}`}>
+    <div className={`relative ${className}`}>
       <input
         name={name}
         onChange={handleChange}

@@ -203,7 +203,7 @@ export default function Settings() {
             <div className="flex gap-2">
               <MyInput
                 color="border-gray-500"
-                className="w-20 border-black mb-3"
+                className="w-20  border-black mb-3"
                 item={{
                   name: "day",
                   type: "number",
@@ -259,7 +259,7 @@ export default function Settings() {
             <div className="pt-5">
               <MyInput
                 color="border-gray-500"
-                className="border-black mb-3"
+                className="border-black w-56 mb-3"
                 item={{
                   name: "email",
                   type: "email",
@@ -335,15 +335,19 @@ export default function Settings() {
           />
           <h1 className="text-sm mb-3 ml-2">UPLOADING DOCUMENTS</h1>
         </div>
+
+        {/* Message phone */}
         <div className="flex w-full justify-end mt-1">
           <span className="text-xs text-green-500 self-center">
             Phone number successfully linked
           </span>
           <MdInfo className="h-5 w-5 self-center ml-1 text-green-500" />
         </div>
-        <div className="hidden md:flex mt-4">
+
+        {/* Use your phone */}
+        <div className="hidden md:block mt-4">
           <h1 className="text-xs md:text-sm mb-3">YOU CAN USE YOUR PHONE</h1>
-          <div className="w-full border-2">
+          <div className="flex w-full rounded-md border-2 mb-10 p-3">
             <Image
               className="p-2"
               src={"/images/logo.svg"}
@@ -375,6 +379,120 @@ export default function Settings() {
               </p>
             </span>
           </div>
+        </div>
+
+        {/* Continue with desktop */}
+        <div className="mt-4">
+          {/* Title */}
+          <h1 className="hidden md:flex text-xs md:text-sm mb-3">
+            OR CONTINUE ON DESKTOP
+          </h1>
+
+          {/* Box 1 */}
+          <div className="flex w-full justify-between rounded-md border-2 p-3">
+            <div className="flex">
+              <Image
+                className="w-24 h-24 p-2"
+                src={"/images/logo.svg"}
+                width={70}
+                height={70}
+                alt="QR_Code"
+              />
+              <div className="ml-3">
+                <label className="text-sm">
+                  Choose your <b>document type:</b>
+                </label>
+                <div className="flex mt-2">
+                  <input type="radio" />
+                  <label className="ml-2 text-sm">Passport</label>
+                  <input className="ml-3" type="radio" />
+                  <label className="ml-2 text-sm">ID card</label>
+                  <input className="ml-3" type="radio" />
+                  <label className="ml-2 text-sm">{"Driver's license"}</label>
+                </div>
+                <div className="flex my-2">
+                  <Button
+                    size="sm"
+                    className="bg-orange text-white rounded-full text-[11px] h-7 px-3"
+                  >
+                    CHOOSE FILE
+                  </Button>
+                  <label className="opacity-65 ml-3 text-sm">
+                    Choose or drop your file here
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-l-2 p-3 px-10">
+              <label className="text-sm opacity-65">
+                Accepted file formats:
+              </label>
+              <p className="text-sm">IPG, JPEG, PNG, PDF, max 50 MB</p>
+            </div>
+          </div>
+
+          {/* Box 2 */}
+          <div className="flex w-full justify-between rounded-md border-2 p-3 mt-10">
+            <div className="flex">
+              <Image
+                className="w-24 h-24 p-2"
+                src={"/images/logo.svg"}
+                width={70}
+                height={70}
+                alt="QR_Code"
+              />
+              <div className="ml-3">
+                <label className="text-sm">
+                  Choose your <b>Proof of address:</b>
+                </label>
+                <div className="flex my-2">
+                  <Button
+                    size="sm"
+                    className="bg-orange w-28 text-white rounded-full text-[11px] h-7 px-3"
+                  >
+                    CHOOSE FILE
+                  </Button>
+                  <label className="opacity-65 ml-3 text-sm">
+                    Choose or drop your file here
+                  </label>
+                </div>
+                <Button
+                  size="sm"
+                  className="bg-gray-500 w-28 text-white rounded-full text-[11px] h-7 px-3"
+                >
+                  +ADD MORE
+                </Button>
+              </div>
+            </div>
+
+            <div className="border-l-2 p-3 px-10">
+              <label className="text-sm opacity-65">
+                Accepted file formats:
+              </label>
+              <p className="text-sm">IPG, JPEG, PNG, PDF, max 50 MB</p>
+            </div>
+          </div>
+
+          <p className="w-full text-xs mt-5">
+            Please note that for the pourposes of KYC (know-your-customer),
+            Paycorp Limited may require you yo submit additional documents in
+            cases where the above mentioned documents are deemed insufficient.
+          </p>
+
+          <div className="flex mt-10">
+            <input className="accent-primary" type="checkbox" />
+            <label className="text-sm ml-2">
+              I UNDERSTAND, ACCEPT, ANDAGREE TO PAYCORP LIMITED TERMS AND
+              CONDITIONS.
+            </label>
+          </div>
+          <Button
+            size="sm"
+            className="text-white bg-orange rounded-full p-4 mt-5"
+          >
+            SUBMIT FOR VERIFICATION
+          </Button>
         </div>
       </div>
     </div>

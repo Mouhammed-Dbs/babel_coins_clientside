@@ -137,6 +137,7 @@ export default function Signup() {
               You can create an account in one minute!
             </h1>
             <MyInput
+              className="w-64"
               textColor="text-white"
               handleChange={onChangeEmail}
               value={inputEmail}
@@ -170,6 +171,7 @@ export default function Signup() {
               Check your email and enter confirmation code
             </h1>
             <MyInput
+              className="w-64"
               textColor="text-white"
               item={{
                 name: "email",
@@ -223,7 +225,7 @@ export default function Signup() {
               textColor="text-white"
               value={account?.password}
               readOnly
-              className="mt-3"
+              className="w-64 mt-3"
               item={{
                 name: "password",
                 type: "text",
@@ -235,7 +237,7 @@ export default function Signup() {
               textColor="text-white"
               value={account?.secretCode}
               readOnly
-              className="mt-3"
+              className="w-64 mt-3"
               item={{
                 name: "secretcode",
                 type: "number",
@@ -247,7 +249,7 @@ export default function Signup() {
               textColor="text-white"
               value={account?.accountName}
               readOnly
-              className="mt-3"
+              className="w-64 mt-3"
               item={{
                 name: "accountname",
                 type: "text",
@@ -288,7 +290,7 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               readOnly
-              className={"mt-3"}
+              className={"w-64 mt-3"}
               item={{
                 name: "lastname",
                 type: "text",
@@ -299,7 +301,7 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               readOnly
-              className={"mt-3"}
+              className={"w-64 mt-3"}
               item={{
                 name: "country",
                 type: "text",

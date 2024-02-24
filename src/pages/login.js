@@ -61,7 +61,7 @@ export default function Signup() {
             </a>
             <MyInput
               textColor="text-white"
-              className="mt-3"
+              className="w-64 mt-3"
               handleChange={onChangeEmail}
               value={inputEmail}
               item={{
@@ -74,7 +74,7 @@ export default function Signup() {
             />
             <MyInput
               textColor="text-white"
-              className="mt-3"
+              className="w-64 mt-3"
               handleChange={onChangePass}
               value={inputPass}
               item={{

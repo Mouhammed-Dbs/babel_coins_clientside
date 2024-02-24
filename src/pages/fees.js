@@ -165,34 +165,3 @@ export default function Fees() {
     </div>
   );
 }
-
-// <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">Account opening</p>
-//             <p className="min-w-44 pl-2">-</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
-//           <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">Monthly service</p>
-//             <p className="min-w-44 pl-2">-</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
-//           <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">Monthly service</p>
-//             <p className="min-w-44 pl-2">USD/EUR/RUB</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
-//           <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">Traging operations</p>
-//             <p className="min-w-44 pl-2">USD/EUR/RUB/BTC/LTC</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
-//           <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">Currency comesion</p>
-//             <p className="min-w-44 pl-2">USD/EUR/RUB/BTC/LTC</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
-//           <div className="grid grid-flow-col auto-cols-max m-auto mb-3">
-//             <p className="min-w-44 pl-2">API</p>
-//             <p className="min-w-44 pl-2">USD/EUR/RUBkjbouvuovouvuiovu</p>
-//             <p className="min-w-44 pl-2">0$</p>
-//           </div>
