@@ -32,11 +32,9 @@ export default function Settings() {
   const [typeAccounts, setTypeAccounts] = useState(["Personal"]);
   const [countries, setCountries] = useState(["Syria", "United State"]);
   return (
-    <div className="container h-screen w-full ml-3 no-scrollbar overflow-y-scroll pb-[150px]">
+    <div className="absolute container h-screen ml-3 no-scrollbar overflow-y-scroll pb-[150px]">
       {/* Tabs */}
-      <div className="ml-1 w-screen overflow-x-hidden">
-        {/* className="flex w-[90%] md:11/12 md:m-auto overflow-x-scroll no-scrollbar" */}
-
+      <div className="w-screen overflow-x-hidden">
         <Tabs
           selectedKey={tab}
           onSelectionChange={setTab}
