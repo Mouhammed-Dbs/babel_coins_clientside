@@ -80,9 +80,9 @@ export default function Contacts() {
                 checked={agreeValue}
                 value={agreeValue}
                 type="checkbox"
-                className="peer bg-white text-white"
+                className="peer accent-white"
               ></input>
-              <label className="text-xs peer-checked:text-cyan-300 text-white text-opacity-65 ml-1">
+              <label className="text-xs peer-checked:text-cyan-300 text-white text-opacity-65 ml-2">
                 I agree to the processing of the personal data provided
               </label>
             </div>
