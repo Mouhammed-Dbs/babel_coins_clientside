@@ -218,6 +218,11 @@ export default function MainNavbare() {
                 <span className="text-xs">Logs</span>
               </DropdownItem>
               <DropdownItem
+                onClick={() =>
+                  router.asPath != "/account/referrals"
+                    ? router.push("/account/referrals")
+                    : null
+                }
                 startContent={
                   <MdGroup
                     className="text-gray-400 hover:cursor-pointer"
