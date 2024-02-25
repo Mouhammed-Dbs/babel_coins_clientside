@@ -145,7 +145,7 @@ export default function Settings() {
                     <div className="flex md:gap-4 gap-3 mt-3">
                       <MyInput
                         color="border-gray-500"
-                        className="w-32 border-black mb-3"
+                        className="w-32 md:w-64 border-black mb-3"
                         item={{
                           name: "nick",
                           type: "text",
@@ -155,7 +155,7 @@ export default function Settings() {
                       />
                       <MyInput
                         color="border-gray-500"
-                        className="w-28 border-black mb-3"
+                        className="w-28 md:w-64 border-black mb-3"
                         item={{
                           name: "nick",
                           type: "text",
