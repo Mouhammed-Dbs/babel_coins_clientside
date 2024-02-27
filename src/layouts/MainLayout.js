@@ -2,12 +2,18 @@
 import Navbar from "@/components/MainNavbar";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
 import { LuWallet } from "react-icons/lu";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { IoIosSend } from "react-icons/io";
+import { IoAddCircleSharp, IoCallOutline } from "react-icons/io5";
+import { IoIosCloseCircleOutline, IoIosSend } from "react-icons/io";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { Button, Card } from "@nextui-org/react";
+import Link from "next/link";
+import { useState } from "react";
+import CallAlert from "@/components/utils/alerts/CallAlert";
+import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationAlert";
+import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
 
 export default function MainLayout(props) {
   const currentRoute = useRouter().asPath.slice(1);
@@ -41,6 +47,10 @@ export default function MainLayout(props) {
           <Navbar />
           {props.children}
         </div>
+
+        {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} />
+        <PhoneVerificationAlert isShow={false} />
+        <AccessLockedAlert isShow={true} /> */}
       </main>
     </>
   );
