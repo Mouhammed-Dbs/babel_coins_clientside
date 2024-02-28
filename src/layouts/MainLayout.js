@@ -48,9 +48,9 @@ export default function MainLayout(props) {
           {props.children}
         </div>
 
-        {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} />
-        <PhoneVerificationAlert isShow={false} />
-        <AccessLockedAlert isShow={true} /> */}
+        {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
+        {/* <PhoneVerificationAlert isShow={true} /> */}
+        {/* <AccessLockedAlert isShow={true} /> */}
       </main>
     </>
   );

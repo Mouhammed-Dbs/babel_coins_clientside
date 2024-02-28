@@ -10,10 +10,13 @@ import { TbMoneybag } from "react-icons/tb";
 import { MdLogin } from "react-icons/md";
 import Canva from "@/components/utils/Canva.js";
 import screenIs from "../screen.js";
+import axios from "axios";
 
 export default function Home() {
   const [idUser, setIdUser] = useState(null);
+  const [coins, setCoins] = useState([]);
   const router = useRouter();
+  const myCoins = ["BTC", "ETH", "TRX", "BCH", "LTC"];
   const data = [
     "ali",
     "ahmad",
@@ -32,8 +35,30 @@ export default function Home() {
   ];
   useEffect(() => {
     setIdUser(localStorage.getItem("babel-coins-user-id"));
+    getDataCoins();
   }, []);
-
+  const getDataCoins = async () => {
+    try {
+      // setLoading(true);
+      const res = await axios.get(`/api/coins?symbols=` + myCoins.join(","));
+      const result = res.data;
+      let arrayCoins = Array();
+      myCoins.forEach((coin) => {
+        arrayCoins.push({
+          name: result[coin][0]["name"],
+          symbol: result[coin][0]["symbol"],
+          price: result[coin][0]["quote"]["USD"]["price"].toFixed(2),
+          change24d:
+            result[coin][0]["quote"]["USD"]["percent_change_24h"].toFixed(2),
+        });
+      });
+      console.log(arrayCoins);
+      setCoins(arrayCoins);
+    } catch (error) {
+      // setLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <div className="mx-auto">
       <div className="section1 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
@@ -108,12 +133,14 @@ export default function Home() {
           <h6 className="hidden md:block">Last Order</h6>
           <h6>7 days chart</h6>
         </div>
-        <RowCard></RowCard>
-        <RowCard></RowCard>
-        <RowCard></RowCard>
-        <RowCard></RowCard>
-        <RowCard></RowCard>
-        <RowCard></RowCard>
+        {coins.map((value, index) => (
+          <RowCard
+            key={value["name"]}
+            name={value["name"]}
+            price={value["price"]}
+            change={value["change24d"]}
+          />
+        ))}
       </div>
 
       <div className="section3 h-screen pt-20 pb-20 bg-primary dark:dark:bg-cyan-200">
@@ -200,7 +227,7 @@ function Slide({ coinPair, price, inc, loss }) {
   );
 }
 
-function RowCard() {
+function RowCard({ name, price, change, lastOrder, weekly }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -220,8 +247,8 @@ function RowCard() {
       className="md:w-5/6 w-full bg-neutral-100 dark:bg-default-100 bg-opacity-100 m-auto mt-3 hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
     >
       <CardBody>
-        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base lg:text-lg">
-          <div className="flex">
+        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
+          <div className="flex justify-self-start">
             <Image
               className="ml-1 md:ml-4"
               src={"/images/logo.svg"}
@@ -229,11 +256,11 @@ function RowCard() {
               width={20}
               height={20}
             />
-            <p className="ml-2 md:ml-4 self-center">Bitcoin</p>
+            <p className="ml-2 md:ml-4 self-center">{name}</p>
           </div>
-          <p className="self-center">$44000</p>
-          <p className="self-center hidden sm:block">+0.11%</p>
-          <p className="self-center hidden md:block">0.0003 BTC</p>
+          <p className="self-center">{price}</p>
+          <p className="self-center hidden sm:block">{change}%</p>
+          <p className="self-center hidden md:block">{lastOrder}--</p>
           <Canva
             value={[400, 210, 700, 270, 530, 1000, 610, 800, 210, 700]}
             color="red"
