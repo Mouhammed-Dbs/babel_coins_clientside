@@ -256,13 +256,13 @@ function RowCard({ name, price, change, lastOrder, weekly }) {
               width={20}
               height={20}
             />
-            <p className="ml-2 md:ml-4 self-center">{name}</p>
+            <p className="ml-2 md:ml-4 text-xs self-center">{name}</p>
           </div>
           <p className="self-center">{price}</p>
           <p
             className={`${
               change > 0 ? "text-green-500" : "text-red-600"
-            } self-center hidden sm:block`}
+            } self-center text-xs hidden sm:block`}
           >
             {change}%
           </p>
