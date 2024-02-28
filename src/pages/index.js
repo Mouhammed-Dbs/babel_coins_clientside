@@ -258,7 +258,7 @@ function RowCard({ name, price, change, lastOrder, weekly }) {
             />
             <p className="ml-2 md:ml-4 text-xs self-center">{name}</p>
           </div>
-          <p className="self-center">{price}</p>
+          <p className="self-center text-xs">{price}</p>
           <p
             className={`${
               change > 0 ? "text-green-500" : "text-red-600"
