@@ -259,11 +259,17 @@ function RowCard({ name, price, change, lastOrder, weekly }) {
             <p className="ml-2 md:ml-4 self-center">{name}</p>
           </div>
           <p className="self-center">{price}</p>
-          <p className="self-center hidden sm:block">{change}%</p>
+          <p
+            className={`${
+              change > 0 ? "text-green-500" : "text-red-600"
+            } self-center hidden sm:block`}
+          >
+            {change}%
+          </p>
           <p className="self-center hidden md:block">{lastOrder}--</p>
           <Canva
             value={[400, 210, 700, 270, 530, 1000, 610, 800, 210, 700]}
-            color="red"
+            color={change > 0 ? "green" : "red"}
             hstep={0.14}
             vstep={0.11}
           ></Canva>
