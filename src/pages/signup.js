@@ -47,7 +47,7 @@ export default function Signup() {
           msg: result.msg,
           error: result.error,
         });
-        localStorage.setItem("babel-coins-user-id", result.data._id);
+        localStorage.setItem("babel-coins-user-token", result.data.token);
         setShowSteps(1);
         setLoading(false);
       } else {

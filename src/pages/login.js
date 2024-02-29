@@ -30,7 +30,7 @@ export default function Signup() {
       const result = res.data;
       setResLogin({ msg: result.msg, error: result.error });
       if (!result.error) {
-        localStorage.setItem("babel-coins-user-id", result.data._id);
+        localStorage.setItem("babel-coins-user-token", result.data.token);
         router.push("/account");
       } else {
         setLoading(false);

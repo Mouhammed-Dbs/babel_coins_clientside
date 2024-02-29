@@ -13,9 +13,12 @@ export default function Balance() {
     try {
       setLoading(true);
       const res = await axios.get(
-        `${process.env.BASE_API_URL}/users/all-accounts/${localStorage.getItem(
-          "babel-coins-user-id"
-        )}`
+        `${process.env.BASE_API_URL}/users/all-balances`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("babel-coins-user-token"),
+          },
+        }
       );
       const result = res.data;
       if (!result.error) {
