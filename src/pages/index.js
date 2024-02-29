@@ -8,6 +8,7 @@ import "swiper/css";
 import { LuWallet } from "react-icons/lu";
 import { TbMoneybag } from "react-icons/tb";
 import { MdLogin } from "react-icons/md";
+import { CgArrowsExchangeAltV } from "react-icons/cg";
 import Canva from "@/components/utils/Canva.js";
 import screenIs from "../screen.js";
 import axios from "axios";
@@ -16,23 +17,18 @@ export default function Home() {
   const [idUser, setIdUser] = useState(null);
   const [coins, setCoins] = useState([]);
   const router = useRouter();
-  const myCoins = ["BTC", "ETH", "TRX", "BCH", "LTC"];
-  const data = [
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
-    "ali",
-    "ahmad",
+  const myCoins = [
+    "BTC",
+    "ETH",
+    "TRX",
+    "BCH",
+    "LTC",
+    "DASH",
+    "DOGE",
+    "BNB",
+    "MATIC",
   ];
+
   useEffect(() => {
     setIdUser(localStorage.getItem("babel-coins-user-id"));
     getDataCoins();
@@ -103,7 +99,7 @@ export default function Home() {
         </div>
         <div className="mx-2 md:mx-8">
           <Swiper
-            className="my-10 h-48"
+            className="my-10 h-52"
             slidesPerView="auto"
             spaceBetween={20}
             loop={false}
@@ -111,13 +107,18 @@ export default function Home() {
               delay: 2000,
             }}
           >
-            {data.map((value, index) => (
+            {coins.map((value, index) => (
               <SwiperSlide
                 style={{ width: "140px", height: "fit-content" }}
                 className="shadow-lg mx-3 top-[5%] rounded-xl"
                 key={index}
               >
-                <Slide coinPair="BTC/USD" price="500$">
+                <Slide
+                  coinPair={`${value["symbol"]}/USD`}
+                  symbol={value["symbol"]}
+                  price={value["price"]}
+                  change={value["change24d"]}
+                >
                   {value}
                 </Slide>
               </SwiperSlide>
@@ -137,6 +138,7 @@ export default function Home() {
           <RowCard
             key={value["name"]}
             name={value["name"]}
+            symbol={value["symbol"]}
             price={value["price"]}
             change={value["change24d"]}
           />
@@ -189,7 +191,7 @@ export default function Home() {
   );
 }
 
-function Slide({ coinPair, price, inc, loss }) {
+function Slide({ coinPair, symbol, price, change }) {
   return (
     <Card
       style={{ width: "inherit" }}
@@ -200,15 +202,16 @@ function Slide({ coinPair, price, inc, loss }) {
     >
       <CardHeader className="flex gap-3">
         <Image
+          className="w-6 h-6"
           alt="nextui logo"
           height={18}
           radius="sm"
-          src="/images/logo.svg"
+          src={`/images/coins/${symbol}.png`}
           width={18}
         />
         <div className="flex flex-col text-left">
-          <p className="text-md">{coinPair}</p>
-          <p className="text-xs text-default-500">{price}</p>
+          <p className="text-sm">{coinPair}</p>
+          <p className="text-xs text-default-700">${price}</p>
         </div>
       </CardHeader>
       <Divider />
@@ -216,18 +219,27 @@ function Slide({ coinPair, price, inc, loss }) {
         <Canva
           vstep={0.11}
           value={[400, 210, 700, 270, 530, 1200, 610, 800, 210, 300]}
-          color="green"
+          color={change > 0 ? "green" : "red"}
           width="140px"
           height="70px"
         ></Canva>
       </CardBody>
       <Divider />
-      <CardFooter></CardFooter>
+      <CardFooter className="p-2 flex justify-between">
+        <p
+          className={`${
+            change > 0 ? "text-green-500" : "text-red-600"
+          } text-xs`}
+        >
+          {change > 0 ? "+" + change : change}%
+        </p>
+        <CgArrowsExchangeAltV className="text-default-700" />
+      </CardFooter>
     </Card>
   );
 }
 
-function RowCard({ name, price, change, lastOrder, weekly }) {
+function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -250,8 +262,8 @@ function RowCard({ name, price, change, lastOrder, weekly }) {
         <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
           <div className="flex justify-self-start">
             <Image
-              className="ml-1 md:ml-4"
-              src={"/images/logo.svg"}
+              className="ml-1 md:ml-4 w-9 h-9"
+              src={`/images/coins/${symbol}.png`}
               alt=""
               width={20}
               height={20}
@@ -264,7 +276,7 @@ function RowCard({ name, price, change, lastOrder, weekly }) {
               change > 0 ? "text-green-500" : "text-red-600"
             } self-center text-xs hidden sm:block`}
           >
-            {change}%
+            {change > 0 ? "+" + change : change}%
           </p>
           <p className="self-center hidden md:block">{lastOrder}--</p>
           <Canva
