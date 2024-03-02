@@ -148,10 +148,7 @@ export default function Home() {
       <div className="section3 h-screen pt-20 pb-20 bg-primary dark:dark:bg-cyan-200">
         <div className="relative">
           <p className="absolute">exam</p>
-          <Card
-            isBlurred
-            className="absolute w-screen rounded-none bg-opacity-0"
-          >
+          <Card isBlurred className="absolute w-full rounded-none bg-opacity-0">
             <CardBody>
               <p className="pl-2 lg:pl-8">
                 Make beautiful websites regardless of your design experience.
@@ -161,30 +158,67 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="section4 bg-neutral-100 grid grid-rows-2 gap-3 pb-12 pl-10 pr-10">
+      <div className="section4 bg-neutral-100 dark:bg-slate-900 pb-12 pl-10 pr-10">
         <h1 className="text-center text-3xl font-bold p-6 md:p-10">
           Why Trade on Babel Coins
         </h1>
-        <Card isBlurred className="dark:bg-cyan-950 bg-neutral-200">
-          <CardBody>
-            <p>Make beautiful websites regardless of your design experience.</p>
-          </CardBody>
-        </Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          <Card isBlurred className="dark:bg-cyan-950 bg-neutral-200">
+        <div className="grid grid-rows-1 gap-3">
+          <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
             <CardBody>
-              <p>
-                Make beautiful websites regardless of your design experience.
-              </p>
+              <div className="flex justify-between">
+                <p className="text-xs md:text-base self-center">
+                  Make beautiful websites regardless of your design experience.
+                </p>
+                <Image
+                  alt=""
+                  width={5000}
+                  height={5000}
+                  src={"/images/3bb.png"}
+                  className="w-1/2"
+                />
+              </div>
             </CardBody>
           </Card>
-          <Card isBlurred className="dark:bg-cyan-950 bg-neutral-200">
-            <CardBody>
-              <p>
-                Make beautiful websites regardless of your design experience.
-              </p>
-            </CardBody>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
+              <CardBody>
+                <div className="flex justify-between h-full">
+                  <p className="w-1/2 text-xs md:text-base self-center">
+                    Make beautiful websites regardless of your design
+                    experience.
+                  </p>
+                  <div className="flex justify-end w-1/2">
+                    <Image
+                      alt=""
+                      width={5000}
+                      height={5000}
+                      src={"/images/1bb.png"}
+                      className="w-2/3 self-end"
+                    />
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+            <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
+              <CardBody>
+                <div className="flex justify-between h-full">
+                  <p className="w-1/2 text-xs md:text-base self-center">
+                    Make beautiful websites regardless of your design
+                    experience.
+                  </p>
+                  <div className="flex justify-end w-1/2">
+                    <Image
+                      alt=""
+                      width={5000}
+                      height={5000}
+                      src={"/images/2bb.png"}
+                      className="w-2/3 h-48 md:h-full"
+                    />
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
