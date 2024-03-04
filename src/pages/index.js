@@ -302,7 +302,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
         <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
           <div className="flex justify-self-start">
             <Image
-              className="ml-1 md:ml-4 w-9 h-9"
+              className="md:ml-4 w-9 h-9"
               src={`/images/coins/${symbol}.png`}
               alt=""
               width={20}
