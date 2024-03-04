@@ -57,7 +57,7 @@ export default function Home() {
   };
   return (
     <div className="mx-auto">
-      <div className="section1 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
+      <div className="section1 bg-neutral-200 dark:bg-default-50 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
         <h1 className="font-bold text-xl md:text-2xl">
           Send, Exchange or Accept fiat and Cryptocurrency
           <br />
@@ -126,7 +126,7 @@ export default function Home() {
           </Swiper>
         </div>
       </div>
-      <div className="section2 bg-neutral-100 dark:bg-default-50 p-3 md:p-6 pt-20 md:pt-28 pb-24">
+      <div className="section2 bg-neutral-100 dark:bg-slate-900 p-3 md:p-6 pt-20 md:pt-28 pb-24">
         <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 text-sm md:text-base lg:text-lg opacity-40 pl-4">
           <h6>Name Coin</h6>
           <h6>Last Price</h6>
@@ -145,20 +145,26 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="section3 h-screen pt-20 pb-20 bg-primary bg-neutral-100 dark:bg-default-50">
-        <div className="relative">
-          {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
-          <Card isBlurred className="absolute w-full rounded-none bg-opacity-0">
-            <CardBody>
-              <p className="pl-2 lg:pl-8">
-                Make beautiful websites regardless of your design experience.
-              </p>
-            </CardBody>
-          </Card>
+      <div className="section3 flex items-center h-[550px] pt-20 pb-20 bg-primary dark:bg-slate-800">
+        {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
+        <div className="md:flex items-center h-3/4 rounded-none bg-white/15 py-3">
+          <p className="md:w-1/2 pl-2 lg:pl-8 text-white md:text-left text-center my-3 md:my-0">
+            Experience Seamless Crypto Mangment with <b>Babel Coins</b> Where
+            Trust Meets Technology!
+          </p>
+          <div className="flex md:w-1/2 justify-center md:justify-end p-1 md:p-3">
+            <Image
+              className="w-11/12 md:w-3/4 rounded-lg border-3 border-black border-b-4"
+              width={3000}
+              height={3000}
+              alt=""
+              src={"/images/screen.png"}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="section4 bg-neutral-100 dark:bg-slate-900 pb-12 pl-10 pr-10">
+      <div className="section4 bg-neutral-100 dark:bg-slate-900 pb-12 px-4 md:px-10">
         <h1 className="text-center text-3xl font-bold p-6 md:p-10">
           Why Trade on Babel Coins
         </h1>
@@ -232,7 +238,7 @@ function Slide({ coinPair, symbol, price, change }) {
       shadow="sm"
       isBlurred
       isPressable
-      className={`bg-background/60 dark:bg-default-100/50 max-w-[140px]`}
+      className={`bg-neutral-100/70 dark:bg-default-100/50 max-w-[140px] shadow-md`}
     >
       <CardHeader className="flex gap-3">
         <Image
@@ -290,7 +296,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
   return (
     <Card
       shadow="md"
-      className="md:w-5/6 w-full bg-neutral-100 dark:bg-default-100 bg-opacity-100 m-auto mt-3 hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
+      className="md:w-5/6 w-full dark:bg-slate-800 bg-neutral-100 bg-opacity-100 m-auto mt-3 hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
     >
       <CardBody>
         <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
