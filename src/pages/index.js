@@ -101,7 +101,7 @@ export default function Home() {
           <Swiper
             className="my-10 h-52"
             slidesPerView="auto"
-            spaceBetween={20}
+            spaceBetween={10}
             loop={false}
             autoplay={{
               delay: 2000,
@@ -126,7 +126,7 @@ export default function Home() {
           </Swiper>
         </div>
       </div>
-      <div className="section2 bg-neutral-100 dark:bg-default-50 p-6 pt-20 md:pt-28 pb-24">
+      <div className="section2 bg-neutral-100 dark:bg-default-50 p-3 md:p-6 pt-20 md:pt-28 pb-24">
         <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 text-sm md:text-base lg:text-lg opacity-40 pl-4">
           <h6>Name Coin</h6>
           <h6>Last Price</h6>
@@ -145,9 +145,9 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="section3 h-screen pt-20 pb-20 bg-primary dark:dark:bg-cyan-200">
+      <div className="section3 h-screen pt-20 pb-20 bg-primary bg-neutral-100 dark:bg-default-50">
         <div className="relative">
-          <p className="absolute">exam</p>
+          {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
           <Card isBlurred className="absolute w-full rounded-none bg-opacity-0">
             <CardBody>
               <p className="pl-2 lg:pl-8">
