@@ -30,7 +30,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    setIdUser(localStorage.getItem("babel-coins-user-id"));
+    setIdUser(localStorage.getItem("babel-coins-user-token"));
     getDataCoins();
   }, []);
   const getDataCoins = async () => {
