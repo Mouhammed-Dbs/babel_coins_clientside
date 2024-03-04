@@ -127,11 +127,11 @@ export default function Home() {
         </div>
       </div>
       <div className="section2 bg-neutral-100 dark:bg-slate-900 p-3 md:p-6 pt-20 md:pt-28 pb-24">
-        <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 text-sm md:text-base lg:text-lg opacity-40 pl-4">
+        <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 text-sm md:text-base lg:text-lg opacity-40 pl-4">
           <h6>Name Coin</h6>
           <h6>Last Price</h6>
           <h6 className="hidden sm:block">24 Change</h6>
-          <h6 className="hidden md:block">Last Order</h6>
+          <h6 className="hidden">Last Order</h6>
           <h6>7 days chart</h6>
         </div>
         {coins.map((value, index) => (
@@ -299,7 +299,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
       className="md:w-5/6 w-full dark:bg-slate-800 bg-neutral-100 bg-opacity-100 m-auto mt-3 hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
     >
       <CardBody>
-        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
+        <div className="grid grid-cols-4 sm:grid-cols-5 justify-items-center gap-1 md:gap-4 text-sm md:text-base">
           <div className="flex justify-self-start">
             <Image
               className="md:ml-4 w-9 h-9"
@@ -318,7 +318,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
           >
             {change > 0 ? "+" + change : change}%
           </p>
-          <p className="self-center hidden md:block">{lastOrder}--</p>
+          <p className="self-center hidden">{lastOrder}--</p>
           <Canva
             value={[400, 210, 700, 270, 530, 1000, 610, 800, 210, 700]}
             color={change > 0 ? "green" : "red"}
