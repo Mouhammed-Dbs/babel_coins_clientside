@@ -71,7 +71,7 @@ export default function Add(props) {
             placeholder="CHOOSE ACCOUNT"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-48 md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] max-w-xs peer w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-6",
             }}
             renderValue={(items) => {
@@ -79,7 +79,7 @@ export default function Add(props) {
                 <div key={item.key} className="flex items-center gap-2">
                   <Avatar
                     alt={item.data.name}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 h-6 w-6"
                     size="sm"
                     src={`/images/coins/${item.key}.png`}
                   />
@@ -126,7 +126,7 @@ export default function Add(props) {
             placeholder="CHOOSE SYSTEM"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-48 md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] max-w-xs peer w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-7",
             }}
             renderValue={(items) => {
@@ -134,7 +134,7 @@ export default function Add(props) {
                 <div key={item.key} className="flex items-center gap-2">
                   <Avatar
                     alt={item.data.name}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 h-6 w-6"
                     size="sm"
                     src={`/images/coins/${item.key}.png`}
                   />
@@ -217,7 +217,7 @@ export default function Add(props) {
             ))}
           </Select>
         </div>
-        <div className="w-fit m-auto md:m-0">
+        <div className="w-fit m-auto md:m-0 md:ml-40">
           <Button className="bg-orange text-white rounded-full mt-4 md:px-10 w-12">
             ADD
           </Button>

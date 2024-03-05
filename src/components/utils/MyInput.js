@@ -22,7 +22,7 @@ export default function MyInput({
         name={name}
         onChange={handleChange}
         value={value}
-        className={`peer w-full self-center placeholder-slate-300 mt-6 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:${selectedBorderColor} ${
+        className={`peer w-full mt-6 self-center placeholder-slate-300 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:${selectedBorderColor} ${
           value
             ? selectedBorderColor
             : color != undefined
@@ -47,7 +47,7 @@ export default function MyInput({
       <label
         className={`absolute -top-0 -left-0 text-sm ml-1 mb-1 peer-focus:${selectedLabelColor} text-opacity-80 ${
           value ? selectedLabelColor : color != undefined ? color : "text-white"
-        }`}
+        } ${item.label ? "" : "hidden"}`}
       >
         {label}
       </label>

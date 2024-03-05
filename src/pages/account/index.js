@@ -68,7 +68,7 @@ export default function Balance() {
               <div className="absolute bg-white dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Image
                   className="p-1"
-                  src={`/images/coins/${coin.network}.png`}
+                  src={`/images/coins/${coin.symbol}.png`}
                   width={50}
                   height={50}
                   alt=""
@@ -76,8 +76,11 @@ export default function Balance() {
               </div>
 
               <div className="w-full mt-3">
-                <h1 className="text-lg">{coin.network}</h1>
-                <h1 className="font-bold text-lg">{coin.balance}</h1>
+                <h1 className="text-lg">{coin.currencyName}</h1>
+                <h1 className="text-sm">{coin.network}</h1>
+                <h1 className="font-bold text-lg">
+                  {coin.validDepositeBalance}
+                </h1>
               </div>
               <div className="grid grid-cols-2 gap-3 mt-1 mb-2">
                 <Button

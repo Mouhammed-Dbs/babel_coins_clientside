@@ -23,6 +23,7 @@ export default function MainLayout(props) {
         <Sidebar>
           <SidebarItem
             text="Balance"
+            link=""
             icon={<LuWallet size={20} />}
             active={
               currentRoute === "account" ||
@@ -32,11 +33,21 @@ export default function MainLayout(props) {
           />
           <SidebarItem
             text="Add"
+            link="add"
             icon={<IoAddCircleSharp size={20} />}
             active={currentRoute.includes("account/add")}
           />
-          <SidebarItem text="Transfer" icon={<IoIosSend size={20} />} />
-          <SidebarItem text="Trade" icon={<PiChartLineUpBold size={20} />} />
+          <SidebarItem
+            text="Transfer"
+            link="send"
+            icon={<IoIosSend size={20} />}
+            active={currentRoute.includes("account/send")}
+          />
+          <SidebarItem
+            text="Trade"
+            link="trade"
+            icon={<PiChartLineUpBold size={20} />}
+          />
           <SidebarItem
             text="Exchange"
             icon={<RiExchangeFundsLine size={20} />}

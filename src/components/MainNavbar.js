@@ -253,7 +253,7 @@ export default function MainNavbare() {
         <NavbarItem>
           <Button
             onClick={() => {
-              localStorage.removeItem("babel-coins-user-id");
+              localStorage.removeItem("babel-coins-user-token");
               router.replace("/");
             }}
             className="min-w-fit p-0"

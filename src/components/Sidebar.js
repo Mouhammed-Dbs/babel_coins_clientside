@@ -55,15 +55,13 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, link, active, alert }) {
   const { expanded } = useContext(SidebarContext);
   const router = useRouter();
   return (
     <li
       onClick={() => {
-        // text.toLowerCase() !== "balance"
-        //   ? router.replace(router.asPath + "/" + text.toLowerCase())
-        //   : router.replace("/account");
+        router.replace("/account/" + link.toLowerCase());
       }}
       className={`
         relative flex items-center py-2 px-3 my-1
