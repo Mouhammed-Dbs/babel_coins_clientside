@@ -60,6 +60,7 @@ export default function Home() {
         console.log(coins);
         setCoins(coins);
         setPageLoading(false);
+        return;
       })
       .catch((err) => {
         console.log(err);
