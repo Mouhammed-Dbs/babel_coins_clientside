@@ -62,7 +62,7 @@ export default function Send(props) {
                     <div key={item.key} className="flex items-center gap-2">
                       <Avatar
                         alt={item.data.name}
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 h-6 w-6"
                         size="sm"
                         src={`/images/coins/${item.key}.png`}
                       />
@@ -81,7 +81,7 @@ export default function Send(props) {
                     <div className="flex gap-2 items-center">
                       <Avatar
                         alt={item["name"]}
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 h-6 w-6"
                         size="sm"
                         src={`/images/coins/${item["name"]}.png`}
                       />
