@@ -35,7 +35,7 @@ export default function Balance() {
     getCoins();
   }, []);
   return (
-    <div className="container h-screen m-auto no-scrollbar overflow-y-scroll pb-20">
+    <div className="container h-screen m-auto no-scrollbar overflow-y-scroll md:pb-20">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">

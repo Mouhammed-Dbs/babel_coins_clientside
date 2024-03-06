@@ -12,8 +12,11 @@ import { CgArrowsExchangeAltV } from "react-icons/cg";
 import Canva from "@/components/utils/Canva.js";
 import screenIs from "../screen.js";
 import axios from "axios";
+import MyLoading from "@/components/MyLoading.js";
 
 export default function Home() {
+  const [mounted, setMount] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
   const [idUser, setIdUser] = useState(null);
   const [coins, setCoins] = useState([]);
   const router = useRouter();
@@ -30,12 +33,13 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    setMount(true);
     setIdUser(localStorage.getItem("babel-coins-user-token"));
     getDataCoins();
   }, []);
   const getDataCoins = async () => {
     try {
-      // setLoading(true);
+      setPageLoading(true);
       const res = await axios.get(`/api/coins?symbols=` + myCoins.join(","));
       const result = res.data;
       let arrayCoins = Array();
@@ -48,13 +52,31 @@ export default function Home() {
             result[coin][0]["quote"]["USD"]["percent_change_24h"].toFixed(2),
         });
       });
-      console.log(arrayCoins);
+      setPageLoading(false);
       setCoins(arrayCoins);
     } catch (error) {
-      // setLoading(false);
+      setPageLoading(false);
       console.log(error);
     }
   };
+
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+
   return (
     <div className="mx-auto">
       <div className="section1 bg-neutral-200 dark:bg-default-50 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">

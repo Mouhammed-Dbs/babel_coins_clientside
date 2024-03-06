@@ -1,14 +1,16 @@
-import { Button, Card, CardBody, Input } from "@nextui-org/react";
-import { useState } from "react";
-import { MdLogin } from "react-icons/md";
+import { Button, Card, CardBody, Input, Spinner } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
 import { useRouter } from "next/router";
 import MyInput from "@/components/utils/MyInput";
 import Link from "next/link";
 import axios from "axios";
+import MyLoading from "@/components/MyLoading";
 
 export default function Signup() {
   const router = useRouter();
+  const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [account, setAccount] = useState({
     accountName: "",
@@ -20,23 +22,125 @@ export default function Signup() {
   const [showSteps, setShowSteps] = useState(0);
   const [inputEmail, setInputEmail] = useState("");
   const [inputCode, setInputCode] = useState("");
+  const [seconds, setSeconds] = useState(30);
+  const [timerOn, setTimerOn] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
+  useEffect(() => {
+    setMount(true);
+    isUserLogged();
+    let timer;
+    if (timerOn) {
+      timer = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        } else {
+          setTimerOn(false);
+          setSeconds(30);
+        }
+      }, 1000);
+    }
 
+    return () => clearInterval(timer);
+  }, [seconds, timerOn]);
+
+  const handleStartTimer = () => {
+    setTimerOn(true);
+  };
   const onChangeEmail = (event) => {
     setInputEmail(event.target.value);
   };
   const onChangeCode = (event) => {
-    const newValue = event.target.value.replace(/\D/g, "").slice(0, 6);
+    const newValue = event.target.value.replace(/\D/g, "").slice(0, 4);
     setInputCode(newValue);
+  };
+  const goToFirstStep = (event) => {
+    event.preventDefault();
+    setShowSteps(1);
   };
   const goToConfirm = async (event) => {
     event.preventDefault();
     try {
       setLoading(true);
       const res = await axios.post(
-        `${process.env.BASE_API_URL}/users/create-new-account`,
-        {
-          email: inputEmail,
+        `${process.env.BASE_API_URL}/users/send-account-verification-code?email=${inputEmail}`
+      );
+      const result = res.data;
+      if (!result.error) {
+        handleStartTimer();
+      } else {
+        setAccount({ error: result.error, msg: result.msg });
+        console.log(result.msg);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  const goToStep2WithConfirm = async (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${process.env.BASE_API_URL}/users/create-new-account?code=${inputCode}`,
+        { email: inputEmail }
+      );
+      const result = res.data;
+      if (!result.error) {
+        setAccount({
+          accountName: result.data.accountName,
+          secretCode: result.data.secretCode,
+          password: result.data.password,
+          msg: result.msg,
+          error: result.error,
+        });
+        localStorage.setItem("babel-coins-user-token", result.data.token);
+        setShowSteps(2);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setAccount({ error: result.error, msg: result.msg });
+        console.log(result.msg);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  const isUserLogged = async () => {
+    let token = localStorage.getItem("babel-coins-user-token");
+    if (token) {
+      try {
+        setPageLoading(true);
+        const res = await axios.get(
+          `${process.env.BASE_API_URL}/users/is-logged`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        const result = res.data;
+        if (!result.error) {
+          router.replace("/");
+        } else {
+          setPageLoading(false);
+          localStorage.removeItem("babel-coins-user-token");
         }
+      } catch (error) {
+        setPageLoading(false);
+        localStorage.removeItem("babel-coins-user-token");
+        console.log(error);
+      }
+    }
+  };
+  const goToStep3 = async (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${process.env.BASE_API_URL}/users/create-new-account`,
+        { email: inputEmail }
       );
       const result = res.data;
       if (!result.error) {
@@ -59,28 +163,46 @@ export default function Signup() {
       setLoading(false);
       console.log(error);
     }
-  };
-  const goToStep2WithConfirm = (event) => {
-    event.preventDefault();
-    setShowSteps(2);
-  };
-  const goToStep2WithoutConfirm = () => {
-    setShowSteps(2);
-  };
-  const goToStep3 = (event) => {
-    event.preventDefault();
     setShowSteps(3);
   };
 
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="warning"
+        className={`text-white mt-24`}
+      />
+    );
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="warning"
+        className={`text-white mt-24`}
+      />
+    );
   return (
     <div className="text-white mt-20 md:mt-5">
-      <h1 className="text-center text-2xl">Create Your Account</h1>
+      <div className="flex justify-center">
+        <MdOutlineArrowCircleLeft
+          className={`w-6 h-6 self-center hover:text-secondary ${
+            showSteps == 1 ? "" : "hidden"
+          }`}
+          onClick={() => {
+            setShowSteps(showSteps - 1);
+          }}
+        />
+        <h1 className="text-center text-2xl ml-2">Create Your Account</h1>
+      </div>
+
       <Card
         isBlurred
         className="w-min m-auto mt-3 p-8 pb-2 pt-2 text-white"
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
         <CardBody>
+          {/* line steps */}
           <div className="w-full justify-center">
             <div className="flex justify-center px-3">
               <div
@@ -129,8 +251,9 @@ export default function Signup() {
               </div>
             </div>
           </div>
+          {/* First Step */}
           <form
-            onSubmit={goToConfirm}
+            onSubmit={goToFirstStep}
             className={showSteps === 0 ? "contents" : "hidden"}
           >
             <h1 className="text-center mt-6 mb-4">
@@ -157,15 +280,16 @@ export default function Signup() {
             </p>
             <Button
               type="submit"
-              isDisabled={loading}
+              isDisabled={inputEmail.length < 5}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
               {loading ? "Creating" : "Create Account"}
             </Button>
           </form>
+          {/* Step 1 */}
           <form
             className={showSteps === 1 ? "contents" : "hidden"}
-            onSubmit={goToStep2WithConfirm}
+            onSubmit={goToConfirm}
           >
             <h1 className="text-center mt-6 mb-4">
               Check your email and enter confirmation code
@@ -200,22 +324,27 @@ export default function Signup() {
               </div>
               <Button
                 type="submit"
-                isDisabled={true} //{inputCode.length != 6}
-                onClick={goToStep2WithConfirm}
-                className="w-full h-8 text-sm font-bold rounded-full bg-orange text-white self-end mb-1"
+                isDisabled={timerOn || loading}
+                onClick={goToConfirm}
+                color="warning"
+                variant="bordered"
+                className="w-full h-8 text-sm font-bold self-end mb-[2px]"
               >
-                Create Account
+                Send Code
               </Button>
             </div>
+            <span className={`text-xs ml-4 mt-2 ${timerOn ? "" : "hidden"}`}>
+              you can request new code after: {seconds}
+            </span>
             <Button
-              onClick={goToStep2WithoutConfirm}
-              className="mt-3 font-bold rounded-lg"
-              color="warning"
-              variant="bordered"
+              isDisabled={inputCode.length != 4 || loading}
+              onClick={goToStep2WithConfirm}
+              className="mt-3 font-bold rounded-full bg-orange text-white h-9"
             >
-              Continue without confirmation
+              Create Account
             </Button>
           </form>
+          {/* Step 2 */}
           <form
             className={showSteps === 2 ? "contents" : "hidden"}
             onSubmit={goToStep3}
@@ -269,6 +398,7 @@ export default function Signup() {
               <GrFormNextLink />
             </Button>
           </form>
+          {/* Step 3 */}
           <form
             className={showSteps === 3 ? "contents" : "hidden"}
             onSubmit={(event) => {
@@ -319,6 +449,7 @@ export default function Signup() {
               <GrFormNextLink />
             </Button>
           </form>
+          {/* Error Message */}
           <p
             className={`text-red-900 font-bold text-xs mt-2 text-center ${
               account.error ? "block" : "hidden"
@@ -328,6 +459,7 @@ export default function Signup() {
           </p>
         </CardBody>
       </Card>
+      {/* Under Card */}
       <div className="flex w-fit m-auto mt-6">
         <p className="mt-1 text-sm opacity-75 text-white">
           Already have an account?

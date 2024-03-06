@@ -149,7 +149,7 @@ export default function Send(props) {
                   label: screenSize ? undefined : "Comment",
                   name: "comment",
                   type: "text",
-                  placeholder: "b0320320",
+                  placeholder: "",
                 }}
               />
             </div>
