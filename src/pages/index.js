@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button, Divider } from "@nextui-org/react";
@@ -16,11 +16,10 @@ import MyLoading from "@/components/MyLoading.js";
 
 export default function Home() {
   const [mounted, setMount] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [idUser, setIdUser] = useState(null);
   const [coins, setCoins] = useState([]);
-  const router = useRouter();
-  const myCoins = [
+  const [myCoins, setMyCoins] = useState([
     "BTC",
     "ETH",
     "TRX",
@@ -30,16 +29,10 @@ export default function Home() {
     "DOGE",
     "BNB",
     "MATIC",
-  ];
-
-  useEffect(() => {
-    setMount(true);
-    setIdUser(localStorage.getItem("babel-coins-user-token"));
-    getDataCoins();
-  }, []);
-  const getDataCoins = async () => {
+  ]);
+  const router = useRouter();
+  const getCoins = useCallback(async () => {
     try {
-      setPageLoading(true);
       const res = await axios.get(`/api/coins?symbols=` + myCoins.join(","));
       const result = res.data;
       let arrayCoins = Array();
@@ -52,13 +45,26 @@ export default function Home() {
             result[coin][0]["quote"]["USD"]["percent_change_24h"].toFixed(2),
         });
       });
-      setPageLoading(false);
-      setCoins(arrayCoins);
+      return arrayCoins;
     } catch (error) {
-      setPageLoading(false);
-      console.log(error);
+      throw new Error(error);
     }
-  };
+  }, [myCoins]);
+
+  useEffect(() => {
+    setMount(true);
+    setIdUser(localStorage.getItem("babel-coins-user-token"));
+
+    getCoins()
+      .then((coins) => {
+        setCoins(coins);
+        setPageLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setPageLoading(false);
+      });
+  }, [getCoins]);
 
   if (!mounted)
     return (
