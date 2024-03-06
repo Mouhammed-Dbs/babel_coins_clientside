@@ -19,19 +19,20 @@ export default function Home() {
   const [pageLoading, setPageLoading] = useState(true);
   const [idUser, setIdUser] = useState(null);
   const [coins, setCoins] = useState([]);
-  const [myCoins, setMyCoins] = useState([
-    "BTC",
-    "ETH",
-    "TRX",
-    "BCH",
-    "LTC",
-    "DASH",
-    "DOGE",
-    "BNB",
-    "MATIC",
-  ]);
+
   const router = useRouter();
   const getCoins = useCallback(async () => {
+    const myCoins = [
+      "BTC",
+      "ETH",
+      "TRX",
+      "BCH",
+      "LTC",
+      "DASH",
+      "DOGE",
+      "BNB",
+      "MATIC",
+    ];
     try {
       const res = await axios.get(`/api/coins?symbols=` + myCoins.join(","));
       const result = res.data;
@@ -49,7 +50,7 @@ export default function Home() {
     } catch (error) {
       throw new Error(error);
     }
-  }, [myCoins]);
+  }, []);
 
   useEffect(() => {
     setMount(true);
@@ -60,7 +61,6 @@ export default function Home() {
         console.log(coins);
         setCoins(coins);
         setPageLoading(false);
-        return;
       })
       .catch((err) => {
         console.log(err);
