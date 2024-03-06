@@ -57,6 +57,7 @@ export default function Home() {
 
     getCoins()
       .then((coins) => {
+        console.log(coins);
         setCoins(coins);
         setPageLoading(false);
       })
