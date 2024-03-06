@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
+import screenIs from "@/screen";
 
 export default function Add(props) {
   const router = useRouter();
@@ -13,7 +14,18 @@ export default function Add(props) {
     { type: "crypto", name: "ETH", balance: "50" },
   ]);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
+  const [screenSize, setScreenSize] = useState(false);
 
+  useEffect(() => {
+    setScreenSize(screenIs("md"));
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
   const getCoins = async () => {
     try {
       // setLoading(true);
@@ -58,7 +70,7 @@ export default function Add(props) {
         </div>
       </div>
       <div className="p-4 py-10 md:px-8 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
-        <div className="md:flex w-fit md:w-full m-auto gap-4 items-center">
+        <div className="md:flex w-full m-auto gap-4 items-center">
           <label className="text-right text-sm md:text-base w-36">
             Choose account
           </label>
@@ -113,7 +125,7 @@ export default function Add(props) {
             )}
           </Select>
         </div>
-        <div className="md:flex w-fit md:w-full m-auto gap-4 items-center mt-3">
+        <div className="md:flex w-full m-auto gap-4 items-center mt-3">
           <label className="text-right text-sm md:text-base w-36">
             Choose system
           </label>
@@ -168,31 +180,35 @@ export default function Add(props) {
             )}
           </Select>
         </div>
-        <div className="flex m-auto w-fit md:w-full md:gap-4 gap-2 items-center">
-          <label className="text-right text-sm md:text-base w-14 md:w-36 mt-3">
+        {/* Amount */}
+        <div className="flex m-auto w-full md:gap-4 gap-2 items-center mt-3">
+          <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
             Amount
           </label>
           <MyInput
             color="border-gray-500"
-            className="w-28 md:w-48 border-black mb-3"
+            className="w-full md:w-48 border-black mb-3"
             item={{
+              label: screenSize ? undefined : "Amount",
               name: "amount",
               type: "number",
               placeholder: "$0",
             }}
           />
-          <p className="w-24 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+          <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
             USD
           </p>
         </div>
-        <div className="flex m-auto w-fit md:w-full md:gap-4 gap-2 items-center">
-          <label className="text-right text-sm md:text-base w-14 md:w-36 mt-3">
+        {/* Total */}
+        <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+          <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
             Total
           </label>
           <MyInput
             color="border-gray-500"
-            className="w-28 md:w-48 border-black mb-3"
+            className="w-full md:w-48 border-black mb-3"
             item={{
+              label: screenSize ? undefined : "Total",
               name: "amount",
               type: "number",
               placeholder: "$0",
@@ -201,7 +217,7 @@ export default function Add(props) {
           <Select
             aria-label="none"
             classNames={{
-              base: "max-w-xs peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-8",
             }}
             size="sm"
