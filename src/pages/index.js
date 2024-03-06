@@ -66,7 +66,7 @@ export default function Home() {
         console.log(err);
         setPageLoading(false);
       });
-  }, [getCoins]);
+  }, []);
 
   if (!mounted)
     return (
