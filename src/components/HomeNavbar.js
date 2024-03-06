@@ -26,9 +26,10 @@ import Link from "next/link.js";
 export default function HomeNavbare() {
   const router = useRouter();
   let currentRoute = router.asPath;
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [screenSize, setScreenSize] = useState(false);
   if (currentRoute == "/") currentRoute = "/home";
   const menuItems = [
     "HOME",
@@ -43,12 +44,21 @@ export default function HomeNavbare() {
     fontWeight: "bold",
     borderBottom: "3px solid var(--secondary-color)",
   };
-
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setScreenSize(screenIs("md"));
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
 
-  if (!mounted) return null;
+  // if (!mounted) return null;
 
   return (
     <Navbar
@@ -167,7 +177,7 @@ export default function HomeNavbare() {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem
-            hidden={index < 3 && screenIs("md")}
+            hidden={index < 3 && screenSize == "md"}
             key={`${item}-${index}`}
           >
             <Link

@@ -1,7 +1,5 @@
-import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useState } from "react";
-import { TbMoneybag } from "react-icons/tb";
-import Link from "next/link";
 import MyInput from "@/components/utils/MyInput";
 
 export default function Signup() {

@@ -66,7 +66,7 @@ export default function Home() {
         console.log(err);
         setPageLoading(false);
       });
-  }, []);
+  }, [getCoins]);
 
   if (!mounted)
     return (
@@ -322,7 +322,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [data]);
   return (
     <Card
       shadow="md"
