@@ -44,7 +44,7 @@ export default function Balance() {
     );
 
   return (
-    <div className="container h-screen m-auto no-scrollbar overflow-y-scroll md:pb-20">
+    <div className="container h-screen m-auto no-scrollbar overflow-y-scroll">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
@@ -56,7 +56,7 @@ export default function Balance() {
         </p>
       </div>
 
-      <div className="w-fit h-screen pb-[300px] ml-10 md:m-auto md:w-full text-center">
+      <div className="w-fit pb-44 ml-10 md:m-auto md:w-full text-center">
         <div className="w-full">
           <div className="w-fit m-auto my-4 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to--default-300 dark:bg-default-50 pb-[2px]">
             <h1 className="w-fit text-xl font-bold bg-slate-50 dark:bg-default-50">
