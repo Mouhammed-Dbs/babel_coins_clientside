@@ -1,17 +1,26 @@
-import { Button, Card, CardBody, Input, Spinner } from "@nextui-org/react";
-import { useCallback, useEffect, useState } from "react";
+import { Button, Card, CardBody } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
 import { useRouter } from "next/router";
 import MyInput from "@/components/utils/MyInput";
 import Link from "next/link";
-import axios from "axios";
 import MyLoading from "@/components/MyLoading";
-import { isUserLogged } from "../../public/global_functions/auth";
+import {
+  getConfirmCode,
+  isUserLogged,
+  registerUser,
+} from "../../public/global_functions/auth";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showSteps, setShowSteps] = useState(0);
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputCode, setInputCode] = useState("");
+  const [seconds, setSeconds] = useState(30);
+  const [timerOn, setTimerOn] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [account, setAccount] = useState({
     accountName: "",
     secretCode: "",
@@ -19,12 +28,61 @@ export default function Signup() {
     msg: "",
     error: false,
   });
-  const [showSteps, setShowSteps] = useState(0);
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputCode, setInputCode] = useState("");
-  const [seconds, setSeconds] = useState(30);
-  const [timerOn, setTimerOn] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
+
+  const handleStartTimer = () => {
+    setTimerOn(true);
+  };
+  const onChangeEmail = (event) => {
+    setInputEmail(event.target.value);
+  };
+  const onChangeCode = (event) => {
+    const newValue = event.target.value.replace(/\D/g, "").slice(0, 4);
+    setInputCode(newValue);
+  };
+  const reqCode = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    getConfirmCode(inputEmail)
+      .then((result) => {
+        if (!result.error) {
+          handleStartTimer();
+        } else {
+          setAccount({ error: result.error, msg: result.msg });
+          console.log(result.msg);
+        }
+        setLoading(false);
+      })
+      .then((err) => {
+        setLoading(false);
+      });
+  };
+  const createAccount = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    registerUser(inputEmail, inputCode)
+      .then((result) => {
+        if (!result.error) {
+          setAccount({
+            accountName: result.data.accountName,
+            secretCode: result.data.secretCode,
+            password: result.data.password,
+            msg: result.msg,
+            error: result.error,
+          });
+          localStorage.setItem("babel-coins-user-token", result.data.token);
+          setShowSteps(2);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          setAccount({ error: result.error, msg: result.msg });
+          console.log(result.msg);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     let timer;
     if (timerOn) {
@@ -40,6 +98,7 @@ export default function Signup() {
 
     return () => clearInterval(timer);
   }, [seconds, timerOn]);
+
   useEffect(() => {
     setMount(true);
     isUserLogged()
@@ -51,80 +110,10 @@ export default function Signup() {
         }
       })
       .catch((err) => {
-        console.log(err);
         localStorage.removeItem("babel-coins-user-token");
         setPageLoading(false);
       });
   }, [router]);
-  const handleStartTimer = () => {
-    setTimerOn(true);
-  };
-  const onChangeEmail = (event) => {
-    setInputEmail(event.target.value);
-  };
-  const onChangeCode = (event) => {
-    const newValue = event.target.value.replace(/\D/g, "").slice(0, 4);
-    setInputCode(newValue);
-  };
-  const goToFirstStep = (event) => {
-    event.preventDefault();
-    setShowSteps(1);
-  };
-  const goToConfirm = async (event) => {
-    event.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        `${process.env.BASE_API_URL}/users/send-account-verification-code?email=${inputEmail}`
-      );
-      const result = res.data;
-      if (!result.error) {
-        handleStartTimer();
-      } else {
-        setAccount({ error: result.error, msg: result.msg });
-        console.log(result.msg);
-      }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-  const goToStep2WithConfirm = async (event) => {
-    event.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        `${process.env.BASE_API_URL}/users/create-new-account?code=${inputCode}`,
-        { email: inputEmail }
-      );
-      const result = res.data;
-      if (!result.error) {
-        setAccount({
-          accountName: result.data.accountName,
-          secretCode: result.data.secretCode,
-          password: result.data.password,
-          msg: result.msg,
-          error: result.error,
-        });
-        localStorage.setItem("babel-coins-user-token", result.data.token);
-        setShowSteps(2);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setAccount({ error: result.error, msg: result.msg });
-        console.log(result.msg);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-
-  const goToStep3 = async (event) => {
-    event.preventDefault();
-    setShowSteps(3);
-  };
 
   if (!mounted)
     return (
@@ -213,7 +202,10 @@ export default function Signup() {
           </div>
           {/* First Step */}
           <form
-            onSubmit={goToFirstStep}
+            onSubmit={(event) => {
+              event.preventDefault();
+              setShowSteps(1);
+            }}
             className={showSteps === 0 ? "contents" : "hidden"}
           >
             <h1 className="text-center mt-6 mb-4">
@@ -249,7 +241,7 @@ export default function Signup() {
           {/* Step 1 */}
           <form
             className={showSteps === 1 ? "contents" : "hidden"}
-            onSubmit={goToConfirm}
+            onSubmit={reqCode}
           >
             <h1 className="text-center mt-6 mb-4">
               Check your email and enter confirmation code
@@ -263,7 +255,7 @@ export default function Signup() {
                 placeholder: "example@gmail.com",
                 label: "Email",
               }}
-              value={inputEmail}
+              defaultValue={inputEmail}
               readOnly
             />
             <div className="grid grid-cols-2 gap-2 mt-2">
@@ -285,7 +277,6 @@ export default function Signup() {
               <Button
                 type="submit"
                 isDisabled={timerOn || loading}
-                onClick={goToConfirm}
                 color="warning"
                 variant="bordered"
                 className="w-full h-8 text-sm font-bold self-end mb-[2px]"
@@ -298,7 +289,7 @@ export default function Signup() {
             </span>
             <Button
               isDisabled={inputCode.length != 4 || loading}
-              onClick={goToStep2WithConfirm}
+              onClick={createAccount}
               className="mt-3 font-bold rounded-full bg-orange text-white h-9"
             >
               Create Account
@@ -307,7 +298,10 @@ export default function Signup() {
           {/* Step 2 */}
           <form
             className={showSteps === 2 ? "contents" : "hidden"}
-            onSubmit={goToStep3}
+            onSubmit={(event) => {
+              event.preventDefault();
+              setShowSteps(3);
+            }}
           >
             <p className="text-center my-2">Please save it in a save place</p>
             <MyInput
@@ -351,7 +345,6 @@ export default function Signup() {
               isDisabled={
                 !(account.accountName && account.secretCode && account.password)
               }
-              onClick={goToStep3}
               className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
               Next
@@ -400,7 +393,7 @@ export default function Signup() {
               }}
             />
             <Button
-              onClick={() => router.push("/account")}
+              onClick={() => router.push("/")}
               type="submit"
               isDisabled={false}
               className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"

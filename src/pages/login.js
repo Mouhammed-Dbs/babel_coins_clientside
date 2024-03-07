@@ -4,10 +4,9 @@ import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
 import { FaLock } from "react-icons/fa6";
 import MyInput from "@/components/utils/MyInput";
-import axios from "axios";
 import { useRouter } from "next/router";
 import MyLoading from "@/components/MyLoading";
-import { isUserLogged } from "../../public/global_functions/auth";
+import { isUserLogged, loginUser } from "../../public/global_functions/auth";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,26 +22,24 @@ export default function Signup() {
   const onChangePass = (event) => {
     setInputPass(event.target.value);
   };
-  const login = async (event) => {
+  const login = (event) => {
     event.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.get(
-        `${process.env.BASE_API_URL}/users/login?email=${inputEmail}&password=${inputPass}`
-      );
-      const result = res.data;
-      setResLogin({ msg: result.msg, error: result.error });
-      if (!result.error) {
-        localStorage.setItem("babel-coins-user-token", result.data.token);
-        router.push("/account");
-      } else {
+    setLoading(true);
+    loginUser(inputEmail, inputPass)
+      .then((result) => {
+        setResLogin({ msg: result.msg, error: result.error });
+        if (!result.error) {
+          localStorage.setItem("babel-coins-user-token", result.data.token);
+          router.push("/");
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
         setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+      });
   };
+
   useEffect(() => {
     setMount(true);
     isUserLogged()
