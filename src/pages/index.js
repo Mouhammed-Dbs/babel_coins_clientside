@@ -13,13 +13,13 @@ import Canva from "@/components/utils/Canva.js";
 import screenIs from "../screen.js";
 import axios from "axios";
 import MyLoading from "@/components/MyLoading.js";
+import { isUserLogged } from "../../public/global_functions/auth.js";
 
 export default function Home() {
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [idUser, setIdUser] = useState(null);
   const [coins, setCoins] = useState([]);
-
+  const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
   const getCoins = useCallback(async () => {
     const myCoins = [
@@ -54,18 +54,30 @@ export default function Home() {
 
   useEffect(() => {
     setMount(true);
-    setIdUser(localStorage.getItem("babel-coins-user-token"));
-
-    getCoins()
-      .then((coins) => {
-        console.log(coins);
-        setCoins(coins);
-        setPageLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setPageLoading(false);
-      });
+    Promise.all([
+      isUserLogged()
+        .then((isLogged) => {
+          if (isLogged) {
+            setIsLogged(true);
+          } else {
+            setIsLogged(false);
+          }
+        })
+        .catch((err) => {
+          setIsLogged(false);
+          setPageLoading(false);
+        }),
+      getCoins()
+        .then((coins) => {
+          setCoins(coins);
+          setPageLoading(false);
+        })
+        .catch((err) => {
+          setPageLoading(false);
+        }),
+    ]).then(() => {
+      // This code will run when both functions are finished successfully
+    });
   }, [getCoins]);
 
   if (!mounted)
@@ -94,7 +106,7 @@ export default function Home() {
           on your personal Account or Website.
         </h1>
         <div className="flex justify-center mt-6">
-          {!idUser ? (
+          {!isLogged ? (
             <div>
               <Button
                 onClick={() => {
