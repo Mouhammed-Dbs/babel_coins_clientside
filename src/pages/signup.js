@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, Input, Spinner } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
 import { useRouter } from "next/router";
@@ -7,7 +7,7 @@ import MyInput from "@/components/utils/MyInput";
 import Link from "next/link";
 import axios from "axios";
 import MyLoading from "@/components/MyLoading";
-
+import { isUserLogged } from "../../public/global_functions/auth";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
@@ -24,10 +24,8 @@ export default function Signup() {
   const [inputCode, setInputCode] = useState("");
   const [seconds, setSeconds] = useState(30);
   const [timerOn, setTimerOn] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   useEffect(() => {
-    setMount(true);
-    isUserLogged();
     let timer;
     if (timerOn) {
       timer = setInterval(() => {
@@ -42,7 +40,22 @@ export default function Signup() {
 
     return () => clearInterval(timer);
   }, [seconds, timerOn]);
-
+  useEffect(() => {
+    setMount(true);
+    isUserLogged()
+      .then((isLogged) => {
+        if (isLogged) {
+          router.replace("/");
+        } else {
+          setPageLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("babel-coins-user-token");
+        setPageLoading(false);
+      });
+  }, [router]);
   const handleStartTimer = () => {
     setTimerOn(true);
   };
@@ -107,62 +120,9 @@ export default function Signup() {
       console.log(error);
     }
   };
-  const isUserLogged = async () => {
-    let token = localStorage.getItem("babel-coins-user-token");
-    if (token) {
-      try {
-        setPageLoading(true);
-        const res = await axios.get(
-          `${process.env.BASE_API_URL}/users/is-logged`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        const result = res.data;
-        if (!result.error) {
-          router.replace("/");
-        } else {
-          setPageLoading(false);
-          localStorage.removeItem("babel-coins-user-token");
-        }
-      } catch (error) {
-        setPageLoading(false);
-        localStorage.removeItem("babel-coins-user-token");
-        console.log(error);
-      }
-    }
-  };
+
   const goToStep3 = async (event) => {
     event.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        `${process.env.BASE_API_URL}/users/create-new-account`,
-        { email: inputEmail }
-      );
-      const result = res.data;
-      if (!result.error) {
-        setAccount({
-          accountName: result.data.accountName,
-          secretCode: result.data.secretCode,
-          password: result.data.password,
-          msg: result.msg,
-          error: result.error,
-        });
-        localStorage.setItem("babel-coins-user-token", result.data.token);
-        setShowSteps(1);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setAccount({ error: result.error, msg: result.msg });
-        console.log(result.msg);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
     setShowSteps(3);
   };
 

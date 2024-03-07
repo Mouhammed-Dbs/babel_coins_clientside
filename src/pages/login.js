@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import Link from "next/link";
@@ -7,13 +7,14 @@ import MyInput from "@/components/utils/MyInput";
 import axios from "axios";
 import { useRouter } from "next/router";
 import MyLoading from "@/components/MyLoading";
+import { isUserLogged } from "../../public/global_functions/auth";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resLogin, setResLogin] = useState({ msg: "", error: false });
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const router = useRouter();
 
   const onChangeEmail = (event) => {
@@ -21,33 +22,6 @@ export default function Signup() {
   };
   const onChangePass = (event) => {
     setInputPass(event.target.value);
-  };
-  const isUserLogged = async () => {
-    let token = localStorage.getItem("babel-coins-user-token");
-    if (token) {
-      try {
-        setPageLoading(true);
-        const res = await axios.get(
-          `${process.env.BASE_API_URL}/users/is-logged`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        const result = res.data;
-        if (!result.error) {
-          router.replace("/");
-        } else {
-          setPageLoading(false);
-          localStorage.removeItem("babel-coins-user-token");
-        }
-      } catch (error) {
-        setPageLoading(false);
-        localStorage.removeItem("babel-coins-user-token");
-        console.log(error);
-      }
-    }
   };
   const login = async (event) => {
     event.preventDefault();
@@ -71,8 +45,20 @@ export default function Signup() {
   };
   useEffect(() => {
     setMount(true);
-    isUserLogged();
-  }, []);
+    isUserLogged()
+      .then((isLogged) => {
+        if (isLogged) {
+          router.replace("/");
+        } else {
+          setPageLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem("babel-coins-user-token");
+        setPageLoading(false);
+      });
+  }, [router]);
 
   if (!mounted)
     return (
