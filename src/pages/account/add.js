@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
+import { MdOutlineContentCopy } from "react-icons/md";
 
 export default function Add(props) {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function Add(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
   const getCoins = async () => {
     try {
       // setLoading(true);
@@ -57,9 +59,6 @@ export default function Add(props) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    // getCoins();
-  }, []);
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
@@ -125,7 +124,8 @@ export default function Add(props) {
             )}
           </Select>
         </div>
-        <div className="md:flex w-full m-auto gap-4 items-center mt-3">
+        {/* md:flex */}
+        <div className="hidden md:hidden w-full m-auto gap-4 items-center mt-3">
           <label className="text-right text-sm md:text-base w-36">
             Choose system
           </label>
@@ -180,8 +180,8 @@ export default function Add(props) {
             )}
           </Select>
         </div>
-        {/* Amount */}
-        <div className="flex m-auto w-full md:gap-4 gap-2 items-center mt-3">
+        {/* Amount hidden->flex */}
+        <div className="hidden m-auto w-full md:gap-4 gap-2 items-center mt-3">
           <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
             Amount
           </label>
@@ -199,8 +199,8 @@ export default function Add(props) {
             USD
           </p>
         </div>
-        {/* Total */}
-        <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+        {/* Total hidden->flex */}
+        <div className="hidden m-auto w-full md:gap-4 gap-2 items-center">
           <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
             Total
           </label>
@@ -232,6 +232,19 @@ export default function Add(props) {
               </SelectItem>
             ))}
           </Select>
+        </div>
+        {/* Address */}
+        <div className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
+          <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
+            Your Address
+          </label>
+          <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+            3GHbpwb14gLYttSfuEvHCbyWriXE2unPJR
+            <MdOutlineContentCopy
+              size={18}
+              className="self-center ml-2 text-primary hover:text-opacity-70"
+            />
+          </p>
         </div>
         <div className="w-fit m-auto md:m-0 md:ml-40">
           <Button className="bg-orange text-white rounded-full mt-4 md:px-10 w-12">

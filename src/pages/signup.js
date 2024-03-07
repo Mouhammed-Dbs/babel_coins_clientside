@@ -204,6 +204,7 @@ export default function Signup() {
           <form
             onSubmit={(event) => {
               event.preventDefault();
+              reqCode(event).then();
               setShowSteps(1);
             }}
             className={showSteps === 0 ? "contents" : "hidden"}
