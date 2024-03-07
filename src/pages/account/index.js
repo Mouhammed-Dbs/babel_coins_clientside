@@ -3,15 +3,15 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import MyLoading from "@/components/MyLoading";
 
 export default function Balance() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [coins, setCoins] = useState([]);
 
   const getCoins = async () => {
     try {
-      setLoading(true);
       const res = await axios.get(
         `${process.env.BASE_API_URL}/users/all-balances`,
         {
@@ -23,17 +23,26 @@ export default function Balance() {
       const result = res.data;
       if (!result.error) {
         setCoins(result.data);
-      } else {
-        setLoading(false);
       }
+      setPageLoading(false);
     } catch (error) {
-      setLoading(false);
-      console.log(error);
+      setPageLoading(false);
+      throw new Error(error);
     }
   };
   useEffect(() => {
     getCoins();
   }, []);
+
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+
   return (
     <div className="container h-screen m-auto no-scrollbar overflow-y-scroll md:pb-20">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
