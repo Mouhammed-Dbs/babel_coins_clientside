@@ -1,64 +1,67 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import { MdOutlineContentCopy } from "react-icons/md";
+import MyLoading from "@/components/MyLoading";
 
 export default function Add(props) {
   const router = useRouter();
+  const [mounted, setMount] = useState(false);
+  const [coins, setCoins] = useState([]);
   const [accounts, setAccounts] = useState([
     { type: "crypto", name: "BTC", balance: "200" },
     { type: "crypto", name: "ETH", balance: "50" },
   ]);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
-    setScreenSize(screenIs("md"));
-    const handleResize = () => {
-      setScreenSize(screenIs("md"));
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [screenSize]);
-
-  const getCoins = async () => {
-    try {
-      // setLoading(true);
-      const res = await axios.get(
-        `${process.env.BASE_API_URL}/users/all-balances`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("babel-coins-user-token"),
-          },
+    setMount(true);
+    const getCoins = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.BASE_API_URL}/users/all-balances`,
+          {
+            headers: {
+              Authorization: localStorage.getItem("babel-coins-user-token"),
+            },
+          }
+        );
+        const result = res.data;
+        if (!result.error) {
+          setCoins(result.data);
         }
-      );
-      const result = res.data;
-      if (!result.error) {
-        coinsArray = Array();
-        result.data.map((coin) => {
-          coinsArray.push({
-            type: "crypto",
-            name: coin.network,
-            balance: coin.balance,
-          });
-        });
-        console.log(result);
-        setAccounts(coinsArray);
-      } else {
-        // setLoading(false);
+        setPageLoading(false);
+      } catch (error) {
+        setPageLoading(false);
       }
-    } catch (error) {
-      // setLoading(false);
-      console.log(error);
-    }
-  };
+    };
+    getCoins();
+  }, []);
+
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
@@ -77,7 +80,7 @@ export default function Add(props) {
             aria-label="none"
             style={{ backgroundColor: "inherit" }}
             size="sm"
-            items={accounts}
+            items={coins}
             labelPlacement="outside"
             placeholder="CHOOSE ACCOUNT"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
@@ -87,17 +90,20 @@ export default function Add(props) {
             }}
             renderValue={(items) => {
               return items.map((item) => (
-                <div key={item.key} className="flex items-center gap-2">
+                <div
+                  key={item.data.network + "_" + item.data.symbol}
+                  className="flex items-center gap-2"
+                >
                   <Avatar
-                    alt={item.data.name}
+                    alt={item.data.currencyName}
                     className="flex-shrink-0 h-6 w-6"
                     size="sm"
-                    src={`/images/coins/${item.key}.png`}
+                    src={`/images/coins/${item.data.symbol}.png`}
                   />
                   <div className="flex flex-col">
-                    <span>{item.data.balance}</span>
+                    <span>{item.data.validDepositeBalance}</span>
                     <span className="text-default-500 text-tiny">
-                      {item.data.name}
+                      {item.data.currencyName}
                     </span>
                   </div>
                 </div>
@@ -105,18 +111,23 @@ export default function Add(props) {
             }}
           >
             {(item) => (
-              <SelectItem key={item["name"]} textValue={item["name"]}>
+              <SelectItem
+                key={item["network"] + "_" + item["symbol"]}
+                textValue={item["currencyName"]}
+              >
                 <div className="flex gap-2 items-center">
                   <Avatar
-                    alt={item["name"]}
+                    alt={item["currencyName"]}
                     className="flex-shrink-0"
                     size="sm"
-                    src={`/images/coins/${item["name"]}.png`}
+                    src={`/images/coins/${item["symbol"]}.png`}
                   />
                   <div className="flex flex-col">
-                    <span className="text-small">{item["balance"]}</span>
+                    <span className="text-small">
+                      {item["validDepositeBalance"]}
+                    </span>
                     <span className="text-tiny text-default-400">
-                      {item["name"]}
+                      {item["currencyName"]}
                     </span>
                   </div>
                 </div>
@@ -133,7 +144,7 @@ export default function Add(props) {
             aria-label="none"
             style={{ backgroundColor: "inherit" }}
             size="sm"
-            items={accounts}
+            items={coins}
             labelPlacement="outside"
             placeholder="CHOOSE SYSTEM"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
@@ -145,7 +156,7 @@ export default function Add(props) {
               return items.map((item) => (
                 <div key={item.key} className="flex items-center gap-2">
                   <Avatar
-                    alt={item.data.name}
+                    alt={item.data.currencyName}
                     className="flex-shrink-0 h-6 w-6"
                     size="sm"
                     src={`/images/coins/${item.key}.png`}
@@ -153,7 +164,7 @@ export default function Add(props) {
                   <div className="flex flex-col">
                     <span>{item.data.balance}</span>
                     <span className="text-default-500 text-tiny">
-                      {item.data.name}
+                      {item.data.currencyName}
                     </span>
                   </div>
                 </div>
@@ -161,18 +172,21 @@ export default function Add(props) {
             }}
           >
             {(item) => (
-              <SelectItem key={item["name"]} textValue={item["name"]}>
+              <SelectItem
+                key={item["currencyName"]}
+                textValue={item["currencyName"]}
+              >
                 <div className="flex gap-2 items-center">
                   <Avatar
-                    alt={item["name"]}
+                    alt={item["currencyName"]}
                     className="flex-shrink-0"
                     size="sm"
-                    src={`/images/coins/${item["name"]}.png`}
+                    src={`/images/coins/${item["currencyName"]}.png`}
                   />
                   <div className="flex flex-col">
                     <span className="text-small">{item["balance"]}</span>
                     <span className="text-tiny text-default-400">
-                      {item["name"]}
+                      {item["currencyName"]}
                     </span>
                   </div>
                 </div>

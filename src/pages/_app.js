@@ -1,12 +1,12 @@
-import * as React from "react";
-import HomeLayout from "@/layouts/HomeLayout";
+import React from "react";
 import "@/styles/globals.scss";
-import { Montserrat } from "next/font/google";
 import Providers from "@/providers";
 import Head from "next/head";
-import StaticLayout from "@/layouts/StaticLayout";
 import { useRouter } from "next/router";
 import MainLayout from "@/layouts/MainLayout";
+import HomeLayout from "@/layouts/HomeLayout";
+import StaticLayout from "@/layouts/StaticLayout";
+import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 export default function App({ Component, pageProps }) {

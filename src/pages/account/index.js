@@ -27,7 +27,6 @@ export default function Balance() {
       setPageLoading(false);
     } catch (error) {
       setPageLoading(false);
-      throw new Error(error);
     }
   };
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function Balance() {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading BabelCoins.."
+        msg="Loading.."
         color="primary"
         className={`text-black dark:text-white mt-24`}
       />
@@ -96,7 +95,7 @@ export default function Balance() {
                   onClick={() =>
                     router.push({
                       pathname: "/account/add",
-                      query: { ...coin },
+                      query: { curr: coin.symbol },
                     })
                   }
                   className="text-primary text-xs mr-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"

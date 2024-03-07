@@ -10,13 +10,41 @@ import { FaHistory } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { Button, Card } from "@nextui-org/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CallAlert from "@/components/utils/alerts/CallAlert";
 import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationAlert";
 import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
+import MyLoading from "@/components/MyLoading";
+import { isUserLogged } from "../../public/global_functions/auth";
 
 export default function MainLayout(props) {
-  const currentRoute = useRouter().asPath.slice(1);
+  const router = useRouter();
+  const currentRoute = router.asPath.slice(1);
+  const [pageLoading, setPageLoading] = useState(true);
+  useEffect(() => {
+    isUserLogged()
+      .then((isLogged) => {
+        if (!isLogged) {
+          router.replace("/login");
+        } else {
+          setPageLoading(false);
+        }
+      })
+      .catch(async (err) => {
+        localStorage.removeItem("babel-coins-user-token");
+        await router.replace("/login");
+        setPageLoading(false);
+      });
+  }, [router]);
+
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading BabelCoins.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
   return (
     <>
       <main className="w-screen flex text-md fixed">
