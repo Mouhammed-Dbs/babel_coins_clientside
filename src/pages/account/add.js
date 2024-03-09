@@ -100,7 +100,7 @@ export default function Add(props) {
             Choose account
           </label>
           <Select
-            selectedKeys={[query["curr"]]}
+            selectedKeys={query["curr"] ? [query["curr"]] : undefined}
             onChange={async (e) => {
               await router.replace({
                 pathname: router.pathname,

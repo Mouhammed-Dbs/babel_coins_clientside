@@ -85,7 +85,7 @@ export default function Home() {
       <MyLoading
         msg="Loading BabelCoins.."
         color="primary"
-        className={`text-black dark:text-white mt-24`}
+        className={`h-screen text-black dark:text-white mt-24`}
       />
     );
   if (pageLoading)
@@ -93,7 +93,7 @@ export default function Home() {
       <MyLoading
         msg="Loading BabelCoins.."
         color="primary"
-        className={`text-black dark:text-white mt-24`}
+        className={`h-screen text-black dark:text-white mt-24`}
       />
     );
 

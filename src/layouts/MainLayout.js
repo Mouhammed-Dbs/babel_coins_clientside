@@ -42,7 +42,7 @@ export default function MainLayout(props) {
       <MyLoading
         msg="Loading BabelCoins.."
         color="primary"
-        className={`text-black dark:text-white mt-24`}
+        className={`h-screen text-black dark:text-white mt-24`}
       />
     );
   return (
