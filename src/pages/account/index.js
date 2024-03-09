@@ -74,7 +74,9 @@ export default function Balance() {
 
               <div className="w-full mt-3">
                 <h1 className="text-lg">{coin.currencyName}</h1>
-                <h1 className="text-sm">{coin.network}</h1>
+                <h1 className="text-sm">
+                  {coin.network.includes(",") ? "-" : coin.network}
+                </h1>
                 <h1 className="font-bold text-lg">
                   {coin.validDepositeBalance}
                 </h1>
