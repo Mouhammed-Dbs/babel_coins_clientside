@@ -39,6 +39,7 @@ export default function Send(props) {
       <div className="p-4 py-10 md:px-8 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         <div className="lg:flex lg:gap-10">
           <div className="lg:w-2/3 lg:ml-5">
+            {/* System */}
             <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="text-right text-sm md:text-base w-36">
                 Choose system
@@ -96,7 +97,8 @@ export default function Send(props) {
                 )}
               </Select>
             </div>
-            <div className="md:flex m-auto w-full gap-4 items-center mt-3">
+            {/* Templates md:flex */}
+            <div className="hidden m-auto w-full gap-4 items-center mt-3">
               <label className="text-right text-sm md:text-base w-36">
                 Templates
               </label>
@@ -121,8 +123,50 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
-            {/* Account */}
-            <div className="md:flex m-auto w-full gap-4 items-center mt-3">
+            {/* Address */}
+            <div className="flex m-auto w-full gap-4 items-center mt-3">
+              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                Address
+              </label>
+              <MyInput
+                color="border-gray-500"
+                className="w-full md:w-64 border-black mb-3"
+                item={{
+                  label: screenSize ? undefined : "Address",
+                  name: "address",
+                  type: "text",
+                  placeholder: "",
+                }}
+              />
+            </div>
+            {/* Network */}
+            <div className="md:flex m-auto w-full gap-4 items-center mb-3 md:mb-0">
+              <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
+                Network
+              </label>
+              <Select
+                aria-label="none"
+                classNames={{
+                  base: "mt-1 md:mt-3 max-w-xs min-w-20 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                  trigger: "h-8",
+                }}
+                size="sm"
+                style={{ backgroundColor: "inherit" }}
+                labelPlacement="outside-left"
+                selectorIcon={
+                  <IoIosArrowDown color="var(--bg-primary-color)" />
+                }
+                placeholder="Tron"
+              >
+                {fiatAccounts.map((account) => (
+                  <SelectItem key={account} value={account}>
+                    {account}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            {/* Account md:flex */}
+            <div className="hidden m-auto w-full gap-4 items-center mt-3">
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
                 Account
               </label>
@@ -137,8 +181,8 @@ export default function Send(props) {
                 }}
               />
             </div>
-            {/* Comment */}
-            <div className="md:flex m-auto w-full  gap-4 items-center">
+            {/* Comment md:flex*/}
+            <div className="hidden m-auto w-full gap-4 items-center">
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
                 Comment
               </label>
@@ -153,8 +197,8 @@ export default function Send(props) {
                 }}
               />
             </div>
-            {/* Secret Code */}
-            <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+            {/* Secret Code flex*/}
+            <div className="hidden m-auto w-full md:gap-4 gap-2 items-center">
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
                 Secret Code
               </label>
@@ -226,7 +270,7 @@ export default function Send(props) {
               <Select
                 aria-label="none"
                 classNames={{
-                  base: "max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                  base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
                   trigger: "h-8",
                 }}
                 size="sm"
@@ -243,6 +287,9 @@ export default function Send(props) {
                   </SelectItem>
                 ))}
               </Select>
+              <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                USD
+              </p>
             </div>
           </div>
           <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
