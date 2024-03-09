@@ -12,7 +12,7 @@ const isUserLogged = async () => {
           },
         }
       );
-      return !res.data.error;
+      return res.data;
     } catch (error) {
       if (error?.response.data.msg === "Unauthorized Error")
         localStorage.removeItem("babel-coins-user-token");

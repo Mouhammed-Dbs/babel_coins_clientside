@@ -20,13 +20,15 @@ import { isUserLogged } from "../../public/global_functions/auth";
 export default function MainLayout(props) {
   const router = useRouter();
   const currentRoute = router.asPath.slice(1);
+  const [userInfo, setUserInfo] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
   useEffect(() => {
     isUserLogged()
-      .then((isLogged) => {
-        if (!isLogged) {
+      .then((result) => {
+        if (result.error) {
           router.replace("/login");
         } else {
+          setUserInfo(result.data);
           setPageLoading(false);
         }
       })
@@ -82,7 +84,7 @@ export default function MainLayout(props) {
           <SidebarItem text="History" icon={<FaHistory size={20} />} />
         </Sidebar>
         <div className="w-full bg-slate-50 dark:bg-default-50">
-          <Navbar />
+          <Navbar accountName={userInfo.accountName} />
           {props.children}
         </div>
 

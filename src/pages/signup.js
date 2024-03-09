@@ -102,8 +102,8 @@ export default function Signup() {
   useEffect(() => {
     setMount(true);
     isUserLogged()
-      .then((isLogged) => {
-        if (isLogged) {
+      .then((result) => {
+        if (!result.error) {
           router.replace("/");
         } else {
           setPageLoading(false);

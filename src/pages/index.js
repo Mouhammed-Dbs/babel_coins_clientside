@@ -56,8 +56,8 @@ export default function Home() {
     setMount(true);
     Promise.all([
       isUserLogged()
-        .then((isLogged) => {
-          if (isLogged) {
+        .then((result) => {
+          if (!result.error) {
             setIsLogged(true);
           } else {
             setIsLogged(false);

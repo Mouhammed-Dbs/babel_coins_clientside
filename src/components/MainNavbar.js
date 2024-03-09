@@ -26,7 +26,7 @@ import { MdOutlineSupportAgent, MdGroup } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiCardsFill } from "react-icons/pi";
 
-export default function MainNavbare() {
+export default function MainNavbare({ accountName }) {
   const router = useRouter();
   const currentRoute = router.asPath.slice(1);
   const [mounted, setMounted] = useState(false);
@@ -84,7 +84,7 @@ export default function MainNavbare() {
                 <div className="ml-1 text-xs text-gray-500">
                   <label>Account No.</label>
                   <p className="text-center text-black dark:text-white">
-                    B023065820
+                    {accountName}
                   </p>
                 </div>
                 <RiArrowDropDownLine className="text-primary" size={18} />
