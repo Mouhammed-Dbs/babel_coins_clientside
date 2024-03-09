@@ -2,36 +2,25 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MyLoading from "@/components/MyLoading";
+import { getBalanceCoins } from "../../../public/global_functions/coins";
 
 export default function Balance() {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(true);
   const [coins, setCoins] = useState([]);
 
-  const getCoins = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.BASE_API_URL}/users/all-balances`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("babel-coins-user-token"),
-          },
-        }
-      );
-      const result = res.data;
-      if (!result.error) {
-        setCoins(result.data);
-      }
-      setPageLoading(false);
-    } catch (error) {
-      setPageLoading(false);
-    }
-  };
   useEffect(() => {
-    getCoins();
-  }, []);
+    getBalanceCoins()
+      .then((result) => {
+        if (!result.error) setCoins(result.data);
+        setPageLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setPageLoading(false);
+      });
+  }, [coins]);
 
   if (pageLoading)
     return (

@@ -8,11 +8,18 @@ import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import { MdOutlineContentCopy } from "react-icons/md";
 import MyLoading from "@/components/MyLoading";
+import {
+  getAddressesByCoinName,
+  getBalanceCoins,
+} from "../../../public/global_functions/coins";
+import { data } from "autoprefixer";
 
 export default function Add(props) {
   const router = useRouter();
+  const { query } = router;
   const [mounted, setMount] = useState(false);
   const [coins, setCoins] = useState([]);
+  const [addressesByCoinName, setAddressesByCoinName] = useState([]);
   const [accounts, setAccounts] = useState([
     { type: "crypto", name: "BTC", balance: "200" },
     { type: "crypto", name: "ETH", balance: "50" },
@@ -20,30 +27,46 @@ export default function Add(props) {
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [addressesLoading, setAddressesLoading] = useState(false);
+
+  useEffect(() => {
+    setScreenSize(screenIs("md"));
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
 
   useEffect(() => {
     setMount(true);
-    const getCoins = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.BASE_API_URL}/users/all-balances`,
-          {
-            headers: {
-              Authorization: localStorage.getItem("babel-coins-user-token"),
-            },
-          }
-        );
-        const result = res.data;
+
+    getBalanceCoins()
+      .then((result) => {
         if (!result.error) {
           setCoins(result.data);
+          if (query["curr"]) {
+            setAddressesLoading(true);
+            getAddressesByCoinName(query["curr"])
+              .then((res) => {
+                if (!res.error) {
+                  setAddressesByCoinName(res.data);
+                }
+                setAddressesLoading(false);
+              })
+              .catch((err) => {
+                setAddressesLoading(false);
+              });
+          }
         }
         setPageLoading(false);
-      } catch (error) {
+      })
+      .catch((err) => {
         setPageLoading(false);
-      }
-    };
-    getCoins();
-  }, []);
+      });
+  }, [query]);
 
   if (!mounted)
     return (
@@ -77,6 +100,13 @@ export default function Add(props) {
             Choose account
           </label>
           <Select
+            selectedKeys={[query["curr"]]}
+            onChange={async (e) => {
+              await router.replace({
+                pathname: router.pathname,
+                query: { curr: e.target.value },
+              });
+            }}
             aria-label="none"
             style={{ backgroundColor: "inherit" }}
             size="sm"
@@ -111,10 +141,7 @@ export default function Add(props) {
             }}
           >
             {(item) => (
-              <SelectItem
-                key={item["network"] + "_" + item["symbol"]}
-                textValue={item["currencyName"]}
-              >
+              <SelectItem key={item["symbol"]} textValue={item["currencyName"]}>
                 <div className="flex gap-2 items-center">
                   <Avatar
                     alt={item["currencyName"]}
@@ -248,18 +275,28 @@ export default function Add(props) {
           </Select>
         </div>
         {/* Address */}
-        <div className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
-          <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
-            Your Address
-          </label>
-          <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-            3GHbpwb14gLYttSfuEvHCbyWriXE2unPJR
-            <MdOutlineContentCopy
-              size={18}
-              className="self-center ml-2 text-primary hover:text-opacity-70"
-            />
-          </p>
-        </div>
+        {!addressesLoading ? (
+          addressesByCoinName.map((item) => (
+            <div
+              key={item.network}
+              className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4"
+            >
+              <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
+                {item.network} address:
+              </label>
+              <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                {item.address}
+                <MdOutlineContentCopy
+                  size={18}
+                  className="self-center ml-2 text-primary hover:text-opacity-70"
+                />
+              </p>
+            </div>
+          ))
+        ) : (
+          <MyLoading />
+        )}
+
         <div className="w-fit m-auto md:m-0 md:ml-40">
           <Button className="bg-orange text-white rounded-full mt-4 md:px-10 w-12">
             ADD

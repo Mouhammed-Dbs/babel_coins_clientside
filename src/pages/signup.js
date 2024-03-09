@@ -267,7 +267,7 @@ export default function Signup() {
                   value={inputCode}
                   className="peer/code w-full mt-6 self-center text-white placeholder-slate-300 rounded-lg border-2 text-xs border-white-500 p-2 bg-inherit focus:outline-none focus:border-cyan-300"
                   type="number"
-                  placeholder="000000"
+                  placeholder="0000"
                 ></input>
                 <label
                   className={`absolute -top-0 -left-0 text-sm ml-1 mb-1 peer-focus/code:text-cyan-300`}
@@ -276,7 +276,6 @@ export default function Signup() {
                 </label>
               </div>
               <Button
-                type="submit"
                 isDisabled={timerOn || loading}
                 color="warning"
                 variant="bordered"
@@ -289,6 +288,7 @@ export default function Signup() {
               you can request new code after: {seconds}
             </span>
             <Button
+              type="submit"
               isDisabled={inputCode.length != 4 || loading}
               onClick={createAccount}
               className="mt-3 font-bold rounded-full bg-orange text-white h-9"
@@ -394,7 +394,7 @@ export default function Signup() {
               }}
             />
             <Button
-              onClick={() => router.push("/")}
+              onClick={async () => await router.push("/")}
               type="submit"
               isDisabled={false}
               className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
