@@ -57,25 +57,24 @@ export default function Home() {
     Promise.all([
       isUserLogged()
         .then((result) => {
-          if (!result.error) {
-            setIsLogged(true);
-          } else {
+          if (result.error) {
             setIsLogged(false);
+          } else {
+            setIsLogged(true);
           }
         })
         .catch((err) => {
           setIsLogged(false);
-          setPageLoading(false);
         }),
       getCoins()
         .then((coins) => {
           setCoins(coins);
-          setPageLoading(false);
         })
         .catch((err) => {
           setPageLoading(false);
         }),
     ]).then(() => {
+      setPageLoading(false);
       // This code will run when both functions are finished successfully
     });
   }, [getCoins]);

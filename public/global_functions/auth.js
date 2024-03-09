@@ -19,7 +19,7 @@ const isUserLogged = async () => {
       throw error;
     }
   }
-  return false;
+  return { error: true };
 };
 const loginUser = async (email, password) => {
   try {
