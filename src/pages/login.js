@@ -51,8 +51,6 @@ export default function Signup() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("babel-coins-user-token");
         setPageLoading(false);
       });
   }, [router]);

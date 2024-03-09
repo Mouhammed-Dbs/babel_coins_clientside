@@ -5,7 +5,7 @@ const isUserLogged = async () => {
   if (token) {
     try {
       const res = await axios.get(
-        `${process.env.BASE_API_URL}/users/is-logged`,
+        `${process.env.BASE_API_URL}/users/user-info`,
         {
           headers: {
             Authorization: token,
@@ -14,7 +14,9 @@ const isUserLogged = async () => {
       );
       return !res.data.error;
     } catch (error) {
-      throw new Error(error);
+      if (error?.response.data.msg === "Unauthorized Error")
+        localStorage.removeItem("babel-coins-user-token");
+      throw error;
     }
   }
   return false;

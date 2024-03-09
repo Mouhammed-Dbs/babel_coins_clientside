@@ -100,7 +100,7 @@ export default function Add(props) {
             Choose account
           </label>
           <Select
-            selectedKeys={query["curr"] ? [query["curr"]] : undefined}
+            selectedKeys={query["curr"] ? [query["curr"]] : []}
             onChange={async (e) => {
               await router.replace({
                 pathname: router.pathname,
@@ -121,7 +121,7 @@ export default function Add(props) {
             renderValue={(items) => {
               return items.map((item) => (
                 <div
-                  key={item.data.network + "_" + item.data.symbol}
+                  key={item.data.currencyName}
                   className="flex items-center gap-2"
                 >
                   <Avatar
@@ -141,7 +141,10 @@ export default function Add(props) {
             }}
           >
             {(item) => (
-              <SelectItem key={item["symbol"]} textValue={item["currencyName"]}>
+              <SelectItem
+                key={item["currencyName"]}
+                textValue={item["currencyName"]}
+              >
                 <div className="flex gap-2 items-center">
                   <Avatar
                     alt={item["currencyName"]}

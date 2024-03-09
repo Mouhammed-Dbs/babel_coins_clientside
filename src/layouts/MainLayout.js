@@ -31,7 +31,6 @@ export default function MainLayout(props) {
         }
       })
       .catch(async (err) => {
-        localStorage.removeItem("babel-coins-user-token");
         await router.replace("/login");
         setPageLoading(false);
       });
