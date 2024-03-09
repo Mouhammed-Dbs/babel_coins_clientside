@@ -287,6 +287,9 @@ export default function Add(props) {
               <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
                 {item.address}
                 <MdOutlineContentCopy
+                  onClick={() => {
+                    navigator.clipboard.writeText(item.address);
+                  }}
                   size={18}
                   className="self-center ml-2 text-primary hover:text-opacity-70"
                 />
