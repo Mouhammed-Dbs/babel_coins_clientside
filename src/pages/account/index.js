@@ -77,7 +77,7 @@ export default function Balance() {
                 <h1 className="text-sm">
                   {coin.network.includes(",") ? "-" : coin.network}
                 </h1>
-                <h1 className="font-bold text-lg">
+                <h1 className="font-bold text-lg mt-1 mb-3">
                   {coin.validDepositeBalance}
                 </h1>
               </div>
