@@ -56,4 +56,25 @@ const getNetworksCurrencies = async () => {
   return null;
 };
 
-export { getBalanceCoins, getAddressesByCoinName, getNetworksCurrencies };
+const getMinimumDepositLimits = async (currencyName) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/minimum-deposit-limits/minimum-debosit-limits-by-currency-name?currencyName=${currencyName}`
+      );
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
+export {
+  getBalanceCoins,
+  getAddressesByCoinName,
+  getNetworksCurrencies,
+  getMinimumDepositLimits,
+};

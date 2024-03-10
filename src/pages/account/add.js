@@ -11,6 +11,7 @@ import MyLoading from "@/components/MyLoading";
 import {
   getAddressesByCoinName,
   getBalanceCoins,
+  getMinimumDepositLimits,
 } from "../../../public/global_functions/coins";
 import { data } from "autoprefixer";
 
@@ -20,6 +21,7 @@ export default function Add(props) {
   const [mounted, setMount] = useState(false);
   const [coins, setCoins] = useState([]);
   const [addressesByCoinName, setAddressesByCoinName] = useState([]);
+  const [minimumLimitsByCoinName, setMinimumLimitsByCoinName] = useState([]);
   const [accounts, setAccounts] = useState([
     { type: "crypto", name: "BTC", balance: "200" },
     { type: "crypto", name: "ETH", balance: "50" },
@@ -49,11 +51,24 @@ export default function Add(props) {
           if (query["curr"]) {
             setAddressesLoading(true);
             getAddressesByCoinName(query["curr"])
-              .then((res) => {
+              .then(async (res) => {
                 if (!res.error) {
                   setAddressesByCoinName(res.data);
+                  getMinimumDepositLimits(query["curr"])
+                    .then((result) => {
+                      if (!result.error) {
+                        result.data.map((minimum) => {
+                          setMinimumLimitsByCoinName(minimum);
+                        });
+                        setAddressesLoading(false);
+                      }
+                    })
+                    .catch((error) => {
+                      setAddressesLoading(false);
+                    });
+                } else {
+                  setAddressesLoading(false);
                 }
-                setAddressesLoading(false);
               })
               .catch((err) => {
                 setAddressesLoading(false);
@@ -281,22 +296,28 @@ export default function Add(props) {
         {/* Address */}
         {!addressesLoading ? (
           addressesByCoinName.map((item) => (
-            <div
-              key={item.network}
-              className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4"
-            >
-              <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
-                {item.network} address:
-              </label>
-              <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-                {item.address}
-                <MdOutlineContentCopy
-                  onClick={() => {
-                    navigator.clipboard.writeText(item.address);
-                  }}
-                  size={18}
-                  className="self-center ml-2 text-primary hover:text-opacity-70"
-                />
+            <div key={item.network}>
+              <div className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
+                <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
+                  {item.network}:
+                </label>
+                <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                  {item.address}
+                  <MdOutlineContentCopy
+                    onClick={() => {
+                      navigator.clipboard.writeText(item.address);
+                    }}
+                    size={18}
+                    className="self-center ml-2 text-primary hover:text-opacity-70"
+                  />
+                </p>
+              </div>
+              <p className="text-xs w-fit text-left lg:ml-40 lg:mt-[2px]">
+                Minimum deposit limit for {minimumLimitsByCoinName.currencyName}
+                {minimumLimitsByCoinName.currencyName !== "USDT"
+                  ? " on " + minimumLimitsByCoinName.network + " "
+                  : ""}
+                is {" " + minimumLimitsByCoinName.amount}
               </p>
             </div>
           ))
