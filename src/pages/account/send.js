@@ -293,7 +293,7 @@ export default function Send(props) {
                 }}
               />
               <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                USD
+                {coinSelected}
               </p>
             </div>
             {/* Total */}
@@ -332,7 +332,7 @@ export default function Send(props) {
                 ))}
               </Select>
               <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                USD
+                {coinSelected}
               </p>
             </div>
           </div>
