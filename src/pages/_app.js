@@ -3,9 +3,10 @@ import "@/styles/globals.scss";
 import Providers from "@/providers";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import MainLayout from "@/layouts/MainLayout";
-import HomeLayout from "@/layouts/HomeLayout";
-import StaticLayout from "@/layouts/StaticLayout";
+import dynamic from "next/dynamic";
+const MainLayout = dynamic(() => import("@/layouts/MainLayout"));
+const HomeLayout = dynamic(() => import("@/layouts/HomeLayout"));
+const StaticLayout = dynamic(() => import("@/layouts/StaticLayout"));
 import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
