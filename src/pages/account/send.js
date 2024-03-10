@@ -21,7 +21,6 @@ export default function Send(props) {
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [networkLoading, setNetworkLoading] = useState(false);
 
   const getNetworks = useCallback(
     (coinSelected) => {
