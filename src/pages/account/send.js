@@ -70,7 +70,7 @@ export default function Send(props) {
                 selectedKeys={coinSelected ? [coinSelected] : []}
                 onChange={async (e) => {
                   setCoinSelected(e.target.value);
-                  // setNetworks(getNetworks());
+                  setNetworks(getNetworks());
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -181,8 +181,10 @@ export default function Send(props) {
               </label>
               <Select
                 items={networks}
-                selectedKeys={[]}
-                onChange={async (e) => {}}
+                selectedKeys={networks}
+                onChange={async (e) => {
+                  setNetworks(getNetworks());
+                }}
                 aria-label="none"
                 classNames={{
                   base: "mt-1 md:mt-3 max-w-xs min-w-20 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
