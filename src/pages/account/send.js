@@ -73,7 +73,7 @@ export default function Send(props) {
             let net = getNetworks(query["curr"]);
             setNetworks(net);
             setNetworkSelected(net[0]);
-            getFees(coinSelected, networkSelected);
+            getFees(query["curr"], net[0]);
           }
         }
         setPageLoading(false);

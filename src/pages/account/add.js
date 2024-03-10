@@ -316,7 +316,7 @@ export default function Add(props) {
                 Minimum deposit limit for {minimumLimitsByCoinName.currencyName}
                 {minimumLimitsByCoinName.currencyName !== "USDT"
                   ? " on " + minimumLimitsByCoinName.network + " "
-                  : ""}
+                  : " "}
                 is {" " + minimumLimitsByCoinName.amount}
               </p>
             </div>
