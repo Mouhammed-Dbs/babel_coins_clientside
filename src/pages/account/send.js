@@ -25,18 +25,15 @@ export default function Send(props) {
   const [feeLoading, setFeeLoading] = useState(false);
   const [fee, setFee] = useState(0);
   const [amount, setAmount] = useState(0);
-  const getNetworks = useCallback(
-    (coinSelected) => {
-      let coin = coins.filter((coin) => {
-        if (coin.currencyName === coinSelected) {
-          return coin;
-        }
-      });
-      if (coin.length > 0) return coin[0].networks;
-      return [];
-    },
-    [coins]
-  );
+  const getNetworks = (coinSelected, coins) => {
+    let coin = coins.filter((coin) => {
+      if (coin.currencyName === coinSelected) {
+        return coin;
+      }
+    });
+    if (coin.length > 0) return coin[0].networks;
+    return [];
+  };
   const getFees = (currencyName, network) => {
     setFeeLoading(true);
     getFeesByCoinNameAndNetwork(currencyName, network)
@@ -70,7 +67,7 @@ export default function Send(props) {
           setCoins(result.data);
           if (query["curr"]) {
             setCoinSelected(query["curr"]);
-            let net = getNetworks(query["curr"]);
+            let net = getNetworks(query["curr"], result.data);
             setNetworks(net);
             setNetworkSelected(net[0]);
             getFees(query["curr"], net[0]);
@@ -118,7 +115,7 @@ export default function Send(props) {
               <Select
                 selectedKeys={query["curr"] ? [query["curr"]] : []}
                 onChange={async (e) => {
-                  let net = getNetworks(e.target.value);
+                  let net = getNetworks(e.target.value, coins);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
                   await router.replace({
