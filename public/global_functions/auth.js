@@ -49,7 +49,7 @@ const registerUser = async (email, code) => {
     );
     return res.data;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 

@@ -6,16 +6,26 @@ import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
+import { getNetworksCurrencies } from "../../../public/global_functions/coins";
 
 export default function Send(props) {
   const router = useRouter();
   const [templates, setTemplates] = useState(["b23523553", "b29523553"]);
-  const [accounts, setAccounts] = useState([
-    { type: "crypto", name: "BTC", balance: "200" },
-    { type: "crypto", name: "ETH", balance: "50" },
-  ]);
+  const [coins, setCoins] = useState([]);
+  const [coinSelected, setCoinSelected] = useState(null);
+  const [networks, setNetworks] = useState([]);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
+
+  const getNetworks = () => {
+    let networks = coins.filter((coin) => {
+      if (coin.currencyName === coinSelected) {
+        return coin.networks;
+      }
+    });
+    return networks;
+  };
 
   useEffect(() => {
     setScreenSize(screenIs("md"));
@@ -27,6 +37,18 @@ export default function Send(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
+  useEffect(() => {
+    getNetworksCurrencies()
+      .then((result) => {
+        if (result) setCoins(result.data);
+        setPageLoading(false);
+      })
+      .catch((err) => {
+        setPageLoading(false);
+      });
+  }, []);
+
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
@@ -45,10 +67,15 @@ export default function Send(props) {
                 Choose system
               </label>
               <Select
+                selectedKeys={coinSelected ? [coinSelected] : []}
+                onChange={async (e) => {
+                  setCoinSelected(e.target.value);
+                  // setNetworks(getNetworks());
+                }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
                 size="sm"
-                items={accounts}
+                items={coins}
                 labelPlacement="outside"
                 placeholder="CHOOSE SYSTEM"
                 selectorIcon={
@@ -60,17 +87,20 @@ export default function Send(props) {
                 }}
                 renderValue={(items) => {
                   return items.map((item) => (
-                    <div key={item.key} className="flex items-center gap-2">
+                    <div
+                      key={item.data.symbol}
+                      className="flex items-center gap-2"
+                    >
                       <Avatar
-                        alt={item.data.name}
+                        alt={item.data.currencyName}
                         className="flex-shrink-0 h-6 w-6"
                         size="sm"
                         src={`/images/coins/${item.key}.png`}
                       />
                       <div className="flex flex-col">
-                        <span>{item.data.balance}</span>
+                        <span>{item.data.currencyName}</span>
                         <span className="text-default-500 text-tiny">
-                          {item.data.name}
+                          {item.data.networks.join(" | ")}
                         </span>
                       </div>
                     </div>
@@ -78,18 +108,23 @@ export default function Send(props) {
                 }}
               >
                 {(item) => (
-                  <SelectItem key={item["name"]} textValue={item["name"]}>
+                  <SelectItem
+                    key={item["symbol"]}
+                    textValue={item["currencyName"]}
+                  >
                     <div className="flex gap-2 items-center">
                       <Avatar
-                        alt={item["name"]}
+                        alt={item["currencyName"]}
                         className="flex-shrink-0 h-6 w-6"
                         size="sm"
-                        src={`/images/coins/${item["name"]}.png`}
+                        src={`/images/coins/${item["symbol"]}.png`}
                       />
                       <div className="flex flex-col">
-                        <span className="text-small">{item["balance"]}</span>
+                        <span className="text-small">
+                          {item["currencyName"]}
+                        </span>
                         <span className="text-tiny text-default-400">
-                          {item["name"]}
+                          {item["networks"].join(" | ")}
                         </span>
                       </div>
                     </div>
@@ -145,6 +180,9 @@ export default function Send(props) {
                 Network
               </label>
               <Select
+                items={networks}
+                selectedKeys={[]}
+                onChange={async (e) => {}}
                 aria-label="none"
                 classNames={{
                   base: "mt-1 md:mt-3 max-w-xs min-w-20 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
@@ -158,9 +196,9 @@ export default function Send(props) {
                 }
                 placeholder="Tron"
               >
-                {fiatAccounts.map((account) => (
-                  <SelectItem key={account} value={account}>
-                    {account}
+                {networks.map((network) => (
+                  <SelectItem key={network} value={network}>
+                    {network}
                   </SelectItem>
                 ))}
               </Select>

@@ -14,7 +14,7 @@ const getBalanceCoins = async () => {
       );
       return res.data;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
   return null;
@@ -34,10 +34,26 @@ const getAddressesByCoinName = async (currencyName) => {
       );
       return res.data;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
   return null;
 };
 
-export { getBalanceCoins, getAddressesByCoinName };
+const getNetworksCurrencies = async () => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/currencies/all-supported-currencies-by-networks`
+      );
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
+export { getBalanceCoins, getAddressesByCoinName, getNetworksCurrencies };
