@@ -20,9 +20,11 @@ import { isUserLogged } from "../../public/global_functions/auth";
 export default function MainLayout(props) {
   const router = useRouter();
   const currentRoute = router.asPath.slice(1);
+  const [mounted, setMounted] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
   useEffect(() => {
+    setMounted(true);
     isUserLogged()
       .then((result) => {
         if (result.error) {
@@ -38,6 +40,14 @@ export default function MainLayout(props) {
       });
   }, [router]);
 
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
   if (pageLoading)
     return (
       <MyLoading
