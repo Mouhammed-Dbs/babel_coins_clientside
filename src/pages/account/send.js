@@ -14,17 +14,19 @@ export default function Send(props) {
   const [coins, setCoins] = useState([]);
   const [coinSelected, setCoinSelected] = useState(null);
   const [networks, setNetworks] = useState([]);
+  const [networkSelected, setNetworkSelected] = useState(null);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
 
-  const getNetworks = () => {
-    let networks = coins.filter((coin) => {
+  const getNetworks = (coinSelected) => {
+    let coin = coins.filter((coin) => {
       if (coin.currencyName === coinSelected) {
-        return coin.networks;
+        return coin;
       }
     });
-    return networks;
+    if (coin.length > 0) return coin[0].networks;
+    return [];
   };
 
   useEffect(() => {
@@ -68,9 +70,11 @@ export default function Send(props) {
               </label>
               <Select
                 selectedKeys={coinSelected ? [coinSelected] : []}
-                onChange={async (e) => {
+                onChange={(e) => {
+                  let net = getNetworks(e.target.value);
                   setCoinSelected(e.target.value);
-                  setNetworks(getNetworks());
+                  setNetworks(net);
+                  setNetworkSelected(net[0]);
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -109,7 +113,7 @@ export default function Send(props) {
               >
                 {(item) => (
                   <SelectItem
-                    key={item["symbol"]}
+                    key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
                     <div className="flex gap-2 items-center">
@@ -181,13 +185,14 @@ export default function Send(props) {
               </label>
               <Select
                 items={networks}
-                selectedKeys={networks}
-                onChange={async (e) => {
-                  setNetworks(getNetworks());
+                selectedKeys={networkSelected ? [networkSelected] : []}
+                onChange={(e) => {
+                  console.log(networkSelected);
+                  setNetworkSelected(e.target.value);
                 }}
                 aria-label="none"
                 classNames={{
-                  base: "mt-1 md:mt-3 max-w-xs min-w-20 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                  base: "mt-1 md:mt-3 max-w-xs min-w-32 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
                   trigger: "h-8",
                 }}
                 size="sm"
@@ -196,7 +201,7 @@ export default function Send(props) {
                 selectorIcon={
                   <IoIosArrowDown color="var(--bg-primary-color)" />
                 }
-                placeholder="Tron"
+                placeholder="network"
               >
                 {networks.map((network) => (
                   <SelectItem key={network} value={network}>
