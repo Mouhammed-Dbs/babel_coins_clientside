@@ -187,7 +187,6 @@ export default function Send(props) {
                 items={networks}
                 selectedKeys={networkSelected ? [networkSelected] : []}
                 onChange={(e) => {
-                  console.log(networkSelected);
                   setNetworkSelected(e.target.value);
                 }}
                 aria-label="none"
