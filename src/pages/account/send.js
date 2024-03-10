@@ -73,6 +73,7 @@ export default function Send(props) {
                 onChange={(e) => {
                   let net = getNetworks(e.target.value);
                   setCoinSelected(e.target.value);
+                  console.log(e.target.value);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
                 }}
@@ -92,7 +93,7 @@ export default function Send(props) {
                 renderValue={(items) => {
                   return items.map((item) => (
                     <div
-                      key={item.data.symbol}
+                      key={item.data.currencyName}
                       className="flex items-center gap-2"
                     >
                       <Avatar
@@ -100,7 +101,7 @@ export default function Send(props) {
                         alt={item.data.currencyName}
                         className="flex-shrink-0 h-6 w-6"
                         size="sm"
-                        src={`/images/coins/${item.key}.png`}
+                        src={`/images/coins/${item.data.symbol}.png`}
                       />
                       <div className="flex flex-col">
                         <span>{item.data.currencyName}</span>
@@ -114,7 +115,7 @@ export default function Send(props) {
               >
                 {(item) => (
                   <SelectItem
-                    key={item["symbol"]}
+                    key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
                     <div className="flex gap-2 items-center">
