@@ -96,6 +96,7 @@ export default function Send(props) {
                       className="flex items-center gap-2"
                     >
                       <Avatar
+                        ImgComponent="img"
                         alt={item.data.currencyName}
                         className="flex-shrink-0 h-6 w-6"
                         size="sm"
@@ -113,11 +114,12 @@ export default function Send(props) {
               >
                 {(item) => (
                   <SelectItem
-                    key={item["currencyName"]}
+                    key={item["symbol"]}
                     textValue={item["currencyName"]}
                   >
                     <div className="flex gap-2 items-center">
                       <Avatar
+                        ImgComponent="img"
                         alt={item["currencyName"]}
                         className="flex-shrink-0 h-6 w-6"
                         size="sm"

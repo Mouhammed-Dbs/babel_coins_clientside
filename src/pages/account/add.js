@@ -125,6 +125,7 @@ export default function Add(props) {
                   className="flex items-center gap-2"
                 >
                   <Avatar
+                    ImgComponent="img"
                     alt={item.data.currencyName}
                     className="flex-shrink-0 h-6 w-6"
                     size="sm"
@@ -147,6 +148,7 @@ export default function Add(props) {
               >
                 <div className="flex gap-2 items-center">
                   <Avatar
+                    ImgComponent="img"
                     alt={item["currencyName"]}
                     className="flex-shrink-0"
                     size="sm"
