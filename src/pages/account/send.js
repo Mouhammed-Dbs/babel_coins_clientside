@@ -1,15 +1,18 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import { getNetworksCurrencies } from "../../../public/global_functions/coins";
+import MyLoading from "@/components/MyLoading";
 
 export default function Send(props) {
   const router = useRouter();
+  const { query } = router;
+  const [mounted, setMount] = useState(false);
   const [templates, setTemplates] = useState(["b23523553", "b29523553"]);
   const [coins, setCoins] = useState([]);
   const [coinSelected, setCoinSelected] = useState(null);
@@ -18,16 +21,20 @@ export default function Send(props) {
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [networkLoading, setNetworkLoading] = useState(false);
 
-  const getNetworks = (coinSelected) => {
-    let coin = coins.filter((coin) => {
-      if (coin.currencyName === coinSelected) {
-        return coin;
-      }
-    });
-    if (coin.length > 0) return coin[0].networks;
-    return [];
-  };
+  const getNetworks = useCallback(
+    (coinSelected) => {
+      let coin = coins.filter((coin) => {
+        if (coin.currencyName === coinSelected) {
+          return coin;
+        }
+      });
+      if (coin.length > 0) return coin[0].networks;
+      return [];
+    },
+    [coins]
+  );
 
   useEffect(() => {
     setScreenSize(screenIs("md"));
@@ -41,16 +48,40 @@ export default function Send(props) {
   }, [screenSize]);
 
   useEffect(() => {
+    setMount(true);
     getNetworksCurrencies()
       .then((result) => {
-        if (result) setCoins(result.data);
+        if (result) {
+          setCoins(result.data);
+          if (query["curr"]) {
+            setCoinSelected(query["curr"]);
+            let net = getNetworks(query["curr"]);
+            setNetworks(net);
+            setNetworkSelected(net[0]);
+          }
+        }
         setPageLoading(false);
       })
       .catch((err) => {
         setPageLoading(false);
       });
-  }, []);
-
+  }, [query]);
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+  if (pageLoading)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
@@ -69,12 +100,15 @@ export default function Send(props) {
                 Choose system
               </label>
               <Select
-                selectedKeys={coinSelected ? [coinSelected] : []}
-                onChange={(e) => {
+                selectedKeys={query["curr"] ? [query["curr"]] : []}
+                onChange={async (e) => {
                   let net = getNetworks(e.target.value);
-                  setCoinSelected(e.target.value);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
+                  await router.replace({
+                    pathname: router.pathname,
+                    query: { curr: e.target.value },
+                  });
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -211,6 +245,7 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
+
             {/* Account md:flex */}
             <div className="hidden m-auto w-full gap-4 items-center mt-3">
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">

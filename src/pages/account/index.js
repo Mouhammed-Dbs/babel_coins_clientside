@@ -7,6 +7,7 @@ import { getBalanceCoins } from "../../../public/global_functions/coins";
 
 export default function Balance() {
   const router = useRouter();
+
   const [pageLoading, setPageLoading] = useState(true);
   const [coins, setCoins] = useState([]);
 
@@ -86,14 +87,22 @@ export default function Balance() {
                   onClick={() =>
                     router.push({
                       pathname: "/account/add",
-                      query: { curr: coin.symbol },
+                      query: { curr: coin.currencyName },
                     })
                   }
                   className="text-primary text-xs mr-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"
                 >
                   Deposit
                 </Button>
-                <Button className="text-primary text-xs ml-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white">
+                <Button
+                  onClick={() =>
+                    router.push({
+                      pathname: "/account/send",
+                      query: { curr: coin.currencyName },
+                    })
+                  }
+                  className="text-primary text-xs ml-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"
+                >
                   Withdrawal
                 </Button>
               </div>

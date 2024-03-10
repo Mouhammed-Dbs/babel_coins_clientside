@@ -42,7 +42,6 @@ export default function Add(props) {
 
   useEffect(() => {
     setMount(true);
-
     getBalanceCoins()
       .then((result) => {
         if (!result.error) {
