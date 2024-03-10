@@ -52,5 +52,39 @@ const registerUser = async (email, code) => {
     throw error;
   }
 };
-
-export { isUserLogged, loginUser, getConfirmCode, registerUser };
+const updateUserInfo = async (
+  password,
+  secretCode,
+  firstName,
+  lastName,
+  country
+) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  try {
+    const res = await axios.put(
+      `${process.env.BASE_API_URL}/users/update-user-info`,
+      {
+        password,
+        secretCode,
+        firstName,
+        lastName,
+        country,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export {
+  isUserLogged,
+  loginUser,
+  getConfirmCode,
+  registerUser,
+  updateUserInfo,
+};

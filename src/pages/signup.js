@@ -10,6 +10,7 @@ import {
   getConfirmCode,
   isUserLogged,
   registerUser,
+  updateUserInfo,
 } from "../../public/global_functions/auth";
 export default function Signup() {
   const router = useRouter();
@@ -23,6 +24,9 @@ export default function Signup() {
   const [pageLoading, setPageLoading] = useState(true);
   const [account, setAccount] = useState({
     accountName: "",
+    firstName: "",
+    lastName: "",
+    country: "",
     secretCode: "",
     password: "",
     msg: "",
@@ -47,7 +51,10 @@ export default function Signup() {
         if (!result.error) {
           handleStartTimer();
         } else {
-          setAccount({ error: result.error, msg: result.msg });
+          setAccount({
+            error: result.error,
+            msg: result.msg + " " + result.data.receiveBlockingExpirationDate,
+          });
           console.log(result.msg);
         }
         setLoading(false);
@@ -66,6 +73,9 @@ export default function Signup() {
             accountName: result.data.accountName,
             secretCode: result.data.secretCode,
             password: result.data.password,
+            firstName: "",
+            lastName: "",
+            country: "",
             msg: result.msg,
             error: result.error,
           });
@@ -130,6 +140,7 @@ export default function Signup() {
         className={`text-white mt-24`}
       />
     );
+
   return (
     <div className="text-white mt-20 md:mt-5">
       <div className="flex justify-center">
@@ -214,7 +225,7 @@ export default function Signup() {
             <MyInput
               className="w-64"
               textColor="text-white"
-              handleChange={onChangeEmail}
+              onChange={onChangeEmail}
               value={inputEmail}
               item={{
                 name: "email",
@@ -275,6 +286,7 @@ export default function Signup() {
                 </label>
               </div>
               <Button
+                onClick={(e) => reqCode(e)}
                 isDisabled={timerOn || loading}
                 color="warning"
                 variant="bordered"
@@ -296,112 +308,144 @@ export default function Signup() {
             </Button>
           </form>
           {/* Step 2 */}
-          <form
-            className={showSteps === 2 ? "contents" : "hidden"}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setShowSteps(3);
-            }}
-          >
-            <p className="text-center my-2">Please save it in a save place</p>
-            <MyInput
-              textColor="text-white"
-              value={account?.password}
-              readOnly
-              className="w-64 mt-3"
-              item={{
-                name: "password",
-                type: "text",
-                placeholder: "password",
-                label: "Password",
+          {showSteps === 2 && (
+            <form
+              className={showSteps === 2 ? "contents" : "hidden"}
+              onSubmit={(event) => {
+                event.preventDefault();
+                setShowSteps(3);
               }}
-            />
-            <MyInput
-              textColor="text-white"
-              value={account?.secretCode}
-              readOnly
-              className="w-64 mt-3"
-              item={{
-                name: "secretcode",
-                type: "number",
-                placeholder: "000000",
-                label: "Secret code",
-              }}
-            />
-            <MyInput
-              textColor="text-white"
-              value={account?.accountName}
-              readOnly
-              className="w-64 mt-3"
-              item={{
-                name: "accountname",
-                type: "text",
-                placeholder: "b0000000",
-                label: "Account name",
-              }}
-            />
-            <Button
-              type="submit"
-              isDisabled={
-                !(account.accountName && account.secretCode && account.password)
-              }
-              className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
-              Next
-              <GrFormNextLink />
-            </Button>
-          </form>
+              <p className="text-center my-2">Please save it in a save place</p>
+              <MyInput
+                textColor="text-white"
+                defaultValue={account?.password}
+                onChange={(e) => {
+                  setAccount({ ...account, password: e.target.value });
+                }}
+                className="w-64 mt-3"
+                item={{
+                  name: "password",
+                  type: "text",
+                  placeholder: "password",
+                  label: "Password",
+                }}
+              />
+              <MyInput
+                textColor="text-white"
+                defaultValue={account.secretCode}
+                onChange={(e) => {
+                  setAccount({ ...account, secretCode: e.target.value });
+                }}
+                className="w-64 mt-3"
+                item={{
+                  name: "secretcode",
+                  type: "text",
+                  placeholder: "000000",
+                  label: "Secret code",
+                }}
+              />
+              <MyInput
+                textColor="text-white"
+                value={account?.accountName}
+                readOnly
+                className="w-64 mt-3"
+                item={{
+                  name: "accountname",
+                  type: "text",
+                  placeholder: "b0000000",
+                  label: "Account name",
+                }}
+              />
+              <Button
+                type="submit"
+                isDisabled={
+                  !(
+                    account.accountName &&
+                    account.secretCode &&
+                    account.password
+                  )
+                }
+                className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
+              >
+                Next
+                <GrFormNextLink />
+              </Button>
+            </form>
+          )}
           {/* Step 3 */}
-          <form
-            className={showSteps === 3 ? "contents" : "hidden"}
-            onSubmit={(event) => {
-              event.preventDefault();
-              console.log("Done");
-            }}
-          >
-            <p className="text-center my-2">Please save it in a save place</p>
-            <MyInput
-              textColor="text-white"
-              readOnly
-              item={{
-                name: "firstname",
-                type: "text",
-                placeholder: "John",
-                label: "First Name",
+          {showSteps === 3 && (
+            <form
+              className={showSteps === 3 ? "contents" : "hidden"}
+              onSubmit={async (event) => {
+                try {
+                  event.preventDefault();
+                  setLoading(true);
+                  let res = await updateUserInfo(
+                    account?.password,
+                    account?.secretCode,
+                    account?.firstName,
+                    account?.lastName,
+                    account?.country
+                  );
+                  if (!res.error) {
+                    await router.push("/");
+                    setLoading(false);
+                  }
+                } catch (err) {
+                  setLoading(false);
+                  console.log(err);
+                }
               }}
-            />
-            <MyInput
-              textColor="text-white"
-              readOnly
-              className={"w-64 mt-3"}
-              item={{
-                name: "lastname",
-                type: "text",
-                placeholder: "Smith",
-                label: "Last name",
-              }}
-            />
-            <MyInput
-              textColor="text-white"
-              readOnly
-              className={"w-64 mt-3"}
-              item={{
-                name: "country",
-                type: "text",
-                placeholder: "Albania",
-                label: "Country",
-              }}
-            />
-            <Button
-              onClick={async () => await router.push("/")}
-              type="submit"
-              isDisabled={false}
-              className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
-              Done
-              <GrFormNextLink />
-            </Button>
-          </form>
+              <p className="text-center my-2">Please save it in a save place</p>
+              <MyInput
+                textColor="text-white"
+                onChange={(e) => {
+                  setAccount({ ...account, firstName: e.target.value });
+                }}
+                item={{
+                  name: "firstname",
+                  type: "text",
+                  placeholder: "John",
+                  label: "First Name",
+                }}
+              />
+              <MyInput
+                textColor="text-white"
+                onChange={(e) => {
+                  setAccount({ ...account, lastName: e.target.value });
+                }}
+                className={"w-64 mt-3"}
+                item={{
+                  name: "lastname",
+                  type: "text",
+                  placeholder: "Smith",
+                  label: "Last name",
+                }}
+              />
+              <MyInput
+                textColor="text-white"
+                value="Syria"
+                readOnly
+                className={"w-64 mt-3"}
+                item={{
+                  name: "country",
+                  type: "text",
+                  placeholder: "Albania",
+                  label: "Country",
+                }}
+              />
+              <Button
+                type="submit"
+                isDisabled={loading}
+                className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
+              >
+                Done
+                <GrFormNextLink />
+              </Button>
+            </form>
+          )}
           {/* Error Message */}
           <p
             className={`text-red-900 font-bold text-xs mt-2 text-center ${

@@ -94,7 +94,7 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              handleChange={onChangeEmail}
+              onChange={onChangeEmail}
               value={inputEmail}
               item={{
                 name: "email",
@@ -107,7 +107,7 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              handleChange={onChangePass}
+              onChange={onChangePass}
               value={inputPass}
               item={{
                 name: "password",
