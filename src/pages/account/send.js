@@ -73,7 +73,6 @@ export default function Send(props) {
                 onChange={(e) => {
                   let net = getNetworks(e.target.value);
                   setCoinSelected(e.target.value);
-                  console.log(e.target.value);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
                 }}
