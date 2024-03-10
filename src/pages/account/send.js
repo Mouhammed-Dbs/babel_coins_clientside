@@ -4,7 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
-import { getNetworksCurrencies } from "../../../public/global_functions/coins";
+import {
+  getFeesByCoinNameAndNetwork,
+  getNetworksCurrencies,
+} from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 
 export default function Send(props) {
@@ -19,7 +22,9 @@ export default function Send(props) {
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-
+  const [feeLoading, setFeeLoading] = useState(false);
+  const [fee, setFee] = useState(0);
+  const [amount, setAmount] = useState(0);
   const getNetworks = useCallback(
     (coinSelected) => {
       let coin = coins.filter((coin) => {
@@ -32,7 +37,20 @@ export default function Send(props) {
     },
     [coins]
   );
-
+  const getFees = (currencyName, network) => {
+    setFeeLoading(true);
+    getFeesByCoinNameAndNetwork(currencyName, network)
+      .then((result) => {
+        if (!result.error) {
+          setFee(result.data.fee);
+        }
+        setFeeLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setFeeLoading(false);
+      });
+  };
   useEffect(() => {
     setScreenSize(screenIs("md"));
     const handleResize = () => {
@@ -55,6 +73,7 @@ export default function Send(props) {
             let net = getNetworks(query["curr"]);
             setNetworks(net);
             setNetworkSelected(net[0]);
+            getFees(coinSelected, networkSelected);
           }
         }
         setPageLoading(false);
@@ -106,6 +125,7 @@ export default function Send(props) {
                     pathname: router.pathname,
                     query: { curr: e.target.value },
                   });
+                  getFees(e.target.value, net[0]);
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -221,6 +241,7 @@ export default function Send(props) {
                 selectedKeys={networkSelected ? [networkSelected] : []}
                 onChange={(e) => {
                   setNetworkSelected(e.target.value);
+                  getFees(coinSelected, networkSelected);
                 }}
                 aria-label="none"
                 classNames={{
@@ -242,7 +263,6 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
-
             {/* Account md:flex */}
             <div className="hidden m-auto w-full gap-4 items-center mt-3">
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
@@ -311,64 +331,81 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
-            {/* Amount */}
-            <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
-              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                Amount
-              </label>
-              <MyInput
-                color="border-gray-500"
-                className="w-full md:w-48 border-black mb-3"
-                item={{
-                  label: screenSize ? undefined : "Amount",
-                  name: "amount",
-                  type: "number",
-                  placeholder: "$0",
-                }}
-              />
-              <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                {coinSelected}
-              </p>
-            </div>
-            {/* Total */}
-            <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
-              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                Total
-              </label>
-              <MyInput
-                color="border-gray-500"
-                className="w-full md:w-48 border-black mb-3"
-                item={{
-                  label: screenSize ? undefined : "Total",
-                  name: "amount",
-                  type: "number",
-                  placeholder: "$0",
-                }}
-              />
-              <Select
-                aria-label="none"
-                classNames={{
-                  base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                  trigger: "h-8",
-                }}
-                size="sm"
-                style={{ backgroundColor: "inherit" }}
-                labelPlacement="outside-left"
-                selectorIcon={
-                  <IoIosArrowDown color="var(--bg-primary-color)" />
-                }
-                placeholder="USD"
-              >
-                {fiatAccounts.map((account) => (
-                  <SelectItem key={account} value={account}>
-                    {account}
-                  </SelectItem>
-                ))}
-              </Select>
-              <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                {coinSelected}
-              </p>
-            </div>
+
+            {!feeLoading ? (
+              <div>
+                {/* Amount */}
+                <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+                  <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                    Amount
+                  </label>
+                  <MyInput
+                    color="border-gray-500"
+                    className="w-full md:w-48 border-black mb-3"
+                    defaultValue={amount}
+                    onChange={(e) => {
+                      if (e.target.value.length > 0) {
+                        setAmount(parseFloat(e.target.value));
+                      } else {
+                        setAmount(0);
+                      }
+                    }}
+                    item={{
+                      label: screenSize ? undefined : "Amount",
+                      name: "amount",
+                      type: "number",
+                      placeholder: "$0",
+                    }}
+                  />
+                  <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    {coinSelected}
+                  </p>
+                </div>
+                {/* Total */}
+                <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+                  <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                    Total
+                  </label>
+                  <MyInput
+                    value={amount > 0 ? amount + fee : amount}
+                    readOnly
+                    color="border-gray-500"
+                    className="w-full md:w-48 border-black mb-3"
+                    item={{
+                      label: screenSize ? undefined : "Total",
+                      name: "amount",
+                      type: "number",
+                      placeholder: "$0",
+                    }}
+                  />
+                  <Select
+                    aria-label="none"
+                    classNames={{
+                      base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                      trigger: "h-8",
+                    }}
+                    size="sm"
+                    style={{ backgroundColor: "inherit" }}
+                    labelPlacement="outside-left"
+                    selectorIcon={
+                      <IoIosArrowDown color="var(--bg-primary-color)" />
+                    }
+                    placeholder="USD"
+                  >
+                    {fiatAccounts.map((account) => (
+                      <SelectItem key={account} value={account}>
+                        {account}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                  <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    {coinSelected}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <MyLoading />
+            )}
           </div>
           <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
             <h1 className="font-bold text-sm">Transfer to BabelCoins Wallet</h1>

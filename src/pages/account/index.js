@@ -21,7 +21,7 @@ export default function Balance() {
         console.log(err);
         setPageLoading(false);
       });
-  }, [coins]);
+  }, []);
 
   if (pageLoading)
     return (
