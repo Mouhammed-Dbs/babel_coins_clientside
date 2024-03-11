@@ -7,6 +7,7 @@ import screenIs from "@/screen";
 import {
   getFeesByCoinNameAndNetwork,
   getNetworksCurrencies,
+  getTransferLimitsByCoinNameAndNetwork,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 
@@ -22,9 +23,11 @@ export default function Send(props) {
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [feeLoading, setFeeLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [fee, setFee] = useState(0);
   const [amount, setAmount] = useState(0);
+  const [limits, setLimits] = useState({});
+  const [msg, setMsg] = useState({ error: false, data: "" });
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
       if (coin.currencyName === coinSelected) {
@@ -35,19 +38,35 @@ export default function Send(props) {
     return [];
   };
   const getFees = (currencyName, network) => {
-    setFeeLoading(true);
+    setLoading(true);
     getFeesByCoinNameAndNetwork(currencyName, network)
       .then((result) => {
         if (!result.error) {
           setFee(result.data.fee);
         }
-        setFeeLoading(false);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setFeeLoading(false);
+        setLoading(false);
       });
   };
+
+  const getLimits = (currencyName, network) => {
+    setLoading(true);
+    getTransferLimitsByCoinNameAndNetwork(currencyName, network)
+      .then((result) => {
+        if (!result.error) {
+          setLimits(result.data);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     setScreenSize(screenIs("md"));
     const handleResize = () => {
@@ -71,6 +90,7 @@ export default function Send(props) {
             setNetworks(net);
             setNetworkSelected(net[0]);
             getFees(query["curr"], net[0]);
+            getLimits(query["curr"], net[0]);
           }
         }
         setPageLoading(false);
@@ -122,7 +142,6 @@ export default function Send(props) {
                     pathname: router.pathname,
                     query: { curr: e.target.value },
                   });
-                  getFees(e.target.value, net[0]);
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -329,92 +348,127 @@ export default function Send(props) {
               </Select>
             </div>
 
-            {!feeLoading ? (
-              <div>
-                {/* Amount */}
-                <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
-                  <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                    Amount
-                  </label>
-                  <MyInput
-                    color="border-gray-500"
-                    className="w-full md:w-48 border-black mb-3"
-                    defaultValue={amount}
-                    onChange={(e) => {
-                      if (e.target.value.length > 0) {
-                        setAmount(parseFloat(e.target.value));
-                      } else {
-                        setAmount(0);
+            {!loading ? (
+              query["curr"] ? (
+                <div>
+                  {/* Amount */}
+                  <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                      Amount
+                    </label>
+                    <MyInput
+                      color="border-gray-500"
+                      className="w-full md:w-48 border-black mb-3"
+                      defaultValue={amount}
+                      onChange={(e) => {
+                        if (e.target.value.length > 0) {
+                          let currentAmount = parseFloat(e.target.value);
+                          if (
+                            currentAmount < limits.minInOneTime ||
+                            currentAmount > limits.maxInOneTime
+                          ) {
+                            setMsg({
+                              error: true,
+                              data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
+                            });
+                          } else {
+                            setAmount(currentAmount);
+                            setMsg({
+                              error: false,
+                              data: "",
+                            });
+                          }
+                        } else {
+                          setAmount(0);
+                        }
+                      }}
+                      item={{
+                        label: screenSize ? undefined : "Amount",
+                        name: "amount",
+                        type: "number",
+                        placeholder: "$0",
+                      }}
+                    />
+                    <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                      {coinSelected}
+                    </p>
+                  </div>
+
+                  {/* Total */}
+                  <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                      Total
+                    </label>
+                    <MyInput
+                      value={amount > 0 ? amount + fee : amount}
+                      readOnly
+                      color="border-gray-500"
+                      className="w-full md:w-48 border-black mb-3"
+                      item={{
+                        label: screenSize ? undefined : "Total",
+                        name: "amount",
+                        type: "number",
+                        placeholder: "$0",
+                      }}
+                    />
+                    <Select
+                      aria-label="none"
+                      classNames={{
+                        base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                        trigger: "h-8",
+                      }}
+                      size="sm"
+                      style={{ backgroundColor: "inherit" }}
+                      labelPlacement="outside-left"
+                      selectorIcon={
+                        <IoIosArrowDown color="var(--bg-primary-color)" />
                       }
-                    }}
-                    item={{
-                      label: screenSize ? undefined : "Amount",
-                      name: "amount",
-                      type: "number",
-                      placeholder: "$0",
-                    }}
-                  />
-                  <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                    {coinSelected}
-                  </p>
+                      placeholder="USD"
+                    >
+                      {fiatAccounts.map((account) => (
+                        <SelectItem key={account} value={account}>
+                          {account}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                      {coinSelected}
+                    </p>
+                  </div>
+                  {msg.error && (
+                    <p className="w-fit m-auto lg:m-0 lg:ml-36 text-xs text-red-700">
+                      {msg.data}
+                    </p>
+                  )}
                 </div>
-                {/* Total */}
-                <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
-                  <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                    Total
-                  </label>
-                  <MyInput
-                    value={amount > 0 ? amount + fee : amount}
-                    readOnly
-                    color="border-gray-500"
-                    className="w-full md:w-48 border-black mb-3"
-                    item={{
-                      label: screenSize ? undefined : "Total",
-                      name: "amount",
-                      type: "number",
-                      placeholder: "$0",
-                    }}
-                  />
-                  <Select
-                    aria-label="none"
-                    classNames={{
-                      base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                      trigger: "h-8",
-                    }}
-                    size="sm"
-                    style={{ backgroundColor: "inherit" }}
-                    labelPlacement="outside-left"
-                    selectorIcon={
-                      <IoIosArrowDown color="var(--bg-primary-color)" />
-                    }
-                    placeholder="USD"
-                  >
-                    {fiatAccounts.map((account) => (
-                      <SelectItem key={account} value={account}>
-                        {account}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                  <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                    {coinSelected}
-                  </p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )
             ) : (
               <MyLoading />
             )}
           </div>
-          <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
-            <h1 className="font-bold text-sm">Transfer to BabelCoins Wallet</h1>
-            <div className="my-4 text-xs">
-              <p>0.2 $/€</p>
-              <p className="text-gray-400">Min. per transaction</p>
+          {!loading && query["curr"] ? (
+            <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
+              <h1 className="font-bold text-sm">
+                Transfer to BabelCoins Wallet
+              </h1>
+              <div className="my-4 text-xs">
+                <p>{limits?.minInOneTime}</p>
+                <p className="text-gray-400">Min. per transaction</p>
+              </div>
+              <div className="my-4 text-xs">
+                <p>{limits?.maxInOneTime}</p>
+                <p className="text-gray-400">Max. per transaction</p>
+              </div>
+              <div className="my-4 text-xs">
+                <p>Instantly</p>
+                <p className="text-gray-400">Transfer term</p>
+              </div>
             </div>
-            <div className="my-4 text-xs">
-              <p>Instantly</p>
-              <p className="text-gray-400">Transfer term</p>
-            </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="w-fit m-auto lg:m-0 lg:ml-44">
