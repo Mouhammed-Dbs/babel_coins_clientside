@@ -64,13 +64,17 @@ const getMinimumDepositLimits = async (currencyName) => {
   }
 };
 
-const getFeesByCoinNameAndNetwork = async (currencyName, network) => {
+const getFeesByCoinNameAndNetwork = async (currencyName, network, type) => {
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
+    let url;
+    if (type === "crypto") {
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-currency-name-and-transfer-type?currencyName=${currencyName}&network=${network}&transferType=${type}`;
+    } else {
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-currency-name-and-transfer-type?currencyName=${currencyName}&transferType=${type}`;
+    }
     try {
-      const res = await axios.get(
-        `${process.env.BASE_API_URL}/transfer-fees/fee-by-currency-and-network-name?currencyName=${currencyName}&network=${network}`
-      );
+      const res = await axios.get(url);
       if (res.error) return null;
       return res.data;
     } catch (error) {
@@ -80,13 +84,21 @@ const getFeesByCoinNameAndNetwork = async (currencyName, network) => {
   return null;
 };
 
-const getTransferLimitsByCoinNameAndNetwork = async (currencyName, network) => {
+const getTransferLimitsByCoinNameAndNetwork = async (
+  currencyName,
+  network,
+  type
+) => {
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
+    let url;
+    if (type === "crypto") {
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-currency-name-and-transfer-type?currencyName=${currencyName}&network=${network}&transferType=${type}`;
+    } else {
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-currency-name-and-transfer-type?currencyName=${currencyName}&transferType=${type}`;
+    }
     try {
-      const res = await axios.get(
-        `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-currency-and-network-name?currencyName=${currencyName}&network=${network}`
-      );
+      const res = await axios.get(url);
       if (res.error) return null;
       return res.data;
     } catch (error) {

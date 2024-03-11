@@ -22,7 +22,11 @@ import {
   IoMdSettings,
   IoMdPower,
 } from "react-icons/io";
-import { MdOutlineSupportAgent, MdGroup } from "react-icons/md";
+import {
+  MdOutlineSupportAgent,
+  MdGroup,
+  MdOutlineSwitchAccount,
+} from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiCardsFill } from "react-icons/pi";
 
@@ -115,7 +119,7 @@ export default function MainNavbare({ accountName }) {
               </DropdownItem>
               <DropdownItem
                 startContent={
-                  <MdGroup
+                  <MdOutlineSwitchAccount
                     className="text-gray-400 hover:cursor-pointer"
                     size={15}
                   />

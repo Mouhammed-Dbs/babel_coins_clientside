@@ -37,9 +37,9 @@ export default function Send(props) {
     if (coin.length > 0) return coin[0].networks;
     return [];
   };
-  const getFees = (currencyName, network) => {
+  const getFees = (currencyName, network, type) => {
     setLoading(true);
-    getFeesByCoinNameAndNetwork(currencyName, network)
+    getFeesByCoinNameAndNetwork(currencyName, network, type)
       .then((result) => {
         if (!result.error) {
           setFee(result.data.fee);
@@ -52,9 +52,9 @@ export default function Send(props) {
       });
   };
 
-  const getLimits = (currencyName, network) => {
+  const getLimits = (currencyName, network, type) => {
     setLoading(true);
-    getTransferLimitsByCoinNameAndNetwork(currencyName, network)
+    getTransferLimitsByCoinNameAndNetwork(currencyName, network, type)
       .then((result) => {
         if (!result.error) {
           setLimits(result.data);
@@ -89,8 +89,8 @@ export default function Send(props) {
             let net = getNetworks(query["curr"], result.data);
             setNetworks(net);
             setNetworkSelected(net[0]);
-            getFees(query["curr"], net[0]);
-            getLimits(query["curr"], net[0]);
+            getFees(query["curr"], net[0], "crypto");
+            getLimits(query["curr"], net[0], "crypto");
           }
         }
         setPageLoading(false);
