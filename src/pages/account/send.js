@@ -386,7 +386,7 @@ export default function Send(props) {
                         label: screenSize ? undefined : "Amount",
                         name: "amount",
                         type: "number",
-                        placeholder: "$0",
+                        placeholder: "0",
                       }}
                     />
                     <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
