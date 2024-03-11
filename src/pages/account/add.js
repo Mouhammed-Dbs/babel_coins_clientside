@@ -14,6 +14,7 @@ import {
   getMinimumDepositLimits,
 } from "../../../public/global_functions/coins";
 import { data } from "autoprefixer";
+import { CopyButton } from "@/components/utils/CopyButton";
 
 export default function Add(props) {
   const router = useRouter();
@@ -303,12 +304,9 @@ export default function Add(props) {
                 </label>
                 <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
                   {item.address}
-                  <MdOutlineContentCopy
-                    onClick={() => {
-                      navigator.clipboard.writeText(item.address);
-                    }}
-                    size={18}
+                  <CopyButton
                     className="self-center ml-2 text-primary hover:text-opacity-70"
+                    copy={item.address}
                   />
                 </p>
               </div>
@@ -325,7 +323,7 @@ export default function Add(props) {
           <MyLoading />
         )}
 
-        <div className="w-fit m-auto md:m-0 md:ml-40">
+        <div className="hidden w-fit m-auto md:m-0 md:ml-40">
           <Button className="bg-orange text-white rounded-full mt-4 md:px-10 w-12">
             ADD
           </Button>
