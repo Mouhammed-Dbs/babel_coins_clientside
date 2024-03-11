@@ -16,6 +16,7 @@ import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationA
 import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged } from "../../public/global_functions/auth";
+import screenIs from "@/screen";
 
 export default function MainLayout(props) {
   const router = useRouter();
@@ -23,6 +24,18 @@ export default function MainLayout(props) {
   const [mounted, setMounted] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
+  const [screenSize, setScreenSize] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      setIsMobile(true);
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     isUserLogged()
@@ -61,6 +74,7 @@ export default function MainLayout(props) {
       <main className="w-screen flex text-md fixed">
         <Sidebar>
           <SidebarItem
+            toast={!isMobile}
             text="Balance"
             link=""
             icon={<LuWallet size={20} />}
@@ -71,23 +85,27 @@ export default function MainLayout(props) {
             }
           />
           <SidebarItem
+            toast={!isMobile}
             text="Add"
             link="add"
             icon={<IoAddCircleSharp size={20} />}
             active={currentRoute.includes("account/add")}
           />
           <SidebarItem
+            toast={!isMobile}
             text="Transfer"
             link="send"
             icon={<IoIosSend size={20} />}
             active={currentRoute.includes("account/send")}
           />
           <SidebarItem
+            toast={!isMobile}
             text="Trade"
             link="trade"
             icon={<PiChartLineUpBold size={20} />}
           />
           <SidebarItem
+            toast={!isMobile}
             text="Exchange"
             icon={<RiExchangeFundsLine size={20} />}
           />

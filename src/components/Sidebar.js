@@ -55,7 +55,14 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, link, active, alert }) {
+export function SidebarItem({
+  icon,
+  text,
+  link,
+  active,
+  alert = false,
+  toast,
+}) {
   const { expanded } = useContext(SidebarContext);
   const router = useRouter();
   return (
@@ -87,10 +94,9 @@ export function SidebarItem({ icon, text, link, active, alert }) {
           className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${
             expanded ? "" : "top-2"
           }`}
-        />
+        ></div>
       )}
-
-      {!expanded && (
+      {!expanded && toast && (
         <div
           className={`
           absolute left-full rounded-md px-2 py-1 ml-6 z-10
