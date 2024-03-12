@@ -41,12 +41,12 @@ export default function Add(props) {
 
   useEffect(() => {
     setMount(true);
+    setAddressesLoading(true);
     getBalanceCoins()
       .then((result) => {
         if (!result.error) {
           setCoins(result.data);
           if (query["curr"]) {
-            setAddressesLoading(true);
             getAddressesByCoinName(query["curr"])
               .then(async (res) => {
                 if (!res.error) {
@@ -111,6 +111,7 @@ export default function Add(props) {
             Choose account
           </label>
           <Select
+            isDisabled={addressesLoading}
             selectedKeys={query["curr"] ? [query["curr"]] : []}
             onChange={async (e) => {
               await router.replace({
