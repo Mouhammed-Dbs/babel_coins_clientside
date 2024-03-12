@@ -73,7 +73,7 @@ const getFeesByCoinNameAndNetwork = async (
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
     let url;
-    if (type === "crypto") {
+    if (transferCurrencyType === "crypto") {
       url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName=${currencyName}`;
     } else {
       url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName=${currencyName}`;
@@ -98,7 +98,7 @@ const getTransferLimitsByCoinNameAndNetwork = async (
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
     let url;
-    if (transferType === "crypto") {
+    if (transferCurrencyType === "crypto") {
       url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName=${currencyName}`;
     } else {
       url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName=${currencyName}`;
@@ -125,7 +125,7 @@ const transferMoney = async (
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
     try {
-      const res = await axios.get(
+      const res = await axios.post(
         `${process.env.BASE_API_URL}/users/send-money`,
         transferCurrencyType === "crypto"
           ? {

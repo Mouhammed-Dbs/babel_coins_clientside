@@ -516,10 +516,10 @@ export default function Send(props) {
 
         <div className="w-fit m-auto lg:m-0 lg:ml-44">
           <Button
-            isDisabled={!isDataValid}
+            isDisabled={!isDataValid() || sendLoading}
             className="bg-orange text-white rounded-full mt-5 px-10"
             onClick={() => {
-              if (isDataValid) {
+              if (isDataValid()) {
                 setSendLoading(true);
                 transferMoney(
                   "crypto",
@@ -530,17 +530,22 @@ export default function Send(props) {
                   amount
                 )
                   .then((result) => {
-                    console.log(result);
+                    setMsg({ error: true, data: result.msg });
+                    setSendLoading(false);
                   })
                   .catch((err) => {
-                    console.log(err);
+                    setMsg({
+                      error: err.response.data.error,
+                      data: err.response.data.msg,
+                    });
+                    setSendLoading(false);
                   });
               } else {
                 setSendLoading(false);
               }
             }}
           >
-            ADD
+            {sendLoading ? "SENDING.." : "ADD"}
           </Button>
         </div>
       </div>
