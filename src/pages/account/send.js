@@ -545,7 +545,7 @@ export default function Send(props) {
               }
             }}
           >
-            {sendLoading ? "SENDING.." : "ADD"}
+            {sendLoading ? "SENDING.." : "SEND"}
           </Button>
         </div>
       </div>
