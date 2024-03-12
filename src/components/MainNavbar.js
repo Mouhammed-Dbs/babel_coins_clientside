@@ -211,6 +211,11 @@ export default function MainNavbare({ accountName }) {
                 <span className="text-xs">Profile</span>
               </DropdownItem>
               <DropdownItem
+                onClick={() =>
+                  router.asPath != "/account/log"
+                    ? router.push("/account/log")
+                    : null
+                }
                 startContent={
                   <RiShieldUserLine
                     className="text-gray-400 hover:cursor-pointer"
