@@ -79,7 +79,7 @@ export default function Balance() {
                   {coin.network.includes(",") ? "-" : coin.network}
                 </h1>
                 <h1 className="font-bold text-lg mt-1 mb-3">
-                  {coin.validDepositeBalance}
+                  {coin.validDepositeBalance.toFixed(2)}
                 </h1>
               </div>
               <div className="grid grid-cols-2 gap-3 mt-1 mb-2">

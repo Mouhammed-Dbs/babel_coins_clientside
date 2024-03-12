@@ -50,7 +50,7 @@ export default function MainNavbare({ accountName }) {
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
-        <Button className="text-sm text-green-500 gap-unit-1 h-unit-9 rounded-full shadow-sm shadow-slate-400 dark:shadow-gray-700 bg-white dark:bg-default-50">
+        <Button className="hidden text-sm text-green-500 gap-unit-1 h-unit-9 rounded-full shadow-sm shadow-slate-400 dark:shadow-gray-700 bg-white dark:bg-default-50">
           $0.00
           <RiArrowDropDownLine size={25} />
         </Button>

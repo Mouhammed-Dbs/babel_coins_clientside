@@ -479,7 +479,11 @@ export default function Send(props) {
                     </p>
                   </div>
                   {msg.error && (
-                    <p className="w-fit m-auto lg:m-0 lg:ml-36 text-xs text-red-700">
+                    <p
+                      className={`w-fit m-auto lg:m-0 lg:ml-40 text-sm ${
+                        msg.error ? "text-red-700" : "text-green-700"
+                      }`}
+                    >
                       {msg.data}
                     </p>
                   )}
@@ -530,7 +534,7 @@ export default function Send(props) {
                   amount
                 )
                   .then((result) => {
-                    setMsg({ error: true, data: result.msg });
+                    setMsg({ error: result.error, data: result.msg });
                     setSendLoading(false);
                   })
                   .catch((err) => {
