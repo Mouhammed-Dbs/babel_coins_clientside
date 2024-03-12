@@ -6,12 +6,10 @@ export default function Log() {
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
-            Messages
+            LOG
           </h1>
         </div>
-        <p className="text-xs opacity-75 mt-1 ml-4 md:ml-0">
-          The actual information in the personal news
-        </p>
+        <p className="text-xs opacity-75 mt-1 ml-4 md:ml-0"></p>
       </div>
       <div className="ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] pb-3 text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         <div className="flex p-3 py-5">
