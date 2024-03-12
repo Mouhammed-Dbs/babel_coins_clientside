@@ -1,19 +1,15 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import axios from "axios";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
-import { MdOutlineContentCopy } from "react-icons/md";
 import MyLoading from "@/components/MyLoading";
 import {
   getAddressesByCoinName,
   getBalanceCoins,
   getMinimumDepositLimits,
 } from "../../../public/global_functions/coins";
-import { data } from "autoprefixer";
 import { CopyButton } from "@/components/utils/CopyButton";
 
 export default function Add(props) {

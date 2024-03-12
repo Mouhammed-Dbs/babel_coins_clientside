@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 export default function Messages(props) {

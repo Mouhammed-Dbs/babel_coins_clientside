@@ -1,8 +1,6 @@
 import MyInput from "@/components/utils/MyInput";
 import {
   Button,
-  Card,
-  Chip,
   Progress,
   Select,
   SelectItem,
@@ -12,15 +10,12 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FaArrowAltCircleLeft, FaArrowDown } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 import {
   IoIosArrowBack,
   IoIosArrowDown,
-  IoIosArrowDropright,
   IoIosArrowForward,
 } from "react-icons/io";
-import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { MdInfo } from "react-icons/md";
 
 export default function Settings() {

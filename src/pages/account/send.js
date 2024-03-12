@@ -1,6 +1,6 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";

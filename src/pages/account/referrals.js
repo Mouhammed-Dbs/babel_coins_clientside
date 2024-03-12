@@ -1,6 +1,5 @@
 import MyInput from "@/components/utils/MyInput";
 import { Button } from "@nextui-org/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { FaRegCopy } from "react-icons/fa6";
 export default function Referrals(props) {
