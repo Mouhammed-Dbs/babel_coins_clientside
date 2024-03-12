@@ -74,9 +74,9 @@ const getFeesByCoinNameAndNetwork = async (
   if (token) {
     let url;
     if (type === "crypto") {
-      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName${currencyName}`;
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName=${currencyName}`;
     } else {
-      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName${currencyName}`;
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName=${currencyName}`;
     }
     try {
       const res = await axios.get(url);
@@ -99,9 +99,9 @@ const getTransferLimitsByCoinNameAndNetwork = async (
   if (token) {
     let url;
     if (transferType === "crypto") {
-      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName${currencyName}`;
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName=${currencyName}`;
     } else {
-      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName${currencyName}`;
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName=${currencyName}`;
     }
     try {
       const res = await axios.get(url);
