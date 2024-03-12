@@ -15,8 +15,12 @@ export default function Log() {
         <div className="flex p-3 py-5">
           <h3 className="text-primary w-3/12 text-xs md:text-base">DATE</h3>
           <h3 className="text-primary w-5/12 text-xs md:text-base">ACTION</h3>
-          <h3 className="text-primary w-2/12 text-xs md:text-base">IP</h3>
-          <h3 className="text-primary w-2/12 text-xs md:text-base">STATUS</h3>
+          <h3 className="text-primary w-2/12 md:w-3/12 text-xs md:text-base">
+            IP
+          </h3>
+          <h3 className="text-primary w-2/12 md:w-1/12 text-xs md:text-base">
+            STATUS
+          </h3>
         </div>
         <ul className="w-full">
           <ItemList
@@ -65,17 +69,21 @@ function ItemList({ date, action, ip, status }) {
   return (
     <li className="flex p-3 border-b-2 ml-2 md:ml-8 py-3">
       <div className="flex w-3/12">
-        <p className="w-full text-xs opacity-70 self-center px-4 text-left">
+        <p className="w-full text-xs opacity-70 self-center md:pl-4 text-left">
           {date}
         </p>
       </div>
-      <div className="flex w-5/12 overflow-hidden">
-        <p className="w-full text-xs opacity-70 self-center px-4">{action}</p>
+      <div className="flex w-5/12">
+        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
+          {action}
+        </p>
       </div>
-      <div className="flex w-2/12 overflow-hidden">
-        <p className="w-full text-xs opacity-70 self-center px-4">{ip}</p>
+      <div className="flex w-3/12">
+        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
+          {ip}
+        </p>
       </div>
-      <div className="flex w-2/12 overflow-hidden place-content-center">
+      <div className="flex w-1/12 overflow-hidden place-content-center">
         {status ? (
           <CiLock
             color="gray"
