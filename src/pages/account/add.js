@@ -70,6 +70,8 @@ export default function Add(props) {
               .catch((err) => {
                 setAddressesLoading(false);
               });
+          } else {
+            setAddressesLoading(false);
           }
         }
         setPageLoading(false);
