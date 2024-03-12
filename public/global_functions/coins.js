@@ -40,18 +40,6 @@ const getAddressesByCoinName = async (currencyName) => {
   return null;
 };
 
-const getNetworksCurrencies = async () => {
-  try {
-    const res = await axios.get(
-      `${process.env.BASE_API_URL}/currencies/all-supported-currencies-by-networks`
-    );
-    if (res.error) return null;
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const getMinimumDepositLimits = async (currencyName) => {
   try {
     const res = await axios.get(
@@ -64,14 +52,31 @@ const getMinimumDepositLimits = async (currencyName) => {
   }
 };
 
-const getFeesByCoinNameAndNetwork = async (currencyName, network, type) => {
+const getNetworksCurrencies = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.BASE_API_URL}/currencies/all-supported-currencies-by-networks`
+    );
+    if (res.error) return null;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getFeesByCoinNameAndNetwork = async (
+  transferCurrencyType,
+  transferType,
+  currencyName,
+  network
+) => {
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
     let url;
     if (type === "crypto") {
-      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-currency-name-and-transfer-type?currencyName=${currencyName}&network=${network}&transferType=${type}`;
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName${currencyName}`;
     } else {
-      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-currency-name-and-transfer-type?currencyName=${currencyName}&transferType=${type}`;
+      url = `${process.env.BASE_API_URL}/transfer-fees/fee-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName${currencyName}`;
     }
     try {
       const res = await axios.get(url);
@@ -85,20 +90,59 @@ const getFeesByCoinNameAndNetwork = async (currencyName, network, type) => {
 };
 
 const getTransferLimitsByCoinNameAndNetwork = async (
+  transferCurrencyType,
+  transferType,
   currencyName,
-  network,
-  type
+  network
 ) => {
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
     let url;
-    if (type === "crypto") {
-      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-currency-name-and-transfer-type?currencyName=${currencyName}&network=${network}&transferType=${type}`;
+    if (transferType === "crypto") {
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&network=${network}&currencyName${currencyName}`;
     } else {
-      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-currency-name-and-transfer-type?currencyName=${currencyName}&transferType=${type}`;
+      url = `${process.env.BASE_API_URL}/transfer-limits/trasfer-limits-by-transfer-info?transferType=${transferType}&transferCurrencyType=${transferCurrencyType}&currencyName${currencyName}`;
     }
     try {
       const res = await axios.get(url);
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
+const transferMoney = async (
+  transferCurrencyType,
+  transferType,
+  currencyName,
+  network,
+  receipentAddress,
+  amount
+) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/users/send-money`,
+        transferCurrencyType === "crypto"
+          ? {
+              transferCurrencyType,
+              transferType,
+              currencyName,
+              receipentAddress,
+              network,
+              amount,
+            }
+          : {},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       if (res.error) return null;
       return res.data;
     } catch (error) {
@@ -115,4 +159,5 @@ export {
   getMinimumDepositLimits,
   getFeesByCoinNameAndNetwork,
   getTransferLimitsByCoinNameAndNetwork,
+  transferMoney,
 };

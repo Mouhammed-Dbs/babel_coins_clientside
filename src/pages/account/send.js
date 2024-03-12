@@ -8,6 +8,7 @@ import {
   getFeesByCoinNameAndNetwork,
   getNetworksCurrencies,
   getTransferLimitsByCoinNameAndNetwork,
+  transferMoney,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 
@@ -28,6 +29,8 @@ export default function Send(props) {
   const [amount, setAmount] = useState(0);
   const [limits, setLimits] = useState({});
   const [msg, setMsg] = useState({ error: false, data: "" });
+  const [address, setAddress] = useState(null);
+  const [sendLoading, setSendLoading] = useState(false);
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
       if (coin.currencyName === coinSelected) {
@@ -37,9 +40,19 @@ export default function Send(props) {
     if (coin.length > 0) return coin[0].networks;
     return [];
   };
-  const getFees = (currencyName, network, type) => {
+  const getFees = (
+    transferCurrencyType,
+    transferType,
+    currencyName,
+    network
+  ) => {
     setLoading(true);
-    getFeesByCoinNameAndNetwork(currencyName, network, type)
+    getFeesByCoinNameAndNetwork(
+      transferCurrencyType,
+      transferType,
+      currencyName,
+      network
+    )
       .then((result) => {
         if (!result.error) {
           setFee(result.data.fee);
@@ -51,10 +64,19 @@ export default function Send(props) {
         setLoading(false);
       });
   };
-
-  const getLimits = (currencyName, network, type) => {
+  const getLimits = (
+    transferCurrencyType,
+    transferType,
+    currencyName,
+    network
+  ) => {
     setLoading(true);
-    getTransferLimitsByCoinNameAndNetwork(currencyName, network, type)
+    getTransferLimitsByCoinNameAndNetwork(
+      transferCurrencyType,
+      transferType,
+      currencyName,
+      network
+    )
       .then((result) => {
         if (!result.error) {
           setLimits(result.data);
@@ -65,6 +87,25 @@ export default function Send(props) {
         console.log(err);
         setLoading(false);
       });
+  };
+  const isAmountValid = (currentAmount) => {
+    if (
+      currentAmount < limits.minInOneTime ||
+      currentAmount > limits.maxInOneTime
+    )
+      return false;
+    return true;
+  };
+  const isDataValid = () => {
+    if (
+      address &&
+      isAmountValid(amount) &&
+      address &&
+      coinSelected &&
+      networkSelected
+    )
+      return true;
+    return false;
   };
 
   useEffect(() => {
@@ -89,8 +130,8 @@ export default function Send(props) {
             let net = getNetworks(query["curr"], result.data);
             setNetworks(net);
             setNetworkSelected(net[0]);
-            getFees(query["curr"], net[0], "crypto");
-            getLimits(query["curr"], net[0], "crypto");
+            getFees("crypto", "external", query["curr"], net[0]);
+            getLimits("crypto", "external", query["curr"], net[0]);
           }
         }
         setPageLoading(false);
@@ -99,6 +140,7 @@ export default function Send(props) {
         setPageLoading(false);
       });
   }, [query]);
+
   if (!mounted)
     return (
       <MyLoading
@@ -237,6 +279,10 @@ export default function Send(props) {
                 Address
               </label>
               <MyInput
+                defaultValue={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
                 color="border-gray-500"
                 className="w-full md:w-64 border-black mb-3"
                 item={{
@@ -363,10 +409,7 @@ export default function Send(props) {
                       onChange={(e) => {
                         if (e.target.value.length > 0) {
                           let currentAmount = parseFloat(e.target.value);
-                          if (
-                            currentAmount < limits.minInOneTime ||
-                            currentAmount > limits.maxInOneTime
-                          ) {
+                          if (!isAmountValid(currentAmount)) {
                             setMsg({
                               error: true,
                               data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
@@ -472,7 +515,31 @@ export default function Send(props) {
         </div>
 
         <div className="w-fit m-auto lg:m-0 lg:ml-44">
-          <Button className="bg-orange text-white rounded-full mt-5 px-10">
+          <Button
+            isDisabled={!isDataValid}
+            className="bg-orange text-white rounded-full mt-5 px-10"
+            onClick={() => {
+              if (isDataValid) {
+                setSendLoading(true);
+                transferMoney(
+                  "crypto",
+                  "external",
+                  coinSelected,
+                  networkSelected,
+                  address,
+                  amount
+                )
+                  .then((result) => {
+                    console.log(result);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              } else {
+                setSendLoading(false);
+              }
+            }}
+          >
             ADD
           </Button>
         </div>
