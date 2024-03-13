@@ -28,7 +28,7 @@ const loginUser = async (email, password) => {
     );
     return res.data;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 const getConfirmCode = async (email) => {
@@ -38,7 +38,7 @@ const getConfirmCode = async (email) => {
     );
     return res.data;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 const registerUser = async (email, code) => {

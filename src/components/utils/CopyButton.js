@@ -24,7 +24,7 @@ export function CopyButton({ className, copy }) {
   }, [seconds, timerOn]);
 
   return (
-    <div className={className}>
+    <span className={className}>
       {copied ? (
         <MdOutlineDownloadDone size={18} className="text-green-700" />
       ) : (
@@ -38,6 +38,6 @@ export function CopyButton({ className, copy }) {
           className="text-primary cursor-pointer"
         />
       )}
-    </div>
+    </span>
   );
 }
