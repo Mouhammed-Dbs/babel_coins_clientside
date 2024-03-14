@@ -67,7 +67,7 @@ export default function Templates() {
 function TemplateItem({ title, account, img, addresses }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="p-1 md:p-3 border-b-1 w-full md:w-3/4">
+    <div className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
       <div
         onClick={() => {
           setOpen(!open);
