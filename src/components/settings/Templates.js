@@ -107,9 +107,7 @@ function TemplateItem({ title, account, img, addresses }) {
               key={address}
               className="flex gap-1 items-center border-1 rounded-md w-fit p-2 mt-2"
             >
-              <label className="text-xs md:text-base">
-                {title + "(" + account + "):"}
-              </label>
+              <label className="text-xs md:text-base">{account + ":"}</label>
               <p className="text-xs md:text-base break-all">{address}</p>
               <IoCloseSharp
                 color="red"
