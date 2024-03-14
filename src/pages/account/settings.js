@@ -2,6 +2,7 @@ import Notifications from "@/components/settings/Notifications";
 import Password from "@/components/settings/Password";
 import ProfileAndVerification from "@/components/settings/ProfileAndVerification";
 import Security from "@/components/settings/Security";
+import Templates from "@/components/settings/Templates";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { createContext, useState } from "react";
@@ -95,7 +96,9 @@ export default function Settings() {
                 <span>TEMPLATES</span>
               </div>
             }
-          ></Tab>
+          >
+            <Templates />
+          </Tab>
           <Tab
             isDisabled
             className="block md:hidden"
