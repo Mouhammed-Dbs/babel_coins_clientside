@@ -432,7 +432,7 @@ export default function Send(props) {
                         placeholder: "0",
                       }}
                     />
-                    <p className="w-24 min-w-20 text-center pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    <p className="w-24 min-w-20 text-center mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
                       {coinSelected}
                     </p>
                   </div>
@@ -474,7 +474,7 @@ export default function Send(props) {
                         </SelectItem>
                       ))}
                     </Select>
-                    <p className="w-24 min-w-20 text-center mb-3 md:mb-0 pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    <p className="w-24 min-w-20 text-center mb-[13px] md:mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
                       {coinSelected}
                     </p>
                   </div>
