@@ -90,7 +90,7 @@ function TemplateItem({ title, account, img, addresses }) {
             height={30}
             width={30}
           />
-          <h1 className="text-lg ml-1 md:ml-3">
+          <h1 className="text-lg ml-3">
             {title + " (" + addresses.length + ")"}
           </h1>
         </div>
