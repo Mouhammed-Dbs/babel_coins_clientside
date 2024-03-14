@@ -2,22 +2,10 @@ import Notifications from "@/components/settings/Notifications";
 import Password from "@/components/settings/Password";
 import ProfileAndVerification from "@/components/settings/ProfileAndVerification";
 import Security from "@/components/settings/Security";
-import MyInput from "@/components/utils/MyInput";
-import {
-  Button,
-  Progress,
-  Select,
-  SelectItem,
-  Tab,
-  Tabs,
-} from "@nextui-org/react";
+import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { createContext, useState } from "react";
-import {
-  IoIosArrowBack,
-  IoIosArrowDown,
-  IoIosArrowForward,
-} from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const CardIDContext = createContext();
 export { CardIDContext };
 export default function Settings() {
