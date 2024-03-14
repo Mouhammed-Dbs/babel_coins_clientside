@@ -294,7 +294,7 @@ export default function Send(props) {
               />
             </div>
             {/* Network */}
-            <div className="md:flex m-auto w-full gap-4 items-center mb-3 md:mb-0">
+            <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
                 Network
               </label>
@@ -398,13 +398,13 @@ export default function Send(props) {
               query["curr"] ? (
                 <div>
                   {/* Amount */}
-                  <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
-                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                  <div className="flex m-auto w-full md:gap-4 gap-2 items-end ">
+                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36">
                       Amount
                     </label>
                     <MyInput
                       color="border-gray-500"
-                      className="w-full md:w-48 border-black mb-3 mt-6"
+                      className="w-full md:w-48 border-black mt-3"
                       defaultValue={amount}
                       onChange={(e) => {
                         if (e.target.value.length > 0) {
@@ -432,13 +432,13 @@ export default function Send(props) {
                         placeholder: "0",
                       }}
                     />
-                    <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    <p className="w-24 min-w-20 text-center pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
                       {coinSelected}
                     </p>
                   </div>
 
                   {/* Total */}
-                  <div className="flex m-auto w-full md:gap-4 gap-2 items-center">
+                  <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
                     <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
                       Total
                     </label>
@@ -446,7 +446,7 @@ export default function Send(props) {
                       value={amount > 0 ? amount + fee : amount}
                       readOnly
                       color="border-gray-500"
-                      className="w-full md:w-48 border-black mb-3 mt-6"
+                      className="w-full md:w-48 border-black mb-3 mt-3"
                       item={{
                         label: screenSize ? undefined : "Total",
                         name: "amount",
@@ -474,7 +474,7 @@ export default function Send(props) {
                         </SelectItem>
                       ))}
                     </Select>
-                    <p className="w-24 min-w-20 text-center pt-[3px] mt-3 h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                    <p className="w-24 min-w-20 text-center mb-3 md:mb-0 pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
                       {coinSelected}
                     </p>
                   </div>
