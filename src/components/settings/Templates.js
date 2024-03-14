@@ -60,14 +60,6 @@ export default function Templates() {
           />
         ))}
       </div>
-
-      <Button
-        onClick={() => {}}
-        size="sm"
-        className="bg-orange text-sm rounded-full mt-10 p-4 text-white"
-      >
-        MODIFY
-      </Button>
     </div>
   );
 }
