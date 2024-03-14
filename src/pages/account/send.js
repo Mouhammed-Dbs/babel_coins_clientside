@@ -284,7 +284,7 @@ export default function Send(props) {
                   setAddress(e.target.value);
                 }}
                 color="border-gray-500"
-                className="w-full md:w-64 border-black mb-3"
+                className="w-full md:w-64 border-black mb-3 mt-6"
                 item={{
                   label: screenSize ? undefined : "Address",
                   name: "address",
@@ -332,7 +332,7 @@ export default function Send(props) {
               </label>
               <MyInput
                 color="border-gray-500"
-                className="w-full md:w-64 border-black mb-3"
+                className="w-full md:w-64 border-black mb-3 mt-6"
                 item={{
                   label: screenSize ? undefined : "Account",
                   name: "account",
@@ -348,7 +348,7 @@ export default function Send(props) {
               </label>
               <MyInput
                 color="border-gray-500"
-                className="w-full md:w-64 border-black mb-3"
+                className="w-full md:w-64 border-black mb-3 mt-6"
                 item={{
                   label: screenSize ? undefined : "Comment",
                   name: "comment",
@@ -364,7 +364,7 @@ export default function Send(props) {
               </label>
               <MyInput
                 color="border-gray-500"
-                className="w-full md:w-48 border-black mb-3"
+                className="w-full md:w-48 border-black mb-3 mt-6"
                 item={{
                   label: screenSize ? undefined : "Secret Code",
                   name: "secretcode",
@@ -404,7 +404,7 @@ export default function Send(props) {
                     </label>
                     <MyInput
                       color="border-gray-500"
-                      className="w-full md:w-48 border-black mb-3"
+                      className="w-full md:w-48 border-black mb-3 mt-6"
                       defaultValue={amount}
                       onChange={(e) => {
                         if (e.target.value.length > 0) {
@@ -446,7 +446,7 @@ export default function Send(props) {
                       value={amount > 0 ? amount + fee : amount}
                       readOnly
                       color="border-gray-500"
-                      className="w-full md:w-48 border-black mb-3"
+                      className="w-full md:w-48 border-black mb-3 mt-6"
                       item={{
                         label: screenSize ? undefined : "Total",
                         name: "amount",
