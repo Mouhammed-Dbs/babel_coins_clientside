@@ -75,7 +75,7 @@ export default function Templates() {
 function TemplateItem({ title, account, img, addresses }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="p-3 border-b-1 w-full md:w-3/4">
+    <div className="p-1 md:p-3 border-b-1 w-full md:w-3/4">
       <div
         onClick={() => {
           setOpen(!open);
@@ -101,14 +101,16 @@ function TemplateItem({ title, account, img, addresses }) {
         )}
       </div>
       {open && (
-        <ul className="ml-2 mt-4">
+        <ul className="md:ml-2 mt-4">
           {addresses.map((address) => (
             <li
               key={address}
               className="flex gap-1 items-center border-1 rounded-md w-fit p-2 mt-2"
             >
-              <label>{title + "(" + account + "):"}</label>
-              <p>{address}</p>
+              <label className="text-xs md:text-base">
+                {title + "(" + account + "):"}
+              </label>
+              <p className="text-xs md:text-base break-all">{address}</p>
               <IoCloseSharp
                 color="red"
                 className="rounded-full hover:bg-slate-400 p-1 w-6 h-6"
