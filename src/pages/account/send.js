@@ -274,7 +274,7 @@ export default function Send(props) {
               </Select>
             </div>
             {/* Address */}
-            <div className="flex m-auto w-full gap-4 items-center mt-3">
+            <div className="flex m-auto w-full gap-4 items-center">
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
                 Address
               </label>
