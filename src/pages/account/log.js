@@ -18,7 +18,7 @@ export default function Log() {
           <h3 className="text-primary w-3/12 md:w-3/12 text-xs md:text-base">
             IP
           </h3>
-          <h3 className="text-primary w-2/12 text-xs md:text-base text-end md:mr-2">
+          <h3 className="text-primary w-2/12 text-xs md:text-base text-end md:mr-3">
             STATUS
           </h3>
         </div>
