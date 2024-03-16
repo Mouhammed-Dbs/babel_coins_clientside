@@ -24,7 +24,6 @@ export default function MainLayout(props) {
   const [mounted, setMounted] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
-  const [screenSize, setScreenSize] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     if (
@@ -109,7 +108,12 @@ export default function MainLayout(props) {
             text="Exchange"
             icon={<RiExchangeFundsLine size={20} />}
           />
-          <SidebarItem text="History" icon={<FaHistory size={20} />} />
+          <SidebarItem
+            toast={!isMobile}
+            text="History"
+            link="history"
+            icon={<FaHistory size={20} />}
+          />
         </Sidebar>
         <div className="w-full bg-slate-50 dark:bg-default-50">
           <Navbar accountName={userInfo.accountName} />
