@@ -34,20 +34,19 @@ export default function MainLayout(props) {
 
   useEffect(() => {
     setMounted(true);
-    setPageLoading(false);
-    // isUserLogged()
-    //   .then((result) => {
-    //     if (result.error) {
-    //       router.replace("/login");
-    //     } else {
-    //       setUserInfo(result.data);
-    //       setPageLoading(false);
-    //     }
-    //   })
-    //   .catch(async (err) => {
-    //     await router.replace("/login");
-    //     setPageLoading(false);
-    //   });
+    isUserLogged()
+      .then((result) => {
+        if (result.error) {
+          router.replace("/login");
+        } else {
+          setUserInfo(result.data);
+          setPageLoading(false);
+        }
+      })
+      .catch(async (err) => {
+        await router.replace("/login");
+        setPageLoading(false);
+      });
   }, [router]);
 
   if (!mounted)
