@@ -34,19 +34,20 @@ export default function MainLayout(props) {
 
   useEffect(() => {
     setMounted(true);
-    isUserLogged()
-      .then((result) => {
-        if (result.error) {
-          router.replace("/login");
-        } else {
-          setUserInfo(result.data);
-          setPageLoading(false);
-        }
-      })
-      .catch(async (err) => {
-        await router.replace("/login");
-        setPageLoading(false);
-      });
+    setPageLoading(false);
+    // isUserLogged()
+    //   .then((result) => {
+    //     if (result.error) {
+    //       router.replace("/login");
+    //     } else {
+    //       setUserInfo(result.data);
+    //       setPageLoading(false);
+    //     }
+    //   })
+    //   .catch(async (err) => {
+    //     await router.replace("/login");
+    //     setPageLoading(false);
+    //   });
   }, [router]);
 
   if (!mounted)
@@ -116,7 +117,6 @@ export default function MainLayout(props) {
           <Navbar accountName={userInfo.accountName} />
           {props.children}
         </div>
-
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}
         {/* <AccessLockedAlert isShow={true} /> */}

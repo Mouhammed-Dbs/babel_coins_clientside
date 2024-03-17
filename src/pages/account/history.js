@@ -1,11 +1,18 @@
+import MyInput from "@/components/utils/MyInput";
+import { Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import { useState } from "react";
-import { CiLock, CiUnlock } from "react-icons/ci";
+import { FaFileCsv } from "react-icons/fa6";
+import { IoIosArrowDown, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { RiErrorWarningFill } from "react-icons/ri";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function History() {
+  const [tillDate, setTillDate] = useState();
+  const [fromDate, setFromDate] = useState();
   const [items, setItems] = useState([
     "TRANSACTIONS",
     "USD",
@@ -41,6 +48,7 @@ export default function History() {
     "GRT",
     "APE",
   ]);
+  const [openFilter, setOpenFilter] = useState(true);
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
@@ -69,6 +77,123 @@ export default function History() {
             </li>
           ))}
         </ul>
+        <div>
+          <div className="flex justify-between px-4">
+            <Button className="text-gray-500 underline">
+              <FaFileCsv />
+              EXPORT TO CSV
+            </Button>
+            <Button
+              className="text-gray-500 underline"
+              onClick={() => {
+                setOpenFilter(!openFilter);
+              }}
+            >
+              SHOW FILTER
+            </Button>
+          </div>
+          {openFilter && (
+            <div className="flex bg-slate-100 dark:bg-gray-600 mx-5 p-2 rounded-md">
+              <div className="w-11/12 md:grid grid-cols-3 gap-1 md:gap-5">
+                <div className="w-full px-1 md:px-4">
+                  <MyInput
+                    color="border-gray-500"
+                    className="w-40 border-black"
+                    item={{
+                      label: "Operation ID:",
+                      name: "operation_id",
+                      type: "text",
+                      placeholder: "",
+                    }}
+                  />
+                  <div className="mt-7">
+                    <Select
+                      label="Type:"
+                      defaultSelectedKeys={["all"]}
+                      disallowEmptySelection={true}
+                      aria-label="none"
+                      classNames={{
+                        base: "w-40 peer self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                        trigger: "h-8",
+                      }}
+                      size="sm"
+                      style={{ backgroundColor: "inherit" }}
+                      labelPlacement="outside"
+                      selectorIcon={
+                        <IoIosArrowDown color="var(--bg-primary-color)" />
+                      }
+                      placeholder="All"
+                    >
+                      <SelectItem key="all" value="all">
+                        All
+                      </SelectItem>
+                    </Select>
+                  </div>
+                </div>
+                <div className="w-full px-1 md:px-4">
+                  <div className="w-full">
+                    <label className="block w-full text-left text-sm mb-[2.5px]">
+                      From
+                    </label>
+                    <DatePicker
+                      className="bg-inherit w-40 outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
+                      selected={fromDate}
+                      onChange={(date) => setFromDate(date)}
+                    />
+                  </div>
+                  <div className="w-full mt-2">
+                    <label className="block w-full text-left text-sm mb-1">
+                      Till
+                    </label>
+                    <DatePicker
+                      className="bg-inherit w-40 outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
+                      selected={tillDate}
+                      onChange={(date) => setTillDate(date)}
+                    />
+                  </div>
+                </div>
+                <div className="w-full text-left px-1 md:px-4">
+                  <Select
+                    label="Currency:"
+                    defaultSelectedKeys={["all"]}
+                    disallowEmptySelection={true}
+                    aria-label="none"
+                    classNames={{
+                      base: "w-40 peer mt-3 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                      trigger: "h-8",
+                    }}
+                    size="sm"
+                    style={{ backgroundColor: "inherit" }}
+                    labelPlacement="outside"
+                    selectorIcon={
+                      <IoIosArrowDown color="var(--bg-primary-color)" />
+                    }
+                    placeholder="All"
+                  >
+                    <SelectItem key="all" value="all">
+                      All
+                    </SelectItem>
+                  </Select>
+                  <Button
+                    size="md"
+                    className="bg-orange text-white rounded-full mt-4"
+                  >
+                    Apply
+                  </Button>
+                </div>
+              </div>
+              <div className="w-1/12">
+                <div className="flex w-full place-content-end">
+                  <IoIosCloseCircleOutline
+                    className="h-6 w-6"
+                    size={10}
+                    onClick={() => setOpenFilter(false)}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="mx-1 md:mx-4">
           <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300">
             <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
