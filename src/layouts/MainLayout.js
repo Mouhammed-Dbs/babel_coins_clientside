@@ -74,12 +74,7 @@ export default function MainLayout(props) {
             text="Balance"
             link=""
             icon={<LuWallet size={20} />}
-            active={
-              currentRoute === "account" ||
-              currentRoute === "account/messages" ||
-              currentRoute === "account/settings" ||
-              currentRoute === "account/log"
-            }
+            active={currentRoute === "account"}
           />
           <SidebarItem
             toast={!isMobile}
