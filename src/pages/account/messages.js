@@ -76,7 +76,7 @@ export default function Messages(props) {
 
 function ItemList({ date, data }) {
   return (
-    <li className="flex p-3 border-b-2 ml-2 md:ml-8 py-5">
+    <li className="flex p-3 border-b-1 md:border-b-2 ml-2 md:ml-8 py-5">
       <div className="flex w-2/5">
         <IoCheckmarkDoneCircle
           color="green"
