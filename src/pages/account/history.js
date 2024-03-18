@@ -366,7 +366,7 @@ export default function History() {
               <div className="w-1/12">
                 <div className="flex w-full place-content-end">
                   <IoIosCloseCircleOutline
-                    className="h-6 w-6"
+                    className="h-6 w-6 cursor-pointer"
                     size={10}
                     onClick={() => setOpenFilter(false)}
                   />
