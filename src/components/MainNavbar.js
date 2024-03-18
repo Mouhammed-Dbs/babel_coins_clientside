@@ -40,12 +40,24 @@ export default function MainNavbare({ accountName }) {
 
   useEffect(() => {
     setMounted(true);
+    const touchstart = () => {
+      setSettingsIsOpen(false);
+      setInfoAccountIsOpen(false);
+    };
+    document?.addEventListener("touchstart", touchstart);
+    return () => {
+      document?.removeEventListener("touchstart", touchstart);
+    };
   }, []);
 
   if (!mounted) return null;
 
   return (
     <Navbar
+      onMouseLeave={() => {
+        setInfoAccountIsOpen(false);
+        setSettingsIsOpen(false);
+      }}
       className="backdrop-blur-md bg-white/65 dark:bg-black/50"
       isBlurred={false}
     >
@@ -80,12 +92,11 @@ export default function MainNavbare({ accountName }) {
           >
             <DropdownTrigger>
               <Button
+                onClick={() => setInfoAccountIsOpen(!infoAccountIsOpen)}
                 className="min-w-fit p-0"
                 onMouseEnter={() => {
                   setInfoAccountIsOpen(true);
-                }}
-                onMouseLeave={() => {
-                  setInfoAccountIsOpen(false);
+                  setSettingsIsOpen(false);
                 }}
               >
                 <IoMdPerson
@@ -106,7 +117,15 @@ export default function MainNavbare({ accountName }) {
                 <RiArrowDropDownLine className="text-primary" size={18} />
               </Button>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
+            <DropdownMenu
+              aria-label="Static Actions"
+              onMouseEnter={() => {
+                setInfoAccountIsOpen(true);
+              }}
+              onMouseLeave={() => {
+                setInfoAccountIsOpen(false);
+              }}
+            >
               <DropdownItem
                 startContent={
                   <IoMdPerson
@@ -202,12 +221,13 @@ export default function MainNavbare({ accountName }) {
           >
             <DropdownTrigger>
               <Button
+                onClick={() => {
+                  setSettingsIsOpen(!settingsIsOpen);
+                }}
                 className="min-w-fit p-0"
                 onMouseEnter={() => {
                   setSettingsIsOpen(true);
-                }}
-                onMouseLeave={() => {
-                  setSettingsIsOpen(false);
+                  setInfoAccountIsOpen(false);
                 }}
               >
                 <IoMdSettings
@@ -217,7 +237,15 @@ export default function MainNavbare({ accountName }) {
                 />
               </Button>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
+            <DropdownMenu
+              aria-label="Static Actions"
+              onMouseEnter={() => {
+                setSettingsIsOpen(true);
+              }}
+              onMouseLeave={() => {
+                setSettingsIsOpen(false);
+              }}
+            >
               <DropdownItem
                 onClick={() =>
                   router.asPath != "/account/settings"
