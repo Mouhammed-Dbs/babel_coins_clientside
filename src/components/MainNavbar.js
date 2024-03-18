@@ -35,7 +35,8 @@ export default function MainNavbare({ accountName }) {
   const currentRoute = router.asPath.slice(1);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [infoAccountIsOpen, setInfoAccountIsOpen] = useState(false);
+  const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -47,7 +48,6 @@ export default function MainNavbare({ accountName }) {
     <Navbar
       className="backdrop-blur-md bg-white/65 dark:bg-black/50"
       isBlurred={false}
-      onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
         <Button className="hidden text-sm text-green-500 gap-unit-1 h-unit-9 rounded-full shadow-sm shadow-slate-400 dark:shadow-gray-700 bg-white dark:bg-default-50">
@@ -73,9 +73,21 @@ export default function MainNavbare({ accountName }) {
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
         <NavbarItem className="hidden md:flex items-center hover:cursor-pointer">
-          <Dropdown size="sm" className="min-w-28 rounded-sm">
+          <Dropdown
+            size="sm"
+            className="min-w-28 rounded-sm"
+            isOpen={infoAccountIsOpen}
+          >
             <DropdownTrigger>
-              <Button className="min-w-fit p-0">
+              <Button
+                className="min-w-fit p-0"
+                onMouseEnter={() => {
+                  setInfoAccountIsOpen(true);
+                }}
+                onMouseLeave={() => {
+                  setInfoAccountIsOpen(false);
+                }}
+              >
                 <IoMdPerson
                   className={`${
                     currentRoute === "account"
@@ -183,9 +195,21 @@ export default function MainNavbare({ accountName }) {
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
         <NavbarItem>
-          <Dropdown size="sm" className="min-w-28 rounded-sm">
+          <Dropdown
+            size="sm"
+            className="min-w-28 rounded-sm"
+            isOpen={settingsIsOpen}
+          >
             <DropdownTrigger>
-              <Button className="min-w-fit p-0">
+              <Button
+                className="min-w-fit p-0"
+                onMouseEnter={() => {
+                  setSettingsIsOpen(true);
+                }}
+                onMouseLeave={() => {
+                  setSettingsIsOpen(false);
+                }}
+              >
                 <IoMdSettings
                   className="hover:cursor-pointer"
                   color="gray"
