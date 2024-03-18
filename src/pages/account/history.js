@@ -10,8 +10,10 @@ import { RiErrorWarningFill } from "react-icons/ri";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MyLoading from "@/components/MyLoading";
+import screenIs from "@/screen";
 
 export default function History() {
+  const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMount] = useState(false);
   const [tillDate, setTillDate] = useState();
   const [fromDate, setFromDate] = useState();
@@ -50,11 +52,23 @@ export default function History() {
     "GRT",
     "APE",
   ]);
-  const [openFilter, setOpenFilter] = useState(true);
+  const [openFilter, setOpenFilter] = useState(false);
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
+  const [widthCard, setWidthCard] = useState("100%");
+
   useEffect(() => {
     setMount(true);
-  }, []);
+    setScreenSize(screenIs("md"));
+    setWidthCard(window.innerWidth);
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+      setWidthCard(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
   if (!mounted)
     return (
       <MyLoading
@@ -73,12 +87,15 @@ export default function History() {
           </h1>
         </div>
       </div>
-      <div className="pb-4 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
-        <ul className="flex flex-wrap w-full bg-gray-200 dark:bg-gray-600 rounded-t-lg py-1">
+      <div className="card_history pb-4 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+        <ul
+          style={!screenSize ? { width: (widthCard - 68) * (11 / 12) } : {}}
+          className="flex md:flex-wrap bg-gray-200 dark:bg-gray-600 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
+        >
           {items.map((item) => (
             <li
               key={item}
-              className={`p-2 px-2 mx-2 text-gray-500 cursor-pointer ${
+              className={`p-2 px-1 md:px-2 mx-1 md:mx-2 text-gray-500 cursor-pointer text-sm md:text-base ${
                 itemSelected === item
                   ? "bg-white dark:text-primary dark:bg-gray-400 rounded-lg text-primary px-3"
                   : "dark:text-gray-300"
@@ -92,7 +109,7 @@ export default function History() {
           ))}
         </ul>
         <div>
-          <div className="flex justify-between px-4">
+          <div className="flex justify-between md:px-4">
             <Button className="text-gray-500 underline">
               <FaFileCsv />
               EXPORT TO CSV
