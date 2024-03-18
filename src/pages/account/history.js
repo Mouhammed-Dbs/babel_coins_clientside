@@ -13,6 +13,153 @@ import MyLoading from "@/components/MyLoading";
 import screenIs from "@/screen";
 
 export default function History() {
+  const [data, setData] = useState([
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 90,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+    {
+      date: "16 Jan 2024 23:52",
+      credit: 0,
+      debit: 15,
+      ps: "TRX",
+      id: "2009936051",
+      status: true,
+    },
+    {
+      date: "16 Jul 2024 23:52",
+      credit: 100,
+      debit: 0,
+      ps: "TRX",
+      id: "2009996551",
+      status: false,
+    },
+  ]);
+  const [currentSize, setCurrentSize] = useState(0);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMount] = useState(false);
   const [tillDate, setTillDate] = useState();
@@ -102,6 +249,7 @@ export default function History() {
               }`}
               onClick={() => {
                 setItemSelected(item);
+                setOpenFilter(false);
               }}
             >
               {item}
@@ -114,14 +262,16 @@ export default function History() {
               <FaFileCsv />
               EXPORT TO CSV
             </Button>
-            <Button
-              className="text-gray-500 underline"
-              onClick={() => {
-                setOpenFilter(!openFilter);
-              }}
-            >
-              SHOW FILTER
-            </Button>
+            {itemSelected === "TRANSACTIONS" && (
+              <Button
+                className="text-gray-500 underline"
+                onClick={() => {
+                  setOpenFilter(!openFilter);
+                }}
+              >
+                SHOW FILTER
+              </Button>
+            )}
           </div>
           {openFilter && (
             <div className="flex bg-slate-100 dark:bg-gray-600 mx-5 p-2 rounded-md">
@@ -237,24 +387,24 @@ export default function History() {
             <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
           </div>
           <ul className="w-full">
-            <ItemTransaction
-              date="16 Jan 2024 23:52"
-              credit="--"
-              debit="-5 TRX"
-              ps="TRX"
-              id="2009936051"
-              status={true}
-            />
-            <ItemTransaction
-              date="16 Jan 2024 23:52"
-              credit="+15 USDT"
-              debit="--"
-              ps="USDT"
-              id="2009936051"
-              status={false}
-            />
+            {data.slice(0, currentSize + 3).map((item) => (
+              <ItemTransaction
+                key={item.date}
+                date={item.date}
+                credit={"+" + item.credit + " " + item.ps}
+                debit={"-" + item.debit + " " + item.ps}
+                ps={item.ps}
+                id={item.id}
+                status={item.status}
+              />
+            ))}
           </ul>
-          <div className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center">
+          <div
+            onClick={() => {
+              setCurrentSize(currentSize + 3);
+            }}
+            className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
+          >
             <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
           </div>
         </div>
