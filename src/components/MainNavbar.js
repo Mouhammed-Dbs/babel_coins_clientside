@@ -204,7 +204,12 @@ export default function MainNavbare({ accountName }) {
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
         <NavbarItem className="hidden md:block">
-          <Button className="min-w-fit p-0">
+          <Button
+            className="min-w-fit p-0"
+            onClick={() => {
+              router.push("/account/support");
+            }}
+          >
             <MdOutlineSupportAgent
               className="hover:cursor-pointer"
               color="gray"
