@@ -1,7 +1,7 @@
 import MyInput from "@/components/utils/MyInput";
 import { Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaFileCsv } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
@@ -9,8 +9,10 @@ import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { RiErrorWarningFill } from "react-icons/ri";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import MyLoading from "@/components/MyLoading";
 
 export default function History() {
+  const [mounted, setMount] = useState(false);
   const [tillDate, setTillDate] = useState();
   const [fromDate, setFromDate] = useState();
   const [items, setItems] = useState([
@@ -50,6 +52,18 @@ export default function History() {
   ]);
   const [openFilter, setOpenFilter] = useState(true);
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
+  useEffect(() => {
+    setMount(true);
+  }, []);
+  if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
@@ -195,15 +209,15 @@ export default function History() {
           )}
         </div>
         <div className="mx-1 md:mx-4">
-          <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300">
+          <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
             <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
               DATE
             </h3>
             <h3 className="w-2/12 text-xs md:text-sm">CREDIT</h3>
             <h3 className="w-2/12 text-xs md:text-sm">DEBIT</h3>
-            <h3 className="w-1/12 text-xs md:text-sm">PS</h3>
+            <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">PS</h3>
             <h3 className="w-3/12 text-xs md:text-sm">ID</h3>
-            <h3 className="w-1/12 text-xs md:text-sm">STATUS</h3>
+            <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
           </div>
           <ul className="w-full">
             <ItemTransaction
@@ -233,7 +247,7 @@ export default function History() {
 }
 function ItemTransaction({ date, credit, debit, ps, id, status }) {
   return (
-    <li className="flex p-3 border-b-2 py-3 font-bold">
+    <li className="flex px-1 md:px-3 border-b-1 md:border-b-2 py-3 font-bold text-center">
       <div className="flex w-3/12">
         <p className="w-full text-xs opacity-70 self-center md:pl-4 text-left">
           {date}
@@ -249,7 +263,7 @@ function ItemTransaction({ date, credit, debit, ps, id, status }) {
           {debit}
         </p>
       </div>
-      <div className="flex w-1/12 place-content-center">
+      <div className="hidden md:flex md:w-1/12 place-content-center">
         <Image
           alt=""
           width={20}
@@ -258,7 +272,7 @@ function ItemTransaction({ date, credit, debit, ps, id, status }) {
           className="w-5 h-5 md:h-8 md:w-8"
         />
       </div>
-      <div className="flex w-3/12">
+      <div className="flex w-4/12">
         <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
           {id}
         </p>
