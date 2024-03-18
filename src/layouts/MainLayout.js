@@ -77,7 +77,8 @@ export default function MainLayout(props) {
             active={
               currentRoute === "account" ||
               currentRoute === "account/messages" ||
-              currentRoute === "account/settings"
+              currentRoute === "account/settings" ||
+              currentRoute === "account/log"
             }
           />
           <SidebarItem
@@ -110,6 +111,7 @@ export default function MainLayout(props) {
             text="History"
             link="history"
             icon={<FaHistory size={20} />}
+            active={currentRoute.includes("account/history")}
           />
         </Sidebar>
         <div className="w-full bg-slate-50 dark:bg-default-50">
