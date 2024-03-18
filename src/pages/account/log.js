@@ -67,7 +67,7 @@ export default function Log() {
 
 function ItemList({ date, action, ip, status }) {
   return (
-    <li className="flex p-3 border-b-2 ml-2 md:ml-8 py-3">
+    <li className="flex p-3 border-b-1 md:border-b-2 ml-2 md:ml-8 py-3">
       <div className="flex w-3/12">
         <p className="w-full text-xs opacity-70 self-center md:pl-4 text-left">
           {date}
