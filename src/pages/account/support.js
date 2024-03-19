@@ -1,4 +1,5 @@
 import SupportList from "@/components/support/SupportList";
+import SupportNewTicket from "@/components/support/SupportNewTicket";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -17,7 +18,7 @@ export default function Support() {
         </p>
       </div>
       <div className="mt-2 md:mt-5 md:m-auto w-11/12 md:w-[720px] lg:w-[950px]">
-        <div className="container h-screen">
+        <div className="container">
           {/* Tabs */}
           <Tabs
             selectedKey={tab}
@@ -25,7 +26,7 @@ export default function Support() {
             aria-label="Options"
             variant="underlined"
             classNames={{
-              tabList: "ml-1 gap-6 relative rounded-none p-0 ",
+              tabList: "ml-1 gap-6 relative rounded-none p-0",
               cursor: "w-full bg-[var(--primary-color)]",
               tab: "max-w-fit px-0 h-12",
               tabContent:
@@ -51,7 +52,9 @@ export default function Support() {
                   <span>New Ticket</span>
                 </div>
               }
-            ></Tab>
+            >
+              <SupportNewTicket />
+            </Tab>
           </Tabs>
         </div>
       </div>
