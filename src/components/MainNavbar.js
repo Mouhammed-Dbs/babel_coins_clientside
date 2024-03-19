@@ -133,6 +133,7 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Account No."
                 key="m_account"
               >
                 <span className="text-xs">Account No.</span>
@@ -144,6 +145,7 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Verification"
                 key="m_verification"
               >
                 <span className="text-xs">Verification</span>
@@ -155,9 +157,9 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Account Type"
                 key="m_accounttype"
               >
-                {" "}
                 <span className="text-xs">Account Type</span>
               </DropdownItem>
               <DropdownItem
@@ -167,10 +169,10 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Registration"
                 key="m_registration"
               >
-                {" "}
-                <span className="text-xs"> Registration</span>
+                <span className="text-xs">Registration</span>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
@@ -263,6 +265,7 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Profile"
                 key="m_profile"
               >
                 <span className="text-xs">Profile</span>
@@ -279,6 +282,7 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="Logs"
                 key="my_logs"
               >
                 <span className="text-xs">Logs</span>
@@ -295,9 +299,9 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="My Referrals"
                 key="my_myreferrals"
               >
-                {" "}
                 <span className="text-xs">My Referrals</span>
               </DropdownItem>
               <DropdownItem
@@ -307,10 +311,10 @@ export default function MainNavbare({ accountName }) {
                     size={15}
                   />
                 }
+                textValue="My Cards"
                 key="my_mycards"
               >
-                {" "}
-                <span className="text-xs"> My Cards</span>
+                <span className="text-xs">My Cards</span>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
