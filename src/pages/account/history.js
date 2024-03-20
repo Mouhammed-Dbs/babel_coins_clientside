@@ -439,12 +439,12 @@ function ItemTransaction({ date, credit, debit, ps, id, status }) {
           className="w-5 h-5 md:h-8 md:w-8"
         />
       </div>
-      <div className="flex w-4/12">
+      <div className="flex w-3/12">
         <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
           {id}
         </p>
       </div>
-      <div className="flex w-1/12 overflow-hidden place-content-center">
+      <div className="flex w-2/12 md:w-1/12 overflow-hidden place-content-center">
         {status ? (
           <IoCheckmarkDoneCircle className="w-5 h-5 md:h-8 md:w-8 self-center text-green-600" />
         ) : (
