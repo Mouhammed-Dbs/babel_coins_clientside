@@ -429,20 +429,22 @@ export default function MainNavbare({ accountName }) {
 
 function ToggelItemMenue({ label, value, link }) {
   return (
-    <div className="grid grid-rows-2 gap-2">
-      <span className="text-gray-500 self-center">{label}</span>
+    <div className="dropxxxblure grid grid-rows-2 gap-2">
+      <span className="dropxxxblure text-gray-500 self-center">{label}</span>
       <Link
         href={link}
-        className={`flex justify-between border-1 rounded-md min-w-10 text-center w-fit ${
+        className={`dropxxxblure flex justify-between border-1 rounded-md min-w-10 text-center w-fit ${
           value ? "border-green-500 bg-green-500" : "border-red-500 bg-red-500"
         }`}
       >
         {value && (
-          <span className="w-2 h-full bg-white rounded-s-xl rounded-e-md"></span>
+          <span className="dropxxxblure w-2 h-full bg-white rounded-s-xl rounded-e-md"></span>
         )}
-        <span className="w-full text-white">Off</span>
+        <span className="dropxxxblure w-full text-white">
+          {value ? "On" : "Off"}
+        </span>
         {!value && (
-          <span className="w-2 h-full bg-white rounded-e-xl rounded-s-md"></span>
+          <span className="dropxxxblure w-2 h-full bg-white rounded-e-xl rounded-s-md"></span>
         )}
       </Link>
     </div>
