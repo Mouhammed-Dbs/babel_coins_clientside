@@ -16,7 +16,8 @@ export default function Settings() {
   const [cardID, setCardID] = useState(false);
   useEffect(() => {
     if (query["tab"] === "security") setTab("security_tab");
-    if (query["tab"] === "profile") setTab("profile_tab");
+    if (query["tab"] === "profile" || query["tab"] === undefined)
+      setTab("profile_tab");
     if (query["tab"] === "password") setTab("password_tab");
     if (query["tab"] === "notification") setTab("notification_tab");
     if (query["tab"] === "templates") setTab("templates_tab");
