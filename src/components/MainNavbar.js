@@ -130,49 +130,104 @@ export default function MainNavbare({ accountName }) {
                 startContent={
                   <IoMdPerson
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Account No."
                 key="m_account"
               >
-                <span className="text-xs">Account No.</span>
+                <div className="flex justify-between h-8">
+                  <div className="self-center">
+                    <span className="block text-xs text-gray-500">
+                      Account No.
+                    </span>
+                    <span className="block text-xs font-bold mt-[2px]">
+                      {accountName}
+                    </span>
+                  </div>
+
+                  <Button
+                    size="md"
+                    className="min-w-10 p-0 ml-2 h-4 text-primary self-end"
+                    onClick={(e) => {
+                      e.target.style.color = "green";
+                      e.target.innerText = "copied";
+                      navigator.clipboard.writeText(accountName);
+                    }}
+                  >
+                    copy
+                  </Button>
+                </div>
               </DropdownItem>
               <DropdownItem
                 startContent={
                   <RiShieldUserLine
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Verification"
                 key="m_verification"
               >
-                <span className="text-xs">Verification</span>
+                <div className="flex justify-between h-8">
+                  <div className="self-center">
+                    <span className="block text-xs text-gray-500">
+                      Verification
+                    </span>
+                    <span className="block text-xs font-bold mt-[2px]">No</span>
+                  </div>
+                  <Button
+                    size="md"
+                    className="min-w-10 p-0 ml-2 h-4 text-primary self-end"
+                    onClick={() => {
+                      router.push("/account/settings");
+                    }}
+                  >
+                    Go
+                  </Button>
+                </div>
               </DropdownItem>
               <DropdownItem
                 startContent={
                   <MdOutlineSwitchAccount
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Account Type"
                 key="m_accounttype"
               >
-                <span className="text-xs">Account Type</span>
+                <div className="flex justify-between h-8">
+                  <div className="self-center">
+                    <span className="block text-xs text-gray-500">
+                      Account Type
+                    </span>
+                    <span className="block text-xs font-bold mt-[2px]">
+                      Registered
+                    </span>
+                  </div>
+                </div>
               </DropdownItem>
               <DropdownItem
                 startContent={
                   <PiCardsFill
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Registration"
                 key="m_registration"
               >
-                <span className="text-xs">Registration</span>
+                <div className="flex justify-between h-8">
+                  <div className="self-center">
+                    <span className="block text-xs text-gray-500">
+                      Registration
+                    </span>
+                    <span className="block text-xs font-bold mt-[2px]">
+                      4/3/2024
+                    </span>
+                  </div>
+                </div>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
