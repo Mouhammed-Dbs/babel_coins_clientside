@@ -30,6 +30,7 @@ import {
 } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiCardsFill } from "react-icons/pi";
+import Link from "next/link";
 
 export default function MainNavbare({ accountName }) {
   const router = useRouter();
@@ -129,10 +130,7 @@ export default function MainNavbare({ accountName }) {
             >
               <DropdownItem
                 startContent={
-                  <IoMdPerson
-                    className="text-gray-400 hover:cursor-pointer"
-                    size={20}
-                  />
+                  <IoMdPerson className="text-gray-400" size={20} />
                 }
                 textValue="Account No."
                 key="m_account"
@@ -162,10 +160,7 @@ export default function MainNavbare({ accountName }) {
               </DropdownItem>
               <DropdownItem
                 startContent={
-                  <RiShieldUserLine
-                    className="text-gray-400 hover:cursor-pointer"
-                    size={20}
-                  />
+                  <RiShieldUserLine className="text-gray-400" size={20} />
                 }
                 textValue="Verification"
                 key="m_verification"
@@ -190,10 +185,7 @@ export default function MainNavbare({ accountName }) {
               </DropdownItem>
               <DropdownItem
                 startContent={
-                  <MdOutlineSwitchAccount
-                    className="text-gray-400 hover:cursor-pointer"
-                    size={20}
-                  />
+                  <MdOutlineSwitchAccount className="text-gray-400" size={20} />
                 }
                 textValue="Account Type"
                 key="m_accounttype"
@@ -211,10 +203,7 @@ export default function MainNavbare({ accountName }) {
               </DropdownItem>
               <DropdownItem
                 startContent={
-                  <MdDateRange
-                    className="text-gray-400 hover:cursor-pointer"
-                    size={20}
-                  />
+                  <MdDateRange className="text-gray-400" size={20} />
                 }
                 textValue="Registration"
                 key="m_registration"
@@ -228,6 +217,20 @@ export default function MainNavbare({ accountName }) {
                       4/3/2024
                     </span>
                   </div>
+                </div>
+              </DropdownItem>
+              <DropdownItem>
+                <div className="flex justify-around gap-4">
+                  <ToggelItemMenue
+                    label="IP Security"
+                    value={true}
+                    link="/account/settings"
+                  />
+                  <ToggelItemMenue
+                    label="SMS Security"
+                    value={false}
+                    link="/account/settings"
+                  />
                 </div>
               </DropdownItem>
             </DropdownMenu>
@@ -394,5 +397,23 @@ export default function MainNavbare({ accountName }) {
         </NavbarItem>
       </NavbarContent>
     </Navbar>
+  );
+}
+
+function ToggelItemMenue({ label, value, link }) {
+  return (
+    <div className="grid grid-rows-2 gap-2">
+      <span className="text-gray-500 self-center">{label}</span>
+      <Link
+        href={link}
+        className={`flex justify-between border-1 rounded-md min-w-10 text-center w-fit ${
+          value ? "border-green-500 bg-green-500" : "border-red-500 bg-red-500"
+        }`}
+      >
+        {value && <span className="w-1 h-full bg-white rounded-s-md">.</span>}
+        <span className="w-full">Off</span>
+        {!value && <span className="w-1 h-full bg-white rounded-e-md">.</span>}
+      </Link>
+    </div>
   );
 }
