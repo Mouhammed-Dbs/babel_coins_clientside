@@ -39,12 +39,17 @@ export default function MainNavbare({ accountName }) {
   const { theme, setTheme } = useTheme();
   const [infoAccountIsOpen, setInfoAccountIsOpen] = useState(false);
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
-
   useEffect(() => {
     setMounted(true);
-    const touchstart = () => {
-      setSettingsIsOpen(false);
-      setInfoAccountIsOpen(false);
+
+    const touchstart = (e) => {
+      if (
+        !e.target.classList.value.split(" ").includes("dropxxxblure") &&
+        !e.target.parentNode.classList.value.split(" ").includes("dropxxxblure")
+      ) {
+        setSettingsIsOpen(false);
+        setInfoAccountIsOpen(false);
+      }
     };
     document?.addEventListener("touchstart", touchstart);
     return () => {
@@ -86,7 +91,7 @@ export default function MainNavbare({ accountName }) {
           </Button>
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
-        <NavbarItem className="hidden md:flex items-center hover:cursor-pointer">
+        <NavbarItem className="flex items-center hover:cursor-pointer">
           <Dropdown
             size="sm"
             className="min-w-28 rounded-sm"
@@ -94,15 +99,17 @@ export default function MainNavbare({ accountName }) {
           >
             <DropdownTrigger>
               <Button
-                onClick={() => setInfoAccountIsOpen(!infoAccountIsOpen)}
-                className="min-w-fit p-0"
+                onClick={() => {
+                  setInfoAccountIsOpen(!infoAccountIsOpen);
+                }}
+                className="min-w-fit p-0 dropxxxblure"
                 onMouseEnter={() => {
                   setInfoAccountIsOpen(true);
                   setSettingsIsOpen(false);
                 }}
               >
                 <IoMdPerson
-                  className={`${
+                  className={`dropxxxblure ${
                     currentRoute === "account"
                       ? "text-primary"
                       : "text-gray-500"
@@ -110,13 +117,16 @@ export default function MainNavbare({ accountName }) {
                   size={25}
                 />
 
-                <div className="ml-1 text-xs text-gray-500">
-                  <label>Account No.</label>
-                  <p className="text-center text-black dark:text-white">
+                <div className="dropxxxblure ml-1 text-xs text-gray-500">
+                  <label className="dropxxxblure">Account No.</label>
+                  <p className="dropxxxblure text-center text-black dark:text-white">
                     {accountName}
                   </p>
                 </div>
-                <RiArrowDropDownLine className="text-primary" size={18} />
+                <RiArrowDropDownLine
+                  className="dropxxxblure text-primary"
+                  size={18}
+                />
               </Button>
             </DropdownTrigger>
             <DropdownMenu
@@ -219,7 +229,7 @@ export default function MainNavbare({ accountName }) {
                   </div>
                 </div>
               </DropdownItem>
-              <DropdownItem>
+              <DropdownItem textValue="toggel">
                 <div className="flex justify-around gap-4">
                   <ToggelItemMenue
                     label="IP Security"
@@ -290,14 +300,14 @@ export default function MainNavbare({ accountName }) {
                 onClick={() => {
                   setSettingsIsOpen(!settingsIsOpen);
                 }}
-                className="min-w-fit p-0"
+                className="dropxxxblure min-w-fit p-0"
                 onMouseEnter={() => {
                   setSettingsIsOpen(true);
                   setInfoAccountIsOpen(false);
                 }}
               >
                 <IoMdSettings
-                  className="hover:cursor-pointer"
+                  className="dropxxxblure hover:cursor-pointer"
                   color="gray"
                   size={20}
                 />
@@ -410,9 +420,13 @@ function ToggelItemMenue({ label, value, link }) {
           value ? "border-green-500 bg-green-500" : "border-red-500 bg-red-500"
         }`}
       >
-        {value && <span className="w-1 h-full bg-white rounded-s-md">.</span>}
+        {value && (
+          <span className="w-2 h-full bg-white rounded-s-xl rounded-e-md"></span>
+        )}
         <span className="w-full text-white">Off</span>
-        {!value && <span className="w-1 h-full bg-white rounded-e-md">.</span>}
+        {!value && (
+          <span className="w-2 h-full bg-white rounded-e-xl rounded-s-md"></span>
+        )}
       </Link>
     </div>
   );
