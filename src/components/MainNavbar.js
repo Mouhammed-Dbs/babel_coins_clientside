@@ -411,7 +411,7 @@ function ToggelItemMenue({ label, value, link }) {
         }`}
       >
         {value && <span className="w-1 h-full bg-white rounded-s-md">.</span>}
-        <span className="w-full">Off</span>
+        <span className="w-full text-white">Off</span>
         {!value && <span className="w-1 h-full bg-white rounded-e-md">.</span>}
       </Link>
     </div>
