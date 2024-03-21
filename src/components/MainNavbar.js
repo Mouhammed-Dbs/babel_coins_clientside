@@ -324,7 +324,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="Profile"
                 key="m_profile"
               >
-                <span className="text-xs">Profile</span>
+                <span className="text-xs font-bold">Profile</span>
               </DropdownItem>
               <DropdownItem
                 onClick={() =>
@@ -341,7 +341,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="Logs"
                 key="my_logs"
               >
-                <span className="text-xs">Logs</span>
+                <span className="text-xs font-bold">Logs</span>
               </DropdownItem>
               <DropdownItem
                 onClick={() =>
@@ -358,7 +358,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="My Referrals"
                 key="my_myreferrals"
               >
-                <span className="text-xs">My Referrals</span>
+                <span className="text-xs font-bold">My Referrals</span>
               </DropdownItem>
               <DropdownItem
                 startContent={
@@ -370,7 +370,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="My Cards"
                 key="my_mycards"
               >
-                <span className="text-xs">My Cards</span>
+                <span className="text-xs font-bold">My Cards</span>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
