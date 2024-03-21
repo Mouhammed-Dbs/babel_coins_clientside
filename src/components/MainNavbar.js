@@ -224,12 +224,12 @@ export default function MainNavbare({ accountName }) {
                   <ToggelItemMenue
                     label="IP Security"
                     value={true}
-                    link="/account/settings"
+                    link="/account/settings?tab=security"
                   />
                   <ToggelItemMenue
                     label="SMS Security"
                     value={false}
-                    link="/account/settings"
+                    link="/account/settings?tab=security"
                   />
                 </div>
               </DropdownItem>
