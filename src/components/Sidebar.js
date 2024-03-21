@@ -54,6 +54,25 @@ export default function Sidebar({ children }) {
     </aside>
   );
 }
+export function SidebarElement({ children, text }) {
+  const { expanded } = useContext(SidebarContext);
+  return (
+    <li
+      className={`flex transition-colors group my-4 ${
+        expanded ? "justify-start px-3" : "justify-center"
+      }`}
+    >
+      <div className="self-center">{children}</div>
+      <span
+        className={`overflow-hidden transition-all text-gray-600 dark:text-gray-400 self-center ${
+          expanded ? "w-fit ml-2 pb-[2px]" : "w-0"
+        }`}
+      >
+        {text}
+      </span>
+    </li>
+  );
+}
 
 export function SidebarItem({
   icon,

@@ -1,9 +1,9 @@
 "use client";
 import Navbar from "@/components/MainNavbar";
-import Sidebar, { SidebarItem } from "@/components/Sidebar";
+import Sidebar, { SidebarElement, SidebarItem } from "@/components/Sidebar";
 import { LuWallet } from "react-icons/lu";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { IoIosSend } from "react-icons/io";
+import { IoIosSend, IoIosSunny } from "react-icons/io";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
@@ -14,10 +14,15 @@ import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationA
 import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged } from "../../public/global_functions/auth";
+import { Divider, Switch } from "@nextui-org/react";
+import { FaMoon } from "react-icons/fa6";
+import { useTheme } from "next-themes";
+import { MdOutlineSupportAgent } from "react-icons/md";
 
 export default function MainLayout(props) {
   const router = useRouter();
   const currentRoute = router.asPath.slice(1);
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
@@ -108,6 +113,32 @@ export default function MainLayout(props) {
             icon={<FaHistory size={20} />}
             active={currentRoute.includes("account/history")}
           />
+
+          {isMobile && (
+            <>
+              <Divider className="my-3" />
+              <SidebarItem
+                toast={!isMobile}
+                text="Support"
+                link="support"
+                icon={<MdOutlineSupportAgent size={20} />}
+                active={currentRoute.includes("account/support")}
+              />
+              <SidebarElement text="Light/Dark">
+                <Switch
+                  className="p-0 m-0"
+                  style={{ maxWidth: "40px" }}
+                  isSelected={theme === "dark"}
+                  size="sm"
+                  startContent={<FaMoon />}
+                  endContent={<IoIosSunny />}
+                  onClick={() => {
+                    theme === "dark" ? setTheme("light") : setTheme("dark");
+                  }}
+                />
+              </SidebarElement>
+            </>
+          )}
         </Sidebar>
         <div className="w-full bg-slate-50 dark:bg-default-50">
           <Navbar accountName={userInfo.accountName} />
