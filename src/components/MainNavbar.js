@@ -26,6 +26,7 @@ import {
   MdOutlineSupportAgent,
   MdGroup,
   MdOutlineSwitchAccount,
+  MdDateRange,
 } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiCardsFill } from "react-icons/pi";
@@ -210,7 +211,7 @@ export default function MainNavbare({ accountName }) {
               </DropdownItem>
               <DropdownItem
                 startContent={
-                  <PiCardsFill
+                  <MdDateRange
                     className="text-gray-400 hover:cursor-pointer"
                     size={20}
                   />
@@ -295,7 +296,7 @@ export default function MainNavbare({ accountName }) {
                 <IoMdSettings
                   className="hover:cursor-pointer"
                   color="gray"
-                  size={25}
+                  size={20}
                 />
               </Button>
             </DropdownTrigger>
@@ -317,7 +318,7 @@ export default function MainNavbare({ accountName }) {
                 startContent={
                   <IoMdSettings
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Profile"
@@ -334,7 +335,7 @@ export default function MainNavbare({ accountName }) {
                 startContent={
                   <RiShieldUserLine
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="Logs"
@@ -351,7 +352,7 @@ export default function MainNavbare({ accountName }) {
                 startContent={
                   <MdGroup
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="My Referrals"
@@ -363,7 +364,7 @@ export default function MainNavbare({ accountName }) {
                 startContent={
                   <PiCardsFill
                     className="text-gray-400 hover:cursor-pointer"
-                    size={15}
+                    size={20}
                   />
                 }
                 textValue="My Cards"
