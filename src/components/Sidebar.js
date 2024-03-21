@@ -38,7 +38,7 @@ export default function Sidebar({ children }) {
         <SidebarContext.Provider value={{ expanded }}>
           <ul className="flex-1 mt-3 px-3">{children}</ul>
         </SidebarContext.Provider>
-        <div className="flex justify-center p-3 mb-16 md:mb-2">
+        <div className="flex justify-center p-3 mb-20 md:mb-2">
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700"
