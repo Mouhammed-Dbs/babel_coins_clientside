@@ -5,15 +5,22 @@ import Security from "@/components/settings/Security";
 import Templates from "@/components/settings/Templates";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const CardIDContext = createContext();
 export { CardIDContext };
 export default function Settings() {
   const router = useRouter();
+  const { query } = router;
   const [tab, setTab] = useState("profile_tab");
   const [cardID, setCardID] = useState(false);
-
+  useEffect(() => {
+    if (query["tab"] === "security") setTab("security_tab");
+    if (query["tab"] === "profile") setTab("profile_tab");
+    if (query["tab"] === "password") setTab("password_tab");
+    if (query["tab"] === "notification") setTab("notification_tab");
+    if (query["tab"] === "templates") setTab("templates_tab");
+  }, [query]);
   return (
     <div className="absolute container h-screen ml-3 no-scrollbar overflow-y-scroll pb-[150px]">
       {/* Tabs */}
