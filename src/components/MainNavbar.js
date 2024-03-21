@@ -43,6 +43,7 @@ export default function MainNavbare({ accountName }) {
     setMounted(true);
 
     const touchstart = (e) => {
+      console.log(e);
       if (
         !e.target.classList.value.split(" ").includes("dropxxxblure") &&
         !e.target.parentNode.classList.value.split(" ").includes("dropxxxblure")
@@ -139,6 +140,9 @@ export default function MainNavbare({ accountName }) {
               }}
             >
               <DropdownItem
+                onClick={(e) => {
+                  setInfoAccountIsOpen(false);
+                }}
                 startContent={
                   <IoMdPerson className="text-gray-400" size={20} />
                 }
@@ -157,7 +161,7 @@ export default function MainNavbare({ accountName }) {
 
                   <Button
                     size="md"
-                    className="min-w-10 p-0 ml-2 h-4 text-primary self-end"
+                    className="dropxxxblure min-w-10 p-0 ml-2 h-4 text-primary self-end"
                     onClick={(e) => {
                       e.target.style.color = "green";
                       e.target.innerText = "copied";
@@ -169,6 +173,7 @@ export default function MainNavbare({ accountName }) {
                 </div>
               </DropdownItem>
               <DropdownItem
+                onClick={() => setInfoAccountIsOpen(false)}
                 startContent={
                   <RiShieldUserLine className="text-gray-400" size={20} />
                 }
@@ -184,9 +189,10 @@ export default function MainNavbare({ accountName }) {
                   </div>
                   <Button
                     size="md"
-                    className="min-w-10 p-0 ml-2 h-4 text-primary self-end"
+                    className="dropxxxblure min-w-11 p-0 ml-2 h-5 text-primary self-end"
                     onClick={() => {
                       router.push("/account/settings");
+                      setInfoAccountIsOpen(false);
                     }}
                   >
                     Go
@@ -194,6 +200,7 @@ export default function MainNavbare({ accountName }) {
                 </div>
               </DropdownItem>
               <DropdownItem
+                onClick={() => setInfoAccountIsOpen(false)}
                 startContent={
                   <MdOutlineSwitchAccount className="text-gray-400" size={20} />
                 }
@@ -212,6 +219,7 @@ export default function MainNavbare({ accountName }) {
                 </div>
               </DropdownItem>
               <DropdownItem
+                onClick={() => setInfoAccountIsOpen(false)}
                 startContent={
                   <MdDateRange className="text-gray-400" size={20} />
                 }
@@ -229,7 +237,10 @@ export default function MainNavbare({ accountName }) {
                   </div>
                 </div>
               </DropdownItem>
-              <DropdownItem textValue="toggel">
+              <DropdownItem
+                textValue="toggel"
+                onClick={() => setInfoAccountIsOpen(false)}
+              >
                 <div className="flex justify-around gap-4">
                   <ToggelItemMenue
                     label="IP Security"
@@ -323,11 +334,12 @@ export default function MainNavbare({ accountName }) {
               }}
             >
               <DropdownItem
-                onClick={() =>
+                onClick={() => {
+                  setSettingsIsOpen(false);
                   router.asPath != "/account/settings"
                     ? router.push("/account/settings")
-                    : null
-                }
+                    : null;
+                }}
                 startContent={
                   <IoMdSettings
                     className="text-gray-400 hover:cursor-pointer"
@@ -340,11 +352,12 @@ export default function MainNavbare({ accountName }) {
                 <span className="text-xs font-bold">Profile</span>
               </DropdownItem>
               <DropdownItem
-                onClick={() =>
+                onClick={() => {
+                  setSettingsIsOpen(false);
                   router.asPath != "/account/log"
                     ? router.push("/account/log")
-                    : null
-                }
+                    : null;
+                }}
                 startContent={
                   <RiShieldUserLine
                     className="text-gray-400 hover:cursor-pointer"
@@ -357,11 +370,12 @@ export default function MainNavbare({ accountName }) {
                 <span className="text-xs font-bold">Logs</span>
               </DropdownItem>
               <DropdownItem
-                onClick={() =>
+                onClick={() => {
+                  setSettingsIsOpen(false);
                   router.asPath != "/account/referrals"
                     ? router.push("/account/referrals")
-                    : null
-                }
+                    : null;
+                }}
                 startContent={
                   <MdGroup
                     className="text-gray-400 hover:cursor-pointer"
@@ -374,6 +388,9 @@ export default function MainNavbare({ accountName }) {
                 <span className="text-xs font-bold">My Referrals</span>
               </DropdownItem>
               <DropdownItem
+                onClick={() => {
+                  setSettingsIsOpen(false);
+                }}
                 startContent={
                   <PiCardsFill
                     className="text-gray-400 hover:cursor-pointer"
