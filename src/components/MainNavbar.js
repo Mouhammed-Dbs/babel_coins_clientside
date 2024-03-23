@@ -390,6 +390,9 @@ export default function MainNavbare({ accountName }) {
               <DropdownItem
                 onClick={() => {
                   setSettingsIsOpen(false);
+                  router.asPath != "/account/mycards"
+                    ? router.push("/account/mycards")
+                    : null;
                 }}
                 startContent={
                   <PiCardsFill
