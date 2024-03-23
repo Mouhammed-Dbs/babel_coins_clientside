@@ -6,14 +6,14 @@ export default function Referrals(props) {
   const router = useRouter();
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
-      <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
+      <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
             REFERRALS
           </h1>
         </div>
       </div>
-      <div className="ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] py-8 px-3 md:px-6 backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] py-8 px-3 md:px-6 backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         {/* Title */}
         <div className="w-full border-b">
           <h1 className="text-sm text-primary font-bold mb-3">MY REFERRALS</h1>
