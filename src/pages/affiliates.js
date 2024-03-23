@@ -1,7 +1,9 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Affiliates() {
+  const router = useRouter();
   return (
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
       <div className="flex w-full p-8 md:p-20 border-b-2 bg-violet-800">
