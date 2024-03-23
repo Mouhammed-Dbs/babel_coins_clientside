@@ -104,6 +104,7 @@ export default function MainLayout(props) {
           <SidebarItem
             toast={!isMobile}
             text="Exchange"
+            link="exchange"
             icon={<RiExchangeFundsLine size={20} />}
           />
           <SidebarItem
