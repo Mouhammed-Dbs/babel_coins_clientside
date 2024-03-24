@@ -43,7 +43,6 @@ export default function MainNavbare({ accountName }) {
     setMounted(true);
 
     const touchstart = (e) => {
-      console.log(e);
       if (
         !e.target.classList.value.split(" ").includes("dropxxxblure") &&
         !e.target.parentNode.classList.value.split(" ").includes("dropxxxblure")

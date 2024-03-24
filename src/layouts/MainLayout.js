@@ -105,6 +105,7 @@ export default function MainLayout(props) {
             toast={!isMobile}
             text="Exchange"
             link="exchange"
+            active={currentRoute.includes("account/exchange")}
             icon={<RiExchangeFundsLine size={20} />}
           />
           <SidebarItem
