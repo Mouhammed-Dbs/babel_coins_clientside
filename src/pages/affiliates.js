@@ -7,7 +7,7 @@ export default function Affiliates() {
   return (
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
       <div className="flex w-full p-8 md:p-20 border-b-2 bg-violet-800">
-        <div className="w-1/2 text-white">
+        <div className="w-3/5 md:1/2 text-white">
           <div className="mb-4 w-3/4">
             <span className="block text-xs text-gray-400">PARTNER PROGRAM</span>
             <span className="block text-lg">EARN WITH</span>
@@ -26,9 +26,9 @@ export default function Affiliates() {
             Create Account
           </Button>
         </div>
-        <div className="w-1/2 flex justify-center">
+        <div className="w-2/5 md:1/2 flex justify-center">
           <Image
-            className="w-80 h-80"
+            className="md:w-80 md:h-80 w-full h-fit self-center"
             width={3000}
             height={3000}
             alt=""
@@ -36,23 +36,23 @@ export default function Affiliates() {
           />
         </div>
       </div>
-      <div className="pt-8 pb-40 h-max">
+      <div className="pt-8 pb-40 h-max mx-3">
         <div className="h-fit shadow-md border-y-1 backdrop-blur-md">
           <h1 className="w-fit m-auto text-center mt-9 border-b-1 border-primary font-bold">
             PARTNER PROGRAM
           </h1>
-          <div className="flex w-full p-8 md:p-20">
-            <div className="w-1/2 flex justify-center">
+          <div className="md:flex w-full p-8 md:p-20">
+            <div className="w-full md:1/2 flex justify-center">
               <Image
-                className="w-80 h-80"
+                className="md:w-80 md:h-80 h-32 w-fit self-center"
                 width={3000}
                 height={3000}
                 alt=""
                 src={"/images/1bb.png"}
               />
             </div>
-            <div className="w-1/2 flex">
-              <div className="self-center">
+            <div className="w-full md:1/2 mt-3 md:mt-0 flex">
+              <div className="self-center pl-3">
                 <div className="h-fit">
                   <span className="block text-3xl">How it works</span>
                   <p className="mt-4">
