@@ -40,51 +40,34 @@ export default function Send(props) {
     if (coin.length > 0) return coin[0].networks;
     return [];
   };
-  const getFees = (
+  const getFeesAndLimits = (
     transferCurrencyType,
     transferType,
     currencyName,
     network
   ) => {
     setLoading(true);
-    getFeesByCoinNameAndNetwork(
-      transferCurrencyType,
-      transferType,
-      currencyName,
-      network
-    )
-      .then((result) => {
-        if (!result.error) {
-          setFee(result.data.fee);
-        }
+    Promise.all([
+      getFeesByCoinNameAndNetwork(
+        transferCurrencyType,
+        transferType,
+        currencyName,
+        network
+      ),
+      getTransferLimitsByCoinNameAndNetwork(
+        transferCurrencyType,
+        transferType,
+        currencyName,
+        network
+      ),
+    ])
+      .then(([fees, limits]) => {
+        if (!fees.error) setFee(fees.data);
+        if (!limits.error) setLimits(limits.data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-  const getLimits = (
-    transferCurrencyType,
-    transferType,
-    currencyName,
-    network
-  ) => {
-    setLoading(true);
-    getTransferLimitsByCoinNameAndNetwork(
-      transferCurrencyType,
-      transferType,
-      currencyName,
-      network
-    )
-      .then((result) => {
-        if (!result.error) {
-          setLimits(result.data);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        console.log("Error getting fees and limits");
         setLoading(false);
       });
   };
@@ -126,12 +109,20 @@ export default function Send(props) {
         if (result) {
           setCoins(result.data);
           if (query["curr"]) {
-            setCoinSelected(query["curr"]);
-            let net = getNetworks(query["curr"], result.data);
-            setNetworks(net);
-            setNetworkSelected(net[0]);
-            getFees("crypto", "external", query["curr"], net[0]);
-            getLimits("crypto", "external", query["curr"], net[0]);
+            if (
+              result.data.map((c) => c.currencyName).includes(query["curr"])
+            ) {
+              setCoinSelected(query["curr"]);
+              let net = getNetworks(query["curr"], result.data);
+              setNetworks(net);
+              setNetworkSelected(net[0]);
+              getFeesAndLimits("crypto", "external", query["curr"], net[0]);
+            } else {
+              router.replace({
+                pathname: router.pathname,
+                query: { curr: "USDT" },
+              });
+            }
           }
         }
         setPageLoading(false);
@@ -175,11 +166,14 @@ export default function Send(props) {
                 Choose system
               </label>
               <Select
-                selectedKeys={query["curr"] ? [query["curr"]] : []}
+                disallowEmptySelection={true}
+                isDisabled={loading}
+                selectedKeys={coinSelected ? [coinSelected] : []}
                 onChange={async (e) => {
                   let net = getNetworks(e.target.value, coins);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
+                  setLoading(true);
                   await router.replace({
                     pathname: router.pathname,
                     query: { curr: e.target.value },
@@ -299,11 +293,17 @@ export default function Send(props) {
                 Network
               </label>
               <Select
+                disallowEmptySelection={true}
                 items={networks}
                 selectedKeys={networkSelected ? [networkSelected] : []}
                 onChange={(e) => {
                   setNetworkSelected(e.target.value);
-                  getFees(coinSelected, networkSelected);
+                  getFeesAndLimits(
+                    "crypto",
+                    "external",
+                    query["curr"],
+                    e.target.value
+                  );
                 }}
                 aria-label="none"
                 classNames={{
