@@ -70,7 +70,9 @@ export default function Exchange() {
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
+          <h1
+            className={`w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50`}
+          >
             EXCHANGE
           </h1>
         </div>
@@ -133,11 +135,7 @@ export default function Exchange() {
                     key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
-                    <div
-                      className={`flex gap-2 items-center  ${
-                        item.currencyName == creditSelected ? "opacity-50" : ""
-                      }`}
-                    >
+                    <div className={`flex gap-2 items-center`}>
                       <Avatar
                         ImgComponent="img"
                         alt={item["currencyName"]}
@@ -188,7 +186,7 @@ export default function Exchange() {
                   return items.map((item) => (
                     <div
                       key={item.data.currencyName}
-                      className="flex items-center gap-2"
+                      className={`flex items-center gap-2`}
                     >
                       <Avatar
                         ImgComponent="img"
@@ -212,11 +210,7 @@ export default function Exchange() {
                     key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
-                    <div
-                      className={`flex gap-2 items-center  ${
-                        item.currencyName == debitSelected ? "opacity-50" : ""
-                      }`}
-                    >
+                    <div className={`flex gap-2 items-center`}>
                       <Avatar
                         ImgComponent="img"
                         alt={item["currencyName"]}
