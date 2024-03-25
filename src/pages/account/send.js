@@ -62,7 +62,7 @@ export default function Send(props) {
       ),
     ])
       .then(([fees, limits]) => {
-        if (!fees.error) setFee(fees.data);
+        if (!fees.error) setFee(fees.data.fee);
         if (!limits.error) setLimits(limits.data);
         setLoading(false);
       })
@@ -410,6 +410,7 @@ export default function Send(props) {
                         if (e.target.value.length > 0) {
                           let currentAmount = parseFloat(e.target.value);
                           if (!isAmountValid(currentAmount)) {
+                            setAmount(0);
                             setMsg({
                               error: true,
                               data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
@@ -450,7 +451,7 @@ export default function Send(props) {
                       item={{
                         label: screenSize ? undefined : "Total",
                         name: "amount",
-                        type: "number",
+                        type: "text",
                         placeholder: "$0",
                       }}
                     />
