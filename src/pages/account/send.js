@@ -26,7 +26,7 @@ export default function Send(props) {
   const [pageLoading, setPageLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [fee, setFee] = useState(0);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [limits, setLimits] = useState({});
   const [msg, setMsg] = useState({ error: false, data: "" });
   const [address, setAddress] = useState(null);
@@ -405,12 +405,13 @@ export default function Send(props) {
                     <MyInput
                       color="border-gray-500"
                       className="w-full md:w-48 border-black mt-3"
-                      defaultValue={amount}
+                      value={amount}
                       onChange={(e) => {
+                        let value = e.target.value.replace(/[e-]/g, "");
+                        setAmount(value);
                         if (e.target.value.length > 0) {
-                          let currentAmount = parseFloat(e.target.value);
+                          let currentAmount = parseFloat(value);
                           if (!isAmountValid(currentAmount)) {
-                            setAmount(0);
                             setMsg({
                               error: true,
                               data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
@@ -422,8 +423,6 @@ export default function Send(props) {
                               data: "",
                             });
                           }
-                        } else {
-                          setAmount(0);
                         }
                       }}
                       item={{
