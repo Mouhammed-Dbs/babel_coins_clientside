@@ -124,6 +124,7 @@ export default function Add(props) {
             Choose account
           </label>
           <Select
+            disallowEmptySelection={true}
             isDisabled={addressesLoading}
             selectedKeys={coinSelected ? [coinSelected] : []}
             onChange={async (e) => {
