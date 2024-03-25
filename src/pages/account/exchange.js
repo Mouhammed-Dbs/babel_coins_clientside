@@ -109,7 +109,7 @@ export default function Exchange() {
                   return items.map((item) => (
                     <div
                       key={item.data.currencyName}
-                      className="flex items-center gap-2"
+                      className={`flex items-center gap-2`}
                     >
                       <Avatar
                         ImgComponent="img"
@@ -133,7 +133,11 @@ export default function Exchange() {
                     key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
-                    <div className="flex gap-2 items-center">
+                    <div
+                      className={`flex gap-2 items-center  ${
+                        item.currencyName == creditSelected ? "opacity-50" : ""
+                      }`}
+                    >
                       <Avatar
                         ImgComponent="img"
                         alt={item["currencyName"]}
@@ -208,7 +212,11 @@ export default function Exchange() {
                     key={item["currencyName"]}
                     textValue={item["currencyName"]}
                   >
-                    <div className="flex gap-2 items-center">
+                    <div
+                      className={`flex gap-2 items-center  ${
+                        item.currencyName == debitSelected ? "opacity-50" : ""
+                      }`}
+                    >
                       <Avatar
                         ImgComponent="img"
                         alt={item["currencyName"]}
