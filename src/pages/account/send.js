@@ -293,6 +293,7 @@ export default function Send(props) {
                 Network
               </label>
               <Select
+                isDisabled={loading}
                 disallowEmptySelection={true}
                 items={networks}
                 selectedKeys={networkSelected ? [networkSelected] : []}
