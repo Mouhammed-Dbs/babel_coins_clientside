@@ -130,7 +130,7 @@ export default function Send(props) {
       .catch((err) => {
         setPageLoading(false);
       });
-  }, [query]);
+  }, [query, router]);
 
   if (!mounted)
     return (
