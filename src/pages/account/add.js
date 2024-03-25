@@ -17,6 +17,7 @@ export default function Add(props) {
   const { query } = router;
   const [mounted, setMount] = useState(false);
   const [coins, setCoins] = useState([]);
+  const [coinSelected, setCoinSelected] = useState(null);
   const [addressesByCoinName, setAddressesByCoinName] = useState([]);
   const [minimumLimitsByCoinName, setMinimumLimitsByCoinName] = useState([]);
   const [accounts, setAccounts] = useState([
@@ -47,29 +48,39 @@ export default function Add(props) {
         if (!result.error) {
           setCoins(result.data);
           if (query["curr"]) {
-            getAddressesByCoinName(query["curr"])
-              .then(async (res) => {
-                if (!res.error) {
-                  setAddressesByCoinName(res.data);
-                  getMinimumDepositLimits(query["curr"])
-                    .then((result) => {
-                      if (!result.error) {
-                        result.data.map((minimum) => {
-                          setMinimumLimitsByCoinName(minimum);
-                        });
+            if (
+              result.data.map((c) => c.currencyName).includes(query["curr"])
+            ) {
+              setCoinSelected(query["curr"]);
+              getAddressesByCoinName(query["curr"])
+                .then(async (res) => {
+                  if (!res.error) {
+                    setAddressesByCoinName(res.data);
+                    getMinimumDepositLimits(query["curr"])
+                      .then((result) => {
+                        if (!result.error) {
+                          result.data.map((minimum) => {
+                            setMinimumLimitsByCoinName(minimum);
+                          });
+                          setAddressesLoading(false);
+                        }
+                      })
+                      .catch((error) => {
                         setAddressesLoading(false);
-                      }
-                    })
-                    .catch((error) => {
-                      setAddressesLoading(false);
-                    });
-                } else {
+                      });
+                  } else {
+                    setAddressesLoading(false);
+                  }
+                })
+                .catch((err) => {
                   setAddressesLoading(false);
-                }
-              })
-              .catch((err) => {
-                setAddressesLoading(false);
+                });
+            } else {
+              router.replace({
+                pathname: router.pathname,
+                query: { curr: "USDT" },
               });
+            }
           } else {
             setAddressesLoading(false);
           }
@@ -79,7 +90,7 @@ export default function Add(props) {
       .catch((err) => {
         setPageLoading(false);
       });
-  }, [query]);
+  }, [query, router]);
 
   if (!mounted)
     return (
@@ -114,7 +125,7 @@ export default function Add(props) {
           </label>
           <Select
             isDisabled={addressesLoading}
-            selectedKeys={query["curr"] ? [query["curr"]] : []}
+            selectedKeys={coinSelected ? [coinSelected] : []}
             onChange={async (e) => {
               await router.replace({
                 pathname: router.pathname,
