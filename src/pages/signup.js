@@ -12,6 +12,10 @@ import {
   registerUser,
   updateUserInfo,
 } from "../../public/global_functions/auth";
+import {
+  validateCode,
+  validateEmail,
+} from "../../public/global_functions/validation";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
@@ -40,11 +44,10 @@ export default function Signup() {
     setInputEmail(event.target.value);
   };
   const onChangeCode = (event) => {
-    const newValue = event.target.value.replace(/\D/g, "").slice(0, 4);
+    const newValue = event.target.value.replace(/[^0-9]/g, "").slice(0, 4);
     setInputCode(newValue);
   };
-  const reqCode = async (event) => {
-    event.preventDefault();
+  const reqCode = async () => {
     setLoading(true);
     getConfirmCode(inputEmail)
       .then((result) => {
@@ -214,8 +217,14 @@ export default function Signup() {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              reqCode(event).then();
-              setShowSteps(1);
+              validateEmail({ email: inputEmail })
+                .then(() => {
+                  reqCode();
+                  setShowSteps(1);
+                })
+                .catch((error) => {
+                  setAccount({ error: true, msg: error[0] });
+                });
             }}
             className={showSteps === 0 ? "contents" : "hidden"}
           >
@@ -276,7 +285,7 @@ export default function Signup() {
                   onChange={onChangeCode}
                   value={inputCode}
                   className="peer/code w-full mt-6 self-center text-white placeholder-slate-300 rounded-lg border-2 text-xs border-white-500 p-2 bg-inherit focus:outline-none focus:border-cyan-300"
-                  type="number"
+                  type="text"
                   placeholder="0000"
                 ></input>
                 <label
@@ -286,7 +295,13 @@ export default function Signup() {
                 </label>
               </div>
               <Button
-                onClick={(e) => reqCode(e)}
+                onClick={() => {
+                  validateCode({ code: inputCode })
+                    .then(() => reqCode())
+                    .catch((error) => {
+                      setAccount({ error: true, msg: error[0] });
+                    });
+                }}
                 isDisabled={timerOn || loading}
                 color="warning"
                 variant="bordered"

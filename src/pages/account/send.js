@@ -408,9 +408,9 @@ export default function Send(props) {
                       className="w-full md:w-48 border-black mt-3"
                       value={amount}
                       onChange={(e) => {
-                        let value = e.target.value.replace(/[e-]/g, "");
+                        let value = e.target.value.replace(/[^0-9]/g, "");
                         setAmount(value);
-                        if (e.target.value.length > 0) {
+                        if (value.length > 0) {
                           let currentAmount = parseFloat(value);
                           if (!isAmountValid(currentAmount)) {
                             setMsg({
@@ -418,7 +418,7 @@ export default function Send(props) {
                               data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
                             });
                           } else {
-                            setAmount(currentAmount);
+                            setAmount(currentAmount.toString());
                             setMsg({
                               error: false,
                               data: "",
@@ -429,7 +429,7 @@ export default function Send(props) {
                       item={{
                         label: screenSize ? undefined : "Amount",
                         name: "amount",
-                        type: "number",
+                        type: "text",
                         placeholder: "0",
                       }}
                     />
