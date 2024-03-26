@@ -40,15 +40,8 @@ export default function Signup() {
   const handleStartTimer = () => {
     setTimerOn(true);
   };
-  const onChangeEmail = (event) => {
-    setInputEmail(event.target.value);
-  };
-  const onChangeCode = (event) => {
-    const newValue = event.target.value.replace(/[^0-9]/g, "").slice(0, 4);
-    setInputCode(newValue);
-  };
   const reqCode = async () => {
-    validateEmail({ email: inputEmail })
+    validateEmail({ email: inputEmail[0] })
       .then(() => {
         setLoading(true);
         getConfirmCode(inputEmail)
@@ -105,18 +98,18 @@ export default function Signup() {
             setLoading(false);
           });
       })
-      .catch(([errorEmail, errorCode]) => {
+      .catch((errorEmail, errorCode) => {
         if (errorCode)
           setAccount({
             ...account,
             error: true,
-            msg: errorCode,
+            msg: errorCode[0],
           });
         if (errorEmail)
           setAccount({
             ...account,
             error: true,
-            msg: errorEmail,
+            msg: errorEmail[0],
           });
       });
   };
@@ -254,7 +247,7 @@ export default function Signup() {
             <MyInput
               className="w-64"
               textColor="text-white"
-              onChange={onChangeEmail}
+              onChange={() => setInputEmail(event.target.value)}
               value={inputEmail}
               item={{
                 name: "email",
@@ -302,7 +295,12 @@ export default function Signup() {
               <div className="relative">
                 <input
                   maxLength={6}
-                  onChange={onChangeCode}
+                  onChange={() => {
+                    const newValue = event.target.value
+                      .replace(/[^0-9]/g, "")
+                      .slice(0, 4);
+                    setInputCode(newValue);
+                  }}
                   value={inputCode}
                   className="peer/code w-full mt-6 self-center text-white placeholder-slate-300 rounded-lg border-2 text-xs border-white-500 p-2 bg-inherit focus:outline-none focus:border-cyan-300"
                   type="text"
