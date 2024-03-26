@@ -1,4 +1,4 @@
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody, input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
@@ -48,51 +48,76 @@ export default function Signup() {
     setInputCode(newValue);
   };
   const reqCode = async () => {
-    setLoading(true);
-    getConfirmCode(inputEmail)
-      .then((result) => {
-        if (!result.error) {
-          handleStartTimer();
-        } else {
-          setAccount({
-            error: result.error,
-            msg: result.msg + " " + result.data.receiveBlockingExpirationDate,
+    validateEmail({ email: inputEmail })
+      .then(() => {
+        setLoading(true);
+        getConfirmCode(inputEmail)
+          .then((result) => {
+            if (!result.error) {
+              handleStartTimer();
+            } else {
+              setAccount({
+                error: result.error,
+                msg:
+                  result.msg + " " + result.data.receiveBlockingExpirationDate,
+              });
+            }
+            setLoading(false);
+          })
+          .then((err) => {
+            setLoading(false);
           });
-          console.log(result.msg);
-        }
-        setLoading(false);
       })
-      .then((err) => {
-        setLoading(false);
+      .catch((error) => {
+        setAccount({ ...account, error: true, msg: error[0] });
       });
   };
   const createAccount = async (event) => {
     event.preventDefault();
-    setLoading(true);
-    registerUser(inputEmail, inputCode)
-      .then((result) => {
-        if (!result.error) {
-          setAccount({
-            accountName: result.data.accountName,
-            secretCode: result.data.secretCode,
-            password: result.data.password,
-            firstName: "",
-            lastName: "",
-            country: "",
-            msg: result.msg,
-            error: result.error,
+    Promise.all([
+      validateEmail({ email: inputEmail }),
+      validateCode({ code: inputCode }),
+    ])
+      .then((res) => {
+        setLoading(true);
+        registerUser(inputEmail, inputCode)
+          .then((result) => {
+            if (!result.error) {
+              setAccount({
+                accountName: result.data.accountName,
+                secretCode: result.data.secretCode,
+                password: result.data.password,
+                firstName: "",
+                lastName: "",
+                country: "",
+                msg: result.msg,
+                error: result.error,
+              });
+              localStorage.setItem("babel-coins-user-token", result.data.token);
+              setShowSteps(2);
+              setLoading(false);
+            } else {
+              setLoading(false);
+              setAccount({ error: result.error, msg: result.msg });
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
           });
-          localStorage.setItem("babel-coins-user-token", result.data.token);
-          setShowSteps(2);
-          setLoading(false);
-        } else {
-          setLoading(false);
-          setAccount({ error: result.error, msg: result.msg });
-          console.log(result.msg);
-        }
       })
-      .catch((err) => {
-        setLoading(false);
+      .catch(([errorEmail, errorCode]) => {
+        if (errorCode)
+          setAccount({
+            ...account,
+            error: true,
+            msg: errorCode,
+          });
+        if (errorEmail)
+          setAccount({
+            ...account,
+            error: true,
+            msg: errorEmail,
+          });
       });
   };
 
@@ -163,6 +188,7 @@ export default function Signup() {
         className="w-min m-auto mt-3 p-8 pb-2 pt-2 text-white"
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
+        {account.accountName}
         <CardBody>
           {/* line steps */}
           <div className="w-full justify-center">
@@ -217,14 +243,8 @@ export default function Signup() {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              validateEmail({ email: inputEmail })
-                .then(() => {
-                  reqCode();
-                  setShowSteps(1);
-                })
-                .catch((error) => {
-                  setAccount({ error: true, msg: error[0] });
-                });
+              reqCode();
+              setShowSteps(1);
             }}
             className={showSteps === 0 ? "contents" : "hidden"}
           >
@@ -261,7 +281,7 @@ export default function Signup() {
           {/* Step 1 */}
           <form
             className={showSteps === 1 ? "contents" : "hidden"}
-            onSubmit={reqCode}
+            onSubmit={createAccount}
           >
             <h1 className="text-center mt-6 mb-4">
               Check your email and enter confirmation code
@@ -296,11 +316,7 @@ export default function Signup() {
               </div>
               <Button
                 onClick={() => {
-                  validateCode({ code: inputCode })
-                    .then(() => reqCode())
-                    .catch((error) => {
-                      setAccount({ error: true, msg: error[0] });
-                    });
+                  reqCode();
                 }}
                 isDisabled={timerOn || loading}
                 color="warning"
