@@ -247,7 +247,7 @@ export default function Signup() {
             <MyInput
               className="w-64"
               textColor="text-white"
-              onChange={() => setInputEmail(event.target.value)}
+              onChange={(event) => setInputEmail(event.target.value)}
               value={inputEmail}
               item={{
                 name: "email",
@@ -295,7 +295,7 @@ export default function Signup() {
               <div className="relative">
                 <input
                   maxLength={6}
-                  onChange={() => {
+                  onChange={(event) => {
                     const newValue = event.target.value
                       .replace(/[^0-9]/g, "")
                       .slice(0, 4);

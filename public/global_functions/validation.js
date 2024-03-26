@@ -31,4 +31,27 @@ const validateCode = async (code) => {
   }
 };
 
-export { validateEmail, validateCode };
+const validateLogin = async (data) => {
+  const loginSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+        "Password should has minimum 8 characters in length,at least one uppercase character, one lowercase character,one digit and one special character0"
+      ),
+  });
+
+  try {
+    await loginSchema.validate(data, { abortEarly: false });
+    return true;
+  } catch (error) {
+    throw error.errors;
+  }
+};
+
+export { validateEmail, validateCode, validateLogin };
