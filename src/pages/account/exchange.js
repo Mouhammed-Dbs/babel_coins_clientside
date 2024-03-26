@@ -40,8 +40,12 @@ export default function Exchange() {
     getNetworksCurrencies()
       .then((result) => {
         if (result) {
-          setCreditAccounts(result.data);
-          setDebitAccounts(result.data);
+          let data = result.data;
+          data.sort((a, b) =>
+            a.currencyName[0].localeCompare(b.currencyName[0])
+          );
+          setCreditAccounts(data);
+          setDebitAccounts(data);
         }
         setPageLoading(false);
       })
@@ -90,9 +94,18 @@ export default function Exchange() {
                 defaultSelectedKeys={[debitSelected]}
                 disallowEmptySelection={true}
                 onChange={(e) => {
-                  if (e.target.value !== creditSelected) {
-                    setDebitSelected(e.target.value);
+                  if (
+                    e.target.value === creditSelected &&
+                    e.target.value !== "USDT"
+                  ) {
+                    setCreditSelected("USDT");
+                  } else if (
+                    e.target.value === creditSelected &&
+                    e.target.value === "USDT"
+                  ) {
+                    setCreditSelected("TRX");
                   }
+                  setDebitSelected(e.target.value);
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
@@ -166,8 +179,18 @@ export default function Exchange() {
                 defaultSelectedKeys={[creditSelected]}
                 disallowEmptySelection={true}
                 onChange={(e) => {
-                  if (e.target.value !== debitSelected)
-                    setCreditSelected(e.target.value);
+                  if (
+                    e.target.value === debitSelected &&
+                    e.target.value !== "USDT"
+                  ) {
+                    setDebitSelected("USDT");
+                  } else if (
+                    e.target.value === debitSelected &&
+                    e.target.value === "USDT"
+                  ) {
+                    setDebitSelected("TRX");
+                  }
+                  setCreditSelected(e.target.value);
                 }}
                 aria-label="none"
                 style={{ backgroundColor: "inherit" }}
