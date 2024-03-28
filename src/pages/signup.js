@@ -15,7 +15,10 @@ import {
 import {
   validateCode,
   validateEmail,
+  validateFirstAndLastName,
+  validatePasswordAndSecretCode,
 } from "../../public/global_functions/validation";
+import { IoWarning } from "react-icons/io5";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
@@ -41,7 +44,7 @@ export default function Signup() {
     setTimerOn(true);
   };
   const reqCode = async () => {
-    validateEmail({ email: inputEmail[0] })
+    validateEmail({ email: inputEmail })
       .then(() => {
         setLoading(true);
         getConfirmCode(inputEmail)
@@ -113,6 +116,34 @@ export default function Signup() {
           });
       });
   };
+  const updateUserInformation = async (event) => {
+    event.preventDefault();
+    validateFirstAndLastName({
+      firstName: account?.firstName,
+      lastName: account?.lastName,
+    })
+      .then(async () => {
+        try {
+          setLoading(true);
+          let res = await updateUserInfo(
+            account?.password,
+            account?.secretCode,
+            account?.firstName,
+            account?.lastName,
+            account?.country
+          );
+          if (!res.error) {
+            await router.push("/");
+            setLoading(false);
+          }
+        } catch (err) {
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        setAccount({ ...account, error: true, msg: error[0] });
+      });
+  };
 
   useEffect(() => {
     let timer;
@@ -143,7 +174,7 @@ export default function Signup() {
       .catch((err) => {
         setPageLoading(false);
       });
-  }, [router]);
+  }, []);
 
   if (!mounted)
     return (
@@ -163,11 +194,11 @@ export default function Signup() {
     );
 
   return (
-    <div className="text-white mt-20 md:mt-5">
+    <div className="text-white mt-14 md:mt-2">
       <div className="flex justify-center">
         <MdOutlineArrowCircleLeft
           className={`w-6 h-6 self-center hover:text-secondary ${
-            showSteps == 1 ? "" : "hidden"
+            showSteps == 1 || showSteps == 3 ? "" : "hidden"
           }`}
           onClick={() => {
             setShowSteps(showSteps - 1);
@@ -178,10 +209,9 @@ export default function Signup() {
 
       <Card
         isBlurred
-        className="w-min m-auto mt-3 p-8 pb-2 pt-2 text-white"
+        className="w-min m-auto mt-3 p-8 py-4 text-white"
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
-        {account.accountName}
         <CardBody>
           {/* line steps */}
           <div className="w-full justify-center">
@@ -274,7 +304,10 @@ export default function Signup() {
           {/* Step 1 */}
           <form
             className={showSteps === 1 ? "contents" : "hidden"}
-            onSubmit={createAccount}
+            onSubmit={(event) => {
+              setAccount({ ...account, error: false, msg: "" });
+              createAccount(event);
+            }}
           >
             <h1 className="text-center mt-6 mb-4">
               Check your email and enter confirmation code
@@ -342,7 +375,17 @@ export default function Signup() {
               className={showSteps === 2 ? "contents" : "hidden"}
               onSubmit={(event) => {
                 event.preventDefault();
-                setShowSteps(3);
+                setAccount({ ...account, error: false, msg: "" });
+                validatePasswordAndSecretCode({
+                  password: account?.password,
+                  secretCode: account?.secretCode,
+                })
+                  .then(() => {
+                    setShowSteps(3);
+                  })
+                  .catch((error) => {
+                    setAccount({ ...account, error: true, msg: error[0] });
+                  });
               }}
             >
               <p className="text-center my-2">Please save it in a save place</p>
@@ -406,25 +449,9 @@ export default function Signup() {
           {showSteps === 3 && (
             <form
               className={showSteps === 3 ? "contents" : "hidden"}
-              onSubmit={async (event) => {
-                try {
-                  event.preventDefault();
-                  setLoading(true);
-                  let res = await updateUserInfo(
-                    account?.password,
-                    account?.secretCode,
-                    account?.firstName,
-                    account?.lastName,
-                    account?.country
-                  );
-                  if (!res.error) {
-                    await router.push("/");
-                    setLoading(false);
-                  }
-                } catch (err) {
-                  setLoading(false);
-                  console.log(err);
-                }
+              onSubmit={(event) => {
+                setAccount({ ...account, error: false, msg: "" });
+                updateUserInformation(event);
               }}
             >
               <p className="text-center my-2">Please save it in a save place</p>
@@ -476,13 +503,14 @@ export default function Signup() {
             </form>
           )}
           {/* Error Message */}
-          <p
-            className={`text-red-900 font-bold text-xs mt-2 text-center ${
+          <div
+            className={`flex text-red-600 font-bold text-xs mt-2 text-left place-content-center ${
               account.error ? "block" : "hidden"
             }`}
           >
-            {account.msg}
-          </p>
+            <IoWarning className="self-center mr-1 text-base w-5 h-5" />
+            <p className="self-center">{account.msg}</p>
+          </div>
         </CardBody>
       </Card>
       {/* Under Card */}
