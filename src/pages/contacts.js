@@ -28,7 +28,7 @@ export default function Contacts() {
             <MyInput
               textColor="text-white"
               className="w-full md:w-72"
-              handleChange={(e) => setNameValue(e.target.value)}
+              onChange={(e) => setNameValue(e.target.value)}
               value={nameValue}
               item={{
                 name: "text",
@@ -40,7 +40,7 @@ export default function Contacts() {
             <MyInput
               textColor="text-white"
               className="mt-3 w-full md:w-72"
-              handleChange={(e) => setEmailValue(e.target.value)}
+              onChange={(e) => setEmailValue(e.target.value)}
               value={emailValue}
               item={{
                 name: "email",
