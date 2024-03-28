@@ -19,6 +19,7 @@ import {
   validatePasswordAndSecretCode,
 } from "../../public/global_functions/validation";
 import { IoWarning } from "react-icons/io5";
+import ErrorMessage from "@/components/utils/ErrorMessage";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
@@ -503,14 +504,7 @@ export default function Signup() {
             </form>
           )}
           {/* Error Message */}
-          <div
-            className={`flex text-red-600 font-bold text-xs mt-2 text-left place-content-center ${
-              account.error ? "block" : "hidden"
-            }`}
-          >
-            <IoWarning className="self-center mr-1 text-base w-5 h-5" />
-            <p className="self-center">{account.msg}</p>
-          </div>
+          <ErrorMessage show={account.error} message={account.msg} />
         </CardBody>
       </Card>
       {/* Under Card */}
