@@ -7,14 +7,32 @@ import {
   CardHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { validateContacts } from "../../public/global_functions/validation";
+import ErrorMessage from "@/components/utils/ErrorMessage";
+import Image from "next/image";
 
 export default function Contacts() {
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [messValue, setMessValue] = useState("");
   const [agreeValue, setAgreeValue] = useState(false);
+  const [errorForm, setErrorForm] = useState({ msg: "", error: false });
+  const sendMessage = (event) => {
+    event.preventDefault();
+    validateContacts({
+      email: emailValue,
+      name: nameValue,
+      message: messValue,
+    })
+      .then(() => {
+        setErrorForm({ error: false, msg: "" });
+      })
+      .catch((error) => {
+        setErrorForm({ error: true, msg: error[0] });
+      });
+  };
   return (
-    <div className="text-white mt-20 md:mt-5">
+    <div className="text-white mt-15 md:mt-4">
       <Card
         isBlurred
         className="w-5/6 md:w-2/3 m-auto mt-4 p-4 px-6 text-white"
@@ -24,7 +42,12 @@ export default function Contacts() {
           <h1 className="w-full text-center text-xl">CONTACT US</h1>
         </CardHeader>
         <CardBody className="grid md:grid-template-columns md:gap-x-4">
-          <form className="w-full">
+          <form
+            className="w-full"
+            onSubmit={(event) => {
+              sendMessage(event);
+            }}
+          >
             <MyInput
               textColor="text-white"
               className="w-full md:w-72"
@@ -72,7 +95,7 @@ export default function Contacts() {
                 Your message
               </label>
             </div>
-            <div className="flex mt-3">
+            <div className="flex mt-3 ml-1">
               <input
                 onChange={() => {
                   setAgreeValue(!agreeValue);
@@ -86,25 +109,34 @@ export default function Contacts() {
                 I agree to the processing of the personal data provided
               </label>
             </div>
+            <ErrorMessage show={errorForm.error} message={errorForm.msg} />
+            <div className="mt-4">
+              <Button
+                type="submit"
+                isDisabled={
+                  !(agreeValue && nameValue && emailValue && messValue)
+                }
+                className="bg-orange rounded-full block m-auto md:m-0 text-white h-8 w-36 hover:bg-white hover:text-orange"
+              >
+                SEND
+              </Button>
+            </div>
           </form>
-          <div className="hidden md:contents pl-8">
+          <div className="hidden md:block pl-1">
             <p>
               hi you cckals f ef eg rgergre ger g rewgegyjhy uk iol oil 0p; 0 ;
               ik7 uy5hy5hg54 tg45 g3 g43ef324f 4ghy j 8k 798k 8 u7j 6 j6
             </p>
             <div className="w-full flex justify-center mt-8">
-              {/* <Image src={'/images/logo.svg'} alt="" width={40} height={40}></Image> */}
+              <Image
+                src={"/images/logo.svg"}
+                alt=""
+                width={40}
+                height={40}
+              ></Image>
             </div>
           </div>
         </CardBody>
-        <CardFooter className="p-0 justify-center">
-          <Button
-            isDisabled={!(agreeValue && nameValue && emailValue && messValue)}
-            className="bg-orange rounded-full text-white h-8 w-36 hover:bg-white hover:text-orange"
-          >
-            SEND
-          </Button>
-        </CardFooter>
       </Card>
     </div>
   );

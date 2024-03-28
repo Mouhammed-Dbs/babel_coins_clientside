@@ -40,10 +40,14 @@ const validateLogin = async (data) => {
     password: yup
       .string()
       .required("Password is required")
+      .matches(/^.{8,}$/, "Password should has minimum 8 characters")
       .matches(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
-        "Password should has minimum 8 characters in length,at least one uppercase character, one lowercase character,one digit and one special character0"
-      ),
+        /(?=.*[a-z].*[a-z].*[a-z])/,
+        "Password should has 3 lowercase letters"
+      )
+      .matches(/(?=.*[A-Z].*[A-Z])/, "Password should has 2 uppercase letters")
+      .matches(/(?=.*[!@#$&*])/, "Password should has one special case letter")
+      .matches(/(?=.*[0-9].*[0-9])/, "Password should has two digits"),
   });
 
   try {
@@ -53,6 +57,7 @@ const validateLogin = async (data) => {
     throw error.errors;
   }
 };
+
 const validatePasswordAndSecretCode = async (data) => {
   const passwordAndSecretCodeSchema = yup.object().shape({
     password: yup
@@ -108,21 +113,21 @@ const validateFirstAndLastName = async (data) => {
 
 const validateContacts = async (data) => {
   const contactsSchema = yup.object().shape({
-    firstName: yup
+    name: yup
       .string()
-      .required("First name is required")
+      .required("Name is required")
       .matches(
         /^[A-Za-z.\s_-]{3,}$/,
-        "First name must be a uppercase or lowercase character!"
+        "Name must be a uppercase or lowercase character!"
       ),
-    lastName: yup
+    email: yup
       .string()
-      .required("Last name is required")
-      .matches(
-        /^[A-Za-z.\s_-]{3,}$/,
-        "Last name must be a uppercase or lowercase character!"
-      ),
-    message: yup.string().required("Message is required"),
+      .required("Email is required")
+      .email("Please enter a valid email address"),
+    message: yup
+      .string()
+      .required("Message is required")
+      .matches(/^.{20,}$/, "Message must be at least 20 characters!"),
   });
 
   try {
@@ -138,4 +143,5 @@ export {
   validateLogin,
   validateFirstAndLastName,
   validatePasswordAndSecretCode,
+  validateContacts,
 };
