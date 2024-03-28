@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged, loginUser } from "../../public/global_functions/auth";
 import { validateLogin } from "../../public/global_functions/validation";
+import ErrorMessage from "@/components/utils/ErrorMessage";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -127,13 +128,7 @@ export default function Signup() {
               {loading ? "login.." : "Login"}
             </Button>
           </form>
-          <p
-            className={`text-red-900 font-bold text-xs mt-2 text-center ${
-              resLogin.error ? "block" : "hidden"
-            }`}
-          >
-            {resLogin.msg}
-          </p>
+          <ErrorMessage show={resLogin.error} message={resLogin.msg} />
         </CardBody>
       </Card>
       <div className="flex w-fit m-auto mt-6">
