@@ -41,9 +41,6 @@ export default function Signup() {
     error: false,
   });
 
-  const handleStartTimer = () => {
-    setTimerOn(true);
-  };
   const reqCode = async () => {
     validateEmail({ email: inputEmail })
       .then(() => {
@@ -145,7 +142,9 @@ export default function Signup() {
         setAccount({ ...account, error: true, msg: error[0] });
       });
   };
-
+  const handleStartTimer = () => {
+    setTimerOn(true);
+  };
   useEffect(() => {
     let timer;
     if (timerOn) {
