@@ -133,7 +133,7 @@ export default function Signup() {
       <div className="w-fit m-auto">
         <ErrorMessage show={resLogin.error} message={resLogin.msg} />
       </div>
-      <div className="flex w-fit m-auto mt-6">
+      <div className="flex w-fit m-auto mt-4">
         <p className="text-sm opacity-75 text-white">
           {`Don't have an account?`}
         </p>
