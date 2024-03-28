@@ -3,7 +3,7 @@ import { IoWarning } from "react-icons/io5";
 export default function ErrorMessage({ show, message }) {
   return (
     <div
-      className={`flex text-red-600 font-bold text-xs mt-2 text-left place-content-center w-fit ${
+      className={`flex text-red-700 font-bold text-xs mt-2 text-left place-content-center w-fit ${
         show ? "block" : "hidden"
       }`}
     >
