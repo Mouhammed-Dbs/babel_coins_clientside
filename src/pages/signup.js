@@ -503,12 +503,14 @@ export default function Signup() {
               </Button>
             </form>
           )}
-          {/* Error Message */}
-          <ErrorMessage show={account.error} message={account.msg} />
         </CardBody>
       </Card>
+      <div className="w-fit m-auto">
+        {/* Error Message */}
+        <ErrorMessage show={account.error} message={account.msg} />
+      </div>
       {/* Under Card */}
-      <div className="flex w-fit m-auto mt-6">
+      <div className="flex w-fit m-auto mt-4">
         <p className="mt-1 text-sm opacity-75 text-white">
           Already have an account?
         </p>
