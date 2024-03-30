@@ -11,6 +11,7 @@ import {
   transferMoney,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
+import { validateAmount } from "../../../public/global_functions/validation";
 
 export default function Exchange() {
   const router = useRouter();
@@ -263,12 +264,8 @@ export default function Exchange() {
                 color="border-gray-500"
                 className="w-36 border-black mt-3"
                 onChange={(e) => {
-                  if (e.target.value.length > 0) {
-                    let currentDebit = parseFloat(e.target.value);
-                    setDebit(currentDebit);
-                  } else {
-                    setDebit(0);
-                  }
+                  let value = validateAmount(e.target.value);
+                  setDebit(value);
                 }}
                 item={{
                   label: screenSize ? undefined : "Debit",
@@ -294,12 +291,8 @@ export default function Exchange() {
                 color="border-gray-500"
                 className="w-36 border-black mb-3 mt-3"
                 onChange={(e) => {
-                  if (e.target.value.length > 0) {
-                    let currentCredit = parseFloat(e.target.value);
-                    setCredit(currentCredit);
-                  } else {
-                    setCredit(0);
-                  }
+                  let value = validateAmount(e.target.value);
+                  setCredit(value);
                 }}
                 item={{
                   label: screenSize ? undefined : "Total",

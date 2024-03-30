@@ -152,6 +152,7 @@ const validateAmount = (text) => {
   if (p3.test(text)) return text;
   return value;
 };
+
 export {
   validateEmail,
   validateCode,
