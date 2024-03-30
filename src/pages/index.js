@@ -75,7 +75,6 @@ export default function Home() {
         }),
     ]).then(() => {
       setPageLoading(false);
-      // This code will run when both functions are finished successfully
     });
   }, [getCoins]);
 
