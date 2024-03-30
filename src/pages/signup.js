@@ -174,7 +174,7 @@ export default function Signup() {
       .catch((err) => {
         setPageLoading(false);
       });
-  }, []);
+  }, [router]);
 
   if (!mounted)
     return (

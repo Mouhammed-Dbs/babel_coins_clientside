@@ -11,6 +11,7 @@ import {
   transferMoney,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
+import { validateAmount } from "../../../public/global_functions/validation";
 
 export default function Send(props) {
   const router = useRouter();
@@ -408,9 +409,9 @@ export default function Send(props) {
                       className="w-full md:w-48 border-black mt-3"
                       value={amount}
                       onChange={(e) => {
-                        let value = e.target.value.replace(/[^0-9]/g, "");
+                        let value = validateAmount(e.target.value);
                         setAmount(value);
-                        if (value.length > 0) {
+                        if (value) {
                           let currentAmount = parseFloat(value);
                           if (!isAmountValid(currentAmount)) {
                             setMsg({
@@ -418,7 +419,6 @@ export default function Send(props) {
                               data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
                             });
                           } else {
-                            setAmount(currentAmount.toString());
                             setMsg({
                               error: false,
                               data: "",
@@ -444,7 +444,7 @@ export default function Send(props) {
                       Total
                     </label>
                     <MyInput
-                      value={amount > 0 ? amount + fee : amount}
+                      value={amount.length > 0 ? parseFloat(amount) + fee : 0}
                       readOnly
                       color="border-gray-500"
                       className="w-full md:w-48 border-black mb-3 mt-3"

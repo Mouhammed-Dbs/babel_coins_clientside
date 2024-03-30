@@ -137,6 +137,21 @@ const validateContacts = async (data) => {
     throw error.errors;
   }
 };
+
+const validateAmount = (text) => {
+  let value = text.replace(/[^\d\.]/g, "");
+  let p1 = /^\d+\.\d+$/;
+  let p3 = /^\d+$/;
+
+  if (!p1.test(text)) {
+    if (value.split(".").length - 1 > 1) {
+      value = value.split(".")[0] + "." + value.split(".")[1];
+      return value;
+    }
+  }
+  if (p3.test(text)) return text;
+  return value;
+};
 export {
   validateEmail,
   validateCode,
@@ -144,4 +159,5 @@ export {
   validateFirstAndLastName,
   validatePasswordAndSecretCode,
   validateContacts,
+  validateAmount,
 };
