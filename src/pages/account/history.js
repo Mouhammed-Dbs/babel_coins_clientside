@@ -23,7 +23,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 23:53",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -31,7 +31,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 23:54",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -39,7 +39,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 23:55",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -47,7 +47,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 23:56",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -55,7 +55,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 23:57",
       credit: 90,
       debit: 0,
       ps: "TRX",
@@ -63,7 +63,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 23:58",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -71,7 +71,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 23:59",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -79,7 +79,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 00:00",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -87,7 +87,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 22:52",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -95,7 +95,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 21:52",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -103,7 +103,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 19:52",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -111,7 +111,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 14:52",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -119,7 +119,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 13:52",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -127,7 +127,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 12:52",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -135,7 +135,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 10:52",
       credit: 100,
       debit: 0,
       ps: "TRX",
@@ -143,7 +143,7 @@ export default function History() {
       status: false,
     },
     {
-      date: "16 Jan 2024 23:52",
+      date: "16 Jan 2024 02:52",
       credit: 0,
       debit: 15,
       ps: "TRX",
@@ -151,7 +151,7 @@ export default function History() {
       status: true,
     },
     {
-      date: "16 Jul 2024 23:52",
+      date: "16 Jul 2024 03:52",
       credit: 100,
       debit: 0,
       ps: "TRX",
