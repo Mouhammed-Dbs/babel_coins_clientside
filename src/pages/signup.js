@@ -18,7 +18,6 @@ import {
   validateFirstAndLastName,
   validatePasswordAndSecretCode,
 } from "../../public/global_functions/validation";
-import { IoWarning } from "react-icons/io5";
 import ErrorMessage from "@/components/utils/ErrorMessage";
 export default function Signup() {
   const router = useRouter();

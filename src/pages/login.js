@@ -122,7 +122,9 @@ export default function Signup() {
             />
             <Button
               type="submit"
-              isDisabled={!(inputEmail && inputPass) || loading}
+              isDisabled={
+                !(inputEmail.length > 4 && inputPass.length > 8) || loading
+              }
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
               {loading ? "login.." : "Login"}
