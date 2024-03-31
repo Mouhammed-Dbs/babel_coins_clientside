@@ -7,8 +7,11 @@ import MyInput from "@/components/utils/MyInput";
 import { useRouter } from "next/router";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged, loginUser } from "../../public/global_functions/auth";
-import { validateLogin } from "../../public/global_functions/validation";
 import ErrorMessage from "@/components/utils/ErrorMessage";
+import {
+  validateEmail,
+  validatePassword,
+} from "../../public/global_functions/validation";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,26 +23,20 @@ export default function Signup() {
 
   const login = (event) => {
     event.preventDefault();
-    validateLogin({ email: inputEmail, password: inputPass })
-      .then(() => {
-        setLoading(true);
-        loginUser(inputEmail, inputPass)
-          .then((result) => {
-            setResLogin({ msg: result.msg, error: result.error });
-            if (!result.error) {
-              localStorage.setItem("babel-coins-user-token", result.data.token);
-              router.push("/");
-            } else {
-              setLoading(false);
-            }
-          })
-          .catch((err) => {
-            setLoading(false);
-          });
+
+    setLoading(true);
+    loginUser(inputEmail, inputPass)
+      .then((result) => {
+        setResLogin({ msg: result.msg, error: result.error });
+        if (!result.error) {
+          localStorage.setItem("babel-coins-user-token", result.data.token);
+          router.push("/");
+        } else {
+          setLoading(false);
+        }
       })
-      .catch((error) => {
-        setResLogin({ error: true, msg: error[0] });
-        console.log(error);
+      .catch((err) => {
+        setLoading(false);
       });
   };
 
@@ -97,7 +94,18 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              onChange={(event) => setInputEmail(event.target.value)}
+              onChange={(event) => {
+                setInputEmail(event.target.value);
+                validateEmail({
+                  email: event.target.value,
+                })
+                  .then(() => {
+                    setResLogin({ error: false, msg: "" });
+                  })
+                  .catch((error) => {
+                    setResLogin({ error: true, msg: error[0] });
+                  });
+              }}
               value={inputEmail}
               item={{
                 name: "email",
@@ -110,7 +118,18 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              onChange={(event) => setInputPass(event.target.value)}
+              onChange={(event) => {
+                setInputPass(event.target.value);
+                validatePassword({
+                  password: event.target.value,
+                })
+                  .then(() => {
+                    setResLogin({ error: false, msg: "" });
+                  })
+                  .catch((error) => {
+                    setResLogin({ error: true, msg: error[0] });
+                  });
+              }}
               value={inputPass}
               item={{
                 name: "password",
@@ -123,7 +142,7 @@ export default function Signup() {
             <Button
               type="submit"
               isDisabled={
-                !(inputEmail.length > 4 && inputPass.length > 8) || loading
+                !(inputEmail && inputPass) || loading || resLogin.error
               }
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >

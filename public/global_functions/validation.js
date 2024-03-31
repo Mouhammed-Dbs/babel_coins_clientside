@@ -15,28 +15,13 @@ const validateEmail = async (email) => {
   }
 };
 
-const validateCode = async (code) => {
-  const codeSchema = yup.object().shape({
-    code: yup
-      .string()
-      .matches(/^\d{4}$/, "Code must be a 4-digit number")
-      .required("Code is required"),
-  });
-
-  try {
-    await codeSchema.validate(code, { abortEarly: false });
-    return true;
-  } catch (error) {
-    throw error.errors;
-  }
+const validateCode = (code) => {
+  const newValue = code.replace(/[^0-9]/g, "").slice(0, 4);
+  return newValue;
 };
 
-const validateLogin = async (data) => {
-  const loginSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Please enter a valid email address")
-      .required("Email is required"),
+const validatePassword = async (password) => {
+  const passwordSchema = yup.object().shape({
     password: yup
       .string()
       .required("Password is required")
@@ -51,26 +36,15 @@ const validateLogin = async (data) => {
   });
 
   try {
-    await loginSchema.validate(data, { abortEarly: false });
+    await passwordSchema.validate(password, { abortEarly: false });
     return true;
   } catch (error) {
     throw error.errors;
   }
 };
 
-const validatePasswordAndSecretCode = async (data) => {
-  const passwordAndSecretCodeSchema = yup.object().shape({
-    password: yup
-      .string()
-      .required("Password is required")
-      .matches(/^.{8,}$/, "Password should has minimum 8 characters")
-      .matches(
-        /(?=.*[a-z].*[a-z].*[a-z])/,
-        "Password should has 3 lowercase letters"
-      )
-      .matches(/(?=.*[A-Z].*[A-Z])/, "Password should has 2 uppercase letters")
-      .matches(/(?=.*[!@#$&*])/, "Password should has one special case letter")
-      .matches(/(?=.*[0-9].*[0-9])/, "Password should has two digits"),
+const validateSecretCode = async (secretCode) => {
+  const secretCodeSchema = yup.object().shape({
     secretCode: yup
       .string()
       .required("Password is required")
@@ -78,52 +52,34 @@ const validatePasswordAndSecretCode = async (data) => {
   });
 
   try {
-    await passwordAndSecretCodeSchema.validate(data, { abortEarly: false });
+    await secretCodeSchema.validate(secretCode, { abortEarly: false });
     return true;
   } catch (error) {
     throw error.errors;
   }
 };
 
-const validateFirstAndLastName = async (data) => {
-  const firstAndLastNameSchema = yup.object().shape({
-    firstName: yup
+const validateName = async (name) => {
+  const nameSchema = yup.object().shape({
+    name: yup
       .string()
       .required("First name is required")
       .matches(
         /^[A-Za-z.\s_-]{3,}$/,
-        "First name must be a uppercase or lowercase character!"
-      ),
-    lastName: yup
-      .string()
-      .required("Last name is required")
-      .matches(
-        /^[A-Za-z.\s_-]{3,}$/,
-        "Last name must be a uppercase or lowercase character!"
+        "Name must be a uppercase or lowercase character!"
       ),
   });
 
   try {
-    await firstAndLastNameSchema.validate(data, { abortEarly: false });
+    await nameSchema.validate(name, { abortEarly: false });
     return true;
   } catch (error) {
     throw error.errors;
   }
 };
 
-const validateContacts = async (data) => {
-  const contactsSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Name is required")
-      .matches(
-        /^[A-Za-z.\s_-]{3,}$/,
-        "Name must be a uppercase or lowercase character!"
-      ),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Please enter a valid email address"),
+const validateMessage = async (message) => {
+  const msgSchema = yup.object().shape({
     message: yup
       .string()
       .required("Message is required")
@@ -131,7 +87,7 @@ const validateContacts = async (data) => {
   });
 
   try {
-    await contactsSchema.validate(data, { abortEarly: false });
+    await msgSchema.validate(message, { abortEarly: false });
     return true;
   } catch (error) {
     throw error.errors;
@@ -156,9 +112,9 @@ const validateAmount = (text) => {
 export {
   validateEmail,
   validateCode,
-  validateLogin,
-  validateFirstAndLastName,
-  validatePasswordAndSecretCode,
-  validateContacts,
+  validatePassword,
+  validateSecretCode,
+  validateName,
+  validateMessage,
   validateAmount,
 };

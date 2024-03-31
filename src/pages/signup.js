@@ -12,13 +12,15 @@ import {
   registerUser,
   updateUserInfo,
 } from "../../public/global_functions/auth";
+
+import ErrorMessage from "@/components/utils/ErrorMessage";
 import {
   validateCode,
   validateEmail,
-  validateFirstAndLastName,
-  validatePasswordAndSecretCode,
+  validateName,
+  validatePassword,
+  validateSecretCode,
 } from "../../public/global_functions/validation";
-import ErrorMessage from "@/components/utils/ErrorMessage";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
@@ -41,76 +43,49 @@ export default function Signup() {
   });
 
   const reqCode = async () => {
-    validateEmail({ email: inputEmail })
-      .then(() => {
-        setLoading(true);
-        getConfirmCode(inputEmail)
-          .then((result) => {
-            if (!result.error) {
-              handleStartTimer();
-            } else {
-              setAccount({
-                error: result.error,
-                msg:
-                  result.msg + " " + result.data.receiveBlockingExpirationDate,
-              });
-            }
-            setLoading(false);
-          })
-          .then((err) => {
-            setLoading(false);
+    setLoading(true);
+    getConfirmCode(inputEmail)
+      .then((result) => {
+        if (!result.error) {
+          handleStartTimer();
+        } else {
+          setAccount({
+            error: result.error,
+            msg: result.msg + " " + result.data.receiveBlockingExpirationDate,
           });
+        }
+        setLoading(false);
       })
-      .catch((error) => {
-        setAccount({ ...account, error: true, msg: error[0] });
+      .then((err) => {
+        setLoading(false);
       });
   };
   const createAccount = async (event) => {
     event.preventDefault();
-    Promise.all([
-      validateEmail({ email: inputEmail }),
-      validateCode({ code: inputCode }),
-    ])
-      .then((res) => {
-        setLoading(true);
-        registerUser(inputEmail, inputCode)
-          .then((result) => {
-            if (!result.error) {
-              setAccount({
-                accountName: result.data.accountName,
-                secretCode: result.data.secretCode,
-                password: result.data.password,
-                firstName: "",
-                lastName: "",
-                country: "",
-                msg: result.msg,
-                error: result.error,
-              });
-              localStorage.setItem("babel-coins-user-token", result.data.token);
-              setShowSteps(2);
-              setLoading(false);
-            } else {
-              setLoading(false);
-              setAccount({ error: result.error, msg: result.msg });
-            }
-          })
-          .catch((err) => {
-            setLoading(false);
+    setLoading(true);
+    registerUser(inputEmail, inputCode)
+      .then((result) => {
+        if (!result.error) {
+          setAccount({
+            accountName: result.data.accountName,
+            secretCode: result.data.secretCode,
+            password: result.data.password,
+            firstName: "",
+            lastName: "",
+            country: "",
+            msg: result.msg,
+            error: result.error,
           });
+          localStorage.setItem("babel-coins-user-token", result.data.token);
+          setShowSteps(2);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          setAccount({ error: result.error, msg: result.msg });
+        }
       })
-      .catch((errorEmail, errorCode) => {
-        if (errorCode)
-          setAccount({
-            ...account,
-            error: true,
-            msg: errorCode[0],
-          });
-        if (errorEmail)
-          setAccount({
-            ...account,
-            error: true,
-            msg: errorEmail[0],
-          });
+      .catch((err) => {
+        setLoading(false);
       });
   };
   const updateUserInformation = async (event) => {
@@ -276,7 +251,16 @@ export default function Signup() {
             <MyInput
               className="w-64"
               textColor="text-white"
-              onChange={(event) => setInputEmail(event.target.value)}
+              onChange={(event) => {
+                setInputEmail(event.target.value);
+                validateEmail({ email: event.target.value })
+                  .then(() => {
+                    setAccount({ ...account, error: false, msg: "" });
+                  })
+                  .catch((error) => {
+                    setAccount({ ...account, error: true, msg: error[0] });
+                  });
+              }}
               value={inputEmail}
               item={{
                 name: "email",
@@ -294,7 +278,7 @@ export default function Signup() {
             </p>
             <Button
               type="submit"
-              isDisabled={inputEmail.length < 5}
+              isDisabled={!inputEmail || account.error}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
               {loading ? "Creating" : "Create Account"}
@@ -328,10 +312,7 @@ export default function Signup() {
                 <input
                   maxLength={6}
                   onChange={(event) => {
-                    const newValue = event.target.value
-                      .replace(/[^0-9]/g, "")
-                      .slice(0, 4);
-                    setInputCode(newValue);
+                    setInputCode(validateCode(event.target.value));
                   }}
                   value={inputCode}
                   className="peer/code w-full mt-6 self-center text-white placeholder-slate-300 rounded-lg border-2 text-xs border-white-500 p-2 bg-inherit focus:outline-none focus:border-cyan-300"
@@ -375,16 +356,7 @@ export default function Signup() {
               onSubmit={(event) => {
                 event.preventDefault();
                 setAccount({ ...account, error: false, msg: "" });
-                validatePasswordAndSecretCode({
-                  password: account?.password,
-                  secretCode: account?.secretCode,
-                })
-                  .then(() => {
-                    setShowSteps(3);
-                  })
-                  .catch((error) => {
-                    setAccount({ ...account, error: true, msg: error[0] });
-                  });
+                setShowSteps(3);
               }}
             >
               <p className="text-center my-2">Please save it in a save place</p>
@@ -393,6 +365,15 @@ export default function Signup() {
                 defaultValue={account?.password}
                 onChange={(e) => {
                   setAccount({ ...account, password: e.target.value });
+                  validatePassword({
+                    password: e.target.value,
+                  })
+                    .then(() => {
+                      setAccount({ ...account, error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setAccount({ ...account, error: true, msg: error[0] });
+                    });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -407,6 +388,15 @@ export default function Signup() {
                 defaultValue={account.secretCode}
                 onChange={(e) => {
                   setAccount({ ...account, secretCode: e.target.value });
+                  validateSecretCode({
+                    secretCode: e.target.value,
+                  })
+                    .then(() => {
+                      setAccount({ ...account, error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setAccount({ ...account, error: true, msg: error[0] });
+                    });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -435,7 +425,7 @@ export default function Signup() {
                     account.accountName &&
                     account.secretCode &&
                     account.password
-                  )
+                  ) || account.error
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
@@ -458,6 +448,13 @@ export default function Signup() {
                 textColor="text-white"
                 onChange={(e) => {
                   setAccount({ ...account, firstName: e.target.value });
+                  validateName({ name: e.target.value })
+                    .then(() => {
+                      setAccount({ ...account, error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setAccount({ ...account, error: true, msg: error[0] });
+                    });
                 }}
                 item={{
                   name: "firstname",
@@ -470,6 +467,13 @@ export default function Signup() {
                 textColor="text-white"
                 onChange={(e) => {
                   setAccount({ ...account, lastName: e.target.value });
+                  validateName({ name: e.target.value })
+                    .then(() => {
+                      setAccount({ ...account, error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setAccount({ ...account, error: true, msg: error[0] });
+                    });
                 }}
                 className={"w-64 mt-3"}
                 item={{
@@ -493,7 +497,11 @@ export default function Signup() {
               />
               <Button
                 type="submit"
-                isDisabled={loading}
+                isDisabled={
+                  !(account.firstName && account.lastName) ||
+                  account.error ||
+                  loading
+                }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
                 Done
