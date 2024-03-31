@@ -7,7 +7,12 @@ import {
   CardHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { validateContacts } from "../../public/global_functions/validation";
+import {
+  validateContacts,
+  validateEmail,
+  validateMessage,
+  validateName,
+} from "../../public/global_functions/validation";
 import ErrorMessage from "@/components/utils/ErrorMessage";
 import Image from "next/image";
 
@@ -19,17 +24,6 @@ export default function Contacts() {
   const [errorForm, setErrorForm] = useState({ msg: "", error: false });
   const sendMessage = (event) => {
     event.preventDefault();
-    validateContacts({
-      email: emailValue,
-      name: nameValue,
-      message: messValue,
-    })
-      .then(() => {
-        setErrorForm({ error: false, msg: "" });
-      })
-      .catch((error) => {
-        setErrorForm({ error: true, msg: error[0] });
-      });
   };
   return (
     <div className="text-white mt-15 md:mt-4">
@@ -51,7 +45,18 @@ export default function Contacts() {
               <MyInput
                 textColor="text-white"
                 className="w-full md:w-72"
-                onChange={(e) => setNameValue(e.target.value)}
+                onChange={(e) => {
+                  setNameValue(e.target.value);
+                  validateName({
+                    name: e.target.value,
+                  })
+                    .then(() => {
+                      setErrorForm({ error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setErrorForm({ error: true, msg: error[0] });
+                    });
+                }}
                 value={nameValue}
                 item={{
                   name: "text",
@@ -63,7 +68,18 @@ export default function Contacts() {
               <MyInput
                 textColor="text-white"
                 className="mt-3 w-full md:w-72"
-                onChange={(e) => setEmailValue(e.target.value)}
+                onChange={(e) => {
+                  setEmailValue(e.target.value);
+                  validateEmail({
+                    email: e.target.value,
+                  })
+                    .then(() => {
+                      setErrorForm({ error: false, msg: "" });
+                    })
+                    .catch((error) => {
+                      setErrorForm({ error: true, msg: error[0] });
+                    });
+                }}
                 value={emailValue}
                 item={{
                   name: "email",
@@ -78,6 +94,15 @@ export default function Contacts() {
                   value={messValue}
                   onChange={(e) => {
                     setMessValue(e.target.value);
+                    validateMessage({
+                      message: e.target.value,
+                    })
+                      .then(() => {
+                        setErrorForm({ error: false, msg: "" });
+                      })
+                      .catch((error) => {
+                        setErrorForm({ error: true, msg: error[0] });
+                      });
                   }}
                   className={`peer/email w-full md:w-72 h-24 resize-none self-center text-white placeholder-slate-300 mt-6 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:border-cyan-300 scrollbar-hide ${
                     messValue
@@ -129,7 +154,10 @@ export default function Contacts() {
           <CardFooter>
             <Button
               type="submit"
-              isDisabled={!(agreeValue && nameValue && emailValue && messValue)}
+              isDisabled={
+                !(agreeValue && nameValue && emailValue && messValue) ||
+                errorForm.error
+              }
               className="bg-orange rounded-full block m-auto text-white h-8 w-36 hover:bg-white hover:text-orange"
             >
               SEND

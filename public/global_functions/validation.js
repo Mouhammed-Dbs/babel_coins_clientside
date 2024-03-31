@@ -87,7 +87,10 @@ const validateMessage = async (message) => {
   });
 
   try {
-    await msgSchema.validate(message, { abortEarly: false });
+    await msgSchema.validate(
+      { message: message.message.trim().replace(/\s+/g, "") },
+      { abortEarly: false }
+    );
     return true;
   } catch (error) {
     throw error.errors;
