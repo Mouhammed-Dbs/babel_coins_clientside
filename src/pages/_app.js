@@ -11,10 +11,7 @@ import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 export default function App({ Component, pageProps }) {
-  // const currentRoute = usePathname();
   const currentRoute = useRouter().asPath;
-
-  const pathRoute = currentRoute.length === 1 ? "home" : currentRoute.slice(1);
   const namePage = currentRoute.charAt(1).toUpperCase() + currentRoute.slice(2);
   const staticRoutes = ["signup", "contacts", "login", "recovery"];
   const accountRoutes = ["account"];
