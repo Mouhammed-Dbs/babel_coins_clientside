@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
     <Providers>
       <Head>
         <title>{currentRoute == "/" ? "Babel Coins" : namePage}</title>
-        <link rel="icon" href="/images/logo.svg" sizes="32x32" />
+        <link rel="icon" href="/images/logo.png" sizes="32x32" />
       </Head>
       <main className={montserrat.className}>
         {staticRoutes.filter((router) => currentRoute.includes(router)).length >
