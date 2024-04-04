@@ -137,7 +137,7 @@ export default function Solutions() {
           width={1000}
           height={1000}
         />
-        <h1 className="mt-8 text-2xl font-bold">PAYEER® Exchange</h1>
+        <h1 className="mt-8 text-2xl font-bold">Babelcoins® Exchange</h1>
         <p className="m-auto mt-5 text-xl w-3/5">
           Trade and exchange various cryptocurrencies on our website or download
           applications for Android and IOS smartphones
@@ -208,9 +208,9 @@ export default function Solutions() {
           </div>
         </div>
         <p className="w-2/3 m-auto">
-          You dont need a bank account, you will receive fiat to your Payeer
+          You dont need a bank account, you will receive fiat to your Babelcoins
           account instantly, you can withdraw funds to crypto, mass payments to
-          Payeer accounts or bank cards VISA, MasterCard from all over the
+          Babelcoins accounts or bank cards VISA, MasterCard from all over the
           world.
         </p>
         <Button
@@ -315,7 +315,7 @@ export default function Solutions() {
         <p className="w-2/3 m-auto">
           Start accepting crypto on your website in few steps, all payments via
           BTC, LTC, ETH, USDT, DASH, XRP, BCH will be converted to USD, EUR or
-          RUB (no risks with rates) and deposited to your Payeer account,
+          RUB (no risks with rates) and deposited to your Babelcoins account,
           instantly use balance for crypto payouts.
         </p>
         <Button
