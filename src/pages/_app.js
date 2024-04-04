@@ -19,7 +19,24 @@ export default function App({ Component, pageProps }) {
     <Providers>
       <Head>
         <title>{currentRoute == "/" ? "Babel Coins" : namePage}</title>
-        <link rel="icon" href="/images/logo.png" sizes="32x32" />
+        <link
+          rel="icon"
+          href="/images/logo/png/babelcoins-logo-32.png"
+          sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href="/images/logo/png/babelcoins-logo-192.png"
+          sizes="192x192"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/images/logo/png/babelcoins-logo-180.png"
+        />
+        <meta
+          name="msapplication-TileImage"
+          content="/images/logo/png/babelcoins-logo-270.png"
+        />
       </Head>
       <main className={montserrat.className}>
         {staticRoutes.filter((router) => currentRoute.includes(router)).length >
