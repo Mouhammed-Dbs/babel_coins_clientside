@@ -11,6 +11,7 @@ export default function Solutions() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   return (
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
       <div className="flex w-full p-8 md:p-20 border-b-2 bg-violet-800 md:py-28">
@@ -80,52 +81,52 @@ export default function Solutions() {
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
-            src={"/images/solutions/multi.png"}
+            src={"/images/solutions/internal.png"}
             alt=""
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">Internal transfers</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
-            src={"/images/solutions/multi.png"}
+            src={"/images/solutions/buy.png"}
             alt=""
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">Buy and Sell Crypto</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
-            src={"/images/solutions/multi.png"}
+            src={"/images/solutions/trading.png"}
             alt=""
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">Trading crypto platform</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
-            src={"/images/solutions/multi.png"}
+            src={"/images/solutions/payments.png"}
             alt=""
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">Payments accepting on website</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
-            src={"/images/solutions/multi.png"}
+            src={"/images/solutions/methods.png"}
             alt=""
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">25+ international payment methods</p>
         </div>
       </div>
       <div className="from-orange-500 to-orange-300 bg-gradient-to-r w-full py-16 text-center text-white">
