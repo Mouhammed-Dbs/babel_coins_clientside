@@ -16,7 +16,7 @@ import {
 import ErrorMessage from "@/components/utils/ErrorMessage";
 import Image from "next/image";
 
-export default function Contacts() {
+export default function ContactUs() {
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [messValue, setMessValue] = useState("");

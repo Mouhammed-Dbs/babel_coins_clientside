@@ -13,7 +13,7 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 export default function App({ Component, pageProps }) {
   const currentRoute = useRouter().asPath;
   const namePage = currentRoute.charAt(1).toUpperCase() + currentRoute.slice(2);
-  const staticRoutes = ["signup", "contacts", "login", "recovery"];
+  const staticRoutes = ["signup", "contact-us", "login", "recovery"];
   const accountRoutes = ["account"];
   return (
     <Providers>

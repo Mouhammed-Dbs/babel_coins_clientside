@@ -85,7 +85,7 @@ export default function StaticLayout(props) {
             >
               <Image
                 src={"/images/logo.svg"}
-                alt=""
+                alt="babelcoins logo"
                 width={25}
                 height={25}
               ></Image>

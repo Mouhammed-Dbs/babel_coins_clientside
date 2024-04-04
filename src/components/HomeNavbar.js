@@ -54,11 +54,6 @@ export default function HomeNavbare() {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-
-  // if (!mounted) return null;
 
   return (
     <Navbar
@@ -78,7 +73,7 @@ export default function HomeNavbare() {
           <Image
             className="h-6 w-6 md:h-8 md:w-8"
             src={"/images/logo.svg"}
-            alt=""
+            alt="babelcoins logo"
             width={25}
             height={25}
           ></Image>
@@ -137,11 +132,11 @@ export default function HomeNavbare() {
               Affiliates
             </Link>
           </NavbarItem>
-          <NavbarItem isActive={currentRoute === "/contacts"}>
+          <NavbarItem isActive={currentRoute === "/contact-us"}>
             <Link
-              href={"/contacts"}
+              href={"/contact-us"}
               className="text-foreground me-4"
-              style={currentRoute === "/contacts" ? styleActiveLink : {}}
+              style={currentRoute === "/contact-us" ? styleActiveLink : {}}
             >
               Contacts
             </Link>
@@ -189,7 +184,14 @@ export default function HomeNavbare() {
               className={
                 item.toLowerCase() === currentRoute.slice(1) ? "font-bold" : {}
               }
-              href={"/" + (item !== "HOME" ? item.toLowerCase() : "")}
+              href={
+                "/" +
+                (item === "HOME"
+                  ? ""
+                  : item === "Contacts"
+                  ? "contact-us"
+                  : item.toLowerCase())
+              }
               size="lg"
             >
               {item}
