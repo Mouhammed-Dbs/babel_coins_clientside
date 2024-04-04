@@ -67,7 +67,7 @@ export default function Solutions() {
           One wallet for all your Individual and Business needs
         </p>
       </div>
-      <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5 lg:gap-7 justify-items-center py-14">
+      <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5 lg:gap-7 justify-items-center py-14 text-center">
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
             className="m-auto w-max h-20"
@@ -146,9 +146,9 @@ export default function Solutions() {
           onClick={() => {
             router.push("exchange");
           }}
-          className="rounded-full border-3 border-white text-white text-lg py-6 px-8 ml-4 mt-5 hover:bg-white hover:text-orange"
+          className="rounded-full border-2 border-white text-white py-5 px-6 ml-4 mt-5 hover:bg-white hover:text-orange"
         >
-          EXCHANGE
+          LEARN MORE
         </Button>
       </div>
       <div className="py-20 text-center">
@@ -160,49 +160,170 @@ export default function Solutions() {
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
               className="m-auto w-max h-20"
-              src={"/images/solutions/multi.png"}
+              src={"/images/solutions/serv1.png"}
               alt=""
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+            <p className="mt-4 font-bold">127 countries accepted</p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
               className="m-auto w-max h-20"
-              src={"/images/solutions/multi.png"}
+              src={"/images/solutions/serv2.png"}
               alt=""
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+            <p className="mt-4 font-bold">
+              High <br /> Limits
+            </p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
               className="m-auto w-max h-20"
-              src={"/images/solutions/multi.png"}
+              src={"/images/solutions/serv3.png"}
               alt=""
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+            <p className="mt-4 font-bold">
+              99.5%
+              <br /> conversation
+            </p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
               className="m-auto w-max h-20"
-              src={"/images/solutions/multi.png"}
+              src={"/images/solutions/serv4.png"}
               alt=""
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+            <p className="mt-4 font-bold">
+              no
+              <br />
+              chargebacks
+            </p>
           </div>
         </div>
         <p className="w-2/3 m-auto">
-          for crypto-services and merchants for crypto-services and merchants
-          for crypto-services and merchants for crypto-services and merchants
-          for crypto-services and merchants
+          You dont need a bank account, you will receive fiat to your Payeer
+          account instantly, you can withdraw funds to crypto, mass payments to
+          Payeer accounts or bank cards VISA, MasterCard from all over the
+          world.
         </p>
+        <Button
+          onClick={() => {}}
+          className="my-12 rounded-full border-2 border-primary text-primary py-5 px-6 ml-4 hover:bg-primary hover:text-white"
+        >
+          Demo Merchant
+        </Button>
+        <div className="relative flex justify-center mb-16 m-auto w-56">
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md w-12 h-12"
+            style={{ top: 0, left: 0 }}
+            src={"/images/coins/USDT.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md w-12 h-12"
+            style={{ top: 0, left: 35 }}
+            src={"/images/coins/BTC.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md w-12 h-12"
+            style={{ top: 0, left: 70 }}
+            src={"/images/coins/ETH.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md  w-12 h-12"
+            style={{ top: 0, left: 105 }}
+            src={"/images/coins/MATIC.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md w-12 h-12"
+            style={{ top: 0, left: 140 }}
+            src={"/images/coins/BNB.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Image
+            className="overlapping-image absolute rounded-full shadow-md w-12 h-12"
+            style={{ top: 0, left: 175 }}
+            src={"/images/coins/TRX.png"}
+            alt=""
+            width={100}
+            height={100}
+          />
+        </div>
+        <h1 className="m-auto text-2xl font-bold w-1/2">Cryptoacquiring</h1>
+        <p className="text-lg mt-3">for Individuals and Business</p>
+        <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-5 justify-items-center py-11">
+          <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
+            <Image
+              className="m-auto w-max h-20"
+              src={"/images/solutions/p1.png"}
+              alt=""
+              width={100}
+              height={100}
+            />
+            <p className="mt-4 font-bold">
+              Instantly converted
+              <br /> to USD, EUR.
+            </p>
+          </div>
+          <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
+            <Image
+              className="m-auto w-max h-20"
+              src={"/images/solutions/p2.png"}
+              alt=""
+              width={100}
+              height={100}
+            />
+            <p className="mt-4 font-bold">
+              no risks
+              <br /> with rates
+            </p>
+          </div>
+          <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
+            <Image
+              className="m-auto w-max h-20"
+              src={"/images/solutions/p3.png"}
+              alt=""
+              width={100}
+              height={100}
+            />
+            <p className="mt-4 font-bold">
+              no
+              <br /> chargebacks
+            </p>
+          </div>
+        </div>
+        <p className="w-2/3 m-auto">
+          Start accepting crypto on your website in few steps, all payments via
+          BTC, LTC, ETH, USDT, DASH, XRP, BCH will be converted to USD, EUR or
+          RUB (no risks with rates) and deposited to your Payeer account,
+          instantly use balance for crypto payouts.
+        </p>
+        <Button
+          onClick={() => {}}
+          className="my-14 rounded-full border-2 border-primary text-primary py-5 px-6 ml-4 hover:bg-primary hover:text-white"
+        >
+          Demo Merchant
+        </Button>
       </div>
     </div>
   );
