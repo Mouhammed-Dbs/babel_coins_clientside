@@ -84,7 +84,7 @@ export default function StaticLayout(props) {
               onClick={() => router.push("/")}
             >
               <Image
-                src={"/images/logo.svg"}
+                src={"/images/logo/webp/babelcoins-logo-512.webp"}
                 alt="babelcoins logo"
                 width={25}
                 height={25}

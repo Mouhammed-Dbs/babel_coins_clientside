@@ -72,7 +72,7 @@ export default function HomeNavbare() {
         >
           <Image
             className="h-6 w-6 md:h-8 md:w-8"
-            src={"/images/logo.svg"}
+            src={"/images/logo/webp/babelcoins-logo-512.webp"}
             alt="babelcoins logo"
             width={25}
             height={25}
