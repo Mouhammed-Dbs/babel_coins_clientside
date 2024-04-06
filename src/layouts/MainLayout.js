@@ -99,6 +99,7 @@ export default function MainLayout(props) {
             toast={!isMobile}
             text="Trade"
             link="trade"
+            active={currentRoute.includes("account/trade")}
             icon={<PiChartLineUpBold size={20} />}
           />
           <SidebarItem
