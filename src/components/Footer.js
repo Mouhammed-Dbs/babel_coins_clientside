@@ -1,7 +1,7 @@
 import { FaPhone } from "react-icons/fa6";
 import { CiMail } from "react-icons/ci";
 import Image from "next/image";
-
+import Link from "next/link";
 export default function Footer() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 h-72 border-t-4 border-indigo-500">
@@ -19,6 +19,11 @@ export default function Footer() {
           it has functioned as a symbol of protection, of perfection, of the
           Devil, and of humanity
         </p>
+        <ul className="mt-3">
+          <li>
+            <Link href="/about-us">About Us</Link>
+          </li>
+        </ul>
       </div>
       <div className="flex justify-self-center mb-6 pb-6 md:pb-0 order-1 md:order-none">
         <div className="w-full self-end">
