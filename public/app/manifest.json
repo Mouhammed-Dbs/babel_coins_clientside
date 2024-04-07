@@ -1,0 +1,15 @@
+﻿{
+  "name": "Babel Coins",
+  "short_name": "Babel Coins",
+  "description": "Babel Coins is the best and first Arab website that provides services for trading, preserving, storing and transferring digital currencies ",
+  "scope": "/",
+  "start_url": "/",
+  "background_color": "#ffffff",
+    "display": "standalone",
+  "theme_color": "#6138f4",
+  "icons": [{
+    "src": "your png imeg url",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}
