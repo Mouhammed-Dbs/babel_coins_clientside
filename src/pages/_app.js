@@ -121,18 +121,6 @@ export default function App({ Component, pageProps }) {
           </HomeLayout>
         )}
       </main>
-
-      <div id="installContainer" className="hidden">
-        <button id="butInstall" type="button">
-          Install
-        </button>
-      </div>
-      <script src="/app/script.js" defer></script>
-      <div
-        className="glitchButton"
-        style={{ position: "fixed", top: "20px", right: "20px" }}
-      ></div>
-      <script src="/app/button.js" defer></script>
     </Providers>
   );
 }
