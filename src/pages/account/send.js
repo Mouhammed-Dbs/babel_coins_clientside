@@ -32,6 +32,15 @@ export default function Send(props) {
   const [msg, setMsg] = useState({ error: false, data: "" });
   const [address, setAddress] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
+  const placeholdersAddresses = {
+    TRON: "TEN4KrL95t6cSWZwb71gaiXj5ZbadJuT3o",
+    POLYGON: "0x7200B957373F641Ad602DC6C0afcBBb43827120E",
+    ETHEREUM: "0x95222290DD7278Aa3Ddd389Cc1E1d165CC4BAfe5",
+    BITCOIN: "3b5a8f7a50caf07685b7026bb5ac8694f36a18246bce7494c7a9239a7674ae5a",
+    BSC: "0x685B1ded8013785d6623CC18D214320b6Bb64759",
+  };
+
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
       if (coin.currencyName === coinSelected) {
@@ -117,6 +126,7 @@ export default function Send(props) {
               let net = getNetworks(query["curr"], result.data);
               setNetworks(net);
               setNetworkSelected(net[0]);
+              setPlaceholder(placeholdersAddresses[net[0]]);
               getFeesAndLimits("crypto", "external", query["curr"], net[0]);
             } else {
               router.replace({
@@ -268,28 +278,8 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
-            {/* Address */}
-            <div className="flex m-auto w-full gap-4 items-center">
-              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                Address
-              </label>
-              <MyInput
-                defaultValue={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-                color="border-gray-500"
-                className="w-full md:w-64 border-black mb-3 mt-6"
-                item={{
-                  label: screenSize ? undefined : "Address",
-                  name: "address",
-                  type: "text",
-                  placeholder: "",
-                }}
-              />
-            </div>
             {/* Network */}
-            <div className="md:flex m-auto w-full gap-4 items-center">
+            <div className="md:flex m-auto w-full gap-4 items-center mt-3 md:mt-0">
               <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
                 Network
               </label>
@@ -299,6 +289,7 @@ export default function Send(props) {
                 items={networks}
                 selectedKeys={networkSelected ? [networkSelected] : []}
                 onChange={(e) => {
+                  setPlaceholder(placeholdersAddresses[e.target.value]);
                   setNetworkSelected(e.target.value);
                   getFeesAndLimits(
                     "crypto",
@@ -326,6 +317,26 @@ export default function Send(props) {
                   </SelectItem>
                 ))}
               </Select>
+            </div>
+            {/* Address */}
+            <div className="flex m-auto w-full gap-4 items-center">
+              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                Address
+              </label>
+              <MyInput
+                defaultValue={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                color="border-gray-500"
+                className="w-full md:w-64 border-black mt-3"
+                item={{
+                  label: screenSize ? undefined : "Address",
+                  name: "address",
+                  type: "text",
+                  placeholder: placeholder,
+                }}
+              />
             </div>
             {/* Account md:flex */}
             <div className="hidden m-auto w-full gap-4 items-center mt-3">
@@ -532,7 +543,7 @@ export default function Send(props) {
                   coinSelected,
                   networkSelected,
                   address,
-                  amount
+                  parseFloat(amount)
                 )
                   .then((result) => {
                     setMsg({ error: result.error, data: result.msg });
