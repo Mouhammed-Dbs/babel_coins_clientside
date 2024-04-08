@@ -7,7 +7,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <div id="installContainer" className="hidden">
+        <div id="installContainer" style={{ display: "none !important" }}>
           <button id="butInstall" type="button">
             Install
           </button>

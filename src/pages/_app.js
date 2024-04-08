@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "@/styles/globals.scss";
+import "@/styles/globals.css";
 import Providers from "@/providers";
 import Head from "next/head";
 import { useRouter } from "next/router";

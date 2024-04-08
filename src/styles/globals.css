@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -22,19 +21,18 @@
   }
 }
 
-@layer{
-  :root{
+@layer {
+  :root {
     --navbar-height: 4rem;
     --primary-color: rgb(97, 56, 244);
-    --secondary-color:rgb(0, 229, 243);
-    --neutral-color:rgb(25, 25, 25);
-    --orange-color:rgb(255, 179, 15);
-    --bg-orange-color:rgb(255, 179, 15);
+    --secondary-color: rgb(0, 229, 243);
+    --neutral-color: rgb(25, 25, 25);
+    --orange-color: rgb(255, 179, 15);
+    --bg-orange-color: rgb(255, 179, 15);
     --color-text-white: rgb(255, 255, 255);
-    --color-text-muted: rgb(199,210,254);
+    --color-text-muted: rgb(199, 210, 254);
     --bg-primary-color: rgb(97, 56, 244);
   }
-  
 }
 
 @layer base {
@@ -45,15 +43,14 @@
   }
 }
 
-// *,::before, ::after{
-//   --tw-ring-shadow: ;
-// }
 html,
 body {
   padding: 0;
   margin: 0;
   font-size: 16px;
 }
+
+// For Install As App
 #installContainer {
   position: absolute;
   bottom: 1em;
@@ -61,7 +58,6 @@ body {
   justify-content: center;
   width: 100%;
 }
-
 #installContainer button {
   background-color: inherit;
   border: 1px solid white;
@@ -69,18 +65,3 @@ body {
   font-size: 1em;
   padding: 0.75em;
 }
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
