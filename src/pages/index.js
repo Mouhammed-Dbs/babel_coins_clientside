@@ -14,7 +14,7 @@ import screenIs from "../screen.js";
 import axios from "axios";
 import MyLoading from "@/components/MyLoading.js";
 import { isUserLogged } from "../../public/global_functions/auth.js";
-import { Head } from "next/document.js";
+import Shape from "@/components/utils/Shape.js";
 
 export default function Home() {
   const [mounted, setMount] = useState(false);
@@ -97,7 +97,12 @@ export default function Home() {
     );
 
   return (
-    <div className="mx-auto">
+    <div className="relative mx-auto">
+      {/* <div className="flex w-full h-full">
+        <Shape name="square" />
+        <Shape name="circle" />
+        <Shape name="triangle" />
+      </div> */}
       <div className="section1 bg-neutral-200 dark:bg-default-50 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
         <h1 className="font-bold text-xl md:text-2xl">
           Send, Exchange or Accept fiat and Cryptocurrency
