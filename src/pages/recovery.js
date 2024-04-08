@@ -2,7 +2,7 @@ import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useState } from "react";
 import MyInput from "@/components/utils/MyInput";
 
-export default function Signup() {
+export default function Recovery() {
   const [inputEmail, setInputEmail] = useState("");
   const [inputSecret, setInputSecret] = useState("");
   const onChangeEmail = (event) => {
