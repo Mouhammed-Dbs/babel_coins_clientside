@@ -20,10 +20,6 @@ export default function Add(props) {
   const [coinSelected, setCoinSelected] = useState(null);
   const [addressesByCoinName, setAddressesByCoinName] = useState([]);
   const [minimumLimitsByCoinName, setMinimumLimitsByCoinName] = useState([]);
-  const [accounts, setAccounts] = useState([
-    { type: "crypto", name: "BTC", balance: "200" },
-    { type: "crypto", name: "ETH", balance: "50" },
-  ]);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
