@@ -1,20 +1,19 @@
 import styles from "../../styles/Shape.module.css";
 
-export default function Shape({ name }) {
+export default function Shape({ name, color, fillColor }) {
   if (name === "triangle")
     return (
       <div style={{ transform: "rotate(25deg)", marginLeft: "50px" }}>
         <div
-          className={`relative ${styles.triangle}`}
+          className={`relative ${color} ${styles.triangle}`}
           style={{
             position: "fixed",
             width: "55px",
             height: "55px",
-            backgroundColor: "var(--secondary-color)",
           }}
         ></div>
         <div
-          className={`${styles.triangle} bg-neutral-200`}
+          className={`${styles.triangle} ${fillColor}`}
           style={{
             position: "fixed",
             width: "50px",
@@ -29,15 +28,14 @@ export default function Shape({ name }) {
     return (
       <div className="relative">
         <div
-          className={`absolute ${styles.circle}`}
+          className={`absolute ${color} ${styles.circle}`}
           style={{
             width: "70px",
             height: "70px",
-            backgroundColor: "var(--secondary-color)",
           }}
         ></div>
         <div
-          className={`absolute bg-neutral-200 ${styles.circle}`}
+          className={`absolute ${fillColor} ${styles.circle}`}
           style={{
             width: "66px",
             height: "66px",
@@ -54,15 +52,14 @@ export default function Shape({ name }) {
         style={{ transform: "rotate(25deg)", marginLeft: "50px" }}
       >
         <div
-          className={`absolute ${styles.square}`}
+          className={`absolute ${color} ${styles.square}`}
           style={{
             width: "70px",
             height: "70px",
-            backgroundColor: "var(--secondary-color)",
           }}
         ></div>
         <div
-          className={`absolute bg-neutral-200 ${styles.square}`}
+          className={`absolute ${fillColor} ${styles.square}`}
           style={{
             width: "66px",
             height: "66px",

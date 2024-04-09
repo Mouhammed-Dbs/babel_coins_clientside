@@ -13,7 +13,7 @@ if (document.domain !== "localhost") {
 
   /* Only register a service worker if it's supported */
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
+    navigator.serviceWorker.register("/app/service-worker.js");
   }
 
   /**

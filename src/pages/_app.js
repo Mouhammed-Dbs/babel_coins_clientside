@@ -26,6 +26,10 @@ export default function App({ Component, pageProps }) {
         <link rel="manifest" href="https://babelcoins.com/app/manifest.json" />
         {!noMetaTags.includes(currentRoute.slice(1)) ? (
           <>
+            <meta
+              name="robots"
+              content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+            />
             <link
               rel="canonical"
               href={`https://babelcoins.com${currentRoute}`}
@@ -34,7 +38,7 @@ export default function App({ Component, pageProps }) {
             <link rel="profile" href="http://gmpg.org/xfn/11" />
             <link
               rel="alternate"
-              hreflang="en"
+              hrefLang="en"
               href={`https://babelcoins.com${currentRoute}`}
             />
             <meta
@@ -81,7 +85,12 @@ export default function App({ Component, pageProps }) {
             )}
           </>
         ) : (
-          <></>
+          <>
+            <meta
+              name="robots"
+              content="max-image-preview:large, noindex, noarchive"
+            />
+          </>
         )}
 
         <link

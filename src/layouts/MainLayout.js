@@ -18,6 +18,7 @@ import { Divider, Switch } from "@nextui-org/react";
 import { FaMoon } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { MdOutlineSupportAgent } from "react-icons/md";
+import Shape from "@/components/utils/Shape";
 
 export default function MainLayout(props) {
   const router = useRouter();
@@ -143,7 +144,7 @@ export default function MainLayout(props) {
             </>
           )}
         </Sidebar>
-        <div className="w-full bg-slate-50 dark:bg-default-50">
+        <div className="w-full relative bg-slate-50 dark:bg-default-50">
           <Navbar accountName={userInfo.accountName} />
           {props.children}
         </div>
