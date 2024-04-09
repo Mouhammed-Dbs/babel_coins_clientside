@@ -18,7 +18,6 @@ import { Divider, Switch } from "@nextui-org/react";
 import { FaMoon } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import Shape from "@/components/utils/Shape";
 import BGShapes from "@/components/utils/BGShapes";
 
 export default function MainLayout(props) {
@@ -75,7 +74,7 @@ export default function MainLayout(props) {
   return (
     <>
       <main className="w-screen flex text-md fixed">
-        <BGShapes />
+        <BGShapes className="bg-slate-50 dark:bg-default-50" />
         <Sidebar>
           <SidebarItem
             toast={!isMobile}
@@ -148,7 +147,9 @@ export default function MainLayout(props) {
         </Sidebar>
         <div className="w-full">
           <Navbar accountName={userInfo.accountName} />
-          <div className="fixed z-10 w-full">{props.children}</div>
+          <div className="fixed z-10 w-full backdrop-blur-md">
+            {props.children}
+          </div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}

@@ -14,7 +14,6 @@ import screenIs from "../screen.js";
 import axios from "axios";
 import MyLoading from "@/components/MyLoading.js";
 import { isUserLogged } from "../../public/global_functions/auth.js";
-import Shape from "@/components/utils/Shape.js";
 
 export default function Home() {
   const [mounted, setMount] = useState(false);

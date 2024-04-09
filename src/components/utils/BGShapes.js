@@ -1,19 +1,26 @@
 import styles from "../../styles/Shape.module.css";
 
-export default function BGShapes() {
+export default function BGShapes({ className }) {
   return (
-    <div className="absolute bg-slate-50 dark:bg-default-50 flex w-full h-full z-0"></div>
+    <div className={`absolute flex w-full h-full z-0 ${className}`}>
+      <Square />
+      <Circle />
+      <Triangle />
+    </div>
   );
 }
 
 function Triangle() {
   return (
     <div
-      className={className}
-      style={{ transform: "rotate(25deg)", marginLeft: "50px" }}
+      style={{
+        transform: "rotate(25deg)",
+        marginLeft: "50px",
+        marginTop: "320px",
+      }}
     >
       <div
-        className={`relative ${color} ${styles.triangle}`}
+        className={`relative bg-secondary ${styles.triangle}`}
         style={{
           position: "fixed",
           width: "95px",
@@ -21,7 +28,7 @@ function Triangle() {
         }}
       ></div>
       <div
-        className={`${styles.triangle} ${fillColor}`}
+        className={`bg-slate-50 ${styles.triangle}`}
         style={{
           position: "fixed",
           width: "90px",
@@ -36,21 +43,21 @@ function Triangle() {
 
 function Circle() {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative top-24 left-96`}>
       <div
-        className={`absolute ${color} ${styles.circle}`}
+        className={`absolute bg-primary ${styles.circle}`}
         style={{
-          width: "90px",
-          height: "90px",
+          width: "156px",
+          height: "156px",
         }}
       ></div>
       <div
-        className={`absolute ${fillColor} ${styles.circle}`}
+        className={`absolute bg-slate-50 ${styles.circle}`}
         style={{
-          width: "96px",
-          height: "96px",
-          marginTop: "2px",
-          marginLeft: "2px",
+          width: "150px",
+          height: "150px",
+          marginTop: "3px",
+          marginLeft: "3px",
         }}
       ></div>
     </div>
@@ -58,14 +65,5 @@ function Circle() {
 }
 
 function Square() {
-  return (
-    <div
-      className={`relative ${color} ${fillColor} ${styles.square} ${className}`}
-      style={{
-        transform: "rotate(25deg)",
-        width: "90px",
-        height: "90px",
-      }}
-    ></div>
-  );
+  return <div className={`relative ${styles.square}`}></div>;
 }
