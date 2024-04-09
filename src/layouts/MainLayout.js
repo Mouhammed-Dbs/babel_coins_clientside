@@ -19,6 +19,7 @@ import { FaMoon } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import Shape from "@/components/utils/Shape";
+import BGShapes from "@/components/utils/BGShapes";
 
 export default function MainLayout(props) {
   const router = useRouter();
@@ -74,6 +75,7 @@ export default function MainLayout(props) {
   return (
     <>
       <main className="w-screen flex text-md fixed">
+        <BGShapes />
         <Sidebar>
           <SidebarItem
             toast={!isMobile}
@@ -144,9 +146,9 @@ export default function MainLayout(props) {
             </>
           )}
         </Sidebar>
-        <div className="w-full relative bg-slate-50 dark:bg-default-50">
+        <div className="w-full">
           <Navbar accountName={userInfo.accountName} />
-          {props.children}
+          <div className="fixed z-10 w-full">{props.children}</div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}
