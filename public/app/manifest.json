@@ -8,7 +8,7 @@
     "display": "standalone",
   "theme_color": "#6138f4",
   "icons": [{
-    "src": "your png imeg url",
+    "src": "https://babelcoins.com/images/logo/png/babelcoins-logo-512.png",
     "sizes": "512x512",
     "type": "image/png"
   }]
