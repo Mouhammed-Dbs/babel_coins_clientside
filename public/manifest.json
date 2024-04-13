@@ -4,8 +4,6 @@
   "description": "Babel Coins is the best and first Arab website that provides services for trading, preserving, storing and transferring digital currencies ",
   "scope": "/",
   "start_url": "https://babelcoins.com/",
-  "android_package_name": "com.view.babelcoins",
-  "prefer_related_applications": true,
   "background_color": "#ffffff",
   "display": "standalone",
   "theme_color": "#6138f4",
@@ -32,10 +30,5 @@
       "sizes": "192x192",
       "type": "image/png"
     }
-  ],
-  "categories": [
-    "organization",
-    "finance",
-    "crypto"
   ]
 }
