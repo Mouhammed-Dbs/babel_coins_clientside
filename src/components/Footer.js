@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <div className="border-t-4 border-indigo-500">
-      <div className="grid grid-cols-1 md:grid-cols-4 mx-4 md:mx-16 border-b-1 border-gray-400">
-        <div className="p-8 text-lg">
+      <div className="md:flex mx-4 md:mx-16 border-b-1 border-gray-400 pb-5">
+        <div className="py-8 text-lg w-60">
           <Image
             src={"/images/logo/webp/babelcoins-logo-512.webp"}
             alt="babelcoins logo"
@@ -19,47 +19,49 @@ export default function Footer() {
             Devil, and of humanity
           </p>
         </div>
-        <div className="p-8 mt-10">
-          <h2 className="self-center text-xl font-bold">About</h2>
-          <ul className="mt-3">
-            <li className="my-2">
-              <Link href="/about-us">About Us</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/contact-us">Contact Us</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/terms-and-service">Terms & Service</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/privacy-policy">Privacy policy</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="p-8 mt-10">
-          <h2 className="self-center text-xl font-bold">Service</h2>
-          <ul className="mt-3">
-            <li className="my-2">
-              <Link href="/exchange">Exchange</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/solutions">Solutions</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/affiliates">Affiliates</Link>
-            </li>
-            <li className="my-2">
-              <Link href="/fees">Fees</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="p-8 mt-10">
-          <h2 className="self-center text-xl font-bold">Learn</h2>
-          <ul className="mt-3">
-            <li>
-              <Link href="/blog">Blog</Link>
-            </li>
-          </ul>
+        <div className="w-fit grid grid-cols-1 md:grid-cols-3 md:gap-10 md:ml-40">
+          <div className="py-2 md:py-8 mt-3 md:mt-10">
+            <h2 className="self-center text-xl font-bold">About</h2>
+            <ul className="mt-3">
+              <li className="my-2">
+                <Link href="/about-us">About Us</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/contact-us">Contact Us</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/terms-and-service">Terms & Service</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/privacy-policy">Privacy policy</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="py-2 md:py-8 mt-3 md:mt-10">
+            <h2 className="self-center text-xl font-bold">Service</h2>
+            <ul className="mt-3">
+              <li className="my-2">
+                <Link href="/fees">Fees</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/affiliates">Affiliates</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/exchange">Exchange</Link>
+              </li>
+              <li className="my-2">
+                <Link href="/solutions">Solutions</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="py-2 md:py-8 mt-3 md:mt-10">
+            <h2 className="self-center text-xl font-bold">Learn</h2>
+            <ul className="mt-3">
+              <li>
+                <Link href="/blog">Blog</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <p className="text-center my-5">2024 © Babel Coins</p>

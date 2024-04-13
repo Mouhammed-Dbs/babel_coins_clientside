@@ -35,22 +35,22 @@ export default function Balance() {
   return (
     <div className="container h-screen m-auto no-scrollbar overflow-y-scroll">
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
-        <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50 backdrop-blur-md">
+        <div className="w-fit pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-sm">
             BALANCE
           </h1>
+          <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
-        <p className="text-xs opacity-75 mt-1 ml-4 md:ml-0">
-          Available accounts
-        </p>
+        <p className="text-xs opacity-75 mt-1">Available accounts</p>
       </div>
 
       <div className="w-fit pb-44 ml-10 md:m-auto md:w-full text-center">
         <div className="w-full">
-          <div className="w-fit m-auto my-4 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to--default-300 dark:bg-default-50 pb-[2px]">
-            <h1 className="w-fit text-xl font-bold bg-slate-50 dark:bg-default-50">
+          <div className="w-fit m-auto my-4 pb-[2px]">
+            <h1 className="w-fit text-xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-sm">
               All Accounts
             </h1>
+            <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
           </div>
         </div>
 
@@ -73,11 +73,11 @@ export default function Balance() {
 function Card({ symbol, currencyName, network, validDepositeBalance }) {
   useEffect(() => {}, []);
   return (
-    <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white dark:bg-default-100 text-center rounded-md shadow-md">
-      <div className="absolute shadow-inner overflow-hidden bg-slate-50 dark:bg-default-50 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white/15 dark:bg-default-100/15 text-center rounded-md shadow-md backdrop-blur-sm">
+      <div className="absolute shadow-inner overflow-hidden bg-slate-50/15 dark:bg-default-50/15 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <div className="absolute w-full h-1/2 top-1/2 bg-white dark:bg-default-100"></div>
       </div>
-      <div className="absolute bg-white dark:bg-default-100 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute bg-white/15 dark:bg-default-100/15 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <Image
           className="p-1"
           src={`/images/coins/${symbol}.png`}
