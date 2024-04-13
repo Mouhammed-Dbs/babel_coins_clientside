@@ -8,7 +8,6 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import {
-  validateContacts,
   validateEmail,
   validateMessage,
   validateName,
@@ -138,8 +137,14 @@ export default function ContactUs() {
             </div>
             <div className="hidden md:block pl-1">
               <p>
-                hi you cckals f ef eg rgergre ger g rewgegyjhy uk iol oil 0p; 0
-                ; ik7 uy5hy5hg54 tg45 g3 g43ef324f 4ghy j 8k 798k 8 u7j 6 j6
+                If you have any questions, suggestions, or feedback, please feel
+                free to contact us using the form below.
+                <br />
+                We value your input and strive to provide excellent customer
+                service.
+                <br />
+                Our team will get back to you as soon as possible to assist you
+                with your inquiries.
               </p>
               <div className="w-full flex justify-center mt-8">
                 <Image

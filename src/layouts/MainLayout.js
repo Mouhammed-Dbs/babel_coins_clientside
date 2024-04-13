@@ -147,9 +147,7 @@ export default function MainLayout(props) {
         </Sidebar>
         <div className="w-full">
           <Navbar accountName={userInfo.accountName} />
-          <div className="fixed z-10 w-full backdrop-blur-md">
-            {props.children}
-          </div>
+          <div className="fixed z-10 w-full">{props.children}</div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}
