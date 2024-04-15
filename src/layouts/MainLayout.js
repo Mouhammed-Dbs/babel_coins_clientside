@@ -74,7 +74,9 @@ export default function MainLayout(props) {
   return (
     <>
       <main className="w-screen flex text-md fixed">
-        <BGShapes className="bg-slate-50 dark:bg-default-50" />
+        {!currentRoute.includes("account/trade") && (
+          <BGShapes className="bg-slate-50 dark:bg-default-50" />
+        )}
         <Sidebar>
           <SidebarItem
             toast={!isMobile}

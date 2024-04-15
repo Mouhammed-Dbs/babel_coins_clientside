@@ -40,7 +40,7 @@ function Triangle({ style }) {
         }}
       ></div>
       <div
-        className={`bg-slate-50 ${styles.triangle}`}
+        className={`bg-slate-50 dark:bg-default-50 ${styles.triangle}`}
         style={{
           position: "fixed",
           width: "90px",
@@ -64,7 +64,7 @@ function Circle({ className, color }) {
         }}
       ></div>
       <div
-        className={`absolute bg-slate-50 ${styles.circle}`}
+        className={`absolute bg-slate-50 dark:bg-default-50 ${styles.circle}`}
         style={{
           width: "150px",
           height: "150px",
