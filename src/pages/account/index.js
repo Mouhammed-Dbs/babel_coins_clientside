@@ -6,8 +6,6 @@ import MyLoading from "@/components/MyLoading";
 import { getBalanceCoins } from "../../../public/global_functions/coins";
 
 export default function Balance() {
-  const router = useRouter();
-
   const [pageLoading, setPageLoading] = useState(true);
   const [coins, setCoins] = useState([]);
 
@@ -71,6 +69,7 @@ export default function Balance() {
 }
 
 function Card({ symbol, currencyName, network, validDepositeBalance }) {
+  const router = useRouter();
   useEffect(() => {}, []);
   return (
     <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white/15 dark:bg-default-100/15 text-center rounded-md shadow-md backdrop-blur-sm">
