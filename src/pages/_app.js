@@ -22,8 +22,20 @@ export default function App({ Component, pageProps }) {
         <title>{currentRoute === "/" ? "Babel Coins" : namePage}</title>
         <meta name="description" content="page description" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        {/* PWA */}
+        <link
+          rel="mask-icon"
+          href="/images/logo/maskable/maskable-babelcoins-logo-192.png"
+          color="#FFFFFF"
+        />
         <meta name="theme-color" content="#6138f4" />
-        <link rel="manifest" href="https://babelcoins.com/app/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" />
+        <link
+          rel="apple-touch-icon"
+          href="/images/logo/png/babelcoins-logo-180.png"
+        />
         {!noMetaTags.includes(currentRoute.slice(1)) ? (
           <>
             <meta
@@ -103,10 +115,7 @@ export default function App({ Component, pageProps }) {
           href="/images/logo/png/babelcoins-logo-192.png"
           sizes="192x192"
         />
-        <link
-          rel="apple-touch-icon"
-          href="/images/logo/png/babelcoins-logo-180.png"
-        />
+
         <meta
           name="msapplication-TileImage"
           content="/images/logo/png/babelcoins-logo-270.png"
