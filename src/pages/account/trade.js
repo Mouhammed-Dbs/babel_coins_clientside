@@ -272,7 +272,7 @@ export default function Trade() {
         </div>
       </div>
       <div className="w-3/5">
-        <div className="rounded-md bg-gray-200 w-full h-80">
+        <div className="rounded-md bg-gray-200 w-full h-72">
           <div className="text-sm flex gap-4 p-2">
             <h1 className="font-bold self-end">Price Graph</h1>
           </div>
@@ -280,7 +280,7 @@ export default function Trade() {
           <div className="p-2"></div>
         </div>
       </div>
-      <div className="w-1/5 min-w-[240px]">
+      <div className="w-1/5 min-w-[260px]">
         <div className="rounded-md bg-gray-200 w-full h-64">
           <div className="text-sm flex gap-4 p-2">
             <h1 className="font-bold self-end">Market</h1>
@@ -289,6 +289,34 @@ export default function Trade() {
           <Divider />
           <div className="p-2 h-full">
             <ul className="bg-white/85 rounded-sm w-full h-[200px] overflow-scroll no-scrollbar">
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>hi, my name is mouhyg</span>
+              </li>
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>
+                  hi, my name is mouhyg bjlbl ljbljb bhgpug bgipgbp pigoug
+                </span>
+              </li>
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>hi, my name is mouhyg bjlbl ljbljb bhgpug</span>
+              </li>
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>hi, my name is mouhyg</span>
+              </li>
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>
+                  hi, my name is mouhyg bjlbl ljbljb bhgpug bgipgbp pigoug
+                </span>
+              </li>
+              <li className="flex text-[11px] px-1 gap-1">
+                <span className="font-bold">b7808680:</span>
+                <span>hi, my name is mouhyg bjlbl ljbljb bhgpug</span>
+              </li>
               <li className="flex text-[11px] px-1 gap-1">
                 <span className="font-bold">b7808680:</span>
                 <span>hi, my name is mouhyg</span>
