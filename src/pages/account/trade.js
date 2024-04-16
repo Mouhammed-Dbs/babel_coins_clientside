@@ -6,6 +6,7 @@ export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
   const [screenSize, setScreenSize] = useState(false);
+
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
@@ -271,7 +272,7 @@ export default function Trade() {
           </div>
         </div>
       </div>
-      <div className="w-3/5">
+      <div className="w-3/5 min-w-[400px]">
         <div className="rounded-md bg-gray-200 w-full h-72">
           <div className="text-sm flex gap-4 p-2">
             <h1 className="font-bold self-end">Price Graph</h1>
