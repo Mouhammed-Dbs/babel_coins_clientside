@@ -72,11 +72,11 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
   const router = useRouter();
   useEffect(() => {}, []);
   return (
-    <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white/15 dark:bg-default-100/15 text-center rounded-md shadow-md backdrop-blur-sm">
-      <div className="absolute shadow-inner overflow-hidden bg-slate-50/15 dark:bg-default-50/15 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
-        <div className="absolute w-full h-1/2 top-1/2 bg-white dark:bg-default-100"></div>
+    <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white/55 dark:bg-default-100/55 text-center rounded-md shadow-lg backdrop-blur-sm">
+      <div className="absolute shadow-inner overflow-hidden bg-slate-50/55 dark:bg-default-50/55 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
+        <div className="absolute w-full h-1/2 top-1/2 bg-white/55 dark:bg-default-100/55"></div>
       </div>
-      <div className="absolute bg-white/15 dark:bg-default-100/15 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
+      <div className="absolute bg-white/55 dark:bg-default-100/15 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <Image
           className="p-1"
           src={`/images/coins/${symbol}.png`}
