@@ -14,7 +14,7 @@ export default function Referrals(props) {
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] py-8 px-3 md:px-6 backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] py-8 px-3 md:px-6 bg-white/55 dark:bg-default-100/55 backdrop-blur-md rounded-lg shadow-md">
         {/* Title */}
         <div className="w-full border-b">
           <h1 className="text-sm text-primary font-bold mb-3">MY REFERRALS</h1>

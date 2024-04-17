@@ -12,7 +12,7 @@ export default function Log() {
         </div>
         <p className="text-xs opacity-75 mt-1 md:ml-0"></p>
       </div>
-      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] pb-3 text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] pb-3 text-center bg-white/55 dark:bg-default-100/55 backdrop-blur-md rounded-lg shadow-md">
         <div className="flex p-3 py-5">
           <h3 className="text-primary w-3/12 text-xs md:text-base">DATE</h3>
           <h3 className="text-primary w-4/12 text-xs md:text-base">ACTION</h3>

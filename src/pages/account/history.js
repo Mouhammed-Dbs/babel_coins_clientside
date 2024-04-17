@@ -235,10 +235,10 @@ export default function History() {
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="card_history pb-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="card_history pb-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 backdrop-blur-md rounded-lg shadow-md">
         <ul
           style={!screenSize ? { width: (widthCard - 72) * (11 / 12) } : {}}
-          className="flex md:flex-wrap bg-gray-200 dark:bg-gray-600 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
+          className="flex md:flex-wrap bg-gray-200/55 dark:bg-gray-600/55 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
         >
           {items.map((item) => (
             <li
@@ -279,7 +279,7 @@ export default function History() {
             )}
           </div>
           {openFilter && (
-            <div className="flex bg-slate-100 dark:bg-gray-600 mx-5 p-2 rounded-md">
+            <div className="flex bg-slate-100/55 dark:bg-gray-600/55 mx-5 p-2 rounded-md shadow-md py-4">
               <div className="w-11/12 md:grid grid-cols-3 gap-1 md:gap-5">
                 <div className="w-full px-1 md:px-4">
                   <MyInput

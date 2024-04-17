@@ -8,7 +8,7 @@ export default function SupportNewTicket() {
   const [files, setFiles] = useState(["f0"]);
   return (
     <div
-      className={`w-full mt-5 rounded-md md:p-6 py-4 px-3 bg-white dark:bg-default-100 shadow-md`}
+      className={`w-full mt-5 rounded-md md:p-6 py-4 px-3 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
     >
       <MyInput
         color="border-gray-500"
