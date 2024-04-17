@@ -15,7 +15,7 @@ export default function Password() {
       <div className="mt-10">
         <MyInput
           color="border-gray-500"
-          className="w-64 border-black mb-3"
+          className="w-full border-black mb-3"
           item={{
             name: "current_pass",
             type: "text",
@@ -25,7 +25,7 @@ export default function Password() {
         />
         <MyInput
           color="border-gray-500"
-          className="w-64 border-black mb-3"
+          className="w-full border-black mb-3"
           item={{
             name: "new_pass",
             type: "text",
@@ -35,7 +35,7 @@ export default function Password() {
         />
         <MyInput
           color="border-gray-500"
-          className="w-64 border-black mb-3"
+          className="w-full border-black mb-3"
           item={{
             name: "repeat_new_pass",
             type: "text",

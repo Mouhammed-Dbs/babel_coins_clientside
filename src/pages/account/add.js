@@ -101,21 +101,21 @@ export default function Add(props) {
       <MyLoading
         msg="Loading.."
         color="primary"
-        className={`text-black dark:text-white mt-24`}
+        className={`text-black dark:text-white bg-slate-200/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
     );
 
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
-      <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3">
+      <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3 md:m-auto">
         <div className="w-fit pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-sm">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
             ADD
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="p-4 py-10 md:px-8 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
+      <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="md:flex w-full m-auto gap-4 items-center">
           <label className="text-right text-sm md:text-base w-36">
             Choose account
@@ -138,7 +138,7 @@ export default function Add(props) {
             placeholder="CHOOSE ACCOUNT"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] max-w-xs peer w-full self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-6",
             }}
             renderValue={(items) => {
@@ -204,7 +204,7 @@ export default function Add(props) {
             placeholder="CHOOSE SYSTEM"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] max-w-xs peer w-full self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-7",
             }}
             renderValue={(items) => {

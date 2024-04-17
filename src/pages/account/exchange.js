@@ -68,21 +68,20 @@ export default function Exchange() {
       <MyLoading
         msg="Loading.."
         color="primary"
-        className={`text-black dark:text-white mt-24`}
+        className={`text-black dark:text-white bg-slate-200/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
     );
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
-        <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1
-            className={`w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50`}
-          >
+        <div className="w-fit pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
             EXCHANGE
           </h1>
+          <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="p-4 py-10 md:px-8 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         <div className="lg:flex lg:gap-10">
           <div className="lg:w-2/3 lg:ml-5">
             {/* Debit Account */}
@@ -137,7 +136,10 @@ export default function Exchange() {
                       <div className="flex flex-col">
                         <span>{item.data.currencyName}</span>
                         <span className="text-default-500 text-tiny">
-                          {item.data.networks.join(" | ")}
+                          {item.data.networks.join(" | ").slice(0, 20)}
+                          {item.data.networks.join(" | ").length >= 20
+                            ? "..."
+                            : ""}
                         </span>
                       </div>
                     </div>
@@ -222,7 +224,10 @@ export default function Exchange() {
                       <div className="flex flex-col">
                         <span>{item.data.currencyName}</span>
                         <span className="text-default-500 text-tiny">
-                          {item.data.networks.join(" | ")}
+                          {item.data.networks.join(" | ").slice(0, 20)}
+                          {item.data.networks.join(" | ").length >= 20
+                            ? "..."
+                            : ""}
                         </span>
                       </div>
                     </div>

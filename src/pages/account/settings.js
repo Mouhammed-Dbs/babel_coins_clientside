@@ -3,6 +3,7 @@ import Password from "@/components/settings/Password";
 import ProfileAndVerification from "@/components/settings/ProfileAndVerification";
 import Security from "@/components/settings/Security";
 import Templates from "@/components/settings/Templates";
+import screenIs from "@/screen";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
@@ -14,6 +15,20 @@ export default function Settings() {
   const { query } = router;
   const [tab, setTab] = useState("profile_tab");
   const [cardID, setCardID] = useState(false);
+  const [widthWindow, setWidthWindow] = useState("100%");
+  const [screenSize, setScreenSize] = useState(false);
+  useEffect(() => {
+    setScreenSize(screenIs("md"));
+    setWidthWindow(window.innerWidth);
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+      setWidthWindow(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
   useEffect(() => {
     if (query["tab"] === "security") setTab("security_tab");
     if (query["tab"] === "profile" || query["tab"] === undefined)
@@ -23,9 +38,12 @@ export default function Settings() {
     if (query["tab"] === "templates") setTab("templates_tab");
   }, [query]);
   return (
-    <div className="absolute container h-screen ml-3 no-scrollbar overflow-y-scroll pb-[150px]">
+    <div className="absolute container h-screen no-scrollbar overflow-y-scroll pb-[150px]">
       {/* Tabs */}
-      <div className="w-screen overflow-x-hidden">
+      <div
+        className="overflow-x-hidden"
+        style={!screenSize ? { width: widthWindow - 20 } : {}}
+      >
         <Tabs
           selectedKey={tab}
           onSelectionChange={setTab}

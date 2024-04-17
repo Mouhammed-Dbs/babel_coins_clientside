@@ -6,12 +6,13 @@ import { useState } from "react";
 export default function Support() {
   const [tab, setTab] = useState("list");
   return (
-    <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pl-5 md:pl-10 pb-[150px]">
+    <div className="h-screen container m-auto no-scrollbar overflow-y-scroll md:pl-10 pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] md:m-auto mt-4 md:mt-4 pb-3">
-        <div className="w-fit bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
+        <div className="w-fit pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
             SUPPORT
           </h1>
+          <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
         <p className="w-full text-xs opacity-75 mt-1 pr-4">
           Operator of a support service will answer you within 1-24 hours

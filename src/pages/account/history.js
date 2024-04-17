@@ -228,15 +228,16 @@ export default function History() {
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
-        <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
+        <div className="w-fit pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
             HISTORY
           </h1>
+          <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="card_history pb-4 ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="card_history pb-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         <ul
-          style={!screenSize ? { width: (widthCard - 68) * (11 / 12) } : {}}
+          style={!screenSize ? { width: (widthCard - 72) * (11 / 12) } : {}}
           className="flex md:flex-wrap bg-gray-200 dark:bg-gray-600 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
         >
           {items.map((item) => (
@@ -258,7 +259,10 @@ export default function History() {
         </ul>
         <div>
           <div className="flex justify-between md:px-4">
-            <Button className="text-gray-500 underline">
+            <Button
+              className="text-gray-500 underline"
+              size={!screenSize ? "sm" : ""}
+            >
               <FaFileCsv />
               EXPORT TO CSV
             </Button>
@@ -268,6 +272,7 @@ export default function History() {
                 onClick={() => {
                   setOpenFilter(!openFilter);
                 }}
+                size={!screenSize ? "sm" : ""}
               >
                 SHOW FILTER
               </Button>

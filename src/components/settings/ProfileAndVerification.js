@@ -65,7 +65,7 @@ export default function ProfileAndVerification() {
             VERIFICATION
           </h1>
           {/* Slide 1 */}
-          <div className={`w-fit ${verificationSlide != 0 ? "hidden" : ""}`}>
+          <div className={`w-full ${verificationSlide != 0 ? "hidden" : ""}`}>
             <div className="mt-10">
               <Select
                 label="Type of account"
@@ -73,7 +73,7 @@ export default function ProfileAndVerification() {
                 labelPlacement="outside"
                 size="sm"
                 style={{ backgroundColor: "inherit" }}
-                className="max-w-xs peer w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
+                classNames="max-w-xs peer w-full self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
                 selectorIcon={<IoIosArrowDown />}
               >
                 {typeAccounts.map((account) => (
@@ -86,7 +86,7 @@ export default function ProfileAndVerification() {
             <div className="flex md:gap-4 gap-3 mt-3">
               <MyInput
                 color="border-gray-500"
-                className="w-32 md:w-64 border-black mb-3"
+                className="w-28 md:w-64 border-black mb-3"
                 item={{
                   name: "nick",
                   type: "text",
@@ -144,7 +144,7 @@ export default function ProfileAndVerification() {
                 placeholder="Select a country"
                 labelPlacement="outside"
                 size="sm"
-                className="max-w-xs peer w-64 self-center rounded-lg border-2 border-black dark:border-slate-400 border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
+                className="max-w-xs peer w-full self-center rounded-lg border-2 border-black dark:border-slate-400 border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
                 selectorIcon={<IoIosArrowDown />}
               >
                 {countries.map((country) => (

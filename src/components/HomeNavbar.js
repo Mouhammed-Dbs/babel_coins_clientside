@@ -18,6 +18,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Switch,
+  Spacer,
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router.js";
@@ -83,7 +84,7 @@ export default function HomeNavbare() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="sm:flex gap-4" justify="end">
+      <NavbarContent className="sm:flex" justify="end">
         <div className="hidden md:flex gap-4 justify-end">
           <NavbarItem isActive={currentRoute === "/home"}>
             <Link
@@ -142,32 +143,35 @@ export default function HomeNavbare() {
             </Link>
           </NavbarItem>
         </div>
-
-        <NavbarItem className="sm:flex">
-          <Switch
-            isSelected={theme === "dark"}
-            size="sm"
-            startContent={<FaMoon />}
-            endContent={<IoIosSunny />}
-            onClick={() => {
-              theme === "dark" ? setTheme("light") : setTheme("dark");
-            }}
-          ></Switch>
-        </NavbarItem>
-        <NavbarItem>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-primary">
-                English
-                <RiArrowDropDownLine />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="new">Arabic</DropdownItem>
-              <DropdownItem key="copy">English</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </NavbarItem>
+        <div className="flex justify-end md:gap-4">
+          {/* Theme */}
+          <NavbarItem className="sm:flex self-center">
+            <Switch
+              isSelected={theme === "dark"}
+              size="sm"
+              startContent={<FaMoon />}
+              endContent={<IoIosSunny />}
+              onClick={() => {
+                theme === "dark" ? setTheme("light") : setTheme("dark");
+              }}
+            ></Switch>
+          </NavbarItem>
+          {/* Language */}
+          <NavbarItem>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-primary">
+                  En
+                  <RiArrowDropDownLine />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="ar">Ar</DropdownItem>
+                <DropdownItem key="en">En</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+        </div>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (

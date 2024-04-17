@@ -42,19 +42,19 @@ export default function MainNavbare({ accountName }) {
   useEffect(() => {
     setMounted(true);
 
-    const touchstart = (e) => {
-      if (
-        !e.target.classList.value.split(" ").includes("dropxxxblure") &&
-        !e.target.parentNode.classList.value.split(" ").includes("dropxxxblure")
-      ) {
-        setSettingsIsOpen(false);
-        setInfoAccountIsOpen(false);
-      }
-    };
-    document?.addEventListener("touchstart", touchstart);
-    return () => {
-      document?.removeEventListener("touchstart", touchstart);
-    };
+    // const touchstart = (e) => {
+    //   if (
+    //     !e.target.classList.value.split(" ").includes("dropxxxblure") &&
+    //     !e.target.parentNode.classList.value.split(" ").includes("dropxxxblure")
+    //   ) {
+    //     setSettingsIsOpen(false);
+    //     setInfoAccountIsOpen(false);
+    //   }
+    // };
+    // document?.addEventListener("touchstart", touchstart);
+    // return () => {
+    //   document?.removeEventListener("touchstart", touchstart);
+    // };
   }, []);
 
   if (!mounted) return null;
@@ -408,7 +408,7 @@ export default function MainNavbare({ accountName }) {
           </Dropdown>
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
-        <NavbarItem>
+        <NavbarItem className="hidden md:block">
           <Button
             onClick={() => {
               localStorage.removeItem("babel-coins-user-token");

@@ -7,13 +7,14 @@ export default function Referrals(props) {
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
-        <div className="w-fit ml-4 md:ml-0 bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]">
-          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50 dark:bg-default-50">
+        <div className="w-fit pb-[2px]">
+          <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
             REFERRALS
           </h1>
+          <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="ml-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] py-8 px-3 md:px-6 backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] py-8 px-3 md:px-6 backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
         {/* Title */}
         <div className="w-full border-b">
           <h1 className="text-sm text-primary font-bold mb-3">MY REFERRALS</h1>
@@ -88,7 +89,7 @@ export default function Referrals(props) {
         <div className="md:flex md:gap-5 w-full mt-16 px-4">
           <MyInput
             color="border-gray-500"
-            className="w-64 border-black mb-3"
+            className="w-full border-black mb-3"
             item={{
               name: "name_user",
               type: "text",
@@ -98,7 +99,7 @@ export default function Referrals(props) {
           />
           <MyInput
             color="border-gray-500"
-            className="w-64 border-black mb-3"
+            className="w-full border-black mb-3"
             item={{
               name: "from_user",
               type: "text",
@@ -108,7 +109,7 @@ export default function Referrals(props) {
           />
           <MyInput
             color="border-gray-500"
-            className="w-64 border-black mb-3"
+            className="w-full border-black mb-3"
             item={{
               name: "to_user",
               type: "text",

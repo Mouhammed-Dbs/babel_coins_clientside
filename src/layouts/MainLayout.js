@@ -3,7 +3,7 @@ import Navbar from "@/components/MainNavbar";
 import Sidebar, { SidebarElement, SidebarItem } from "@/components/Sidebar";
 import { LuWallet } from "react-icons/lu";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { IoIosSend, IoIosSunny } from "react-icons/io";
+import { IoIosSend, IoIosSunny, IoMdPower } from "react-icons/io";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
@@ -14,7 +14,7 @@ import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationA
 import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged } from "../../public/global_functions/auth";
-import { Divider, Switch } from "@nextui-org/react";
+import { Button, Divider, Switch } from "@nextui-org/react";
 import { FaMoon } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { MdOutlineSupportAgent } from "react-icons/md";
@@ -40,19 +40,20 @@ export default function MainLayout(props) {
 
   useEffect(() => {
     setMounted(true);
-    isUserLogged()
-      .then((result) => {
-        if (result.error) {
-          router.replace("/login");
-        } else {
-          setUserInfo(result.data);
-          setPageLoading(false);
-        }
-      })
-      .catch(async (err) => {
-        await router.replace("/login");
-        setPageLoading(false);
-      });
+    setPageLoading(false);
+    // isUserLogged()
+    //   .then((result) => {
+    //     if (result.error) {
+    //       router.replace("/login");
+    //     } else {
+    //       setUserInfo(result.data);
+    //       setPageLoading(false);
+    //     }
+    //   })
+    //   .catch(async (err) => {
+    //     await router.replace("/login");
+    //     setPageLoading(false);
+    //   });
   }, [router]);
 
   if (!mounted)
@@ -68,15 +69,13 @@ export default function MainLayout(props) {
       <MyLoading
         msg="Loading BabelCoins.."
         color="primary"
-        className={`h-screen text-black dark:text-white mt-24`}
+        className={`h-full text-black dark:text-white mt-24`}
       />
     );
   return (
     <>
-      <main className="w-screen flex text-md fixed">
-        {!currentRoute.includes("account/trade") && (
-          <BGShapes className="bg-slate-50 dark:bg-default-50" />
-        )}
+      <main className="w-screen flex text-md fixed bg-slate-50 dark:bg-default-50">
+        {!currentRoute.includes("account/trade") && <BGShapes />}
         <Sidebar>
           <SidebarItem
             toast={!isMobile}
@@ -131,6 +130,22 @@ export default function MainLayout(props) {
                 icon={<MdOutlineSupportAgent size={20} />}
                 active={currentRoute.includes("account/support")}
               />
+              <SidebarElement text="Logout">
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem("babel-coins-user-token");
+                    router.replace("/");
+                  }}
+                  className="min-w-fit p-0"
+                >
+                  {" "}
+                  <IoMdPower
+                    className="hover:cursor-pointer"
+                    color="gray"
+                    size={25}
+                  />
+                </Button>
+              </SidebarElement>
               <SidebarElement text="Light/Dark">
                 <Switch
                   className="p-0 m-0"
@@ -147,9 +162,9 @@ export default function MainLayout(props) {
             </>
           )}
         </Sidebar>
-        <div className="w-full">
+        <div className="w-screen z-10">
           <Navbar accountName={userInfo.accountName} />
-          <div className="fixed w-full">{props.children}</div>
+          <div className="px-4 md:px-0 w-[92%]">{props.children}</div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}
