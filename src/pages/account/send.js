@@ -156,7 +156,7 @@ export default function Send(props) {
       <MyLoading
         msg="Loading.."
         color="primary"
-        className={`text-black dark:text-white bg-slate-200/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
+        className={`text-black dark:text-white bg-white/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
     );
   return (

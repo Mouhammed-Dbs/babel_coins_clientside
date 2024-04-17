@@ -81,7 +81,7 @@ export default function Exchange() {
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
-      <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="lg:flex lg:gap-10">
           <div className="lg:w-2/3 lg:ml-5">
             {/* Debit Account */}
