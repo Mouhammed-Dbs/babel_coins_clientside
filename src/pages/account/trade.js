@@ -2,6 +2,9 @@ import { Divider, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import screenIs from "@/screen";
 import MyLoading from "@/components/MyLoading";
+import LimitTrade from "@/components/trade/LimitTrade";
+import MarketTrade from "@/components/trade/MarketTrade";
+import TriggerTrade from "@/components/trade/TriggerTrade";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -396,9 +399,7 @@ export default function Trade() {
                 </div>
               }
             >
-              <div>
-                <p>This is limit</p>
-              </div>
+              <LimitTrade />
             </Tab>
             <Tab
               key="market_tab"
@@ -408,21 +409,17 @@ export default function Trade() {
                 </div>
               }
             >
-              <div>
-                <p>This is market</p>
-              </div>
+              <MarketTrade />
             </Tab>
             <Tab
               key="trigger_tab"
               title={
                 <div className="flex items-center">
-                  <p>Limit</p>
+                  <p>Trigger</p>
                 </div>
               }
             >
-              <div>
-                <p>This is trigger</p>
-              </div>
+              <TriggerTrade />
             </Tab>
           </Tabs>
         </div>
