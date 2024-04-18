@@ -31,6 +31,10 @@ export default function Signup() {
   const [seconds, setSeconds] = useState(30);
   const [timerOn, setTimerOn] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [validateAccount, setValidateAccount] = useState({
+    error: false,
+    msg: "",
+  });
   const [account, setAccount] = useState({
     accountName: "",
     firstName: "",
@@ -176,6 +180,7 @@ export default function Signup() {
           }`}
           onClick={() => {
             setShowSteps(showSteps - 1);
+            setInputCode("");
           }}
         />
         <h1 className="text-center text-2xl ml-2">Create Your Account</h1>
@@ -255,10 +260,13 @@ export default function Signup() {
                 setInputEmail(event.target.value);
                 validateEmail({ email: event.target.value })
                   .then(() => {
-                    setAccount({ ...account, error: false, msg: "" });
+                    setValidateAccount({ error: false, msg: "" });
                   })
                   .catch((error) => {
-                    setAccount({ ...account, error: true, msg: error[0] });
+                    setValidateAccount({
+                      error: true,
+                      msg: error[0],
+                    });
                   });
               }}
               value={inputEmail}
@@ -278,7 +286,7 @@ export default function Signup() {
             </p>
             <Button
               type="submit"
-              isDisabled={!inputEmail || account.error}
+              isDisabled={!inputEmail || validateAccount.error}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
               {loading ? "Creating" : "Create Account"}
@@ -392,10 +400,13 @@ export default function Signup() {
                     secretCode: e.target.value,
                   })
                     .then(() => {
-                      setAccount({ ...account, error: false, msg: "" });
+                      setValidateAccount({ error: false, msg: "" });
                     })
                     .catch((error) => {
-                      setAccount({ ...account, error: true, msg: error[0] });
+                      setValidateAccount({
+                        error: true,
+                        msg: error[0],
+                      });
                     });
                 }}
                 className="w-64 mt-3"
@@ -425,7 +436,7 @@ export default function Signup() {
                     account.accountName &&
                     account.secretCode &&
                     account.password
-                  ) || account.error
+                  ) || validateAccount.error
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
@@ -448,12 +459,15 @@ export default function Signup() {
                 textColor="text-white"
                 onChange={(e) => {
                   setAccount({ ...account, firstName: e.target.value });
-                  validateName({ name: e.target.value })
+                  setValidateAccount({ name: e.target.value })
                     .then(() => {
-                      setAccount({ ...account, error: false, msg: "" });
+                      setValidateAccount({ error: false, msg: "" });
                     })
                     .catch((error) => {
-                      setAccount({ ...account, error: true, msg: error[0] });
+                      setValidateAccount({
+                        error: true,
+                        msg: error[0],
+                      });
                     });
                 }}
                 item={{
@@ -469,10 +483,13 @@ export default function Signup() {
                   setAccount({ ...account, lastName: e.target.value });
                   validateName({ name: e.target.value })
                     .then(() => {
-                      setAccount({ ...account, error: false, msg: "" });
+                      setValidateAccount({ error: false, msg: "" });
                     })
                     .catch((error) => {
-                      setAccount({ ...account, error: true, msg: error[0] });
+                      setValidateAccount({
+                        error: true,
+                        msg: error[0],
+                      });
                     });
                 }}
                 className={"w-64 mt-3"}
@@ -499,7 +516,7 @@ export default function Signup() {
                 type="submit"
                 isDisabled={
                   !(account.firstName && account.lastName) ||
-                  account.error ||
+                  validateAccount.error ||
                   loading
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"

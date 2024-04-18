@@ -16,6 +16,7 @@ export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resLogin, setResLogin] = useState({ msg: "", error: false });
+  const [validateLogin, setValidateLogin] = useState({ msg: "", error: false });
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
@@ -100,10 +101,10 @@ export default function Signup() {
                   email: event.target.value,
                 })
                   .then(() => {
-                    setResLogin({ error: false, msg: "" });
+                    setValidateLogin({ error: false, msg: "" });
                   })
                   .catch((error) => {
-                    setResLogin({ error: true, msg: error[0] });
+                    setValidateLogin({ error: true, msg: error[0] });
                   });
               }}
               value={inputEmail}
@@ -142,7 +143,7 @@ export default function Signup() {
             <Button
               type="submit"
               isDisabled={
-                !(inputEmail && inputPass) || loading || resLogin.error
+                !(inputEmail && inputPass) || loading || validateLogin.error
               }
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
