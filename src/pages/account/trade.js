@@ -8,6 +8,7 @@ import TriggerTrade from "@/components/trade/TriggerTrade";
 import TradeChat from "@/components/trade/TradeChat";
 import MarketCoinsListTrade from "@/components/trade/MarketCoinsListTrade";
 import { FaBitcoin, FaDollarSign } from "react-icons/fa6";
+import Image from "next/image";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -15,6 +16,7 @@ export default function Trade() {
   const [tabForm, setTabForm] = useState("limit_tab");
   const [tabChatAndCoinsList, setTabChatAndCoinsList] =
     useState("coinslist_tab");
+  const [showOrders, setShowOrdes] = useState("all");
   const [pairSelected, setPairSelected] = useState("ETH/USDT");
   useEffect(() => {
     setMount(true);
@@ -48,6 +50,50 @@ export default function Trade() {
             <span className="text-xs self-end text-green-500">+5.1%</span>
           </div>
           <Divider />
+          <div className="flex bg-white/85 dark:bg-default-200/50 rounded-md w-[93%] m-auto mt-1">
+            <button
+              className={`w-1/3 p-1 border-1 rounded-l-md hover:border-sky-500 ${
+                showOrders === "buy" ? "border-sky-500" : ""
+              }`}
+              onClick={() => setShowOrdes("buy")}
+            >
+              <Image
+                className="m-auto"
+                src="/images/icons/trade-icon.svg"
+                alt="alt"
+                width={20}
+                height={20}
+              />
+            </button>
+            <button
+              className={`w-1/3 p-1 border-1 hover:border-sky-500 ${
+                showOrders === "all" ? "border-sky-500" : ""
+              }`}
+              onClick={() => setShowOrdes("all")}
+            >
+              <Image
+                className="m-auto"
+                src="/images/icons/trade-all-icon.svg"
+                alt="alt"
+                width={20}
+                height={20}
+              />
+            </button>
+            <button
+              className={`w-1/3 p-1 border-1 rounded-r-md hover:border-sky-500 ${
+                showOrders === "sell" ? "border-sky-500" : ""
+              }`}
+              onClick={() => setShowOrdes("sell")}
+            >
+              <Image
+                className="m-auto"
+                src="/images/icons/trade-red-icon.svg"
+                alt="alt"
+                width={20}
+                height={20}
+              />
+            </button>
+          </div>
           <div className="p-2 h-full">
             <div className="flex justify-between text-[11px] gap-2 mb-1">
               <span>PRICE({pairSelected.split("/")[1]})</span>
@@ -55,7 +101,7 @@ export default function Trade() {
               <span>VALUE({pairSelected.split("/")[1]})</span>
             </div>
             <ul
-              className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[734px] overflow-scroll no-scrollbar py-1`}
+              className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[700px] overflow-scroll no-scrollbar py-1`}
               // style={{ height: heightWindow - 100 + "px" }}
             >
               <li className="flex justify-between text-[11px] px-1">
