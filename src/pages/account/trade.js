@@ -5,9 +5,9 @@ import MyLoading from "@/components/MyLoading";
 import LimitTrade from "@/components/trade/LimitTrade";
 import MarketTrade from "@/components/trade/MarketTrade";
 import TriggerTrade from "@/components/trade/TriggerTrade";
-import MarketCoinsList from "@/components/trade/MarketCoinsListTrade";
 import TradeChat from "@/components/trade/TradeChat";
 import MarketCoinsListTrade from "@/components/trade/MarketCoinsListTrade";
+import { FaBitcoin, FaDollarSign } from "react-icons/fa6";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -15,6 +15,7 @@ export default function Trade() {
   const [tabForm, setTabForm] = useState("limit_tab");
   const [tabChatAndCoinsList, setTabChatAndCoinsList] =
     useState("coinslist_tab");
+  const [pairSelected, setPairSelected] = useState("ETH/USDT");
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
@@ -42,16 +43,16 @@ export default function Trade() {
       <div className="w-1/5 min-w-max h-fit pb-28">
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
           <div className="text-sm flex justify-between p-2">
-            <h1 className="font-bold self-end">BTC/USD</h1>
+            <h1 className="font-bold self-end">{pairSelected}</h1>
             <span className="text-xs self-end text-gray-500">68312.12</span>
             <span className="text-xs self-end text-green-500">+5.1%</span>
           </div>
           <Divider />
           <div className="p-2 h-full">
             <div className="flex justify-between text-[11px] gap-2 mb-1">
-              <span>PRICE(USD)</span>
-              <span>AMOUNT(BTC)</span>
-              <span>VALUE(USD)</span>
+              <span>PRICE({pairSelected.split("/")[1]})</span>
+              <span>AMOUNT({pairSelected.split("/")[0]})</span>
+              <span>VALUE({pairSelected.split("/")[1]})</span>
             </div>
             <ul
               className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[734px] overflow-scroll no-scrollbar py-1`}
@@ -381,52 +382,65 @@ export default function Trade() {
           <div className="p-2"></div>
         </div>
         {/* Trade Form */}
-        <div className="relative rounded-md bg-gray-100 dark:bg-default-100 w-full h-[500px] shadow-md mt-5 p-2">
-          <Tabs
-            selectedKey={tabForm}
-            onSelectionChange={setTabForm}
-            aria-label="Options"
-            variant="underlined"
-            classNames={{
-              tabList:
-                "md:ml-2 gap-6 relative rounded-none p-0 md:w-full w-screen overflow-x-scroll no-scrollbar",
-              cursor: "w-full bg-[var(--primary-color)]",
-              tab: "max-w-fit px-0 h-10",
-              tabContent:
-                "group-data-[selected=true]:text-[var(--primary-color)]",
-            }}
-          >
-            <Tab
-              key="limit_tab"
-              title={
-                <div className="flex items-center">
-                  <p>Limit</p>
-                </div>
-              }
+        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[500px] shadow-md mt-5 p-2">
+          <div className="relative w-full h-[460px]">
+            <Tabs
+              selectedKey={tabForm}
+              onSelectionChange={setTabForm}
+              aria-label="Options"
+              variant="underlined"
+              classNames={{
+                tabList:
+                  "md:ml-2 gap-6 relative rounded-none p-0 md:w-full w-screen",
+                cursor: "w-full bg-[var(--primary-color)]",
+                tab: "max-w-fit px-0 h-10",
+                tabContent:
+                  "group-data-[selected=true]:text-[var(--primary-color)]",
+              }}
             >
-              <LimitTrade />
-            </Tab>
-            <Tab
-              key="market_tab"
-              title={
-                <div className="flex items-center">
-                  <p>Market</p>
-                </div>
-              }
-            >
-              <MarketTrade />
-            </Tab>
-            <Tab
-              key="trigger_tab"
-              title={
-                <div className="flex items-center">
-                  <p>Trigger</p>
-                </div>
-              }
-            >
-              <TriggerTrade />
-            </Tab>
-          </Tabs>
+              <Tab
+                key="limit_tab"
+                title={
+                  <div className="flex items-center">
+                    <p>Limit</p>
+                  </div>
+                }
+              >
+                <LimitTrade />
+              </Tab>
+              <Tab
+                key="market_tab"
+                title={
+                  <div className="flex items-center">
+                    <p>Market</p>
+                  </div>
+                }
+              >
+                <MarketTrade />
+              </Tab>
+              <Tab
+                key="trigger_tab"
+                title={
+                  <div className="flex items-center">
+                    <p>Trigger</p>
+                  </div>
+                }
+              >
+                <TriggerTrade />
+              </Tab>
+            </Tabs>
+          </div>
+          <div className="flex justify-center gap-3 text-sm">
+            <p className="text-gray-500">Balance:</p>
+            <span className="flex gap-1">
+              <FaBitcoin className="self-center text-red-500" />
+              <p className="self-center">0.00</p>
+            </span>
+            <span className="flex gap-1 text-sm">
+              <FaDollarSign className="self-center text-green-500" />
+              <p className="self-center">0.00</p>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -480,13 +494,13 @@ export default function Trade() {
             <div className="p-2 h-full md:text-[8px] lg:text-[10px]">
               <div className="flex justify-between bg-white/85 dark:bg-default-200/50 font-bold gap-2 p-1">
                 <span>Time</span>
-                <span>PRICE(USD)</span>
-                <span>AMOUNT(BTC)</span>
-                <span>VALUE(USD)</span>
+                <span>PRICE({pairSelected.split("/")[1]})</span>
+                <span>AMOUNT({pairSelected.split("/")[0]})</span>
+                <span>VALUE({pairSelected.split("/")[1]})</span>
               </div>
               <Divider />
               <ul
-                className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[425px] overflow-scroll no-scrollbar py-1`}
+                className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[423px] overflow-scroll no-scrollbar py-1`}
                 // style={{ height: heightWindow - 100 + "px" }}
               >
                 <li className="flex justify-between text-[11px] px-1">
