@@ -475,8 +475,6 @@ export default function Trade() {
           <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
             <div className="text-sm flex justify-between p-2">
               <h1 className="font-bold self-end">Trade History</h1>
-              <span className="text-xs self-end text-gray-500">68312.12</span>
-              <span className="text-xs self-end text-green-500">+5.1%</span>
             </div>
             <Divider />
             <div className="p-2 h-full md:text-[8px] lg:text-[10px]">
