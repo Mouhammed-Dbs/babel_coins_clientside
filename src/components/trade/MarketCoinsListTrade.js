@@ -12,8 +12,10 @@ export default function MarketCoinsListTrade() {
   return (
     <div className="px-2 h-full">
       <div className="bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[230px]">
-        <div className="flex flex-wrap gap-1 text-[9px] p-1">
-          <span>USDT</span>
+        <div className="flex flex-wrap gap-2 text-[9px] p-1 cursor-pointer">
+          <span className="text-primary font-bold">USDT</span>
+          <span>MATIC</span>
+          <span>ETH</span>
         </div>
         <Divider />
         <div className="flex gap-3 text-[9px] p-1 font-bold text-gray-600 dark:text-gray-400">
@@ -68,7 +70,7 @@ function ItemPair({ pair, lastPrice, change }) {
   return (
     <li className="flex gap-3 text-[10px] p-1 cursor-pointer hover:bg-slate-200">
       <span className="flex min-w-24">
-        <FaStar className="self-center mx-1" />
+        <FaStar className="text-gray-600 self-center mx-1" />
         <p className="self-center">{pair}</p>
       </span>
       <p className="min-w-24 pl-1">{lastPrice}</p>
