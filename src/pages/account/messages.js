@@ -15,7 +15,7 @@ export default function Messages(props) {
           The actual information in the personal news
         </p>
       </div>
-      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] pb-3 text-center backdrop-blur-xs bg-white dark:bg-default-100 rounded-lg shadow-md">
+      <div className="mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] pb-3 text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="flex p-3 py-5">
           <h3 className="text-primary w-2/5">DATE</h3>
           <h3 className="text-primary w-3/5">NEWS LIST</h3>
