@@ -156,6 +156,96 @@ export default function Trade() {
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
             </ul>
             <div className="h-9 bg-white/85 dark:bg-default-200/50 flex border-y-1">
               <p className="text-[12px] self-center px-1">64,759.90</p>
@@ -297,7 +387,7 @@ export default function Trade() {
 
       {/* Third Col */}
       <div className="w-1/5 min-w-[300px]">
-        {/* Chat */}
+        {/* Chat & Market */}
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-72 shadow-md">
           <Tabs
             selectedKey={tabChatAndCoinsList}
@@ -354,49 +444,49 @@ export default function Trade() {
                 className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[463px] overflow-scroll no-scrollbar py-1`}
                 // style={{ height: heightWindow - 100 + "px" }}
               >
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
                   <span className="text-red-500">200.32</span>
                 </li>
-                <li className="flex justify-between text-[11px] px-1">
+                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
                   <span className="">21:35</span>
                   <span className="text-red-500">44231.22</span>
                   <span className="">0.000213</span>
