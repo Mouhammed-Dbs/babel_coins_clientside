@@ -1,7 +1,5 @@
 import { Button } from "@nextui-org/react";
 import MyCoinInput from "../utils/MyCoinInput";
-import MyInput from "../utils/MyInput";
-
 export default function LimitTrade({ currencyName, symbol }) {
   return (
     <div className="grid grid-cols-2 gap-4 px-4 py-4 bg-white dark:bg-default-50/50 rounded-md h-[440px]">
