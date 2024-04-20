@@ -113,7 +113,7 @@ export default function Trade() {
                   ? numSellOrders >= 35
                     ? "h-[704px]"
                     : "h-fit"
-                  : "h-[372px]"
+                  : "h-[352px]"
               } flex flex-col-reverse bg-white/85 dark:bg-default-200/50 rounded-sm w-full overflow-scroll no-scrollbar py-1`}
             >
               <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
@@ -167,7 +167,7 @@ export default function Trade() {
             </div>
             <ul
               className={`${showOrders === "sell" ? "hidden" : ""} ${
-                showOrders === "buy" ? "h-[704px]" : "h-[372px]"
+                showOrders === "buy" ? "h-[704px]" : "h-[352px]"
               } bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[332px] overflow-scroll no-scrollbar py-1`}
               // style={{ height: heightWindow - 100 + "px" }}
             >
