@@ -8,6 +8,10 @@ import TriggerTrade from "@/components/trade/TriggerTrade";
 import TradeChat from "@/components/trade/TradeChat";
 import MarketCoinsListTrade from "@/components/trade/MarketCoinsListTrade";
 import { FaBitcoin, FaDollarSign } from "react-icons/fa6";
+import {
+  HiOutlineArrowNarrowDown,
+  HiOutlineArrowNarrowUp,
+} from "react-icons/hi";
 import Image from "next/image";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
@@ -17,6 +21,7 @@ export default function Trade() {
   const [tabChatAndCoinsList, setTabChatAndCoinsList] =
     useState("coinslist_tab");
   const [showOrders, setShowOrdes] = useState("all");
+  const [numSellOrders, setNumSellOrders] = useState(35);
   const [pairSelected, setPairSelected] = useState("ETH/USDT");
   useEffect(() => {
     setMount(true);
@@ -44,12 +49,14 @@ export default function Trade() {
       {/* First Col */}
       <div className="w-1/5 min-w-max h-fit pb-28">
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
+          {/* Header */}
           <div className="text-sm flex justify-between p-2">
             <h1 className="font-bold self-end">{pairSelected}</h1>
             <span className="text-xs self-end text-gray-500">68312.12</span>
             <span className="text-xs self-end text-green-500">+5.1%</span>
           </div>
           <Divider />
+          {/* Tabs */}
           <div className="flex bg-white/85 dark:bg-default-200/50 rounded-md w-[93%] m-auto mt-1">
             <button
               className={`w-1/3 p-1 border-1 rounded-l-md hover:border-sky-500 ${
@@ -94,15 +101,20 @@ export default function Trade() {
               />
             </button>
           </div>
-          <div className="p-2 h-full">
+          <div className="p-2 h-full]">
             <div className="flex justify-between text-[11px] gap-2 mb-1">
               <span>PRICE({pairSelected.split("/")[1]})</span>
               <span>AMOUNT({pairSelected.split("/")[0]})</span>
               <span>VALUE({pairSelected.split("/")[1]})</span>
             </div>
             <ul
-              className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[700px] overflow-scroll no-scrollbar py-1`}
-              // style={{ height: heightWindow - 100 + "px" }}
+              className={`${showOrders === "buy" ? "hidden" : ""} ${
+                showOrders === "sell"
+                  ? numSellOrders >= 35
+                    ? "h-[664px]"
+                    : "h-fit"
+                  : "h-[332px]"
+              } flex flex-col-reverse bg-white/85 dark:bg-default-200/50 rounded-sm w-full overflow-scroll no-scrollbar py-1`}
             >
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-red-500">44231.22</span>
@@ -111,243 +123,213 @@ export default function Trade() {
               </li>
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000214</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000215</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-red-500">44231.22</span>
+                <span className="">0.000216</span>
+                <span className="text-red-500">200.3223414</span>
+              </li>
+            </ul>
+            <div className="w-full h-9 bg-white/85 dark:bg-default-200/50 flex border-y-1">
+              <p className="text-[12px] self-center px-1">64,759.90</p>
+              <span className="self-center flex">
+                <HiOutlineArrowNarrowUp className={`text-red-500 hidden`} />
+                <HiOutlineArrowNarrowDown className={`text-green-500`} />
+                <p className="self-center text-[9px]">1.47</p>
+              </span>
+            </div>
+            <ul
+              className={`${showOrders === "sell" ? "hidden" : ""} ${
+                showOrders === "buy" ? "h-[664px]" : "h-[332px]"
+              } bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[332px] overflow-scroll no-scrollbar py-1`}
+              // style={{ height: heightWindow - 100 + "px" }}
+            >
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
@@ -360,9 +342,14 @@ export default function Trade() {
                 <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
+                <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
@@ -375,9 +362,9 @@ export default function Trade() {
                 <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
+                <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
+                <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
@@ -385,29 +372,69 @@ export default function Trade() {
                 <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
+                <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
+                <span className="text-green-500">200.3223414</span>
               </li>
               <li className="flex justify-between text-[11px] px-1">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414wqe</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
               </li>
             </ul>
           </div>
