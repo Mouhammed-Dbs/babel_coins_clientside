@@ -117,132 +117,133 @@ export default function Trade() {
                   : "h-[352px]"
               } flex flex-col-reverse bg-white/85 dark:bg-default-200/50 rounded-sm w-full overflow-scroll no-scrollbar py-1`}
             >
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
                 <span className="text-red-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-red-500">200.3223414</span>
@@ -262,42 +263,112 @@ export default function Trade() {
               } bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[332px] overflow-scroll no-scrollbar py-1`}
               // style={{ height: heightWindow - 100 + "px" }}
             >
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
               </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-b-2 border-dotted cursor-pointer">
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
+                <span className="text-green-500">44231.22</span>
+                <span className="">0.000213</span>
+                <span className="text-green-500">200.3223414</span>
+              </li>
+              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
                 <span className="text-green-500">44231.22</span>
                 <span className="">0.000213</span>
                 <span className="text-green-500">200.3223414</span>
@@ -347,7 +418,7 @@ export default function Trade() {
                       showArrow={true}
                       content="Limit order is an order to buy/sell at a specified price or better"
                     >
-                      <Button size="sm" className="p-0 min-w-1">
+                      <Button size="sm" className="p-0 min-w-1 h-4">
                         <FaInfoCircle className="text-xs dark:text-gray-300" />
                       </Button>
                     </Tooltip>
@@ -369,7 +440,7 @@ export default function Trade() {
                       showArrow={true}
                       content="Quick buy/sell at market price"
                     >
-                      <Button size="sm" className="p-0 min-w-1">
+                      <Button size="sm" className="p-0 min-w-1 h-4">
                         <FaInfoCircle className="text-xs dark:text-gray-300" />
                       </Button>
                     </Tooltip>
@@ -391,7 +462,7 @@ export default function Trade() {
                       showArrow={true}
                       content="To buy/sell coin once the price reaches a specified price"
                     >
-                      <Button size="sm" className="p-0 min-w-1">
+                      <Button size="sm" className="p-0 min-w-1 h-4">
                         <FaInfoCircle className="text-xs dark:text-gray-300" />
                       </Button>
                     </Tooltip>
