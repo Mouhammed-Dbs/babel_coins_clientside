@@ -4,7 +4,7 @@ export default function LimitTrade({ currencyName, symbol }) {
   return (
     <div className="grid grid-cols-2 gap-4 px-4 py-4 bg-white dark:bg-default-50/50 rounded-md h-[440px]">
       <div>
-        <h2 className="text-xl font-bold max-w-64 m-auto mt-5">
+        <h2 className="text-xl font-bold max-w-64 m-auto mt-2 pl-1">
           BUY {currencyName}
         </h2>
         <div className="grid grid-rows-3 gap-5 mt-4 w-fit m-auto">
@@ -21,7 +21,7 @@ export default function LimitTrade({ currencyName, symbol }) {
         </Button>
       </div>
       <div>
-        <h2 className="text-xl font-bold max-w-64 m-auto mt-5">
+        <h2 className="text-xl font-bold max-w-64 m-auto mt-2 pl-1">
           SELL {currencyName}
         </h2>
         <div className="grid grid-rows-3 gap-5 mt-4 w-fit m-auto">
