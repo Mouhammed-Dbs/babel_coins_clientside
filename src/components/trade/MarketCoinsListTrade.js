@@ -11,7 +11,7 @@ export default function MarketCoinsListTrade() {
 
   return (
     <div className="px-2 h-full">
-      <div className="bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[230px]">
+      <div className="bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[290px]">
         <div className="flex flex-wrap gap-2 text-[9px] p-1 cursor-pointer">
           <span className="text-primary font-bold">USDT</span>
           <span>MATIC</span>

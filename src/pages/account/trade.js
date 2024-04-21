@@ -14,6 +14,7 @@ import {
 } from "react-icons/hi";
 import Image from "next/image";
 import { FaInfoCircle } from "react-icons/fa";
+import GraphTrade from "@/components/trade/GraphTrage";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -112,9 +113,9 @@ export default function Trade() {
               className={`${showOrders === "buy" ? "hidden" : ""} ${
                 showOrders === "sell"
                   ? numSellOrders >= 35
-                    ? "h-[704px]"
+                    ? "h-[764px]"
                     : "h-fit"
-                  : "h-[352px]"
+                  : "h-[382px]"
               } flex flex-col-reverse bg-white/85 dark:bg-default-200/50 rounded-sm w-full overflow-scroll no-scrollbar py-1`}
             >
               <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
@@ -259,7 +260,7 @@ export default function Trade() {
             </div>
             <ul
               className={`${showOrders === "sell" ? "hidden" : ""} ${
-                showOrders === "buy" ? "h-[704px]" : "h-[352px]"
+                showOrders === "buy" ? "h-[764px]" : "h-[382px]"
               } bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[332px] overflow-scroll no-scrollbar py-1`}
               // style={{ height: heightWindow - 100 + "px" }}
             >
@@ -381,15 +382,17 @@ export default function Trade() {
       {/* Second Col */}
       <div
         className="w-3/5 md:min-w-[360px] lg:min-w-[400px]"
-        style={{ height: heightWindow + 300 + "px" }}
+        style={{ height: heightWindow + 340 + "px" }}
       >
         {/* Price Graph */}
-        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-72 shadow-md">
+        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[350px] shadow-md">
           <div className="text-sm flex gap-4 p-2">
             <h1 className="font-bold self-end">Price Graph</h1>
           </div>
           <Divider />
-          <div className="p-2"></div>
+          <div className="p-2">
+            <GraphTrade pair={pairSelected} />
+          </div>
         </div>
         {/* Trade Form */}
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[540px] shadow-md mt-5 p-2">
@@ -490,7 +493,7 @@ export default function Trade() {
       {/* Third Col */}
       <div className="w-1/5 min-w-[300px]">
         {/* Chat & Market */}
-        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-72 shadow-md">
+        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[348px] shadow-md">
           <Tabs
             selectedKey={tabChatAndCoinsList}
             onSelectionChange={setTabChatAndCoinsList}
