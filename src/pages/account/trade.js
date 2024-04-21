@@ -1,4 +1,4 @@
-import { Divider, Tab, Tabs } from "@nextui-org/react";
+import { Button, Divider, Tab, Tabs, Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import screenIs from "@/screen";
 import MyLoading from "@/components/MyLoading";
@@ -13,6 +13,7 @@ import {
   HiOutlineArrowNarrowUp,
 } from "react-icons/hi";
 import Image from "next/image";
+import { FaInfoCircle } from "react-icons/fa";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -339,8 +340,17 @@ export default function Trade() {
               <Tab
                 key="limit_tab"
                 title={
-                  <div className="flex items-center">
+                  <div className="flex gap-2 items-center">
                     <p>Limit</p>
+                    <Tooltip
+                      className="text-xs"
+                      showArrow={true}
+                      content="Limit order is an order to buy/sell at a specified price or better"
+                    >
+                      <Button size="sm" className="p-0 min-w-1">
+                        <FaInfoCircle className="text-xs dark:text-gray-300" />
+                      </Button>
+                    </Tooltip>
                   </div>
                 }
               >
@@ -352,8 +362,17 @@ export default function Trade() {
               <Tab
                 key="market_tab"
                 title={
-                  <div className="flex items-center">
+                  <div className="flex gap-2 items-center">
                     <p>Market</p>
+                    <Tooltip
+                      className="text-xs"
+                      showArrow={true}
+                      content="Quick buy/sell at market price"
+                    >
+                      <Button size="sm" className="p-0 min-w-1">
+                        <FaInfoCircle className="text-xs dark:text-gray-300" />
+                      </Button>
+                    </Tooltip>
                   </div>
                 }
               >
@@ -365,8 +384,17 @@ export default function Trade() {
               <Tab
                 key="trigger_tab"
                 title={
-                  <div className="flex items-center">
+                  <div className="flex gap-2 items-center">
                     <p>Trigger</p>
+                    <Tooltip
+                      className="text-xs"
+                      showArrow={true}
+                      content="To buy/sell coin once the price reaches a specified price"
+                    >
+                      <Button size="sm" className="p-0 min-w-1">
+                        <FaInfoCircle className="text-xs dark:text-gray-300" />
+                      </Button>
+                    </Tooltip>
                   </div>
                 }
               >
