@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function MyCoinInput({ symbol, label, onChange }) {
+export default function MyCoinInput({
+  symbol,
+  label,
+  onChange,
+  readOnly = false,
+}) {
   const [selected, setSelected] = useState(false);
   return (
     <div>
@@ -18,6 +23,7 @@ export default function MyCoinInput({ symbol, label, onChange }) {
         }`}
       >
         <input
+          readOnly={readOnly}
           onChange={onChange}
           className="peer outline-none w-full px-2 rounded-l-md text-black dark:text-white"
           onFocus={() => setSelected(true)}

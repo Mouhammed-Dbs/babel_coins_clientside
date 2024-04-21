@@ -65,7 +65,7 @@ export default function Trade() {
               onClick={() => setShowOrdes("buy")}
             >
               <Image
-                className="m-auto"
+                className="w-6 h-6 m-auto"
                 src="/images/icons/trade-icon.svg"
                 alt="alt"
                 width={20}
@@ -79,7 +79,7 @@ export default function Trade() {
               onClick={() => setShowOrdes("all")}
             >
               <Image
-                className="m-auto"
+                className="w-6 h-6 m-auto"
                 src="/images/icons/trade-all-icon.svg"
                 alt="alt"
                 width={20}
@@ -93,7 +93,7 @@ export default function Trade() {
               onClick={() => setShowOrdes("sell")}
             >
               <Image
-                className="m-auto"
+                className="w-6 h-6 m-auto"
                 src="/images/icons/trade-red-icon.svg"
                 alt="alt"
                 width={20}
@@ -357,7 +357,10 @@ export default function Trade() {
                   </div>
                 }
               >
-                <MarketTrade />
+                <MarketTrade
+                  currencyName={pairSelected.split("/")[0]}
+                  symbol={pairSelected.split("/")[0]}
+                />
               </Tab>
               <Tab
                 key="trigger_tab"

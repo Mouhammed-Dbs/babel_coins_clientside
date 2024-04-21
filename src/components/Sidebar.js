@@ -26,7 +26,7 @@ export default function Sidebar({ children }) {
           {!expanded && (
             <Image
               onClick={() => router.push("/")}
-              className="transition-all"
+              className="transition-all h-9 w-9"
               width={28}
               height={28}
               alt=""
