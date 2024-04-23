@@ -128,22 +128,10 @@ export default function Send(props) {
   };
   const isDataValid = () => {
     if (transferType === "external")
-      if (
-        address &&
-        isAmountValid(amount) &&
-        address &&
-        coinSelected &&
-        networkSelected
-      )
+      if (isAmountValid(amount) && address && coinSelected && networkSelected)
         return true;
     if (transferType === "internal")
-      if (
-        address &&
-        isAmountValid(amount) &&
-        account &&
-        coinSelected &&
-        networkSelected
-      )
+      if (isAmountValid(amount) && account && coinSelected && networkSelected)
         return true;
     return false;
   };
@@ -174,7 +162,7 @@ export default function Send(props) {
               setNetworks(net);
               setNetworkSelected(net[0]);
               setPlaceholder(placeholdersAddresses[net[0]]);
-              getFeesAndLimits("crypto", "external", query["curr"], net[0]);
+              getFeesAndLimits("crypto", transferType, query["curr"], net[0]);
             } else {
               router.replace({
                 pathname: router.pathname,
@@ -262,12 +250,19 @@ export default function Send(props) {
                       <p className="font-bold">Fee:</p>
                       <p className="">{resData.data?.fee}</p>
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <p className="font-bold">Receiver address:</p>
-                      <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-                        {resData.data?.receiverAddress}
-                      </p>
-                    </div>
+                    {resData.transferType === "external" ? (
+                      <div className="flex flex-col gap-1">
+                        <p className="font-bold">Receiver address:</p>
+                        <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                          {resData.data?.receiverAddress}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2">
+                        <p className="font-bold">Receiver Account Name:</p>
+                        <p className="">{resData.data?.receiverAccountName}</p>
+                      </div>
+                    )}
                     <div className="flex flex-col gap-1">
                       <p className="font-bold">Operation ID:</p>
                       <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
@@ -504,6 +499,12 @@ export default function Send(props) {
                     defaultChecked
                     onChange={() => {
                       setTransferType("external");
+                      getFeesAndLimits(
+                        "crypto",
+                        "external",
+                        query["curr"],
+                        networkSelected
+                      );
                     }}
                     id="external_transfer"
                     className="accent-primary"
@@ -516,6 +517,12 @@ export default function Send(props) {
                   <input
                     onChange={() => {
                       setTransferType("internal");
+                      getFeesAndLimits(
+                        "crypto",
+                        "internal",
+                        query["curr"],
+                        networkSelected
+                      );
                     }}
                     id="internal_transfer"
                     name="transfer"
@@ -570,7 +577,7 @@ export default function Send(props) {
                   label: screenSize ? undefined : "Account",
                   name: "account",
                   type: "text",
-                  placeholder: "b000000",
+                  placeholder: "B000000",
                 }}
               />
             </div>
@@ -768,7 +775,7 @@ export default function Send(props) {
                 )
                   .then((result) => {
                     setResData({
-                      data: resData.data,
+                      data: result.data,
                       error: result.error,
                       msg: result.msg,
                     });
