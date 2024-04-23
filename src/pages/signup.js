@@ -368,10 +368,13 @@ export default function Signup() {
                     password: e.target.value,
                   })
                     .then(() => {
-                      setAccount({ ...account, error: false, msg: "" });
+                      setValidateAccount({ error: false, msg: "" });
                     })
                     .catch((error) => {
-                      setAccount({ ...account, error: true, msg: error[0] });
+                      setValidateAccount({
+                        error: true,
+                        msg: error[0],
+                      });
                     });
                 }}
                 className="w-64 mt-3"
