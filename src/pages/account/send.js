@@ -214,6 +214,7 @@ export default function Send(props) {
         isOpen={isOpen}
         onClose={onClose}
         onOpenChange={onOpenChange}
+        className="border-t-2 border-gray-400"
       >
         <ModalContent>
           {(onClose) => (
