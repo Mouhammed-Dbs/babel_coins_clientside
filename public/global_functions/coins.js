@@ -119,7 +119,7 @@ const transferMoney = async (
   transferType,
   currencyName,
   network,
-  receipentAddress,
+  receiverAddress,
   amount
 ) => {
   let token = localStorage.getItem("babel-coins-user-token");
@@ -130,9 +130,9 @@ const transferMoney = async (
         transferCurrencyType === "crypto"
           ? {
               transferCurrencyType,
-              transferType,
+              transferType, //internal
               currencyName,
-              receipentAddress,
+              receiverAddress, //receiverId
               network,
               amount,
             }

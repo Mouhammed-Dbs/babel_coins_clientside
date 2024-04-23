@@ -1,7 +1,19 @@
-import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { BiSolidError } from "react-icons/bi";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import {
@@ -12,6 +24,14 @@ import {
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 import { validateAmount } from "../../../public/global_functions/validation";
+import { data } from "autoprefixer";
+import { CopyButton } from "@/components/utils/CopyButton";
+import { FaInfoCircle } from "react-icons/fa";
+import Link from "next/link";
+import {
+  getDateFormated,
+  getTimeFormated,
+} from "../../../public/global_functions/helpers";
 
 export default function Send(props) {
   const router = useRouter();
@@ -29,6 +49,24 @@ export default function Send(props) {
   const [fee, setFee] = useState(0);
   const [amount, setAmount] = useState("");
   const [limits, setLimits] = useState({});
+  const [resData, setResData] = useState({
+    error: false,
+    msg: "",
+    data: {
+      transferType: "external",
+      transferCurrencyType: "crypto",
+      network: "TRON",
+      currencyName: "USDT",
+      senderId: "660839b814d4842df81b5bed",
+      receiverAddress: "TEN4KrL95t6cSWZwb71gaiXj5ZbadJuT3o",
+      amount: 5,
+      fee: 4,
+      status: "pending",
+      dateOfTransfer: "2024-04-23T14:21:01.702Z",
+      _id: "6627c3ceb5cf165c6bc2b017",
+      __v: 0,
+    },
+  });
   const [msg, setMsg] = useState({ error: false, data: "" });
   const [address, setAddress] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
@@ -40,6 +78,16 @@ export default function Send(props) {
     BITCOIN: "3b5a8f7a50caf07685b7026bb5ac8694f36a18246bce7494c7a9239a7674ae5a",
     BSC: "0x685B1ded8013785d6623CC18D214320b6Bb64759",
   };
+  const sitesScan = {
+    TRON: { title: "tronscan.org", url: "https://tronscan.org/#/address/" },
+    POLYGON: {
+      title: "polygonscan.com",
+      url: "https://polygonscan.com/address/",
+    },
+    ETHEREUM: { title: "etherscan.io", url: "https://etherscan.io/address/" },
+    BSC: { title: "bscscan.com", url: "https://bscscan.com/address/" },
+  };
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
@@ -161,6 +209,125 @@ export default function Send(props) {
     );
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
+      <Modal
+        size="md"
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>
+                {resData.error && (
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
+                    <BiSolidError className="self-cente w-7 h-7 text-red-400" />
+                    <p className="self-center text-xl">Sending failure</p>
+                  </span>
+                )}
+                {!resData.error && (
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
+                    <FaInfoCircle
+                      className={`self-cente w-7 h-7 ${
+                        resData.data.status === "pending"
+                          ? "text-yellow-500"
+                          : ""
+                      }`}
+                    />
+                    <p className="self-center text-xl">Sending Info</p>
+                  </span>
+                )}
+              </ModalHeader>
+              <ModalBody>
+                {resData.error && (
+                  <p className={`w-fit m-auto`}>{resData.msg}</p>
+                )}
+                {!resData.error && (
+                  <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
+                    <div className="flex gap-2">
+                      <p className="font-bold self-center">Coin:</p>
+                      <p className="self-center">{resData.data.currencyName}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Network:</p>
+                      <p className="">{resData.data.network}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Amount:</p>
+                      <p className="">{resData.data.amount}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Fee:</p>
+                      <p className="">{resData.data.fee}</p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="font-bold">Receiver address:</p>
+                      <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                        {resData.data.receiverAddress}
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="font-bold">Operation ID:</p>
+                      <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                        {resData.data._id}
+                        <CopyButton
+                          className="self-center ml-2 text-primary hover:text-opacity-70"
+                          copy={resData.data._id}
+                        />
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Status:</p>
+                      <p
+                        className={
+                          resData.data.status === "pending"
+                            ? "text-yellow-500"
+                            : ""
+                        }
+                      >
+                        {resData.data.status.toUpperCase()}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Date & Time:</p>
+                      <p className="">
+                        {getDateFormated(resData.data.dateOfTransfer)}{" "}
+                        {getTimeFormated(resData.data.dateOfTransfer)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                {resData.error && (
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                )}
+                {!resData.error && (
+                  <>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button className="text-white" color="primary">
+                      <Link
+                        className="flex items-center justify-center w-full h-full"
+                        target="_blank"
+                        href={
+                          sitesScan[resData.data.network].url +
+                          resData.data.receiverAddress
+                        }
+                      >
+                        Go {sitesScan[resData.data.network].title}
+                      </Link>
+                    </Button>
+                  </>
+                )}
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
@@ -550,13 +717,19 @@ export default function Send(props) {
                   parseFloat(amount)
                 )
                   .then((result) => {
-                    setMsg({ error: result.error, data: result.msg });
+                    setResData({
+                      data: resData.data,
+                      error: !result.error,
+                      msg: result.msg,
+                    });
                     setSendLoading(false);
+                    onOpen();
                   })
                   .catch((err) => {
-                    setMsg({
+                    setResData({
                       error: err.response.data.error,
-                      data: err.response.data.msg,
+                      msg: err.response.data.msg,
+                      data: {},
                     });
                     setSendLoading(false);
                   });
