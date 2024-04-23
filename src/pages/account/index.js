@@ -42,7 +42,7 @@ export default function Balance() {
         <p className="text-xs opacity-75 mt-1">Available accounts</p>
       </div>
 
-      <div className="w-fit pb-44 md:m-auto md:w-full text-center">
+      <div className="w-full pb-44 md:m-auto md:w-full text-center">
         <div className="w-full">
           <div className="w-fit m-auto my-4 pb-[2px]">
             <h1 className="w-fit text-xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-sm">

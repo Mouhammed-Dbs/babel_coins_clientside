@@ -163,7 +163,7 @@ export default function MainLayout(props) {
         </Sidebar>
         <div className="w-screen z-10">
           <Navbar accountName={userInfo.accountName} />
-          <div className="px-4 md:px-0 w-[92%]">{props.children}</div>
+          <div className="px-4 md:px-0 w-[92%] pt-2">{props.children}</div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}
