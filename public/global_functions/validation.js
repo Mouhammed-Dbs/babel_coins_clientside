@@ -47,7 +47,7 @@ const validateSecretCode = async (secretCode) => {
   const secretCodeSchema = yup.object().shape({
     secretCode: yup
       .string()
-      .required("Password is required")
+      .required("Secret code is required")
       .matches(/^\d{6}$/, "Secret code must be a 6-digit number"),
   });
 

@@ -37,6 +37,7 @@ export default function Send(props) {
   const router = useRouter();
   const { query } = router;
   const [mounted, setMount] = useState(false);
+  const [transferType, setTransferType] = useState("external");
   const [templates, setTemplates] = useState(["b23523553", "b29523553"]);
   const [coins, setCoins] = useState([]);
   const [coinSelected, setCoinSelected] = useState(null);
@@ -52,23 +53,11 @@ export default function Send(props) {
   const [resData, setResData] = useState({
     error: false,
     msg: "",
-    data: {
-      transferType: "external",
-      transferCurrencyType: "crypto",
-      network: "TRON",
-      currencyName: "USDT",
-      senderId: "660839b814d4842df81b5bed",
-      receiverAddress: "TEN4KrL95t6cSWZwb71gaiXj5ZbadJuT3o",
-      amount: 5,
-      fee: 4,
-      status: "pending",
-      dateOfTransfer: "2024-04-23T14:21:01.702Z",
-      _id: "6627c3ceb5cf165c6bc2b017",
-      __v: 0,
-    },
+    data: {},
   });
   const [msg, setMsg] = useState({ error: false, data: "" });
   const [address, setAddress] = useState(null);
+  const [account, setAccount] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("");
   const placeholdersAddresses = {
@@ -138,14 +127,24 @@ export default function Send(props) {
     return true;
   };
   const isDataValid = () => {
-    if (
-      address &&
-      isAmountValid(amount) &&
-      address &&
-      coinSelected &&
-      networkSelected
-    )
-      return true;
+    if (transferType === "external")
+      if (
+        address &&
+        isAmountValid(amount) &&
+        address &&
+        coinSelected &&
+        networkSelected
+      )
+        return true;
+    if (transferType === "internal")
+      if (
+        address &&
+        isAmountValid(amount) &&
+        account &&
+        coinSelected &&
+        networkSelected
+      )
+        return true;
     return false;
   };
 
@@ -230,7 +229,7 @@ export default function Send(props) {
                   <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
                     <FaInfoCircle
                       className={`self-cente w-7 h-7 ${
-                        resData.data.status === "pending"
+                        resData.data?.status === "pending"
                           ? "text-yellow-500"
                           : ""
                       }`}
@@ -247,33 +246,35 @@ export default function Send(props) {
                   <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
                     <div className="flex gap-2">
                       <p className="font-bold self-center">Coin:</p>
-                      <p className="self-center">{resData.data.currencyName}</p>
+                      <p className="self-center">
+                        {resData.data?.currencyName}
+                      </p>
                     </div>
                     <div className="flex gap-2">
                       <p className="font-bold">Network:</p>
-                      <p className="">{resData.data.network}</p>
+                      <p className="">{resData.data?.network}</p>
                     </div>
                     <div className="flex gap-2">
                       <p className="font-bold">Amount:</p>
-                      <p className="">{resData.data.amount}</p>
+                      <p className="">{resData.data?.amount}</p>
                     </div>
                     <div className="flex gap-2">
                       <p className="font-bold">Fee:</p>
-                      <p className="">{resData.data.fee}</p>
+                      <p className="">{resData.data?.fee}</p>
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className="font-bold">Receiver address:</p>
                       <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-                        {resData.data.receiverAddress}
+                        {resData.data?.receiverAddress}
                       </p>
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className="font-bold">Operation ID:</p>
                       <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-                        {resData.data._id}
+                        {resData.data?._id}
                         <CopyButton
                           className="self-center ml-2 text-primary hover:text-opacity-70"
-                          copy={resData.data._id}
+                          copy={resData.data?._id}
                         />
                       </p>
                     </div>
@@ -281,19 +282,19 @@ export default function Send(props) {
                       <p className="font-bold">Status:</p>
                       <p
                         className={
-                          resData.data.status === "pending"
+                          resData.data?.status === "pending"
                             ? "text-yellow-500"
                             : ""
                         }
                       >
-                        {resData.data.status.toUpperCase()}
+                        {resData.data.status?.toUpperCase()}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <p className="font-bold">Date & Time:</p>
                       <p className="">
-                        {getDateFormated(resData.data.dateOfTransfer)}{" "}
-                        {getTimeFormated(resData.data.dateOfTransfer)}
+                        {getDateFormated(resData.data?.dateOfTransfer)}{" "}
+                        {getTimeFormated(resData.data?.dateOfTransfer)}
                       </p>
                     </div>
                   </div>
@@ -315,11 +316,13 @@ export default function Send(props) {
                         className="flex items-center justify-center w-full h-full"
                         target="_blank"
                         href={
-                          sitesScan[resData.data.network].url +
-                          resData.data.receiverAddress
+                          sitesScan[resData.data?.network]
+                            ? sitesScan[resData.data?.network]?.url +
+                              resData.data?.receiverAddress
+                            : ""
                         }
                       >
-                        Go {sitesScan[resData.data.network].title}
+                        Go {sitesScan[resData.data?.network]?.title}
                       </Link>
                     </Button>
                   </>
@@ -339,7 +342,7 @@ export default function Send(props) {
       </div>
       <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="lg:flex lg:gap-10">
-          <div className="lg:w-2/3 lg:ml-5">
+          <div className="lg:w-2/3 lg:ml-5 flex flex-col gap-4">
             {/* System */}
             <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="text-right text-sm md:text-base w-36">
@@ -425,7 +428,7 @@ export default function Send(props) {
               </Select>
             </div>
             {/* Templates md:flex */}
-            <div className="hidden m-auto w-full gap-4 items-center mt-3">
+            <div className="hidden m-auto w-full gap-4 items-center mt-4">
               <label className="text-right text-sm md:text-base w-36">
                 Templates
               </label>
@@ -451,7 +454,7 @@ export default function Send(props) {
               </Select>
             </div>
             {/* Network */}
-            <div className="md:flex m-auto w-full gap-4 items-center mt-3 md:mt-0">
+            <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
               <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
                 Network
               </label>
@@ -490,8 +493,45 @@ export default function Send(props) {
                 ))}
               </Select>
             </div>
+            {/* Type Transfer */}
+            <div className="md:flex m-auto w-full gap-4 items-center mt-4">
+              <label className="block ml-1 md:ml-0 md:text-right text-base w-36">
+                Transfer type
+              </label>
+              <div className="flex gap-4 mt-1 md:mt-0 pl-2 md:pl-0 text-sm">
+                <div className="flex gap-1">
+                  <input
+                    defaultChecked
+                    onChange={() => {
+                      setTransferType("external");
+                    }}
+                    id="external_transfer"
+                    className="accent-primary"
+                    name="transfer"
+                    type="radio"
+                  />
+                  <label htmlFor="external_transfer">External</label>
+                </div>
+                <div className="flex gap-1">
+                  <input
+                    onChange={() => {
+                      setTransferType("internal");
+                    }}
+                    id="internal_transfer"
+                    name="transfer"
+                    type="radio"
+                    className="accent-primary"
+                  />
+                  <label htmlFor="internal_transfer">Internal</label>
+                </div>
+              </div>
+            </div>
             {/* Address */}
-            <div className="flex m-auto w-full gap-4 items-center">
+            <div
+              className={`m-auto w-full gap-4 items-center ${
+                transferType === "external" ? "flex " : "hidden"
+              }`}
+            >
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
                 Address
               </label>
@@ -511,18 +551,26 @@ export default function Send(props) {
               />
             </div>
             {/* Account md:flex */}
-            <div className="hidden m-auto w-full gap-4 items-center mt-3">
+            <div
+              className={`m-auto w-full gap-4 items-center ${
+                transferType === "internal" ? "md:flex" : "hidden"
+              }`}
+            >
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
                 Account
               </label>
               <MyInput
+                defaultValue={account}
+                onChange={(e) => {
+                  setAccount(e.target.value);
+                }}
                 color="border-gray-500"
-                className="w-full md:w-64 border-black mb-3 mt-6"
+                className="w-full md:w-64 border-black mt-3"
                 item={{
                   label: screenSize ? undefined : "Account",
                   name: "account",
                   type: "text",
-                  placeholder: "b0320320",
+                  placeholder: "b000000",
                 }}
               />
             </div>
@@ -702,7 +750,7 @@ export default function Send(props) {
           )}
         </div>
 
-        <div className="w-fit m-auto lg:m-0 lg:ml-44">
+        <div className="w-fit m-auto lg:m-0 lg:ml-44 mt-4">
           <Button
             isDisabled={!isDataValid() || sendLoading}
             className="bg-orange text-white rounded-full mt-5 px-10"
@@ -711,16 +759,17 @@ export default function Send(props) {
                 setSendLoading(true);
                 transferMoney(
                   "crypto",
-                  "external",
+                  transferType,
                   coinSelected,
                   networkSelected,
                   address,
+                  account,
                   parseFloat(amount)
                 )
                   .then((result) => {
                     setResData({
                       data: resData.data,
-                      error: !result.error,
+                      error: result.error,
                       msg: result.msg,
                     });
                     setSendLoading(false);

@@ -120,6 +120,7 @@ const transferMoney = async (
   currencyName,
   network,
   receiverAddress,
+  receiverAccountName,
   amount
 ) => {
   let token = localStorage.getItem("babel-coins-user-token");
@@ -128,14 +129,15 @@ const transferMoney = async (
       const res = await axios.post(
         `${process.env.BASE_API_URL}/users/send-money`,
         transferCurrencyType === "crypto"
-          ? {
+          ? getDataByTransferType({
               transferCurrencyType,
-              transferType, //internal
+              transferType,
               currencyName,
-              receiverAddress, //receiverId
+              receiverAddress,
+              receiverAccountName,
               network,
               amount,
-            }
+            })
           : {},
         {
           headers: {
@@ -150,6 +152,26 @@ const transferMoney = async (
     }
   }
   return null;
+};
+
+const getDataByTransferType = (data) => {
+  if (data.transferType === "external")
+    return {
+      transferCurrencyType: data.transferCurrencyType,
+      transferType: data.transferType,
+      currencyName: data.currencyName,
+      receiverAddress: data.receiverAddress,
+      network: data.network,
+      amount: data.amount,
+    };
+  return {
+    transferCurrencyType: data.transferCurrencyType,
+    transferType: data.transferType,
+    currencyName: data.currencyName,
+    receiverAccountName: data.receiverAccountName,
+    network: data.network,
+    amount: data.amount,
+  };
 };
 
 export {

@@ -94,31 +94,22 @@ export default function Signup() {
   };
   const updateUserInformation = async (event) => {
     event.preventDefault();
-    validateFirstAndLastName({
-      firstName: account?.firstName,
-      lastName: account?.lastName,
-    })
-      .then(async () => {
-        try {
-          setLoading(true);
-          let res = await updateUserInfo(
-            account?.password,
-            account?.secretCode,
-            account?.firstName,
-            account?.lastName,
-            account?.country
-          );
-          if (!res.error) {
-            await router.push("/");
-            setLoading(false);
-          }
-        } catch (err) {
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        setAccount({ ...account, error: true, msg: error[0] });
-      });
+    try {
+      setLoading(true);
+      let res = await updateUserInfo(
+        account?.password,
+        account?.secretCode,
+        account?.firstName,
+        account?.lastName,
+        account?.country
+      );
+      if (!res.error) {
+        await router.push("/");
+        setLoading(false);
+      }
+    } catch (err) {
+      setLoading(false);
+    }
   };
   const handleStartTimer = () => {
     setTimerOn(true);
@@ -456,10 +447,11 @@ export default function Signup() {
             >
               <p className="text-center my-2">Please save it in a save place</p>
               <MyInput
+                defaultValue={account?.firstName}
                 textColor="text-white"
                 onChange={(e) => {
                   setAccount({ ...account, firstName: e.target.value });
-                  setValidateAccount({ name: e.target.value })
+                  validateName({ name: e.target.value })
                     .then(() => {
                       setValidateAccount({ error: false, msg: "" });
                     })
@@ -478,6 +470,7 @@ export default function Signup() {
                 }}
               />
               <MyInput
+                defaultValue={account?.lastName}
                 textColor="text-white"
                 onChange={(e) => {
                   setAccount({ ...account, lastName: e.target.value });
@@ -531,6 +524,10 @@ export default function Signup() {
       <div className="w-fit m-auto">
         {/* Error Message */}
         <ErrorMessage show={account.error} message={account.msg} />
+        <ErrorMessage
+          show={validateAccount.error}
+          message={validateAccount.msg}
+        />
       </div>
       {/* Under Card */}
       <div className="flex w-fit m-auto mt-4">
