@@ -306,20 +306,22 @@ export default function Send(props) {
                     <Button color="danger" variant="light" onPress={onClose}>
                       Close
                     </Button>
-                    <Button className="text-white" color="primary">
-                      <Link
-                        className="flex items-center justify-center w-full h-full"
-                        target="_blank"
-                        href={
-                          sitesScan[resData.data?.network]
-                            ? sitesScan[resData.data?.network]?.url +
-                              resData.data?.receiverAddress
-                            : ""
-                        }
-                      >
-                        Go {sitesScan[resData.data?.network]?.title}
-                      </Link>
-                    </Button>
+                    {resData.transferType === "external" && (
+                      <Button className="text-white" color="primary">
+                        <Link
+                          className="flex items-center justify-center w-full h-full"
+                          target="_blank"
+                          href={
+                            sitesScan[resData.data?.network]
+                              ? sitesScan[resData.data?.network]?.url +
+                                resData.data?.receiverAddress
+                              : ""
+                          }
+                        >
+                          Go {sitesScan[resData.data?.network]?.title}
+                        </Link>
+                      </Button>
+                    )}
                   </>
                 )}
               </ModalFooter>
