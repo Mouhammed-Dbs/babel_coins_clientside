@@ -13,150 +13,23 @@ import MyLoading from "@/components/MyLoading";
 import screenIs from "@/screen";
 
 export default function History() {
+  const [tab, setTab] = useState("CREDIT");
   const [data, setData] = useState([
     {
+      type: "CREDIT",
       date: "16 Jan 2024 23:52",
-      credit: 0,
-      debit: 15,
+      amount: 15,
       ps: "TRX",
       id: "2009936051",
       status: true,
     },
     {
-      date: "16 Jul 2024 23:53",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 23:54",
-      credit: 0,
-      debit: 15,
+      type: "DEBIT",
+      date: "16 Jan 2024 23:52",
+      amount: 10,
       ps: "TRX",
       id: "2009936051",
       status: true,
-    },
-    {
-      date: "16 Jul 2024 23:55",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 23:56",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 23:57",
-      credit: 90,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 23:58",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 23:59",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 00:00",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 22:52",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 21:52",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 19:52",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 14:52",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 13:52",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 12:52",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 10:52",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
-    },
-    {
-      date: "16 Jan 2024 02:52",
-      credit: 0,
-      debit: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      date: "16 Jul 2024 03:52",
-      credit: 100,
-      debit: 0,
-      ps: "TRX",
-      id: "2009996551",
-      status: false,
     },
   ]);
   const [currentSize, setCurrentSize] = useState(0);
@@ -238,7 +111,7 @@ export default function History() {
       <div className="card_history pb-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 backdrop-blur-md rounded-lg shadow-md">
         <ul
           style={!screenSize ? { width: (widthCard - 72) * (11 / 12) } : {}}
-          className="flex md:flex-wrap bg-gray-200/55 dark:bg-gray-600/55 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
+          className="flex md:flex-wrap bg-gray-200/70 dark:bg-gray-600/70 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
         >
           {items.map((item) => (
             <li
@@ -257,6 +130,20 @@ export default function History() {
             </li>
           ))}
         </ul>
+        <div className="flex w-full border-t-1 border-b-1 bg-gray-200/55 dark:bg-gray-600/55 border-gray-400 dark:border-gray-300">
+          <Button
+            className="w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300"
+            onClick={() => setTab("CREDIT")}
+          >
+            CREDIT
+          </Button>
+          <Button
+            className="w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none"
+            onClick={() => setTab("DEBIT")}
+          >
+            DEBIT
+          </Button>
+        </div>
         <div>
           <div className="flex justify-between md:px-4">
             <Button
@@ -295,7 +182,7 @@ export default function History() {
                   <div className="mt-7">
                     <Select
                       label="Type:"
-                      defaultSelectedKeys={["all"]}
+                      selectedKeys={[tab]}
                       disallowEmptySelection={true}
                       aria-label="none"
                       classNames={{
@@ -308,10 +195,12 @@ export default function History() {
                       selectorIcon={
                         <IoIosArrowDown color="var(--bg-primary-color)" />
                       }
-                      placeholder="All"
                     >
-                      <SelectItem key="all" value="all">
-                        All
+                      <SelectItem key="DEBIT" value="DEBIT">
+                        DEBIT
+                      </SelectItem>
+                      <SelectItem key="CREDIT" value="CREDIT">
+                        CREDIT
                       </SelectItem>
                     </Select>
                   </div>
@@ -385,19 +274,18 @@ export default function History() {
             <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
               DATE
             </h3>
-            <h3 className="w-2/12 text-xs md:text-sm">CREDIT</h3>
-            <h3 className="w-2/12 text-xs md:text-sm">DEBIT</h3>
+            <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
             <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">PS</h3>
-            <h3 className="w-3/12 text-xs md:text-sm">ID</h3>
+            <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
             <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
           </div>
           <ul className="w-full">
             {data.slice(0, currentSize + 3).map((item) => (
               <ItemTransaction
                 key={item.date}
+                type={item.type}
                 date={item.date}
-                credit={"+" + item.credit + " " + item.ps}
-                debit={"-" + item.debit + " " + item.ps}
+                amount={item.amount}
                 ps={item.ps}
                 id={item.id}
                 status={item.status}
@@ -417,7 +305,7 @@ export default function History() {
     </div>
   );
 }
-function ItemTransaction({ date, credit, debit, ps, id, status }) {
+function ItemTransaction({ date, amount, ps, id, status, type }) {
   return (
     <li className="flex px-1 md:px-3 border-b-1 md:border-b-2 py-3 font-bold text-center">
       <div className="flex w-3/12">
@@ -425,14 +313,14 @@ function ItemTransaction({ date, credit, debit, ps, id, status }) {
           {date}
         </p>
       </div>
-      <div className="flex w-2/12">
-        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4 text-green-600">
-          {credit}
-        </p>
-      </div>
-      <div className="flex w-2/12">
-        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4 text-red-600">
-          {debit}
+      <div className="flex w-3/12">
+        <p
+          className={`w-full text-xs opacity-70 self-center px-1 md:px-4 ${
+            type === "CREDIT" ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {type === "CREDIT" ? "+" : "-"}
+          {amount}
         </p>
       </div>
       <div className="hidden md:flex md:w-1/12 place-content-center">
@@ -444,7 +332,7 @@ function ItemTransaction({ date, credit, debit, ps, id, status }) {
           className="w-5 h-5 md:h-8 md:w-8"
         />
       </div>
-      <div className="flex w-3/12">
+      <div className="flex w-4/12">
         <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
           {id}
         </p>
