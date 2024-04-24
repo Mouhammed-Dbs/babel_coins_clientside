@@ -156,7 +156,9 @@ export default function History() {
         <div className="flex w-full border-t-1 border-b-1 bg-gray-200/55 dark:bg-gray-600/55 border-gray-400 dark:border-gray-300">
           <Button
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300 ${
-              tab === "CREDIT" ? "text-primary font-bold" : ""
+              tab === "CREDIT"
+                ? "text-primary dark:text-secondary font-bold"
+                : ""
             }`}
             onClick={() => {
               setTab("CREDIT");
@@ -167,7 +169,9 @@ export default function History() {
           </Button>
           <Button
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none ${
-              tab === "DEBIT" ? "text-primary font-bold" : ""
+              tab === "DEBIT"
+                ? "text-primary dark:text-secondary font-bold"
+                : ""
             }`}
             onClick={() => {
               setTab("DEBIT");
