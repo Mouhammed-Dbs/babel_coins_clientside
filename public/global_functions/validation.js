@@ -42,6 +42,7 @@ const validatePassword = async (password) => {
     throw error.errors;
   }
 };
+
 const validateReapeatPassword = async (password, repeatPassword) => {
   const passwordSchema = yup.object().shape({
     repeatPassword: yup
