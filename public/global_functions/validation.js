@@ -42,6 +42,21 @@ const validatePassword = async (password) => {
     throw error.errors;
   }
 };
+const validateReapeatPassword = async (password, repeatPassword) => {
+  const passwordSchema = yup.object().shape({
+    repeatPassword: yup
+      .string()
+      .required("Repeat password is required")
+      .oneOf([password], "Passwords must match"),
+  });
+
+  try {
+    await passwordSchema.validate(repeatPassword, { abortEarly: false });
+    return true;
+  } catch (error) {
+    throw error.errors;
+  }
+};
 
 const validateSecretCode = async (secretCode) => {
   const secretCodeSchema = yup.object().shape({
@@ -120,4 +135,5 @@ export {
   validateName,
   validateMessage,
   validateAmount,
+  validateReapeatPassword,
 };

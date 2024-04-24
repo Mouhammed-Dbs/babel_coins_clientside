@@ -81,10 +81,33 @@ const updateUserInfo = async (
     throw error;
   }
 };
+
+const changePassword = async (currentPassword, newPassword) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.put(
+        `${process.env.BASE_API_URL}/users/change-password?password=${currentPassword}&newPassword=${newPassword}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
 export {
   isUserLogged,
   loginUser,
   getConfirmCode,
   registerUser,
   updateUserInfo,
+  changePassword,
 };
