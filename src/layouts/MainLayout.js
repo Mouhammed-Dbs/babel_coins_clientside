@@ -46,6 +46,7 @@ export default function MainLayout(props) {
           router.replace("/login");
         } else {
           setUserInfo(result.data);
+          localStorage.setItem("babel-coins-user-id", result.data._id);
           setPageLoading(false);
         }
       })

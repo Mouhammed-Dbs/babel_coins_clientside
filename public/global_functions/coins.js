@@ -174,6 +174,36 @@ const getDataByTransferType = (data) => {
   };
 };
 
+const getOperationsCount = async (operationType, filters) => {
+  try {
+    const res = await axios.get(
+      `${process.env.BASE_API_URL}/${operationType}/${operationType}-count?${
+        filters ? filters : ""
+      }`
+    );
+    if (res.error) return null;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getOperations = async (operationType, pageNumber, pageSize, filters) => {
+  try {
+    const res = await axios.get(
+      `${
+        process.env.BASE_API_URL
+      }/${operationType}/all-${operationType}-inside-the-page?pageNumber=${pageNumber}&pageSize=${pageSize}&${
+        filters ? filters : ""
+      }`
+    );
+    if (res.error) return null;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   getBalanceCoins,
   getAddressesByCoinName,
@@ -182,4 +212,6 @@ export {
   getFeesByCoinNameAndNetwork,
   getTransferLimitsByCoinNameAndNetwork,
   transferMoney,
+  getOperationsCount,
+  getOperations,
 };

@@ -11,27 +11,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MyLoading from "@/components/MyLoading";
 import screenIs from "@/screen";
+import {
+  getOperations,
+  getOperationsCount,
+} from "../../../public/global_functions/coins";
 
 export default function History() {
   const [tab, setTab] = useState("CREDIT");
-  const [data, setData] = useState([
-    {
-      type: "CREDIT",
-      date: "16 Jan 2024 23:52",
-      amount: 15,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-    {
-      type: "DEBIT",
-      date: "16 Jan 2024 23:52",
-      amount: 10,
-      ps: "TRX",
-      id: "2009936051",
-      status: true,
-    },
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const [currentSize, setCurrentSize] = useState(0);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMount] = useState(false);
@@ -75,7 +63,28 @@ export default function History() {
   const [openFilter, setOpenFilter] = useState(false);
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
   const [widthCard, setWidthCard] = useState("100%");
+  const [totalSlidesCount, setTotalSlidesCount] = useState(0);
+  const [filters, setFilters] = useState({
+    _id: "",
+    status: "",
+    userId: "",
+    currencyName: "",
+  });
 
+  const getFilteringString = (filters) => {
+    let filteringString = "";
+    if (filters._id) filteringString += `_id=${filters._id}&`;
+    if (filters.status) filteringString += `status=${filters.status}&`;
+    if (filters.userId) filteringString += `userId=${filters.userId}&`;
+    if (filters.currencyName)
+      filteringString += `currencyName=${filters.currencyName}&`;
+    if (filteringString)
+      filteringString = filteringString.substring(
+        0,
+        filteringString.length - 1
+      );
+    return filteringString;
+  };
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
@@ -89,6 +98,35 @@ export default function History() {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
+  useEffect(() => {
+    const tempFilters = {
+      ...filters,
+      userId: localStorage.getItem("babel-coins-user-id"),
+    };
+    setFilters(tempFilters);
+    setLoading(true);
+    getOperationsCount("transfers", getFilteringString(tempFilters))
+      .then((result) => {
+        console.log(result);
+        if (result.data > 0) {
+          getOperations("transfers", 1, 4, getFilteringString(tempFilters))
+            .then((result) => {
+              console.log(result.data);
+              setData(result.data);
+              setLoading(false);
+            })
+            .catch((err) => {
+              setLoading(false);
+            });
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  }, []);
   if (!mounted)
     return (
       <MyLoading
@@ -276,38 +314,44 @@ export default function History() {
             </div>
           )}
         </div>
-        <div className="mx-1 md:mx-4">
-          <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
-            <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
-              DATE
-            </h3>
-            <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
-            <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">PS</h3>
-            <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
-            <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+        {!loading ? (
+          <div className="mx-1 md:mx-4">
+            <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
+              <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
+                DATE
+              </h3>
+              <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
+              <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
+                PS
+              </h3>
+              <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
+              <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+            </div>
+            <ul className="w-full">
+              {data.slice(0, currentSize + 3).map((item) => (
+                <ItemTransaction
+                  key={item._id}
+                  type={tab}
+                  date={item.dateOfTransfer}
+                  amount={item.amount}
+                  ps={item.currencyName}
+                  id={item._id}
+                  status={item.status}
+                />
+              ))}
+            </ul>
+            <div
+              onClick={() => {
+                setCurrentSize(currentSize + 3);
+              }}
+              className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
+            >
+              <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
+            </div>
           </div>
-          <ul className="w-full">
-            {data.slice(0, currentSize + 3).map((item) => (
-              <ItemTransaction
-                key={item.date}
-                type={item.type}
-                date={item.date}
-                amount={item.amount}
-                ps={item.ps}
-                id={item.id}
-                status={item.status}
-              />
-            ))}
-          </ul>
-          <div
-            onClick={() => {
-              setCurrentSize(currentSize + 3);
-            }}
-            className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
-          >
-            <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
-          </div>
-        </div>
+        ) : (
+          <MyLoading />
+        )}
       </div>
     </div>
   );
@@ -345,10 +389,14 @@ function ItemTransaction({ date, amount, ps, id, status, type }) {
         </p>
       </div>
       <div className="flex w-2/12 md:w-1/12 overflow-hidden place-content-center">
-        {status ? (
+        {status === "success" ? (
           <IoCheckmarkDoneCircle className="w-5 h-5 md:h-8 md:w-8 self-center text-green-600" />
-        ) : (
+        ) : status === "failed" ? (
           <RiErrorWarningFill className="w-5 h-5 md:h-8 md:w-8 self-center text-red-600" />
+        ) : (
+          status === "pending" && (
+            <RiErrorWarningFill className="w-5 h-5 md:h-8 md:w-8 self-center text-yellow-400" />
+          )
         )}
       </div>
     </li>

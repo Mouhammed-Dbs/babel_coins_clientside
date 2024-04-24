@@ -38,8 +38,8 @@ const nextConfig = {
       {
         source:
           process.env.NODE_ENV === "development"
-            ? "//pro-api.coinmarketcap.com/v2/(.)"
-            : "//pro-api.coinmarketcap.com/v2/(.)",
+            ? "//api.babelcoins.com/(.*)"
+            : "//api.babelcoins.com/(.*)",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
