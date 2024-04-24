@@ -132,13 +132,17 @@ export default function History() {
         </ul>
         <div className="flex w-full border-t-1 border-b-1 bg-gray-200/55 dark:bg-gray-600/55 border-gray-400 dark:border-gray-300">
           <Button
-            className="w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300"
+            className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300 ${
+              tab === "CREDIT" ? "text-primary font-bold" : ""
+            }`}
             onClick={() => setTab("CREDIT")}
           >
             CREDIT
           </Button>
           <Button
-            className="w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none"
+            className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none ${
+              tab === "DEBIT" ? "text-primary font-bold" : ""
+            }`}
             onClick={() => setTab("DEBIT")}
           >
             DEBIT
@@ -183,6 +187,9 @@ export default function History() {
                     <Select
                       label="Type:"
                       selectedKeys={[tab]}
+                      onChange={(e) => {
+                        setTab(e.target.value);
+                      }}
                       disallowEmptySelection={true}
                       aria-label="none"
                       classNames={{
