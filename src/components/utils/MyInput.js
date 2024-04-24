@@ -39,7 +39,7 @@ export default function MyInput({
       {withLink !== undefined ? (
         <Link
           href={withLink.href}
-          className={`${linkColor} text-xs absolute -bottom-0 -right-0 mb-3 mr-2`}
+          className={`${linkColor} text-xs absolute -bottom-0 -right-0 mb-2 mr-2`}
         >
           {withLink.nameLink}
         </Link>

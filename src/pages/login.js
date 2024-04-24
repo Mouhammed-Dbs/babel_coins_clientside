@@ -114,7 +114,7 @@ export default function Signup() {
                 placeholder: "example@gmail.com",
                 label: "Email",
               }}
-              withLink={{ nameLink: "forget login?", href: "" }}
+              // withLink={{ nameLink: "forget login?", href: "" }}
             />
             <MyInput
               textColor="text-white"
