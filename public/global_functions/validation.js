@@ -31,7 +31,7 @@ const validatePassword = async (password) => {
         "Password should has 3 lowercase letters"
       )
       .matches(/(?=.*[A-Z].*[A-Z])/, "Password should has 2 uppercase letters")
-      .matches(/(?=.*[!@#$&*])/, "Password should has one special case letter")
+      .matches(/(?=.*[!@$&*-_])/, "Password should has one special case letter")
       .matches(/(?=.*[0-9].*[0-9])/, "Password should has two digits"),
   });
 

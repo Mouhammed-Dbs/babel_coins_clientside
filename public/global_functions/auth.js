@@ -104,6 +104,30 @@ const changePassword = async (currentPassword, newPassword) => {
   return null;
 };
 
+const getForRecoveryPassword = async (email, secretCode) => {
+  try {
+    const res = await axios.get(
+      `${process.env.BASE_API_URL}/users/forget-password?email=${email}&secretCode=${secretCode}`
+    );
+    if (res.error) return null;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const recoveryPassword = async (email, code, newPassword) => {
+  try {
+    const res = await axios.put(
+      `${process.env.BASE_API_URL}/users/reset-password?email=${email}&code=${code}&newPassword=${newPassword}`
+    );
+    if (res.error) return null;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   isUserLogged,
   loginUser,
@@ -111,4 +135,6 @@ export {
   registerUser,
   updateUserInfo,
   changePassword,
+  getForRecoveryPassword,
+  recoveryPassword,
 };

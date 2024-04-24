@@ -309,7 +309,7 @@ export default function Signup() {
             <div className="grid grid-cols-2 gap-2 mt-2">
               <div className="relative">
                 <input
-                  maxLength={6}
+                  maxLength={4}
                   onChange={(event) => {
                     setInputCode(validateCode(event.target.value));
                   }}

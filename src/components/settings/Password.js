@@ -58,16 +58,15 @@ export default function Password() {
             })
               .then(() => {
                 setValidate({ error: false, msg: "" });
-                if (inputRepeatNewPassword.length > 0)
-                  validateReapeatPassword(e.target.value, {
-                    repeatPassword: inputRepeatNewPassword,
+                validateReapeatPassword(e.target.value, {
+                  repeatPassword: inputRepeatNewPassword,
+                })
+                  .then(() => {
+                    setValidate({ error: false, msg: "" });
                   })
-                    .then(() => {
-                      setValidate({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidate({ error: true, msg: error[0] });
-                    });
+                  .catch((error) => {
+                    setValidate({ error: true, msg: error[0] });
+                  });
               })
               .catch((error) => {
                 setValidate({ error: true, msg: error[0] });
@@ -86,11 +85,20 @@ export default function Password() {
           defaultValue={inputRepeatNewPassword}
           onChange={(e) => {
             setInputRepeatNewPassword(e.target.value);
-            validateReapeatPassword(inputNewPassword, {
-              repeatPassword: e.target.value,
+            validatePassword({
+              password: e.target.value,
             })
               .then(() => {
                 setValidate({ error: false, msg: "" });
+                validateReapeatPassword(e.target.value, {
+                  repeatPassword: inputNewPassword,
+                })
+                  .then(() => {
+                    setValidate({ error: false, msg: "" });
+                  })
+                  .catch((error) => {
+                    setValidate({ error: true, msg: error[0] });
+                  });
               })
               .catch((error) => {
                 setValidate({ error: true, msg: error[0] });

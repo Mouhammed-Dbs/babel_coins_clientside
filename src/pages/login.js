@@ -138,7 +138,7 @@ export default function Signup() {
                 placeholder: "password",
                 label: "Password",
               }}
-              withLink={{ nameLink: "forget password?", href: "" }}
+              withLink={{ nameLink: "forget password?", href: "/recovery" }}
             />
             <Button
               type="submit"
