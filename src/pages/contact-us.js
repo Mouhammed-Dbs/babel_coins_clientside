@@ -12,7 +12,7 @@ import {
   validateMessage,
   validateName,
 } from "../../public/global_functions/validation";
-import ErrorMessage from "@/components/utils/ErrorMessage";
+import MyMessage from "@/components/utils/MyMessage";
 import Image from "next/image";
 
 export default function ContactUs() {
@@ -133,7 +133,7 @@ export default function ContactUs() {
                   I agree to the processing of the personal data provided
                 </label>
               </div>
-              <ErrorMessage show={errorForm.error} message={errorForm.msg} />
+              <MyMessage show={errorForm.error} message={errorForm.msg} />
             </div>
             <div className="hidden md:block pl-1">
               <p>

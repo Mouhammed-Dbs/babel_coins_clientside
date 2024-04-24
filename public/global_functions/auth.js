@@ -88,6 +88,7 @@ const changePassword = async (currentPassword, newPassword) => {
     try {
       const res = await axios.put(
         `${process.env.BASE_API_URL}/users/change-password?password=${currentPassword}&newPassword=${newPassword}`,
+        {},
         {
           headers: {
             Authorization: token,

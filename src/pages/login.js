@@ -7,7 +7,7 @@ import MyInput from "@/components/utils/MyInput";
 import { useRouter } from "next/router";
 import MyLoading from "@/components/MyLoading";
 import { isUserLogged, loginUser } from "../../public/global_functions/auth";
-import ErrorMessage from "@/components/utils/ErrorMessage";
+import MyMessage from "@/components/utils/MyMessage";
 import {
   validateEmail,
   validatePassword,
@@ -125,10 +125,10 @@ export default function Signup() {
                   password: event.target.value,
                 })
                   .then(() => {
-                    setResLogin({ error: false, msg: "" });
+                    setValidateLogin({ error: false, msg: "" });
                   })
                   .catch((error) => {
-                    setResLogin({ error: true, msg: error[0] });
+                    setValidateLogin({ error: true, msg: error[0] });
                   });
               }}
               value={inputPass}
@@ -153,7 +153,8 @@ export default function Signup() {
         </CardBody>
       </Card>
       <div className="w-fit m-auto">
-        <ErrorMessage show={resLogin.error} message={resLogin.msg} />
+        <MyMessage show={resLogin.error} message={resLogin.msg} />
+        <MyMessage show={validateLogin.error} message={validateLogin.msg} />
       </div>
       <div className="flex w-fit m-auto mt-4">
         <p className="text-sm opacity-75 text-white">

@@ -1,17 +1,20 @@
 import { Button } from "@nextui-org/react";
 import MyInput from "../utils/MyInput";
 import { useState } from "react";
-import ErrorMessage from "../utils/ErrorMessage";
+import MyMessage from "../utils/MyMessage";
 import {
   validatePassword,
   validateReapeatPassword,
 } from "../../../public/global_functions/validation";
+import { changePassword } from "../../../public/global_functions/auth";
 
 export default function Password() {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputRepeatNewPassword, setInputRepeatNewPassword] = useState("");
   const [validate, setValidate] = useState({ msg: "", error: false });
+  const [loading, setLoading] = useState(false);
+  const [resMsg, setResMsg] = useState({ msg: "", error: false });
   return (
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white dark:bg-default-100 shadow-md`}
@@ -103,20 +106,38 @@ export default function Password() {
           }}
         />
       </div>
-      <ErrorMessage show={validate.error} message={validate.msg} />
+      <MyMessage show={validate.error} message={validate.msg} />
+      <MyMessage
+        show={resMsg.msg.length > 0}
+        message={resMsg.msg}
+        isSuccess={!resMsg.error}
+      />
       <Button
         isDisabled={
           !(
             inputCurrentPassword &&
             inputNewPassword &&
             inputRepeatNewPassword
-          ) || validate.error
+          ) ||
+          validate.error ||
+          loading
         }
-        onClick={() => {}}
+        onClick={(event) => {
+          event.preventDefault();
+          setLoading(true);
+          changePassword(inputCurrentPassword, inputNewPassword)
+            .then((result) => {
+              setLoading(false);
+              setResMsg({ error: result.error, msg: result.msg });
+            })
+            .catch((err) => {
+              setLoading(false);
+            });
+        }}
         size="sm"
         className="bg-orange text-sm rounded-full mt-10 p-4 text-white"
       >
-        MODIFY
+        {loading ? "modifying.." : "MODIFY"}
       </Button>
     </div>
   );

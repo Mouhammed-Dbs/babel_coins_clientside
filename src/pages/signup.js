@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, input } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
@@ -13,7 +13,7 @@ import {
   updateUserInfo,
 } from "../../public/global_functions/auth";
 
-import ErrorMessage from "@/components/utils/ErrorMessage";
+import MyMessage from "@/components/utils/MyMessage";
 import {
   validateCode,
   validateEmail,
@@ -526,11 +526,8 @@ export default function Signup() {
       </Card>
       <div className="w-fit m-auto">
         {/* Error Message */}
-        <ErrorMessage show={account.error} message={account.msg} />
-        <ErrorMessage
-          show={validateAccount.error}
-          message={validateAccount.msg}
-        />
+        <MyMessage show={account.error} message={account.msg} />
+        <MyMessage show={validateAccount.error} message={validateAccount.msg} />
       </div>
       {/* Under Card */}
       <div className="flex w-fit m-auto mt-4">
