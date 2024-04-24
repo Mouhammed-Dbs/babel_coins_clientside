@@ -250,7 +250,7 @@ export default function Send(props) {
                       <p className="font-bold">Fee:</p>
                       <p className="">{resData.data?.fee}</p>
                     </div>
-                    {resData.transferType === "external" ? (
+                    {resData.data.transferType === "external" ? (
                       <div className="flex flex-col gap-1">
                         <p className="font-bold">Receiver address:</p>
                         <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
@@ -306,7 +306,7 @@ export default function Send(props) {
                     <Button color="danger" variant="light" onPress={onClose}>
                       Close
                     </Button>
-                    {resData.transferType === "external" && (
+                    {resData.data.transferType === "external" && (
                       <Button className="text-white" color="primary">
                         <Link
                           className="flex items-center justify-center w-full h-full"
