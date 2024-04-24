@@ -465,7 +465,7 @@ export default function Send(props) {
                   setNetworkSelected(e.target.value);
                   getFeesAndLimits(
                     "crypto",
-                    "external",
+                    transferType,
                     query["curr"],
                     e.target.value
                   );
