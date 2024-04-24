@@ -27,38 +27,14 @@ export default function History() {
   const [fromDate, setFromDate] = useState();
   const [items, setItems] = useState([
     "TRANSACTIONS",
-    "USD",
-    "RUB",
-    "EUR",
-    "BTC",
+    // "USD",
+    // "RUB",
+    // "EUR",
     "ETH",
-    "BCH",
-    "LTC",
-    "DASH",
     "USDT",
-    "XRP",
-    "DOGE",
     "TRX",
     "BNB",
     "MATIC",
-    "DAI",
-    "DOT",
-    "USDC",
-    "LINK",
-    "SAND",
-    "MANA",
-    "AAVE",
-    "SUSHI",
-    "CAKE",
-    "1INCH",
-    "GALA",
-    "LDO",
-    "GMT",
-    "UNI",
-    "CRV",
-    "BAL",
-    "GRT",
-    "APE",
   ]);
   const [openFilter, setOpenFilter] = useState(false);
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
@@ -85,32 +61,24 @@ export default function History() {
       );
     return filteringString;
   };
-  useEffect(() => {
-    setMount(true);
-    setScreenSize(screenIs("md"));
-    setWidthCard(window.innerWidth);
-    const handleResize = () => {
-      setScreenSize(screenIs("md"));
-      setWidthCard(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [screenSize]);
 
-  useEffect(() => {
+  const getData = (type, pageNumber, sizeNumber) => {
     const tempFilters = {
       ...filters,
       userId: localStorage.getItem("babel-coins-user-id"),
     };
     setFilters(tempFilters);
     setLoading(true);
-    getOperationsCount("transfers", getFilteringString(tempFilters))
+    setData([]);
+    getOperationsCount(type, getFilteringString(tempFilters))
       .then((result) => {
-        console.log(result);
         if (result.data > 0) {
-          getOperations("transfers", 1, 4, getFilteringString(tempFilters))
+          getOperations(
+            type,
+            pageNumber,
+            sizeNumber,
+            getFilteringString(tempFilters)
+          )
             .then((result) => {
               console.log(result.data);
               setData(result.data);
@@ -126,6 +94,23 @@ export default function History() {
       .catch((err) => {
         setLoading(false);
       });
+  };
+  useEffect(() => {
+    setMount(true);
+    setScreenSize(screenIs("md"));
+    setWidthCard(window.innerWidth);
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+      setWidthCard(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
+
+  useEffect(() => {
+    getData("deposits", 1, 4);
   }, []);
   if (!mounted)
     return (
@@ -173,7 +158,10 @@ export default function History() {
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300 ${
               tab === "CREDIT" ? "text-primary font-bold" : ""
             }`}
-            onClick={() => setTab("CREDIT")}
+            onClick={() => {
+              setTab("CREDIT");
+              getData("deposits", 1, 4);
+            }}
           >
             CREDIT
           </Button>
@@ -181,7 +169,10 @@ export default function History() {
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none ${
               tab === "DEBIT" ? "text-primary font-bold" : ""
             }`}
-            onClick={() => setTab("DEBIT")}
+            onClick={() => {
+              setTab("DEBIT");
+              getData("transfers", 1, 4);
+            }}
           >
             DEBIT
           </Button>
