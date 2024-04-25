@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import {
   validateEmail,
+  validateInputs,
   validateMessage,
   validateName,
 } from "../../public/global_functions/validation";
@@ -20,7 +21,34 @@ export default function ContactUs() {
   const [emailValue, setEmailValue] = useState("");
   const [messValue, setMessValue] = useState("");
   const [agreeValue, setAgreeValue] = useState(false);
-  const [errorForm, setErrorForm] = useState({ msg: "", error: false });
+  const [validate, setValidate] = useState({
+    msg: "",
+    error: false,
+  });
+  const getSchemaForm = (name, email, message) => {
+    return [
+      {
+        sort: 0,
+        name: "`name`",
+        typeValidate: "name",
+        data: { name },
+      },
+      {
+        sort: 1,
+        name: "`email`",
+        typeValidate: "email",
+        data: { email },
+      },
+      {
+        sort: 2,
+        name: "`message`",
+        typeValidate: "message",
+        data: {
+          message,
+        },
+      },
+    ];
+  };
   const sendMessage = (event) => {
     event.preventDefault();
   };
@@ -44,17 +72,17 @@ export default function ContactUs() {
               <MyInput
                 textColor="text-white"
                 className="w-full md:w-72"
-                onChange={(e) => {
+                onChange={async (e) => {
                   setNameValue(e.target.value);
-                  validateName({
-                    name: e.target.value,
-                  })
-                    .then(() => {
-                      setErrorForm({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setErrorForm({ error: true, msg: error[0] });
+                  const err = await validateInputs(
+                    getSchemaForm(e.target.value, emailValue, messValue)
+                  );
+                  if (err.error) {
+                    setValidate({
+                      msg: err.message,
+                      error: true,
                     });
+                  } else setValidate({ msg: "", error: false });
                 }}
                 value={nameValue}
                 item={{
@@ -67,17 +95,17 @@ export default function ContactUs() {
               <MyInput
                 textColor="text-white"
                 className="mt-3 w-full md:w-72"
-                onChange={(e) => {
+                onChange={async (e) => {
                   setEmailValue(e.target.value);
-                  validateEmail({
-                    email: e.target.value,
-                  })
-                    .then(() => {
-                      setErrorForm({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setErrorForm({ error: true, msg: error[0] });
+                  const err = await validateInputs(
+                    getSchemaForm(nameValue, e.target.value, messValue)
+                  );
+                  if (err.error) {
+                    setValidate({
+                      msg: err.message,
+                      error: true,
                     });
+                  } else setValidate({ msg: "", error: false });
                 }}
                 value={emailValue}
                 item={{
@@ -91,17 +119,17 @@ export default function ContactUs() {
               <div className="relative mt-3">
                 <textarea
                   value={messValue}
-                  onChange={(e) => {
+                  onChange={async (e) => {
                     setMessValue(e.target.value);
-                    validateMessage({
-                      message: e.target.value,
-                    })
-                      .then(() => {
-                        setErrorForm({ error: false, msg: "" });
-                      })
-                      .catch((error) => {
-                        setErrorForm({ error: true, msg: error[0] });
+                    const err = await validateInputs(
+                      getSchemaForm(nameValue, emailValue, e.target.value)
+                    );
+                    if (err.error) {
+                      setValidate({
+                        msg: err.message,
+                        error: true,
                       });
+                    } else setValidate({ msg: "", error: false });
                   }}
                   className={`peer/email w-full md:w-72 h-24 resize-none self-center text-white placeholder-slate-300 mt-6 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:border-cyan-300 scrollbar-hide ${
                     messValue
@@ -133,7 +161,7 @@ export default function ContactUs() {
                   I agree to the processing of the personal data provided
                 </label>
               </div>
-              <MyMessage show={errorForm.error} message={errorForm.msg} />
+              <MyMessage show={validate.error} message={validate.msg} />
             </div>
             <div className="hidden md:block pl-1">
               <p>
@@ -161,7 +189,7 @@ export default function ContactUs() {
               type="submit"
               isDisabled={
                 !(agreeValue && nameValue && emailValue && messValue) ||
-                errorForm.error
+                validate.error
               }
               className="bg-orange rounded-full block m-auto text-white h-8 w-36 hover:bg-white hover:text-orange"
             >
