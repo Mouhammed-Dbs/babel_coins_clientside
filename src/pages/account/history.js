@@ -31,7 +31,7 @@ export default function History() {
     // "USD",
     // "RUB",
     // "EUR",
-    "ETH",
+    "ETHER",
     "USDT",
     "TRX",
     "BNB",
@@ -381,15 +381,19 @@ export default function History() {
                   <ItemTransaction
                     key={item._id}
                     type={tab}
-                    date={item.dateOfTransfer}
+                    date={
+                      tab === "DEBIT" ? item.dateOfTransfer : item.dateOfDeposit
+                    }
                     amount={item.amount}
-                    ps={item.currencyName}
+                    ps={
+                      item.currencyName === "ETHER" ? "ETH" : item.currencyName
+                    }
                     id={item._id}
                     status={item.status}
                   />
                 ))}
               </ul>
-              {currentlSlidesCount != totalSlidesCount && (
+              {currentlSlidesCount < totalSlidesCount && (
                 <div
                   onClick={() => {
                     if (currentlSlidesCount <= totalSlidesCount) {
