@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 
 export default function Recovery() {
   const router = useRouter();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   useState(false);
   const [resMsg, setResMsg] = useState({ error: false, msg: "" });
   const [inputEmail, setInputEmail] = useState("");
