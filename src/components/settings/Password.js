@@ -2,19 +2,46 @@ import { Button } from "@nextui-org/react";
 import MyInput from "../utils/MyInput";
 import { useState } from "react";
 import MyMessage from "../utils/MyMessage";
-import {
-  validatePassword,
-  validateReapeatPassword,
-} from "../../../public/global_functions/validation";
+import { validateInputs } from "../../../public/global_functions/validation";
 import { changePassword } from "../../../public/global_functions/auth";
 
 export default function Password() {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputRepeatNewPassword, setInputRepeatNewPassword] = useState("");
-  const [validate, setValidate] = useState({ msg: "", error: false });
+  const [validate, setValidate] = useState({
+    msg: "",
+    error: false,
+    show: false,
+  });
   const [loading, setLoading] = useState(false);
   const [resMsg, setResMsg] = useState({ msg: "", error: false });
+
+  const getSchemaForm = (currentPass, newPass, newRepeatPass) => {
+    return [
+      {
+        sort: 0,
+        name: "current password",
+        typeValidate: "password",
+        data: { password: currentPass },
+      },
+      {
+        sort: 1,
+        name: "new password",
+        typeValidate: "password",
+        data: { password: newPass },
+      },
+      {
+        sort: 2,
+        name: "repeat password",
+        typeValidate: "repeatPassword",
+        data: {
+          password: newPass,
+          repeatPassword: newRepeatPass,
+        },
+      },
+    ];
+  };
   return (
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white dark:bg-default-100 shadow-md`}
@@ -28,17 +55,22 @@ export default function Password() {
       <div className="mt-10">
         <MyInput
           defaultValue={inputCurrentPassword}
-          onChange={(e) => {
+          onChange={async (e) => {
             setInputCurrentPassword(e.target.value);
-            validatePassword({
-              password: e.target.value,
-            })
-              .then(() => {
-                setValidate({ error: false, msg: "" });
-              })
-              .catch((error) => {
-                setValidate({ error: true, msg: error[0] });
+            const err = await validateInputs(
+              getSchemaForm(
+                e.target.value,
+                inputNewPassword,
+                inputRepeatNewPassword
+              )
+            );
+            if (err.error) {
+              setValidate({
+                msg: err.message,
+                error: true,
+                show: true,
               });
+            } else setValidate({ msg: "", error: false, show: false });
           }}
           color="border-gray-500"
           className="w-full md:w-64 border-black mb-3"
@@ -46,31 +78,28 @@ export default function Password() {
             name: "current_pass",
             type: "text",
             placeholder: "",
-            label: "Your password:",
+            label: "Current password:",
           }}
         />
         <MyInput
           defaultValue={inputNewPassword}
-          onChange={(e) => {
+          onChange={async (e) => {
             setInputNewPassword(e.target.value);
-            validatePassword({
-              password: e.target.value,
-            })
-              .then(() => {
-                setValidate({ error: false, msg: "" });
-                validateReapeatPassword(e.target.value, {
-                  repeatPassword: inputRepeatNewPassword,
-                })
-                  .then(() => {
-                    setValidate({ error: false, msg: "" });
-                  })
-                  .catch((error) => {
-                    setValidate({ error: true, msg: error[0] });
-                  });
-              })
-              .catch((error) => {
-                setValidate({ error: true, msg: error[0] });
+            const err = await validateInputs(
+              getSchemaForm(
+                inputCurrentPassword,
+                e.target.value,
+                inputRepeatNewPassword
+              )
+            );
+
+            if (err.error) {
+              setValidate({
+                msg: err.message,
+                error: true,
+                show: true,
               });
+            } else setValidate({ msg: "", error: false, show: false });
           }}
           color="border-gray-500"
           className="w-full md:w-64 border-black mb-3"
@@ -83,26 +112,23 @@ export default function Password() {
         />
         <MyInput
           defaultValue={inputRepeatNewPassword}
-          onChange={(e) => {
+          onChange={async (e) => {
             setInputRepeatNewPassword(e.target.value);
-            validatePassword({
-              password: e.target.value,
-            })
-              .then(() => {
-                setValidate({ error: false, msg: "" });
-                validateReapeatPassword(e.target.value, {
-                  repeatPassword: inputNewPassword,
-                })
-                  .then(() => {
-                    setValidate({ error: false, msg: "" });
-                  })
-                  .catch((error) => {
-                    setValidate({ error: true, msg: error[0] });
-                  });
-              })
-              .catch((error) => {
-                setValidate({ error: true, msg: error[0] });
+            const err = await validateInputs(
+              getSchemaForm(
+                inputCurrentPassword,
+                inputNewPassword,
+                e.target.value
+              )
+            );
+
+            if (err.error) {
+              setValidate({
+                msg: err.message,
+                error: true,
+                show: true,
               });
+            } else setValidate({ msg: "", error: false, show: false });
           }}
           color="border-gray-500"
           className="w-full md:w-64 border-black mb-3"
@@ -114,7 +140,7 @@ export default function Password() {
           }}
         />
       </div>
-      <MyMessage show={validate.error} message={validate.msg} />
+      <MyMessage show={validate.show} message={validate.msg} />
       <MyMessage
         show={resMsg.msg.length > 0}
         message={resMsg.msg}

@@ -9,15 +9,10 @@ const validateEmail = async (email) => {
   });
   try {
     await emailSchema.validate(email, { abortEarly: false });
-    return true;
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
-};
-
-const validateCode = (code) => {
-  const newValue = code.replace(/[^0-9]/g, "").slice(0, 4);
-  return newValue;
 };
 
 const validatePassword = async (password) => {
@@ -37,13 +32,13 @@ const validatePassword = async (password) => {
 
   try {
     await passwordSchema.validate(password, { abortEarly: false });
-    return true;
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
 };
 
-const validateReapeatPassword = async (password, repeatPassword) => {
+const validateReapeatPassword = async ({ password, repeatPassword }) => {
   const passwordSchema = yup.object().shape({
     repeatPassword: yup
       .string()
@@ -52,10 +47,10 @@ const validateReapeatPassword = async (password, repeatPassword) => {
   });
 
   try {
-    await passwordSchema.validate(repeatPassword, { abortEarly: false });
-    return true;
+    await passwordSchema.validate({ repeatPassword }, { abortEarly: false });
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
 };
 
@@ -69,9 +64,9 @@ const validateSecretCode = async (secretCode) => {
 
   try {
     await secretCodeSchema.validate(secretCode, { abortEarly: false });
-    return true;
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
 };
 
@@ -88,9 +83,9 @@ const validateName = async (name) => {
 
   try {
     await nameSchema.validate(name, { abortEarly: false });
-    return true;
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
 };
 
@@ -107,10 +102,15 @@ const validateMessage = async (message) => {
       { message: message.message.trim().replace(/\s+/g, "") },
       { abortEarly: false }
     );
-    return true;
+    return [];
   } catch (error) {
-    throw error.errors;
+    return error.errors;
   }
+};
+
+const validateCode = (code) => {
+  const newValue = code.replace(/[^0-9]/g, "").slice(0, 4);
+  return newValue;
 };
 
 const validateAmount = (text) => {
@@ -128,7 +128,54 @@ const validateAmount = (text) => {
   return value;
 };
 
+//[{ name: "myemail",typeValidate:"email", data: { password: "", repeatPassword: "" } }];
+const validateInputs = async (inputs) => {
+  inputs.sort((a, b) => a.sort - b.sort);
+  const errors = await Promise.all(
+    inputs.map(async (input) => {
+      if (input.typeValidate === "email") {
+        const err = await validateEmail(input.data);
+        return { name: input.name, errors: err };
+      }
+      if (input.typeValidate === "secretCode") {
+        const err = await validateSecretCode(input.data);
+        return { name: input.name, errors: err };
+      }
+      if (input.typeValidate === "password") {
+        const err = await validatePassword(input.data);
+        return { name: input.name, errors: err };
+      }
+      if (input.typeValidate === "name") {
+        const err = await validateName(input.data);
+        return { name: input.name, errors: err };
+      }
+      if (input.typeValidate === "message") {
+        const err = await validateMessage(input.data);
+        return { name: input.name, errors: err };
+      }
+      if (input.typeValidate === "repeatPassword") {
+        const err = await validateReapeatPassword(input.data);
+        return { name: input.name, errors: err };
+      }
+    })
+  );
+  const lens = await Promise.all(errors.map((input) => input.errors.length));
+  const totalErrors = lens.reduce((acc, curr) => acc + curr, 0);
+
+  if (totalErrors > 0)
+    for (let i = 0; i < errors.length; i++) {
+      if (errors[i].errors.length > 0) {
+        return {
+          error: true,
+          message: errors[i].errors[0] + " in " + errors[i].name,
+        };
+      }
+    }
+  return { error: false, message: "" };
+};
+
 export {
+  validateInputs,
   validateEmail,
   validateCode,
   validatePassword,

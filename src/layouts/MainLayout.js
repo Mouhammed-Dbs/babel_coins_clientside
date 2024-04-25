@@ -40,20 +40,21 @@ export default function MainLayout(props) {
 
   useEffect(() => {
     setMounted(true);
-    isUserLogged()
-      .then((result) => {
-        if (result.error) {
-          router.replace("/login");
-        } else {
-          setUserInfo(result.data);
-          localStorage.setItem("babel-coins-user-id", result.data._id);
-          setPageLoading(false);
-        }
-      })
-      .catch(async (err) => {
-        await router.replace("/login");
-        setPageLoading(false);
-      });
+    setPageLoading(false);
+    // isUserLogged()
+    //   .then((result) => {
+    //     if (result.error) {
+    //       router.replace("/login");
+    //     } else {
+    //       setUserInfo(result.data);
+    //       localStorage.setItem("babel-coins-user-id", result.data._id);
+    //       setPageLoading(false);
+    //     }
+    //   })
+    //   .catch(async (err) => {
+    //     await router.replace("/login");
+    //     setPageLoading(false);
+    //   });
   }, [router]);
 
   if (!mounted)
