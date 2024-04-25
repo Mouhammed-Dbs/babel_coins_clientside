@@ -247,18 +247,14 @@ export default function Signup() {
             <MyInput
               className="w-64"
               textColor="text-white"
-              onChange={(event) => {
+              onChange={async (event) => {
                 setInputEmail(event.target.value);
-                validateEmail({ email: event.target.value })
-                  .then(() => {
-                    setValidateAccount({ error: false, msg: "" });
-                  })
-                  .catch((error) => {
-                    setValidateAccount({
-                      error: true,
-                      msg: error[0],
-                    });
-                  });
+                const err = await validateEmail({
+                  email: event.target.value,
+                });
+                if (err.length > 0)
+                  setValidateAccount({ error: true, msg: err[0] });
+                else setValidateAccount({ error: false, msg: "" });
               }}
               value={inputEmail}
               item={{
@@ -362,20 +358,14 @@ export default function Signup() {
               <MyInput
                 textColor="text-white"
                 defaultValue={account?.password}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setAccount({ ...account, password: e.target.value });
-                  validatePassword({
+                  const err = await validatePassword({
                     password: e.target.value,
-                  })
-                    .then(() => {
-                      setValidateAccount({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidateAccount({
-                        error: true,
-                        msg: error[0],
-                      });
-                    });
+                  });
+                  if (err.length > 0)
+                    setValidateAccount({ error: true, msg: err[0] });
+                  else setValidateAccount({ error: false, msg: "" });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -388,20 +378,14 @@ export default function Signup() {
               <MyInput
                 textColor="text-white"
                 defaultValue={account.secretCode}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setAccount({ ...account, secretCode: e.target.value });
-                  validateSecretCode({
+                  const err = await validateSecretCode({
                     secretCode: e.target.value,
-                  })
-                    .then(() => {
-                      setValidateAccount({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidateAccount({
-                        error: true,
-                        msg: error[0],
-                      });
-                    });
+                  });
+                  if (err.length > 0)
+                    setValidateAccount({ error: true, msg: err[0] });
+                  else setValidateAccount({ error: false, msg: "" });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -452,18 +436,14 @@ export default function Signup() {
               <MyInput
                 defaultValue={account?.firstName}
                 textColor="text-white"
-                onChange={(e) => {
+                onChange={async (e) => {
                   setAccount({ ...account, firstName: e.target.value });
-                  validateName({ name: e.target.value })
-                    .then(() => {
-                      setValidateAccount({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidateAccount({
-                        error: true,
-                        msg: error[0],
-                      });
-                    });
+                  const err = await validateName({
+                    name: e.target.value,
+                  });
+                  if (err.length > 0)
+                    setValidateAccount({ error: true, msg: err[0] });
+                  else setValidateAccount({ error: false, msg: "" });
                 }}
                 item={{
                   name: "firstname",
@@ -475,18 +455,14 @@ export default function Signup() {
               <MyInput
                 defaultValue={account?.lastName}
                 textColor="text-white"
-                onChange={(e) => {
+                onChange={async (e) => {
                   setAccount({ ...account, lastName: e.target.value });
-                  validateName({ name: e.target.value })
-                    .then(() => {
-                      setValidateAccount({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidateAccount({
-                        error: true,
-                        msg: error[0],
-                      });
-                    });
+                  const err = await validateName({
+                    name: e.target.value,
+                  });
+                  if (err.length > 0)
+                    setValidateAccount({ error: true, msg: err[0] });
+                  else setValidateAccount({ error: false, msg: "" });
                 }}
                 className={"w-64 mt-3"}
                 item={{

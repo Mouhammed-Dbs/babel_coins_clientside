@@ -9,31 +9,30 @@ export default function Password() {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputRepeatNewPassword, setInputRepeatNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resMsg, setResMsg] = useState({ msg: "", error: false });
   const [validate, setValidate] = useState({
     msg: "",
     error: false,
     show: false,
   });
-  const [loading, setLoading] = useState(false);
-  const [resMsg, setResMsg] = useState({ msg: "", error: false });
-
   const getSchemaForm = (currentPass, newPass, newRepeatPass) => {
     return [
       {
         sort: 0,
-        name: "current password",
+        name: "`current password`",
         typeValidate: "password",
         data: { password: currentPass },
       },
       {
         sort: 1,
-        name: "new password",
+        name: "`new password`",
         typeValidate: "password",
         data: { password: newPass },
       },
       {
         sort: 2,
-        name: "repeat password",
+        name: "`repeat password`",
         typeValidate: "repeatPassword",
         data: {
           password: newPass,

@@ -4,6 +4,7 @@ import MyInput from "@/components/utils/MyInput";
 import {
   validateCode,
   validateEmail,
+  validateInputs,
   validatePassword,
   validateReapeatPassword,
   validateSecretCode,
@@ -17,9 +18,8 @@ import { useRouter } from "next/router";
 
 export default function Recovery() {
   const router = useRouter();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   useState(false);
-  const [validate, setValidate] = useState({ error: false, msg: "" });
   const [resMsg, setResMsg] = useState({ error: false, msg: "" });
   const [inputEmail, setInputEmail] = useState("");
   const [inputSecret, setInputSecret] = useState("");
@@ -27,6 +27,29 @@ export default function Recovery() {
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputRepeatNewPassword, setInputRepeatNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [validate, setValidate] = useState({
+    msg: "",
+    error: false,
+  });
+  const getSchemaForm = (newPass, newRepeatPass) => {
+    return [
+      {
+        sort: 0,
+        name: "`password`",
+        typeValidate: "password",
+        data: { password: newPass },
+      },
+      {
+        sort: 1,
+        name: "`repeat password`",
+        typeValidate: "repeatPassword",
+        data: {
+          password: newPass,
+          repeatPassword: newRepeatPass,
+        },
+      },
+    ];
+  };
   return (
     <div className="text-white mt-10">
       <Card
@@ -58,18 +81,16 @@ export default function Recovery() {
               className="contents"
             >
               <MyInput
+                textColor="text-white"
                 value={inputEmail}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setInputEmail(e.target.value);
-                  validateEmail({
+                  const err = await validateEmail({
                     email: e.target.value,
-                  })
-                    .then(() => {
-                      setValidate({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidate({ error: true, msg: error[0] });
-                    });
+                  });
+                  if (err.length > 0) setValidate({ error: true, msg: err[0] });
+                  else setValidate({ error: false, msg: "" });
+                  setResMsg({ error: false, msg: "" });
                 }}
                 item={{
                   name: "email",
@@ -79,23 +100,25 @@ export default function Recovery() {
                 }}
               />
               <MyInput
+                textColor="text-white"
                 className="mt-3"
                 value={inputSecret}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setInputSecret(e.target.value);
-                  validateSecretCode({
+                  const err = await validateSecretCode({
                     secretCode: e.target.value,
-                  })
-                    .then(() => {
-                      setValidate({ error: false, msg: "" });
-                    })
-                    .catch((error) => {
-                      setValidate({
-                        error: true,
-                        msg: error[0],
-                      });
-                      setResMsg({ error: false, msg: "" });
+                  });
+                  if (err.length > 0)
+                    setValidate({
+                      error: true,
+                      msg: err[0],
                     });
+                  else
+                    setValidate({
+                      error: false,
+                      msg: "",
+                    });
+                  setResMsg({ error: false, msg: "" });
                 }}
                 item={{
                   name: "secret_code",
@@ -135,6 +158,7 @@ export default function Recovery() {
               className="contents"
             >
               <MyInput
+                textColor="text-white"
                 maxLength={4}
                 onChange={(e) => {
                   setInputCode(validateCode(e.target.value));
@@ -148,28 +172,21 @@ export default function Recovery() {
                 }}
               />
               <MyInput
+                textColor="text-white"
                 className="mt-3"
                 value={inputNewPassword}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setInputNewPassword(e.target.value);
-                  validatePassword({
-                    password: e.target.value,
-                  })
-                    .then(() => {
-                      setValidate({ error: false, msg: "" });
-                      validateReapeatPassword(e.target.value, {
-                        repeatPassword: inputRepeatNewPassword,
-                      })
-                        .then(() => {
-                          setValidate({ error: false, msg: "" });
-                        })
-                        .catch((error) => {
-                          setValidate({ error: true, msg: error[0] });
-                        });
-                    })
-                    .catch((error) => {
-                      setValidate({ error: true, msg: error[0] });
+                  const err = await validateInputs(
+                    getSchemaForm(e.target.value, inputRepeatNewPassword)
+                  );
+                  if (err.error) {
+                    setValidate({
+                      msg: err.message,
+                      error: true,
+                      show: true,
                     });
+                  } else setValidate({ msg: "", error: false, show: false });
                 }}
                 item={{
                   name: "new_password",
@@ -179,28 +196,21 @@ export default function Recovery() {
                 }}
               />
               <MyInput
+                textColor="text-white"
                 className="mt-3"
                 value={inputRepeatNewPassword}
-                onChange={(e) => {
+                onChange={async (e) => {
                   setInputRepeatNewPassword(e.target.value);
-                  validatePassword({
-                    password: e.target.value,
-                  })
-                    .then(() => {
-                      setValidate({ error: false, msg: "" });
-                      validateReapeatPassword(e.target.value, {
-                        repeatPassword: inputNewPassword,
-                      })
-                        .then(() => {
-                          setValidate({ error: false, msg: "" });
-                        })
-                        .catch((error) => {
-                          setValidate({ error: true, msg: error[0] });
-                        });
-                    })
-                    .catch((error) => {
-                      setValidate({ error: true, msg: error[0] });
+                  const err = await validateInputs(
+                    getSchemaForm(inputNewPassword, e.target.value)
+                  );
+                  if (err.error) {
+                    setValidate({
+                      msg: err.message,
+                      error: true,
+                      show: true,
                     });
+                  } else setValidate({ msg: "", error: false, show: false });
                 }}
                 item={{
                   name: "repeat_new_password",

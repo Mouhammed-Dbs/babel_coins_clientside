@@ -95,17 +95,14 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              onChange={(event) => {
+              onChange={async (event) => {
                 setInputEmail(event.target.value);
-                validateEmail({
+                const err = await validateEmail({
                   email: event.target.value,
-                })
-                  .then(() => {
-                    setValidateLogin({ error: false, msg: "" });
-                  })
-                  .catch((error) => {
-                    setValidateLogin({ error: true, msg: error[0] });
-                  });
+                });
+                if (err.length > 0)
+                  setValidateLogin({ error: true, msg: err[0] });
+                else setValidateLogin({ error: false, msg: "" });
               }}
               value={inputEmail}
               item={{
@@ -119,17 +116,14 @@ export default function Signup() {
             <MyInput
               textColor="text-white"
               className="w-64 mt-3"
-              onChange={(event) => {
+              onChange={async (event) => {
                 setInputPass(event.target.value);
-                validatePassword({
+                const err = await validatePassword({
                   password: event.target.value,
-                })
-                  .then(() => {
-                    setValidateLogin({ error: false, msg: "" });
-                  })
-                  .catch((error) => {
-                    setValidateLogin({ error: true, msg: error[0] });
-                  });
+                });
+                if (err.length > 0)
+                  setValidateLogin({ error: true, msg: err[0] });
+                else setValidateLogin({ error: false, msg: "" });
               }}
               value={inputPass}
               item={{

@@ -77,7 +77,7 @@ const validateName = async (name) => {
       .required("First name is required")
       .matches(
         /^[A-Za-z.\s_-]{3,}$/,
-        "Name must be a uppercase or lowercase character!"
+        "Name must be at least 3 uppercase or lowercase character!"
       ),
   });
 
@@ -128,7 +128,7 @@ const validateAmount = (text) => {
   return value;
 };
 
-//[{ name: "myemail",typeValidate:"email", data: { password: "", repeatPassword: "" } }];
+//[{ name: "myemail",typeValidate:"email", data: { password: "", repeatPassword: "" } }]
 const validateInputs = async (inputs) => {
   inputs.sort((a, b) => a.sort - b.sort);
   const errors = await Promise.all(
