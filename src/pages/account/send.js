@@ -24,14 +24,10 @@ import {
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 import { validateAmount } from "../../../public/global_functions/validation";
-import { data } from "autoprefixer";
 import { CopyButton } from "@/components/utils/CopyButton";
 import { FaInfoCircle } from "react-icons/fa";
 import Link from "next/link";
-import {
-  getDateFormated,
-  getTimeFormated,
-} from "../../../public/global_functions/helpers";
+import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 
 export default function Send(props) {
   const router = useRouter();
@@ -288,8 +284,7 @@ export default function Send(props) {
                     <div className="flex gap-2">
                       <p className="font-bold">Date & Time:</p>
                       <p className="">
-                        {getDateFormated(resData.data?.dateOfTransfer)}{" "}
-                        {getTimeFormated(resData.data?.dateOfTransfer)}
+                        {getDateTimeFormated(resData.data?.dateOfTransfer)}
                       </p>
                     </div>
                   </div>

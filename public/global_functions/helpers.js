@@ -16,4 +16,8 @@ const getTimeFormated = (date) => {
   return orderedTimeInDateFormat;
 };
 
-export { getDateFormated, getTimeFormated };
+const getDateTimeFormated = (date) => {
+  return getDateFormated(date) + " " + getTimeFormated(date);
+};
+
+export { getDateFormated, getTimeFormated, getDateTimeFormated };

@@ -15,12 +15,13 @@ import {
   getOperations,
   getOperationsCount,
 } from "../../../public/global_functions/coins";
+import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 
 export default function History() {
+  const PAGE_SIZE = 4;
   const [tab, setTab] = useState("CREDIT");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [currentSize, setCurrentSize] = useState(0);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMount] = useState(false);
   const [tillDate, setTillDate] = useState();
@@ -40,6 +41,7 @@ export default function History() {
   const [itemSelected, setItemSelected] = useState("TRANSACTIONS");
   const [widthCard, setWidthCard] = useState("100%");
   const [totalSlidesCount, setTotalSlidesCount] = useState(0);
+  const [currentlSlidesCount, setCurrentSlidesCount] = useState(1);
   const [filters, setFilters] = useState({
     _id: "",
     status: "",
@@ -62,7 +64,7 @@ export default function History() {
     return filteringString;
   };
 
-  const getData = (type, pageNumber, sizeNumber) => {
+  const getData = (type, pageNumber, sizeNumber, filters) => {
     const tempFilters = {
       ...filters,
       userId: localStorage.getItem("babel-coins-user-id"),
@@ -70,8 +72,10 @@ export default function History() {
     setFilters(tempFilters);
     setLoading(true);
     setData([]);
+    setCurrentSlidesCount(pageNumber);
     getOperationsCount(type, getFilteringString(tempFilters))
       .then((result) => {
+        setTotalSlidesCount(Math.ceil(result.data / PAGE_SIZE));
         if (result.data > 0) {
           getOperations(
             type,
@@ -95,6 +99,7 @@ export default function History() {
         setLoading(false);
       });
   };
+
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
@@ -110,7 +115,7 @@ export default function History() {
   }, [screenSize]);
 
   useEffect(() => {
-    getData("deposits", 1, 4);
+    getData("deposits", currentlSlidesCount, PAGE_SIZE, filters);
   }, []);
   if (!mounted)
     return (
@@ -123,6 +128,7 @@ export default function History() {
 
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
+      {/* Title Page */}
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
@@ -131,9 +137,11 @@ export default function History() {
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
+      {/* Body Page */}
       <div className="card_history pb-4 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 backdrop-blur-md rounded-lg shadow-md">
+        {/* Currencies Tabs */}
         <ul
-          style={!screenSize ? { width: (widthCard - 72) * (11 / 12) } : {}}
+          style={!screenSize ? { width: (widthCard - 100) * (11 / 12) } : {}}
           className="flex md:flex-wrap bg-gray-200/70 dark:bg-gray-600/70 rounded-t-lg py-1 no-scrollbar overflow-x-scroll"
         >
           {items.map((item) => (
@@ -144,8 +152,23 @@ export default function History() {
                   ? "bg-white dark:text-primary dark:bg-gray-400 rounded-lg text-primary px-3"
                   : "dark:text-gray-300"
               }`}
-              onClick={() => {
-                setItemSelected(item);
+              onClick={(e) => {
+                const currency =
+                  e.target.innerText === "TRANSACTIONS"
+                    ? ""
+                    : e.target.innerText;
+                setItemSelected(e.target.innerText);
+                const tempFilters = {
+                  ...filters,
+                  currencyName: currency,
+                };
+                setFilters(tempFilters);
+                getData(
+                  tab === "DEBIT" ? "transfers" : "deposits",
+                  1,
+                  PAGE_SIZE,
+                  tempFilters
+                );
                 setOpenFilter(false);
               }}
             >
@@ -153,6 +176,7 @@ export default function History() {
             </li>
           ))}
         </ul>
+        {/* Transfer Type Tabs CREDIT/DEBIT */}
         <div className="flex w-full border-t-1 border-b-1 bg-gray-200/55 dark:bg-gray-600/55 border-gray-400 dark:border-gray-300">
           <Button
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none border-r-1 border-gray-400 dark:border-gray-300 ${
@@ -162,7 +186,7 @@ export default function History() {
             }`}
             onClick={() => {
               setTab("CREDIT");
-              getData("deposits", 1, 4);
+              getData("deposits", 1, PAGE_SIZE, filters);
             }}
           >
             CREDIT
@@ -175,12 +199,13 @@ export default function History() {
             }`}
             onClick={() => {
               setTab("DEBIT");
-              getData("transfers", 1, 4);
+              getData("transfers", 1, PAGE_SIZE, filters);
             }}
           >
             DEBIT
           </Button>
         </div>
+        {/* Export To CSV & Show Filter */}
         <div>
           <div className="flex justify-between md:px-4">
             <Button
@@ -207,6 +232,10 @@ export default function History() {
               <div className="w-11/12 md:grid grid-cols-3 gap-1 md:gap-5">
                 <div className="w-full px-1 md:px-4">
                   <MyInput
+                    value={filters._id}
+                    onChange={(e) => {
+                      setFilters({ ...filters, _id: e.target.value });
+                    }}
                     color="border-gray-500"
                     className="w-40 border-black"
                     item={{
@@ -222,6 +251,12 @@ export default function History() {
                       selectedKeys={[tab]}
                       onChange={(e) => {
                         setTab(e.target.value);
+                        getData(
+                          e.target.value === "DEBIT" ? "transfers" : "deposits",
+                          1,
+                          PAGE_SIZE,
+                          filters
+                        );
                       }}
                       disallowEmptySelection={true}
                       aria-label="none"
@@ -290,10 +325,19 @@ export default function History() {
                     </SelectItem>
                   </Select>
                   <Button
+                    isDisabled={loading}
+                    onClick={() => {
+                      getData(
+                        tab === "DEBIT" ? "transfers" : "deposits",
+                        currentlSlidesCount,
+                        PAGE_SIZE,
+                        filters
+                      );
+                    }}
                     size="md"
                     className="bg-orange text-white rounded-full mt-4"
                   >
-                    Apply
+                    {loading ? "Sending.." : "Apply"}
                   </Button>
                 </div>
               </div>
@@ -302,7 +346,15 @@ export default function History() {
                   <IoIosCloseCircleOutline
                     className="h-6 w-6 cursor-pointer"
                     size={10}
-                    onClick={() => setOpenFilter(false)}
+                    onClick={() => {
+                      setOpenFilter(false);
+                      setFilters({
+                        _id: "",
+                        status: "",
+                        userId: "",
+                        currencyName: "",
+                      });
+                    }}
                   />
                 </div>
               </div>
@@ -310,40 +362,57 @@ export default function History() {
           )}
         </div>
         {!loading ? (
-          <div className="mx-1 md:mx-4">
-            <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
-              <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
-                DATE
-              </h3>
-              <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
-              <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
-                PS
-              </h3>
-              <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
-              <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+          data.length > 0 ? (
+            // Operations Table
+            <div className="mx-1 md:mx-4">
+              <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
+                <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
+                  DATE
+                </h3>
+                <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
+                <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
+                  PS
+                </h3>
+                <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
+                <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+              </div>
+              <ul className="w-full">
+                {data.map((item) => (
+                  <ItemTransaction
+                    key={item._id}
+                    type={tab}
+                    date={item.dateOfTransfer}
+                    amount={item.amount}
+                    ps={item.currencyName}
+                    id={item._id}
+                    status={item.status}
+                  />
+                ))}
+              </ul>
+              {currentlSlidesCount != totalSlidesCount && (
+                <div
+                  onClick={() => {
+                    if (currentlSlidesCount <= totalSlidesCount) {
+                      getData(
+                        tab === "DEBIT" ? "transfers" : "deposits",
+                        currentlSlidesCount + 1,
+                        PAGE_SIZE,
+                        filters
+                      );
+                      setCurrentSlidesCount(currentlSlidesCount + 1);
+                    }
+                  }}
+                  className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
+                >
+                  <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
+                </div>
+              )}
             </div>
-            <ul className="w-full">
-              {data.slice(0, currentSize + 3).map((item) => (
-                <ItemTransaction
-                  key={item._id}
-                  type={tab}
-                  date={item.dateOfTransfer}
-                  amount={item.amount}
-                  ps={item.currencyName}
-                  id={item._id}
-                  status={item.status}
-                />
-              ))}
-            </ul>
-            <div
-              onClick={() => {
-                setCurrentSize(currentSize + 3);
-              }}
-              className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
-            >
-              <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
+          ) : (
+            <div className="flex justify-center">
+              <p className="text-sm py-5">No {tab.toLowerCase()} operations</p>
             </div>
-          </div>
+          )
         ) : (
           <MyLoading />
         )}
@@ -351,12 +420,13 @@ export default function History() {
     </div>
   );
 }
+
 function ItemTransaction({ date, amount, ps, id, status, type }) {
   return (
     <li className="flex px-1 md:px-3 border-b-1 md:border-b-2 py-3 font-bold text-center">
       <div className="flex w-3/12">
         <p className="w-full text-xs opacity-70 self-center md:pl-4 text-left">
-          {date}
+          {getDateTimeFormated(date)}
         </p>
       </div>
       <div className="flex w-3/12">

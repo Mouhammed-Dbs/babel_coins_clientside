@@ -124,6 +124,7 @@ export default function Signup() {
                 if (err.length > 0)
                   setValidateLogin({ error: true, msg: err[0] });
                 else setValidateLogin({ error: false, msg: "" });
+                setResLogin({ error: false, msg: "" });
               }}
               value={inputPass}
               item={{
