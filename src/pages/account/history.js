@@ -147,7 +147,7 @@ export default function History() {
           {items.map((item) => (
             <li
               key={item}
-              className={`p-2 px-1 md:px-2 mx-1 md:mx-2 text-gray-500 cursor-pointer text-sm md:text-base ${
+              className={`p-1 px-1 md:px-2 mx-1 md:mx-2 text-gray-500 cursor-pointer text-sm md:text-base pt-2 ${
                 itemSelected === item
                   ? "bg-white dark:text-primary dark:bg-gray-400 rounded-lg text-primary px-3"
                   : "dark:text-gray-300"
