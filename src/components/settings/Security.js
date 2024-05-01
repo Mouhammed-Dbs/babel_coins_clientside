@@ -6,7 +6,7 @@ export default function Security() {
   const [enableMasterKey, setEnableMasterKey] = useState(false);
   return (
     <div
-      className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white dark:bg-default-100 shadow-md`}
+      className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
     >
       {/* Title 1 */}
       <div className="w-full border-b">
