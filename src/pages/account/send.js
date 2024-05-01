@@ -34,11 +34,72 @@ export default function Send(props) {
   const { query } = router;
   const [mounted, setMount] = useState(false);
   const [transferType, setTransferType] = useState("external");
-  const [templates, setTemplates] = useState(["b23523553", "b29523553"]);
   const [coins, setCoins] = useState([]);
   const [coinSelected, setCoinSelected] = useState(null);
   const [networks, setNetworks] = useState([]);
   const [networkSelected, setNetworkSelected] = useState(null);
+
+  const templates = [
+    {
+      network: "TRON",
+      symbol: "USDT",
+      currencyName: "USDT",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
+      ],
+    },
+    {
+      network: "POLYGON",
+      symbol: "USDT",
+      currencyName: "USDT",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
+      ],
+    },
+    {
+      network: "TRON",
+      symbol: "TRX",
+      currencyName: "TRX",
+      accounts: [
+        { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+        { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
+      ],
+    },
+    {
+      currencyName: "MATIC",
+      network: "POLYGON",
+      symbol: "MATIC",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
+        { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+      ],
+    },
+    {
+      currencyName: "BABELCOINS",
+      network: "Account",
+      symbol: "",
+      accounts: [
+        { name: "Alaa", address: "B1" },
+        { name: "Alaa", address: "B2" },
+        { name: "Alaa", address: "B3" },
+        { name: "Alaa", address: "B4" },
+        { name: "Alaa", address: "B5" },
+      ],
+    },
+  ];
+
+  const [templatesAccount, setTemplatesAccount] = useState([]);
+  const [templateSelected, setTemplateSelected] = useState(null);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
@@ -52,8 +113,8 @@ export default function Send(props) {
     data: {},
   });
   const [msg, setMsg] = useState({ error: false, data: "" });
-  const [address, setAddress] = useState(null);
-  const [account, setAccount] = useState(null);
+  const [address, setAddress] = useState("");
+  const [account, setAccount] = useState("B");
   const [sendLoading, setSendLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("");
   const placeholdersAddresses = {
@@ -129,9 +190,31 @@ export default function Send(props) {
       if (isAmountValid(amount) && address && coinSelected && networkSelected)
         return true;
     if (transferType === "internal")
-      if (isAmountValid(amount) && account && coinSelected && networkSelected)
+      if (
+        isAmountValid(amount) &&
+        account.length > 1 &&
+        coinSelected &&
+        networkSelected
+      )
         return true;
     return false;
+  };
+
+  const getTemplateByCurrencyNameAndNetwork = (
+    transferType,
+    currencyName = null,
+    network = null
+  ) => {
+    if (transferType === "external")
+      return templates
+        .filter(
+          (item) =>
+            item.currencyName === currencyName && item.network === network
+        )
+        .flatMap((item) => item.accounts);
+    return templates
+      .filter((item) => item.currencyName === "BABELCOINS")
+      .flatMap((item) => item.accounts);
   };
 
   useEffect(() => {
@@ -350,6 +433,13 @@ export default function Send(props) {
                   let net = getNetworks(e.target.value, coins);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
+                  setTemplatesAccount(
+                    getTemplateByCurrencyNameAndNetwork(
+                      transferType,
+                      e.target.value,
+                      net[0]
+                    )
+                  );
                   setLoading(true);
                   await router.replace({
                     pathname: router.pathname,
@@ -418,32 +508,6 @@ export default function Send(props) {
                 )}
               </Select>
             </div>
-            {/* Templates md:flex */}
-            <div className="hidden m-auto w-full gap-4 items-center mt-4">
-              <label className="text-right text-sm md:text-base w-36">
-                Templates
-              </label>
-              <Select
-                aria-label="none"
-                style={{ backgroundColor: "inherit" }}
-                size="sm"
-                labelPlacement="outside"
-                placeholder="CHOOSE TEMPLATE"
-                selectorIcon={
-                  <IoIosArrowDown color="var(--bg-primary-color)" />
-                }
-                classNames={{
-                  base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                  trigger: "h-7",
-                }}
-              >
-                {templates.map((template) => (
-                  <SelectItem key={template} value={template}>
-                    {template}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
             {/* Network */}
             <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
               <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
@@ -457,6 +521,13 @@ export default function Send(props) {
                 onChange={(e) => {
                   setPlaceholder(placeholdersAddresses[e.target.value]);
                   setNetworkSelected(e.target.value);
+                  setTemplatesAccount(
+                    getTemplateByCurrencyNameAndNetwork(
+                      transferType,
+                      coinSelected,
+                      e.target.value
+                    )
+                  );
                   getFeesAndLimits(
                     "crypto",
                     transferType,
@@ -494,6 +565,14 @@ export default function Send(props) {
                   <input
                     defaultChecked
                     onChange={() => {
+                      setTemplatesAccount(
+                        getTemplateByCurrencyNameAndNetwork(
+                          "external",
+                          coinSelected,
+                          networkSelected
+                        )
+                      );
+                      setTemplateSelected(null);
                       setTransferType("external");
                       getFeesAndLimits(
                         "crypto",
@@ -512,6 +591,10 @@ export default function Send(props) {
                 <div className="flex gap-1">
                   <input
                     onChange={() => {
+                      setTemplatesAccount(
+                        getTemplateByCurrencyNameAndNetwork("internal")
+                      );
+                      setTemplateSelected(null);
                       setTransferType("internal");
                       getFeesAndLimits(
                         "crypto",
@@ -529,6 +612,70 @@ export default function Send(props) {
                 </div>
               </div>
             </div>
+            {/* Templates md:flex */}
+            {templatesAccount.length > 0 && (
+              <div
+                className={`${
+                  coinSelected && networkSelected ? "flex" : "hidden"
+                } m-auto w-full gap-4 items-center mt-4`}
+              >
+                <label className="text-right text-sm md:text-base w-36">
+                  Templates
+                </label>
+                <Select
+                  onChange={(e) => {
+                    if (e.target.value.length > 0) {
+                      setTemplateSelected(e.target.value);
+                      transferType === "external"
+                        ? setAddress(e.target.value)
+                        : setAccount(e.target.value);
+                    } else {
+                      transferType === "external"
+                        ? setAddress("")
+                        : setAccount("B");
+
+                      setTemplateSelected(null);
+                    }
+                  }}
+                  selectedKeys={templateSelected ? [templateSelected] : []}
+                  isDisabled={loading || !(coinSelected && networkSelected)}
+                  items={templatesAccount}
+                  aria-label="none"
+                  style={{ backgroundColor: "inherit" }}
+                  size="sm"
+                  labelPlacement="outside"
+                  placeholder="CHOOSE TEMPLATE"
+                  selectorIcon={
+                    <IoIosArrowDown color="var(--bg-primary-color)" />
+                  }
+                  classNames={{
+                    base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                    trigger: "h-7",
+                  }}
+                  renderValue={(items) => {
+                    return items.map((item) => {
+                      return (
+                        <div key={item.data.address} className="flex flex-col">
+                          <span>{item.data.name}</span>
+                          <span className="text-default-500 text-tiny">
+                            {item.data.address}
+                          </span>
+                        </div>
+                      );
+                    });
+                  }}
+                >
+                  {(item) => (
+                    <SelectItem key={item.address} textValue={item.address}>
+                      <div className="flex flex-col">
+                        <span>{item.name}</span>
+                        <span>{item.address}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
+              </div>
+            )}
             {/* Address */}
             <div
               className={`m-auto w-full gap-4 items-center ${
@@ -539,7 +686,8 @@ export default function Send(props) {
                 Address
               </label>
               <MyInput
-                defaultValue={address}
+                readOnly={templateSelected}
+                value={address}
                 onChange={(e) => {
                   setAddress(e.target.value);
                 }}
@@ -565,9 +713,11 @@ export default function Send(props) {
                 Account
               </label>
               <MyInput
-                defaultValue={account}
+                id="account_id"
+                readOnly={templateSelected}
+                value={account}
                 onChange={(e) => {
-                  setAccount(e.target.value);
+                  if (e.target.value.length >= 1) setAccount(e.target.value);
                 }}
                 color="border-gray-500"
                 className="w-full md:w-64 border-black mt-3"

@@ -6,35 +6,59 @@ import { IoCloseSharp } from "react-icons/io5";
 export default function Templates() {
   const [data, setData] = useState([
     {
-      title: "Tether",
-      account: "Tron",
+      network: "TRON",
       symbol: "USDT",
-      addresses: [
-        "TKHQbDCENpkFqYjkACMnrQDzEonKqRG",
-        "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG",
-        "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG",
-        "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG",
+      currencyName: "USDT",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG" },
       ],
     },
     {
-      title: "TRX",
-      account: "Tron",
+      network: "POLYGON",
+      symbol: "USDT",
+      currencyName: "USDT",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENepkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCENpkFqjkACCNVMnrQDzEeonKqRG" },
+      ],
+    },
+    {
+      network: "Tron",
       symbol: "TRX",
-      addresses: [
-        "TKHQbDCENpkFqYjkACMnrQDzEonKqRG",
-        "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG",
+      currencyName: "TRX",
+      accounts: [
+        { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpkFqjekACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+        { name: "Monir", address: "TKHQbeDCENpkFqjkACCNVMnrQDzEonKqRG" },
       ],
     },
     {
-      title: "MATIC",
-      account: "Polygon",
+      currencyName: "MATIC",
+      network: "POLYGON",
       symbol: "MATIC",
-      addresses: [
-        "TKHQbDCENpkFqYjkACMnrQDzEonKqRG",
-        "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG",
-        "TKHQbDCENpkFqYjkACMnrQDzEonKqRG",
-        "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG",
-        "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG",
+      accounts: [
+        { name: "Ali", address: "TKHQbDCEwNpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+      ],
+    },
+    {
+      currencyName: "BABELCOINS",
+      network: "Account",
+      symbol: "",
+      accounts: [
+        { name: "Alaa", address: "B1" },
+        { name: "Alaa", address: "B2" },
+        { name: "Alaa", address: "B3" },
+        { name: "Alaa", address: "B4" },
+        { name: "Alaa", address: "B5" },
       ],
     },
   ]);
@@ -51,11 +75,11 @@ export default function Templates() {
       <div className="mt-10">
         {data.map((item) => (
           <TemplateItem
-            key={item.title + "_" + item.account}
-            title={item.title}
-            account={item.account}
-            addresses={item.addresses}
-            img={item.symbol}
+            key={item.currencyName + "_" + item.network}
+            title={item.currencyName}
+            network={item.network}
+            accounts={item.accounts}
+            imgCoin={item.symbol}
           />
         ))}
       </div>
@@ -63,7 +87,7 @@ export default function Templates() {
   );
 }
 
-function TemplateItem({ title, account, img, addresses }) {
+function TemplateItem({ title, network, imgCoin, accounts }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
@@ -71,18 +95,34 @@ function TemplateItem({ title, account, img, addresses }) {
         onClick={() => {
           setOpen(!open);
         }}
-        className="flex items-center justify-between"
+        className="flex items-center justify-between cursor-pointer"
       >
         <div className="flex items-center">
-          <Image
-            className="rounded-full h-9 w-9"
-            src={`/images/coins/${img}.png`}
-            alt=""
-            height={30}
-            width={30}
-          />
+          <div className="relative">
+            <Image
+              className={`h-10 w-10 ${title === "BABELCOINS" ? "p-[2px]" : ""}`}
+              src={
+                title !== "BABELCOINS"
+                  ? `/images/coins/${imgCoin}.png`
+                  : "/images/logo/png/babelcoins-logo-64.png"
+              }
+              alt=""
+              height={30}
+              width={30}
+            />
+            {title !== "BABELCOINS" && (
+              <Image
+                className="absolute rounded-full h-4 w-4 bottom-0 right-0 border-1"
+                src={`/images/networks/${network}.png`}
+                alt=""
+                height={30}
+                width={30}
+              />
+            )}
+          </div>
+
           <h1 className="text-lg ml-3">
-            {title + " (" + addresses.length + ")"}
+            {title + " (" + accounts.length + ")"}
           </h1>
         </div>
         {open ? (
@@ -93,17 +133,28 @@ function TemplateItem({ title, account, img, addresses }) {
       </div>
       {open && (
         <ul className="md:ml-2 mt-4">
-          {addresses.map((address) => (
+          {accounts.map((account) => (
             <li
-              key={address}
-              className="flex gap-1 items-center border-1 rounded-md w-fit p-2 mt-2"
+              key={account.address}
+              className="border-1 rounded-md w-fit p-2 mt-2"
             >
-              <label className="text-xs md:text-base">{account + ":"}</label>
-              <p className="text-xs md:text-base break-all">{address}</p>
-              <IoCloseSharp
-                color="red"
-                className="rounded-full hover:bg-slate-400 p-1 w-6 h-6"
-              />
+              <div className="flex gap-1 items-center mb-1">
+                <span className="font-bold">Name:</span>
+                <span>{account.name}</span>
+              </div>
+
+              <div className="flex gap-1 items-center">
+                <label className="text-xs md:text-base font-bold">
+                  {network + ":"}
+                </label>
+                <p className="text-xs md:text-base break-all">
+                  {account.address}
+                </p>
+                <IoCloseSharp
+                  color="red"
+                  className="rounded-full hover:bg-slate-400 p-1 w-6 h-6"
+                />
+              </div>
             </li>
           ))}
         </ul>
