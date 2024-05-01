@@ -126,6 +126,7 @@ export default function Send(props) {
       return false;
     return true;
   };
+
   const isDataValid = () => {
     if (transferType === "external")
       if (isAmountValid(amount) && address && coinSelected && networkSelected)
@@ -139,6 +140,12 @@ export default function Send(props) {
       )
         return true;
     return false;
+  };
+
+  const initForTemplate = () => {
+    setTemplateSelected(null);
+    setAccount("B");
+    setAddress("");
   };
 
   const getTemplateByCurrencyNameAndNetwork = (
@@ -422,7 +429,7 @@ export default function Send(props) {
       </div>
       <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[720px] lg:w-[950px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="lg:flex lg:gap-10">
-          <div className="lg:w-2/3 lg:ml-5 flex flex-col gap-4">
+          <div className="lg:w-2/3 lg:ml-5 flex flex-col gap-1 md:gap-4">
             {/* System */}
             <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="text-right text-sm md:text-base w-36">
@@ -443,6 +450,7 @@ export default function Send(props) {
                       net[0]
                     )
                   );
+                  initForTemplate();
                   setLoading(true);
                   await router.replace({
                     pathname: router.pathname,
@@ -476,9 +484,9 @@ export default function Send(props) {
                         src={`/images/coins/${item.data.symbol}.png`}
                       />
                       <div className="flex flex-col">
-                        <span>{item.data.currencyName}</span>
+                        <span>{item.data.validDepositeBalance}</span>
                         <span className="text-default-500 text-tiny">
-                          Balance: {item.data.validDepositeBalance}
+                          {item.data.currencyName}
                         </span>
                       </div>
                     </div>
@@ -500,10 +508,10 @@ export default function Send(props) {
                       />
                       <div className="flex flex-col">
                         <span className="text-small">
-                          {item["currencyName"]}
+                          {item.validDepositeBalance}
                         </span>
                         <span className="text-tiny text-default-400">
-                          {item.validDepositeBalance}
+                          {item["currencyName"]}
                         </span>
                       </div>
                     </div>
@@ -531,6 +539,7 @@ export default function Send(props) {
                       e.target.value
                     )
                   );
+                  initForTemplate();
                   getFeesAndLimits(
                     "crypto",
                     transferType,
@@ -540,7 +549,7 @@ export default function Send(props) {
                 }}
                 aria-label="none"
                 classNames={{
-                  base: "mt-1 md:mt-3 max-w-xs min-w-32 peer w-28 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                  base: "mt-1 md:mt-3 max-w-sm min-w-32 peer w-36 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
                   trigger: "h-8",
                 }}
                 size="sm"
@@ -575,7 +584,7 @@ export default function Send(props) {
                           networkSelected
                         )
                       );
-                      setTemplateSelected(null);
+                      initForTemplate();
                       setTransferType("external");
                       getFeesAndLimits(
                         "crypto",
@@ -597,7 +606,7 @@ export default function Send(props) {
                       setTemplatesAccount(
                         getTemplateByCurrencyNameAndNetwork("internal")
                       );
-                      setTemplateSelected(null);
+                      initForTemplate();
                       setTransferType("internal");
                       getFeesAndLimits(
                         "crypto",
@@ -614,123 +623,6 @@ export default function Send(props) {
                   <label htmlFor="internal_transfer">Internal</label>
                 </div>
               </div>
-            </div>
-            {/* Templates md:flex */}
-            {templatesAccount.length > 0 && (
-              <div
-                className={`${
-                  coinSelected && networkSelected ? "flex" : "hidden"
-                } m-auto w-full gap-4 items-center mt-4`}
-              >
-                <label className="text-right text-sm md:text-base w-36">
-                  Templates
-                </label>
-                <Select
-                  onChange={(e) => {
-                    if (e.target.value.length > 0) {
-                      setTemplateSelected(e.target.value);
-                      transferType === "external"
-                        ? setAddress(e.target.value)
-                        : setAccount(e.target.value);
-                    } else {
-                      transferType === "external"
-                        ? setAddress("")
-                        : setAccount("B");
-
-                      setTemplateSelected(null);
-                    }
-                  }}
-                  selectedKeys={templateSelected ? [templateSelected] : []}
-                  isDisabled={loading || !(coinSelected && networkSelected)}
-                  items={templatesAccount}
-                  aria-label="none"
-                  style={{ backgroundColor: "inherit" }}
-                  size="sm"
-                  labelPlacement="outside"
-                  placeholder="CHOOSE TEMPLATE"
-                  selectorIcon={
-                    <IoIosArrowDown color="var(--bg-primary-color)" />
-                  }
-                  classNames={{
-                    base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                    trigger: "h-7",
-                  }}
-                  renderValue={(items) => {
-                    return items.map((item) => {
-                      return (
-                        <div key={item.data.address} className="flex flex-col">
-                          <span>{item.data.name}</span>
-                          <span className="text-default-500 text-tiny">
-                            {item.data.address}
-                          </span>
-                        </div>
-                      );
-                    });
-                  }}
-                >
-                  {(item) => (
-                    <SelectItem key={item.address} textValue={item.address}>
-                      <div className="flex flex-col">
-                        <span>{item.name}</span>
-                        <span>{item.address}</span>
-                      </div>
-                    </SelectItem>
-                  )}
-                </Select>
-              </div>
-            )}
-            {/* Address */}
-            <div
-              className={`m-auto w-full gap-4 items-center ${
-                transferType === "external" && coinSelected ? "flex " : "hidden"
-              }`}
-            >
-              <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                Address
-              </label>
-              <MyInput
-                readOnly={templateSelected}
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-                color="border-gray-500"
-                className="w-full md:w-64 border-black mt-3"
-                item={{
-                  label: screenSize ? undefined : "Address",
-                  name: "address",
-                  type: "text",
-                  placeholder: placeholder,
-                }}
-              />
-            </div>
-            {/* Account md:flex */}
-            <div
-              className={`m-auto w-full gap-4 items-center ${
-                transferType === "internal" && coinSelected
-                  ? "md:flex"
-                  : "hidden"
-              }`}
-            >
-              <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
-                Account
-              </label>
-              <MyInput
-                id="account_id"
-                readOnly={templateSelected}
-                value={account}
-                onChange={(e) => {
-                  if (e.target.value.length >= 1) setAccount(e.target.value);
-                }}
-                color="border-gray-500"
-                className="w-full md:w-64 border-black mt-3"
-                item={{
-                  label: screenSize ? undefined : "Account",
-                  name: "account",
-                  type: "text",
-                  placeholder: "B000000",
-                }}
-              />
             </div>
             {/* Comment md:flex*/}
             <div className="hidden m-auto w-full gap-4 items-center">
@@ -787,86 +679,218 @@ export default function Send(props) {
 
             {!loading ? (
               query["curr"] ? (
-                <div>
-                  {/* Amount */}
-                  <div className="flex m-auto w-full md:gap-4 gap-2 items-end ">
-                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36">
-                      Amount
-                    </label>
-                    <MyInput
-                      color="border-gray-500"
-                      className="w-full md:w-48 border-black mt-3"
-                      value={amount}
-                      onChange={(e) => {
-                        let value = validateAmount(e.target.value);
-                        setAmount(value);
-                        if (value) {
-                          let currentAmount = parseFloat(value);
-                          if (!isAmountValid(currentAmount)) {
-                            setMsg({
-                              error: true,
-                              data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
-                            });
-                          } else {
-                            setMsg({
-                              error: false,
-                              data: "",
-                            });
-                          }
-                        }
-                      }}
-                      item={{
-                        label: screenSize ? undefined : "Amount",
-                        name: "amount",
-                        type: "text",
-                        placeholder: "0",
-                      }}
-                    />
-                    <p className="w-24 min-w-20 text-center mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                      {coinSelected}
-                    </p>
-                  </div>
-
-                  {/* Total */}
-                  <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
-                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                      Total
-                    </label>
-                    <MyInput
-                      value={amount.length > 0 ? parseFloat(amount) + fee : 0}
-                      readOnly
-                      color="border-gray-500"
-                      className="w-full md:w-48 border-black mb-3 mt-3"
-                      item={{
-                        label: screenSize ? undefined : "Total",
-                        name: "amount",
-                        type: "text",
-                        placeholder: "$0",
-                      }}
-                    />
-                    <Select
-                      aria-label="none"
-                      classNames={{
-                        base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                        trigger: "h-8",
-                      }}
-                      size="sm"
-                      style={{ backgroundColor: "inherit" }}
-                      labelPlacement="outside-left"
-                      selectorIcon={
-                        <IoIosArrowDown color="var(--bg-primary-color)" />
-                      }
-                      placeholder="USD"
+                <>
+                  {/* Templates */}
+                  {templatesAccount.length > 0 && (
+                    <div
+                      className={`${
+                        coinSelected && networkSelected ? "md:flex" : "hidden"
+                      } m-auto w-full gap-4 items-center mt-2`}
                     >
-                      {fiatAccounts.map((account) => (
-                        <SelectItem key={account} value={account}>
-                          {account}
-                        </SelectItem>
-                      ))}
-                    </Select>
-                    <p className="w-24 min-w-20 text-center mb-[13px] md:mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
-                      {coinSelected}
-                    </p>
+                      <label className="text-right text-sm md:text-base w-36">
+                        Templates
+                      </label>
+                      <Select
+                        onChange={(e) => {
+                          if (e.target.value.length > 0) {
+                            setTemplateSelected(e.target.value);
+                            transferType === "external"
+                              ? setAddress(e.target.value)
+                              : setAccount(e.target.value);
+                          } else {
+                            transferType === "external"
+                              ? setAddress("")
+                              : setAccount("B");
+
+                            setTemplateSelected(null);
+                          }
+                        }}
+                        selectedKeys={
+                          templateSelected ? [templateSelected] : []
+                        }
+                        isDisabled={
+                          loading || !(coinSelected && networkSelected)
+                        }
+                        items={templatesAccount}
+                        style={{ backgroundColor: "inherit" }}
+                        aria-label="none"
+                        size="sm"
+                        labelPlacement="outside"
+                        placeholder="CHOOSE TEMPLATE"
+                        selectorIcon={
+                          <IoIosArrowDown color="var(--bg-primary-color)" />
+                        }
+                        classNames={{
+                          base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                          trigger: "h-7",
+                        }}
+                        renderValue={(items) => {
+                          return items.map((item) => {
+                            return (
+                              <div
+                                key={item.data.address}
+                                className="flex flex-col"
+                              >
+                                <span>{item.data.name}</span>
+                                <span className="text-default-500 text-tiny">
+                                  {item.data.address}
+                                </span>
+                              </div>
+                            );
+                          });
+                        }}
+                      >
+                        {(item) => (
+                          <SelectItem
+                            key={item.address}
+                            textValue={item.address}
+                          >
+                            <div className="flex flex-col">
+                              <span>{item.name}</span>
+                              <span>{item.address}</span>
+                            </div>
+                          </SelectItem>
+                        )}
+                      </Select>
+                    </div>
+                  )}
+                  {/* Address */}
+                  <div
+                    className={`m-auto w-full gap-4 items-center ${
+                      transferType === "external" && coinSelected
+                        ? "flex "
+                        : "hidden"
+                    }`}
+                  >
+                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                      Address
+                    </label>
+                    <MyInput
+                      readOnly={templateSelected}
+                      value={address}
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                      }}
+                      color="border-gray-500"
+                      className="w-full md:w-64 border-black mt-3"
+                      item={{
+                        label: screenSize ? undefined : "Address",
+                        name: "address",
+                        type: "text",
+                        placeholder: placeholder,
+                      }}
+                    />
+                  </div>
+                  {/* Account */}
+                  <div
+                    className={`m-auto w-full gap-4 items-center ${
+                      transferType === "internal" && coinSelected
+                        ? "md:flex"
+                        : "hidden"
+                    }`}
+                  >
+                    <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
+                      Account
+                    </label>
+                    <MyInput
+                      id="account_id"
+                      readOnly={templateSelected}
+                      value={account}
+                      onChange={(e) => {
+                        if (e.target.value.length >= 1)
+                          setAccount(e.target.value);
+                      }}
+                      color="border-gray-500"
+                      className="w-full md:w-64 border-black mt-3"
+                      item={{
+                        label: screenSize ? undefined : "Account",
+                        name: "account",
+                        type: "text",
+                        placeholder: "B000000",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    {/* Amount */}
+                    <div className="flex m-auto w-full md:gap-4 gap-2 items-end ">
+                      <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36">
+                        Amount
+                      </label>
+                      <MyInput
+                        color="border-gray-500"
+                        className="w-full md:w-48 border-black mt-3"
+                        value={amount}
+                        onChange={(e) => {
+                          let value = validateAmount(e.target.value);
+                          setAmount(value);
+                          if (value) {
+                            let currentAmount = parseFloat(value);
+                            if (!isAmountValid(currentAmount)) {
+                              setMsg({
+                                error: true,
+                                data: `The amount must be less than ${limits.minInOneTime} and greater than ${limits.maxInOneTime}`,
+                              });
+                            } else {
+                              setMsg({
+                                error: false,
+                                data: "",
+                              });
+                            }
+                          }
+                        }}
+                        item={{
+                          label: screenSize ? undefined : "Amount",
+                          name: "amount",
+                          type: "text",
+                          placeholder: "0",
+                        }}
+                      />
+                      <p className="w-24 min-w-20 text-center mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                        {coinSelected}
+                      </p>
+                    </div>
+
+                    {/* Total */}
+                    <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
+                      <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                        Total
+                      </label>
+                      <MyInput
+                        value={amount.length > 0 ? parseFloat(amount) + fee : 0}
+                        readOnly
+                        color="border-gray-500"
+                        className="w-full md:w-48 border-black mb-3 mt-3"
+                        item={{
+                          label: screenSize ? undefined : "Total",
+                          name: "amount",
+                          type: "text",
+                          placeholder: "$0",
+                        }}
+                      />
+                      <Select
+                        aria-label="none"
+                        classNames={{
+                          base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                          trigger: "h-8",
+                        }}
+                        size="sm"
+                        style={{ backgroundColor: "inherit" }}
+                        labelPlacement="outside-left"
+                        selectorIcon={
+                          <IoIosArrowDown color="var(--bg-primary-color)" />
+                        }
+                        placeholder="USD"
+                      >
+                        {fiatAccounts.map((account) => (
+                          <SelectItem key={account} value={account}>
+                            {account}
+                          </SelectItem>
+                        ))}
+                      </Select>
+                      <p className="w-24 min-w-20 text-center mb-[13px] md:mb-[1px] pt-[3px] h-[34px] bg-inherit border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md">
+                        {coinSelected}
+                      </p>
+                    </div>
                   </div>
                   {msg.error && (
                     <p
@@ -877,7 +901,7 @@ export default function Send(props) {
                       {msg.data}
                     </p>
                   )}
-                </div>
+                </>
               ) : (
                 ""
               )
