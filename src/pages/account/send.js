@@ -38,66 +38,7 @@ export default function Send(props) {
   const [coinSelected, setCoinSelected] = useState(null);
   const [networks, setNetworks] = useState([]);
   const [networkSelected, setNetworkSelected] = useState(null);
-
-  const templates = [
-    {
-      network: "TRON",
-      symbol: "USDT",
-      currencyName: "USDT",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
-      ],
-    },
-    {
-      network: "POLYGON",
-      symbol: "USDT",
-      currencyName: "USDT",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
-      ],
-    },
-    {
-      network: "TRON",
-      symbol: "TRX",
-      currencyName: "TRX",
-      accounts: [
-        { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
-        { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
-      ],
-    },
-    {
-      currencyName: "MATIC",
-      network: "POLYGON",
-      symbol: "MATIC",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
-        { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
-      ],
-    },
-    {
-      currencyName: "BABELCOINS",
-      network: "Account",
-      symbol: "",
-      accounts: [
-        { name: "Alaa", address: "B1" },
-        { name: "Alaa", address: "B2" },
-        { name: "Alaa", address: "B3" },
-        { name: "Alaa", address: "B4" },
-        { name: "Alaa", address: "B5" },
-      ],
-    },
-  ];
-
+  const [templates, setTemplates] = useState([]);
   const [templatesAccount, setTemplatesAccount] = useState([]);
   const [templateSelected, setTemplateSelected] = useState(null);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
@@ -230,6 +171,68 @@ export default function Send(props) {
 
   useEffect(() => {
     setMount(true);
+
+    //replace with real request
+    const templates = [
+      {
+        network: "TRON",
+        symbol: "USDT",
+        currencyName: "USDT",
+        accounts: [
+          { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
+          { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
+          { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
+          { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
+        ],
+      },
+      {
+        network: "POLYGON",
+        symbol: "USDT",
+        currencyName: "USDT",
+        accounts: [
+          { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+          { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
+          { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
+          { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
+        ],
+      },
+      {
+        network: "TRON",
+        symbol: "TRX",
+        currencyName: "TRX",
+        accounts: [
+          { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
+          { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
+          { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+          { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
+        ],
+      },
+      {
+        currencyName: "MATIC",
+        network: "POLYGON",
+        symbol: "MATIC",
+        accounts: [
+          { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
+          { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
+          { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
+          { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+        ],
+      },
+      {
+        currencyName: "BABELCOINS",
+        network: "Account",
+        symbol: "",
+        accounts: [
+          { name: "Alaa", address: "B1" },
+          { name: "Alaa", address: "B2" },
+          { name: "Alaa", address: "B3" },
+          { name: "Alaa", address: "B4" },
+          { name: "Alaa", address: "B5" },
+        ],
+      },
+    ];
+    setTemplates(templates);
+
     getBalanceCoins()
       .then((result) => {
         if (result) {
