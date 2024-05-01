@@ -87,7 +87,7 @@ export function SidebarItem({
   return (
     <li
       onClick={() => {
-        router.replace("/account/" + link.toLowerCase());
+        if (!active) router.replace("/account/" + link.toLowerCase());
       }}
       className={`
         relative flex items-center py-2 px-3 my-1
