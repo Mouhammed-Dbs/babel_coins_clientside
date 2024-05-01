@@ -17,8 +17,8 @@ import { BiSolidError } from "react-icons/bi";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import {
+  getBalanceCoins,
   getFeesByCoinNameAndNetwork,
-  getNetworksCurrencies,
   getTransferLimitsByCoinNameAndNetwork,
   transferMoney,
 } from "../../../public/global_functions/coins";
@@ -80,9 +80,10 @@ export default function Send(props) {
         return coin;
       }
     });
-    if (coin.length > 0) return coin[0].networks;
+    if (coin.length > 0) return coin[0].network.split(",");
     return [];
   };
+
   const getFeesAndLimits = (
     transferCurrencyType,
     transferType,
@@ -114,6 +115,7 @@ export default function Send(props) {
         setLoading(false);
       });
   };
+
   const isAmountValid = (currentAmount) => {
     if (
       currentAmount < limits.minInOneTime ||
@@ -145,7 +147,7 @@ export default function Send(props) {
 
   useEffect(() => {
     setMount(true);
-    getNetworksCurrencies()
+    getBalanceCoins()
       .then((result) => {
         if (result) {
           setCoins(result.data);
@@ -383,10 +385,7 @@ export default function Send(props) {
                       <div className="flex flex-col">
                         <span>{item.data.currencyName}</span>
                         <span className="text-default-500 text-tiny">
-                          {item.data.networks.join(" | ").slice(0, 20)}
-                          {item.data.networks.join(" | ").length >= 20
-                            ? "..."
-                            : ""}
+                          Balance: {item.data.validDepositeBalance}
                         </span>
                       </div>
                     </div>
@@ -411,7 +410,7 @@ export default function Send(props) {
                           {item["currencyName"]}
                         </span>
                         <span className="text-tiny text-default-400">
-                          {item["networks"].join(" | ")}
+                          {item.validDepositeBalance}
                         </span>
                       </div>
                     </div>
@@ -451,7 +450,7 @@ export default function Send(props) {
                 Network
               </label>
               <Select
-                isDisabled={loading}
+                isDisabled={loading || !coinSelected}
                 disallowEmptySelection={true}
                 items={networks}
                 selectedKeys={networkSelected ? [networkSelected] : []}
@@ -533,7 +532,7 @@ export default function Send(props) {
             {/* Address */}
             <div
               className={`m-auto w-full gap-4 items-center ${
-                transferType === "external" ? "flex " : "hidden"
+                transferType === "external" && coinSelected ? "flex " : "hidden"
               }`}
             >
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
@@ -557,7 +556,9 @@ export default function Send(props) {
             {/* Account md:flex */}
             <div
               className={`m-auto w-full gap-4 items-center ${
-                transferType === "internal" ? "md:flex" : "hidden"
+                transferType === "internal" && coinSelected
+                  ? "md:flex"
+                  : "hidden"
               }`}
             >
               <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
