@@ -183,7 +183,12 @@ export default function Home() {
         </div>
       </div>
       <div className="section2 h-fit dark:bg-slate-950/75 bg-slate-50/95 p-3 md:p-6 pt-20 md:py-28 pb-24">
-        <BGShapes fillColor="dark:bg-slate-950 bg-slate-50" />
+        <BGShapes
+          style={{ paddingTop: "0px" }}
+          showThree={true}
+          fillColor="dark:bg-slate-950 bg-slate-50"
+          className="w-[93%] h-fit"
+        />
         <div className="md:w-5/6 py-1 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 text-sm md:text-base lg:text-lg pl-4 dark:bg-slate-950/35 bg-slate-50/35 backdrop-blur-md rounded-md">
           <h6 className="">Name Coin</h6>
           <h6>Last Price</h6>

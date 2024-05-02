@@ -10,9 +10,9 @@ export default function Sidebar({ children }) {
   const router = useRouter();
   return (
     <aside className="h-screen uppercase z-20">
-      <nav className="h-full flex flex-col bg-white/55 dark:bg-black/55 border-r shadow-sm backdrop-blur-md">
+      <nav className="h-full flex flex-col bg-white/55 dark:bg-black/55 border-r border-default-200 shadow-sm backdrop-blur-md">
         <div
-          className="p-4 pb-2 flex justify-center items-center border-b-1"
+          className="p-4 pb-2 flex justify-center items-center border-default-200 border-b-1"
           style={{ height: "var(--navbar-height)" }}
         >
           <p

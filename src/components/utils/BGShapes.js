@@ -1,27 +1,37 @@
 import styles from "../../styles/Shape.module.css";
 
-export default function BGShapes({ className, fillColor }) {
+export default function BGShapes({
+  style,
+  className,
+  fillColor,
+  showThree = false,
+}) {
   return (
-    <div className={`absolute z-0 w-[93%] h-fit flex md:flex-col ${className}`}>
-      <div
-        className={`grid md:hidden gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px]`}
-      >
-        <Square color={"border-primary"} className={`m-auto`} />
-        <Triangle
-          color={"bg-secondary"}
-          fillColor={fillColor}
-          className={"m-auto"}
-        />
-        <Circle
-          fillColor={fillColor}
-          color={"bg-primary"}
-          className={`m-auto`}
-        />
+    <div
+      style={style}
+      className={`absolute z-0 flex md:flex-col pt-48 ${className}`}
+    >
+      {showThree && (
+        <div
+          className={`grid md:hidden gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px]`}
+        >
+          <Square color={"border-primary"} className={`m-auto`} />
+          <Triangle
+            color={"bg-secondary"}
+            fillColor={fillColor}
+            className={"m-auto"}
+          />
+          <Circle
+            fillColor={fillColor}
+            color={"bg-primary"}
+            className={`m-auto`}
+          />
 
-        <Square color={"border-secondary"} className={`m-auto`} />
-      </div>
+          <Square color={"border-secondary"} className={`m-auto`} />
+        </div>
+      )}
       <div
-        className={`mt-24 md:mt-0 grid gap-20 md:gap-0 md:grid-cols-3 items-center w-full h-[250px]`}
+        className={`mt-24 md:mt-0 grid gap-24 md:gap-0 md:grid-cols-3 items-center w-full h-[250px]`}
       >
         <Triangle
           color={"bg-primary"}
@@ -35,9 +45,7 @@ export default function BGShapes({ className, fillColor }) {
           className={`m-auto`}
         />
       </div>
-      <div
-        className={`grid gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px] ${className}`}
-      >
+      <div className={`grid gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px]`}>
         <Square color={"border-secondary"} className={`m-auto`} />
         <Circle
           fillColor={fillColor}

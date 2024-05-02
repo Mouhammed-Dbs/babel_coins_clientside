@@ -78,7 +78,7 @@ export default function MainLayout(props) {
       <main className="w-screen flex text-md fixed bg-slate-50 dark:bg-default-50">
         {!currentRoute.includes("account/trade") && (
           <BGShapes
-            className="pt-10"
+            className="w-full pt-28 h-full"
             fillColor="bg-slate-50 dark:bg-default-50"
           />
         )}
