@@ -64,7 +64,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p className="text-center my-5">2024 © Babel Coins</p>
+      <p className="text-center py-5">2024 © Babel Coins</p>
       {/* <div className="flex justify-self-center mb-6 pb-6 md:pb-0 order-1 md:order-none">
         <div className="w-full self-end">
           <div className="flex justify-between w-64">

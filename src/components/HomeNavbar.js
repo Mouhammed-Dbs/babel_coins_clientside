@@ -58,7 +58,7 @@ export default function HomeNavbare() {
 
   return (
     <Navbar
-      className="backdrop-blur-md bg-white/50 dark:bg-black/50"
+      className="backdrop-blur-md bg-opacity-65"
       isBlurred={false}
       onMenuOpenChange={setIsMenuOpen}
     >

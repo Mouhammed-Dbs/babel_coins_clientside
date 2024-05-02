@@ -14,13 +14,21 @@ import screenIs from "../screen.js";
 import axios from "axios";
 import MyLoading from "@/components/MyLoading.js";
 import { isUserLogged } from "../../public/global_functions/auth.js";
+import BGShapes from "@/components/utils/BGShapes.js";
 
 export default function Home() {
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
+  const [coins, setCoins] = useState([
+    { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
+    { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
+    { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
+    { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
+    { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
+  ]);
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
+
   const getCoins = useCallback(async () => {
     const myCoins = [
       "BTC",
@@ -86,6 +94,7 @@ export default function Home() {
         className={`h-screen text-black dark:text-white mt-24`}
       />
     );
+
   if (pageLoading)
     return (
       <MyLoading
@@ -97,8 +106,8 @@ export default function Home() {
 
   return (
     <div className="relative mx-auto">
-      <div className="section1 bg-neutral-200 dark:bg-default-50 w-full text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
-        <h1 className="font-bold text-xl md:text-2xl">
+      <div className="section1 bg-white/85 dark:bg-gray-950 w-full h-fit text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
+        <h1 className="font-bold text-xl md:text-2xl relative z-10">
           Send, Exchange or Accept fiat and Cryptocurrency
           <br />
           on your personal Account or Website.
@@ -139,7 +148,7 @@ export default function Home() {
         </div>
         <div className="mx-2 md:mx-8">
           <Swiper
-            className="my-10 h-52"
+            className="my-10 h-52 max-w-min"
             slidesPerView="auto"
             spaceBetween={10}
             loop={false}
@@ -166,28 +175,31 @@ export default function Home() {
           </Swiper>
         </div>
       </div>
-      <div className="section2 bg-neutral-100 dark:bg-slate-900 p-3 md:p-6 pt-20 md:pt-28 pb-24">
-        <div className="md:w-5/6 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 text-sm md:text-base lg:text-lg opacity-40 pl-4">
-          <h6>Name Coin</h6>
+      <div className="section2 h-fit dark:bg-slate-950/75 bg-slate-50/95 p-3 md:p-6 pt-20 md:py-28 pb-24">
+        <BGShapes fillColor="dark:bg-slate-950 bg-slate-50" />
+        <div className="md:w-5/6 py-1 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 text-sm md:text-base lg:text-lg pl-4 dark:bg-slate-950/35 bg-slate-50/35 backdrop-blur-md rounded-md">
+          <h6 className="">Name Coin</h6>
           <h6>Last Price</h6>
           <h6 className="hidden sm:block">24 Change</h6>
           <h6 className="hidden">Last Order</h6>
           <h6>7 days chart</h6>
         </div>
-        {coins.map((value, index) => (
-          <RowCard
-            key={value["name"]}
-            name={value["name"]}
-            symbol={value["symbol"]}
-            price={value["price"]}
-            change={value["change24d"]}
-          />
-        ))}
+        <ul className="flex flex-col gap-6 mt-3">
+          {coins.map((value) => (
+            <RowCard
+              key={value["name"]}
+              name={value["name"]}
+              symbol={value["symbol"]}
+              price={value["price"]}
+              change={value["change24d"]}
+            />
+          ))}
+        </ul>
       </div>
 
-      <div className="section3 flex items-center h-[550px] pt-20 pb-20 bg-primary dark:bg-slate-800">
+      <div className="section3 flex items-center h-[450px] bg-primary dark:bg-slate-900">
         {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
-        <div className="md:flex items-center h-3/4 rounded-none bg-white/15 py-3">
+        <div className="md:flex items-center h-[300px] rounded-none py-3 dark:bg-slate-950/55">
           <p className="md:w-1/2 pl-2 lg:pl-8 text-white md:text-left text-center my-3 md:my-0">
             Experience Seamless Crypto Mangment with <b>Babel Coins</b> Where
             Trust Meets Technology!
@@ -204,12 +216,12 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="section4 bg-neutral-100 dark:bg-slate-900 pb-12 px-4 md:px-10">
+      <div className="section4 bg-neutral-100 dark:bg-gray-950 pb-12 px-4 md:px-10">
         <h1 className="text-center text-3xl font-bold p-6 md:p-10">
           Why Trade on Babel Coins
         </h1>
         <div className="grid grid-rows-1 gap-3">
-          <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
+          <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
             <CardBody>
               <div className="flex justify-between">
                 <p className="text-xs md:text-base self-center">
@@ -226,7 +238,7 @@ export default function Home() {
             </CardBody>
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
+            <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
               <CardBody>
                 <div className="flex justify-between h-full">
                   <p className="w-1/2 text-xs md:text-base self-center">
@@ -245,7 +257,7 @@ export default function Home() {
                 </div>
               </CardBody>
             </Card>
-            <Card isBlurred className="dark:bg-slate-800 bg-neutral-200">
+            <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
               <CardBody>
                 <div className="flex justify-between h-full">
                   <p className="w-1/2 text-xs md:text-base self-center">
@@ -278,7 +290,7 @@ function Slide({ coinPair, symbol, price, change }) {
       shadow="sm"
       isBlurred
       isPressable
-      className={`bg-neutral-100/70 dark:bg-default-100/50 max-w-[140px] shadow-md`}
+      className={`bg-white/65 dark:bg-slate-900/55 max-w-[140px] shadow-md`}
     >
       <CardHeader className="flex gap-3">
         <Image
@@ -336,7 +348,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
   return (
     <Card
       shadow="md"
-      className="md:w-5/6 w-full dark:bg-slate-800 bg-neutral-100 bg-opacity-100 m-auto mt-3 hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
+      className="md:w-5/6 w-full border-1 border-default-200 bg-white/55 dark:bg-slate-900/55 backdrop-blur-md m-auto hover:shadow-[0_0px_3px_2px_rgba(255,179,15,0.3)] dark:hover:text-orange"
     >
       <CardBody>
         <div className="grid grid-cols-4 sm:grid-cols-5 justify-items-center gap-1 md:gap-4 text-sm md:text-base">

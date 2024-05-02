@@ -72,9 +72,9 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
   const router = useRouter();
   useEffect(() => {}, []);
   return (
-    <div className="relative w-64 h-min mt-2 mr-2 p-4 bg-white/55 dark:bg-default-100/55 text-center rounded-md shadow-lg backdrop-blur-sm">
-      <div className="absolute shadow-inner overflow-hidden bg-slate-50/55 dark:bg-default-50/55 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
-        <div className="absolute w-full h-1/2 top-1/2 bg-white/55 dark:bg-default-100/55"></div>
+    <div className="relative w-64 h-min mt-2 mr-2 p-4 border-1 dark:border-default-100 border-gray-200 bg-white/55 dark:bg-black/55 text-center rounded-md shadow-lg backdrop-blur-sm">
+      <div className="absolute shadow-inner overflow-hidden bg-slate-50/55 dark:bg-default-50/55 border-t-1 border-default-100 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
+        <div className="absolute w-full h-1/2 top-1/2 bg-white/55 dark:bg-black/15"></div>
       </div>
       <div className="absolute bg-white/55 dark:bg-default-100/15 rounded-full w-12 h-12 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <Image
@@ -101,7 +101,7 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
               query: { curr: currencyName },
             })
           }
-          className="text-primary text-xs mr-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"
+          className="text-primary dark:text-secondary text-xs mr-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
         >
           Deposit
         </Button>
@@ -112,7 +112,7 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
               query: { curr: currencyName },
             })
           }
-          className="text-primary text-xs ml-2 px-2 border-1 border-primary rounded-full h-7 hover:bg-primary hover:text-white"
+          className="text-primary dark:text-secondary text-xs ml-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
         >
           Withdrawal
         </Button>

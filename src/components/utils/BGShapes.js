@@ -1,50 +1,78 @@
 import styles from "../../styles/Shape.module.css";
 
-export default function BGShapes({ className }) {
+export default function BGShapes({ className, fillColor }) {
   return (
-    <div className={`absolute flex w-full h-full z-0 ${className}`}>
-      <Square className={`top-24 left-48`} />
-      <Triangle
-        style={{
-          transform: "rotate(25deg)",
-          marginLeft: "30px",
-          marginTop: "320px",
-        }}
-      />
-      <Circle color={"bg-primary"} className={`relative top-96 left-60`} />
-      <Square className={`top-[100px] left-[800px]`} />
-      <Circle
-        color={"bg-secondary"}
-        className={`relative top-[400px] left-[600px]`}
-      />
-      <Triangle
-        style={{
-          transform: "rotate(25deg)",
-          marginLeft: "250px",
-          marginTop: "170px",
-        }}
-      />
+    <div className={`absolute z-0 w-[93%] h-fit flex md:flex-col ${className}`}>
+      <div
+        className={`grid md:hidden gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px]`}
+      >
+        <Square color={"border-primary"} className={`m-auto`} />
+        <Triangle
+          color={"bg-secondary"}
+          fillColor={fillColor}
+          className={"m-auto"}
+        />
+        <Circle
+          fillColor={fillColor}
+          color={"bg-primary"}
+          className={`m-auto`}
+        />
+
+        <Square color={"border-secondary"} className={`m-auto`} />
+      </div>
+      <div
+        className={`mt-24 md:mt-0 grid gap-20 md:gap-0 md:grid-cols-3 items-center w-full h-[250px]`}
+      >
+        <Triangle
+          color={"bg-primary"}
+          fillColor={fillColor}
+          className={"m-auto"}
+        />
+        <Square color={"border-secondary"} className={`m-auto`} />
+        <Circle
+          fillColor={fillColor}
+          color={"bg-primary"}
+          className={`m-auto`}
+        />
+      </div>
+      <div
+        className={`grid gap-20 md:gap-0 md:grid-cols-4 w-full h-[250px] ${className}`}
+      >
+        <Square color={"border-secondary"} className={`m-auto`} />
+        <Circle
+          fillColor={fillColor}
+          color={"bg-primary"}
+          className={`m-auto`}
+        />
+        <Triangle
+          color={"bg-secondary"}
+          fillColor={fillColor}
+          className={"m-auto"}
+        />
+        <Square color={"border-primary"} className={`m-auto`} />
+      </div>
     </div>
   );
 }
 
-function Triangle({ style }) {
+function Triangle({ className, fillColor, color }) {
   return (
-    <div style={style}>
+    <div
+      className={`w-[40px] h-[40px] md:w-[95px] md:h-[95px] ${className}`}
+      style={{
+        transform: "rotate(25deg)",
+      }}
+    >
       <div
-        className={`relative bg-secondary ${styles.triangle}`}
+        className={`relative w-[45px] h-[45px] md:w-[95px] md:h-[95px] ${color} ${styles.triangle}`}
         style={{
           position: "fixed",
-          width: "95px",
-          height: "95px",
         }}
       ></div>
       <div
-        className={`bg-slate-50 dark:bg-default-50 ${styles.triangle}`}
+        className={`w-[40px] h-[40px] md:w-[90px] md:h-[90px] ${fillColor} ${styles.triangle}`}
         style={{
           position: "fixed",
-          width: "90px",
-          height: "90px",
           top: "4px",
           left: "2.5px",
         }}
@@ -53,21 +81,17 @@ function Triangle({ style }) {
   );
 }
 
-function Circle({ className, color }) {
+function Circle({ className, color, fillColor }) {
   return (
-    <div className={className}>
+    <div
+      className={`relative w-[70px] h-[70px] md:w-[156px] md:h-[156px] ${className}`}
+    >
       <div
-        className={`absolute ${color} ${styles.circle}`}
-        style={{
-          width: "156px",
-          height: "156px",
-        }}
+        className={`absolute w-[76px] h-[76px] md:w-[156px] md:h-[156px] rounded-full ${color}`}
       ></div>
       <div
-        className={`absolute bg-slate-50 dark:bg-default-50 ${styles.circle}`}
+        className={`absolute w-[70px] h-[70px] md:w-[150px] md:h-[150px] rounded-full ${fillColor}`}
         style={{
-          width: "150px",
-          height: "150px",
           marginTop: "3px",
           marginLeft: "3px",
         }}
@@ -76,6 +100,10 @@ function Circle({ className, color }) {
   );
 }
 
-function Square({ className }) {
-  return <div className={`relative ${styles.square} ${className}`}></div>;
+function Square({ className, color }) {
+  return (
+    <div
+      className={`relative border-3 rounded-lg md:rounded-3xl w-[70px] h-[70px] md:w-[150px] md:h-[150px] ${color} ${styles.square} ${className}`}
+    ></div>
+  );
 }

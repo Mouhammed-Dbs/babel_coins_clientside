@@ -1,20 +1,9 @@
-.circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
 .square {
   transform: rotate(25deg);
-  width: 150px;
-  height: 150px;
-  border: 3px solid var(--bg-primary-color);
-  border-radius: 20px;
 }
 
 .triangle {
   position: relative;
-  width: 90px;
-  height: 90px;
   border-top-right-radius: 30%;
   text-align: justify;
   transform: rotate(-60deg) skewX(-30deg) scale(1, 0.866);
