@@ -19,6 +19,7 @@ import BGShapes from "@/components/utils/BGShapes.js";
 export default function Home() {
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [coins, setCoins] = useState([
     { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
     { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
@@ -67,7 +68,9 @@ export default function Home() {
         .then((result) => {
           if (result.error) {
             setIsLogged(false);
+            setLoading(false);
           } else {
+            setLoading(false);
             setIsLogged(true);
           }
         })
@@ -112,40 +115,44 @@ export default function Home() {
           <br />
           on your personal Account or Website.
         </h1>
-        <div className="flex justify-center mt-6">
-          {!isLogged ? (
-            <div>
+        {!loading ? (
+          <div className="flex justify-center mt-6">
+            {!isLogged ? (
+              <div>
+                <Button
+                  onClick={() => {
+                    router.push("signup");
+                  }}
+                  className="bg-orange font-bold rounded-full text-white"
+                >
+                  <TbMoneybag />
+                  Create Account
+                </Button>
+                <Button
+                  onClick={() => {
+                    router.push("login");
+                  }}
+                  className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
+                >
+                  <MdLogin />
+                  Login
+                </Button>
+              </div>
+            ) : (
               <Button
                 onClick={() => {
-                  router.push("signup");
+                  router.push("account");
                 }}
                 className="bg-orange font-bold rounded-full text-white"
               >
-                <TbMoneybag />
-                Create Account
+                <LuWallet />
+                My Account
               </Button>
-              <Button
-                onClick={() => {
-                  router.push("login");
-                }}
-                className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
-              >
-                <MdLogin />
-                Login
-              </Button>
-            </div>
-          ) : (
-            <Button
-              onClick={() => {
-                router.push("account");
-              }}
-              className="bg-orange font-bold rounded-full text-white"
-            >
-              <LuWallet />
-              My Account
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        ) : (
+          <MyLoading />
+        )}
         <div className="mx-2 md:mx-8">
           <Swiper
             className="my-10 h-52 max-w-min"
