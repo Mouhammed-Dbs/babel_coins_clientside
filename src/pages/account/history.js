@@ -71,7 +71,7 @@ export default function History() {
     };
     setFilters(tempFilters);
     setLoading(true);
-    setData([]);
+    if (pageNumber === 1) setData([]);
     setCurrentSlidesCount(pageNumber);
     getOperationsCount(type, getFilteringString(tempFilters))
       .then((result) => {
@@ -85,7 +85,8 @@ export default function History() {
           )
             .then((result) => {
               console.log(result.data);
-              setData(result.data);
+              if (pageNumber === 1) setData(result.data);
+              else setData([...data, ...result.data]);
               setLoading(false);
             })
             .catch((err) => {
@@ -149,7 +150,7 @@ export default function History() {
               key={item}
               className={`p-1 px-1 md:px-2 mx-1 md:mx-2 text-gray-500 cursor-pointer text-sm md:text-base pt-2 ${
                 itemSelected === item
-                  ? "bg-white dark:text-primary dark:bg-gray-400 rounded-lg text-primary px-3"
+                  ? "bg-white dark:text-secondary dark:bg-gray-600 rounded-lg text-primary px-3"
                   : "dark:text-gray-300"
               }`}
               onClick={(e) => {
@@ -361,64 +362,61 @@ export default function History() {
             </div>
           )}
         </div>
-        {!loading ? (
-          data.length > 0 ? (
-            // Operations Table
-            <div className="mx-1 md:mx-4">
-              <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
-                <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
-                  DATE
-                </h3>
-                <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
-                <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
-                  PS
-                </h3>
-                <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
-                <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+
+        {data.length > 0 ? ( // Operations Table
+          <div className="mx-1 md:mx-4">
+            <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
+              <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
+                DATE
+              </h3>
+              <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
+              <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
+                PS
+              </h3>
+              <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
+              <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+            </div>
+            <ul className="w-full">
+              {data.map((item) => (
+                <ItemTransaction
+                  key={item._id}
+                  type={tab}
+                  date={
+                    tab === "DEBIT" ? item.dateOfTransfer : item.dateOfDeposit
+                  }
+                  amount={item.amount}
+                  ps={item.currencyName === "ETHER" ? "ETH" : item.currencyName}
+                  id={item._id}
+                  status={item.status}
+                />
+              ))}
+            </ul>
+            {loading && <MyLoading />}
+            {currentlSlidesCount < totalSlidesCount && (
+              <div
+                onClick={() => {
+                  if (currentlSlidesCount <= totalSlidesCount) {
+                    getData(
+                      tab === "DEBIT" ? "transfers" : "deposits",
+                      currentlSlidesCount + 1,
+                      PAGE_SIZE,
+                      filters
+                    );
+                    setCurrentSlidesCount(currentlSlidesCount + 1);
+                  }
+                }}
+                className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
+              >
+                <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
               </div>
-              <ul className="w-full">
-                {data.map((item) => (
-                  <ItemTransaction
-                    key={item._id}
-                    type={tab}
-                    date={
-                      tab === "DEBIT" ? item.dateOfTransfer : item.dateOfDeposit
-                    }
-                    amount={item.amount}
-                    ps={
-                      item.currencyName === "ETHER" ? "ETH" : item.currencyName
-                    }
-                    id={item._id}
-                    status={item.status}
-                  />
-                ))}
-              </ul>
-              {currentlSlidesCount < totalSlidesCount && (
-                <div
-                  onClick={() => {
-                    if (currentlSlidesCount <= totalSlidesCount) {
-                      getData(
-                        tab === "DEBIT" ? "transfers" : "deposits",
-                        currentlSlidesCount + 1,
-                        PAGE_SIZE,
-                        filters
-                      );
-                      setCurrentSlidesCount(currentlSlidesCount + 1);
-                    }
-                  }}
-                  className="w-full rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 my-3 flex place-content-center"
-                >
-                  <PiDotsThreeOutlineFill className="text-gray-400 h-6 w-8" />
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="flex justify-center">
-              <p className="text-sm py-5">No {tab.toLowerCase()} operations</p>
-            </div>
-          )
-        ) : (
+            )}
+          </div>
+        ) : loading ? (
           <MyLoading />
+        ) : (
+          <div className="flex justify-center">
+            <p className="text-sm py-5">No {tab.toLowerCase()} operations</p>
+          </div>
         )}
       </div>
     </div>
@@ -453,7 +451,7 @@ function ItemTransaction({ date, amount, ps, id, status, type }) {
         />
       </div>
       <div className="flex w-4/12">
-        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4">
+        <p className="w-full text-xs opacity-70 self-center px-1 md:px-4 break-all">
           {id}
         </p>
       </div>
