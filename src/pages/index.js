@@ -75,6 +75,7 @@ export default function Home() {
           }
         })
         .catch((err) => {
+          setLoading(false);
           setIsLogged(false);
         }),
       getCoins()
