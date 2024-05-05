@@ -148,7 +148,20 @@ export default function Send(props) {
     setAddress("");
   };
 
+  const showAddToTemplate = () => {
+    if (transferType === "external" && address.length === 0) return false;
+    if (transferType === "internal" && account.length === 1) return false;
+    if (templatesAccount.filter((item) => item.address === address).length > 0)
+      return false;
+    else if (
+      templatesAccount.filter((item) => item.address === account).length > 0
+    )
+      return false;
+    return true;
+  };
+
   const getTemplateByCurrencyNameAndNetwork = (
+    templates,
     transferType,
     currencyName = null,
     network = null
@@ -252,6 +265,14 @@ export default function Send(props) {
               let net = getNetworks(query["curr"], result.data);
               setNetworks(net);
               setNetworkSelected(net[0]);
+              setTemplatesAccount(
+                getTemplateByCurrencyNameAndNetwork(
+                  templates,
+                  "external",
+                  query["curr"],
+                  net[0]
+                )
+              );
               setPlaceholder(placeholdersAddresses[net[0]]);
               getFeesAndLimits("crypto", transferType, query["curr"], net[0]);
             } else {
@@ -445,6 +466,7 @@ export default function Send(props) {
                   setNetworkSelected(net[0]);
                   setTemplatesAccount(
                     getTemplateByCurrencyNameAndNetwork(
+                      templates,
                       transferType,
                       e.target.value,
                       net[0]
@@ -534,6 +556,7 @@ export default function Send(props) {
                   setNetworkSelected(e.target.value);
                   setTemplatesAccount(
                     getTemplateByCurrencyNameAndNetwork(
+                      templates,
                       transferType,
                       coinSelected,
                       e.target.value
@@ -579,6 +602,7 @@ export default function Send(props) {
                     onChange={() => {
                       setTemplatesAccount(
                         getTemplateByCurrencyNameAndNetwork(
+                          templates,
                           "external",
                           coinSelected,
                           networkSelected
@@ -604,7 +628,10 @@ export default function Send(props) {
                   <input
                     onChange={() => {
                       setTemplatesAccount(
-                        getTemplateByCurrencyNameAndNetwork("internal")
+                        getTemplateByCurrencyNameAndNetwork(
+                          templates,
+                          "internal"
+                        )
                       );
                       initForTemplate();
                       setTransferType("internal");
@@ -754,61 +781,75 @@ export default function Send(props) {
                       </Select>
                     </div>
                   )}
-                  {/* Address */}
-                  <div
-                    className={`m-auto w-full gap-4 items-center ${
-                      transferType === "external" && coinSelected
-                        ? "flex "
-                        : "hidden"
-                    }`}
-                  >
-                    <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                      Address
-                    </label>
-                    <MyInput
-                      readOnly={templateSelected}
-                      value={address}
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                      }}
-                      color="border-gray-500"
-                      className="w-full md:w-64 border-black mt-3"
-                      item={{
-                        label: screenSize ? undefined : "Address",
-                        name: "address",
-                        type: "text",
-                        placeholder: placeholder,
-                      }}
-                    />
-                  </div>
-                  {/* Account */}
-                  <div
-                    className={`m-auto w-full gap-4 items-center ${
-                      transferType === "internal" && coinSelected
-                        ? "md:flex"
-                        : "hidden"
-                    }`}
-                  >
-                    <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
-                      Account
-                    </label>
-                    <MyInput
-                      id="account_id"
-                      readOnly={templateSelected}
-                      value={account}
-                      onChange={(e) => {
-                        if (e.target.value.length >= 1)
-                          setAccount(e.target.value);
-                      }}
-                      color="border-gray-500"
-                      className="w-full md:w-64 border-black mt-3"
-                      item={{
-                        label: screenSize ? undefined : "Account",
-                        name: "account",
-                        type: "text",
-                        placeholder: "B000000",
-                      }}
-                    />
+                  <div className="flex flex-col">
+                    {/* Address */}
+                    <div
+                      className={`m-auto w-full gap-4 items-center ${
+                        transferType === "external" && coinSelected
+                          ? "flex "
+                          : "hidden"
+                      }`}
+                    >
+                      <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                        Address
+                      </label>
+                      <MyInput
+                        readOnly={templateSelected}
+                        value={address}
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                        }}
+                        color="border-gray-500"
+                        className="w-full md:w-64 border-black mt-3"
+                        item={{
+                          label: screenSize ? undefined : "Address",
+                          name: "address",
+                          type: "text",
+                          placeholder: placeholder,
+                        }}
+                      />
+                    </div>
+                    {/* Account */}
+                    <div
+                      className={`m-auto w-full gap-4 items-center ${
+                        transferType === "internal" && coinSelected
+                          ? "md:flex"
+                          : "hidden"
+                      }`}
+                    >
+                      <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
+                        Account
+                      </label>
+                      <MyInput
+                        id="account_id"
+                        readOnly={templateSelected}
+                        value={account}
+                        onChange={(e) => {
+                          if (e.target.value.length >= 1)
+                            setAccount(e.target.value);
+                        }}
+                        color="border-gray-500"
+                        className="w-full md:w-64 border-black mt-3"
+                        item={{
+                          label: screenSize ? undefined : "Account",
+                          name: "account",
+                          type: "text",
+                          placeholder: "B000000",
+                        }}
+                      />
+                    </div>
+                    {showAddToTemplate() && (
+                      <Link
+                        className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
+                        href="/account/settings?tab=templates"
+                      >
+                        Add
+                        {transferType === "external"
+                          ? " address "
+                          : " account "}
+                        to templates?
+                      </Link>
+                    )}
                   </div>
                   <div>
                     {/* Amount */}
