@@ -148,7 +148,7 @@ export default function Send(props) {
     setAddress("");
   };
 
-  const showAddToTemplate = () => {
+  const isAddressORAccountInTemplates = () => {
     if (transferType === "external" && address.length === 0) return false;
     if (transferType === "internal" && account.length === 1) return false;
     if (templatesAccount.filter((item) => item.address === address).length > 0)
@@ -838,7 +838,7 @@ export default function Send(props) {
                         }}
                       />
                     </div>
-                    {showAddToTemplate() && (
+                    {isAddressORAccountInTemplates() && (
                       <Link
                         className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
                         href="/account/settings?tab=templates&add-template=true"
