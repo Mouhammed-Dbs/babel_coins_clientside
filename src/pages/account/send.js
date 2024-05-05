@@ -841,7 +841,7 @@ export default function Send(props) {
                     {showAddToTemplate() && (
                       <Link
                         className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
-                        href="/account/settings?tab=templates"
+                        href="/account/settings?tab=templates&add-template=true"
                       >
                         Add
                         {transferType === "external"

@@ -1,9 +1,13 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 
 export default function Templates() {
+  const router = useRouter();
+  const { query } = router;
+  const [showAddTemplate, setShowAddTemplate] = useState(false);
   const [data, setData] = useState([
     {
       network: "TRON",
@@ -11,9 +15,9 @@ export default function Templates() {
       currencyName: "USDT",
       accounts: [
         { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
         { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCENpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
       ],
     },
     {
@@ -22,20 +26,20 @@ export default function Templates() {
       currencyName: "USDT",
       accounts: [
         { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENepkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
         { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCENpkFqjkACCNVMnrQDzEeonKqRG" },
+        { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
       ],
     },
     {
-      network: "Tron",
+      network: "TRON",
       symbol: "TRX",
       currencyName: "TRX",
       accounts: [
         { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpkFqjekACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
-        { name: "Monir", address: "TKHQbeDCENpkFqjkACCNVMnrQDzEonKqRG" },
+        { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
+        { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+        { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
       ],
     },
     {
@@ -43,10 +47,10 @@ export default function Templates() {
       network: "POLYGON",
       symbol: "MATIC",
       accounts: [
-        { name: "Ali", address: "TKHQbDCEwNpkFqYjkACMnrQDzEonKqRG" },
+        { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
         { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
         { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+        { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
       ],
     },
     {
@@ -62,6 +66,11 @@ export default function Templates() {
       ],
     },
   ]);
+
+  useEffect(() => {
+    if (query["add-template"]) setShowAddTemplate(true);
+  }, []);
+
   return (
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
@@ -72,16 +81,19 @@ export default function Templates() {
       </div>
 
       {/* Content */}
-      <div className="mt-10">
-        {data.map((item) => (
-          <TemplateItem
-            key={item.currencyName + "_" + item.network}
-            title={item.currencyName}
-            network={item.network}
-            accounts={item.accounts}
-            imgCoin={item.symbol}
-          />
-        ))}
+      <div>
+        {showAddTemplate && <div>here is add templates</div>}
+        <ul className="mt-10">
+          {data.map((item) => (
+            <TemplateItem
+              key={item.currencyName + "_" + item.network}
+              title={item.currencyName}
+              network={item.network}
+              accounts={item.accounts}
+              imgCoin={item.symbol}
+            />
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -90,7 +102,7 @@ export default function Templates() {
 function TemplateItem({ title, network, imgCoin, accounts }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
+    <li className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
       <div
         onClick={() => {
           setOpen(!open);
@@ -159,6 +171,6 @@ function TemplateItem({ title, network, imgCoin, accounts }) {
           ))}
         </ul>
       )}
-    </div>
+    </li>
   );
 }

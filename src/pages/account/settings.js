@@ -15,8 +15,9 @@ export default function Settings() {
   const { query } = router;
   const [tab, setTab] = useState("profile_tab");
   const [cardID, setCardID] = useState(false);
-  const [widthWindow, setWidthWindow] = useState("100%");
+  const [widthWindow, setWidthWindow] = useState(300);
   const [screenSize, setScreenSize] = useState(false);
+
   useEffect(() => {
     setScreenSize(screenIs("md"));
     setWidthWindow(window.innerWidth);
@@ -29,6 +30,7 @@ export default function Settings() {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
   useEffect(() => {
     if (query["tab"] === "security") setTab("security_tab");
     if (query["tab"] === "profile" || query["tab"] === undefined)
@@ -37,6 +39,7 @@ export default function Settings() {
     if (query["tab"] === "notification") setTab("notification_tab");
     if (query["tab"] === "templates") setTab("templates_tab");
   }, [query]);
+
   return (
     <div className="absolute container h-screen no-scrollbar overflow-y-scroll pb-[150px]">
       {/* Tabs */}
