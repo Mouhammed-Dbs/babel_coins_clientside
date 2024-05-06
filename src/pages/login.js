@@ -90,7 +90,7 @@ export default function Signup() {
             </h1>
             <a className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed">
               <FaLock className="mr-1" />
-              https://babel.com
+              https://babelcoins.com
             </a>
             <MyInput
               textColor="text-white"
