@@ -12,8 +12,11 @@ import {
 import { IoCloseSharp } from "react-icons/io5";
 import { getNetworksCurrencies } from "../../../public/global_functions/coins";
 import MyLoading from "../MyLoading";
+import MyInput from "../utils/MyInput";
+import screenIs from "@/screen";
 
 export default function Templates() {
+  const [screenSize, setScreenSize] = useState(false);
   const router = useRouter();
   const { query } = router;
   const [coins, setCoins] = useState([]);
@@ -22,6 +25,8 @@ export default function Templates() {
   const [coinSelected, setCoinSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAddTemplate, setShowAddTemplate] = useState(false);
+  const [address, setAddress] = useState("");
+  const [nameTemplate, setNameTemplate] = useState("");
   const [data, setData] = useState([
     {
       network: "TRON",
@@ -96,6 +101,16 @@ export default function Templates() {
       query: { tab: "template", "add-template": !showAddTemplate },
     });
   };
+  useEffect(() => {
+    setScreenSize(screenIs("md"));
+    const handleResize = () => {
+      setScreenSize(screenIs("md"));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenSize]);
 
   useEffect(() => {
     if (query["add-template"] === "true") {
@@ -103,7 +118,16 @@ export default function Templates() {
       getNetworksCurrencies()
         .then((result) => {
           if (!result.error) {
-            setCoins(result.data);
+            setCoins([
+              ...result.data,
+              {
+                _id: "babelcoins",
+                networks: [],
+                currencyName: "BABELCOINS",
+                symbol: "",
+                __v: 0,
+              },
+            ]);
             toggleAdd();
           }
           setLoading(false);
@@ -122,6 +146,7 @@ export default function Templates() {
       <div className="flex justify-between w-full border-b py-2">
         <h1 className="w-fit flex self-center font-bold">TEMPLATES</h1>
         <Button
+          isDisabled={loading}
           size="sm"
           className="w-24 md:w-28 border-2 border-primary rounded-lg text-primary text-sm backdrop-blur-md p-4"
           onClick={(e) => {
@@ -135,7 +160,16 @@ export default function Templates() {
               getNetworksCurrencies()
                 .then((result) => {
                   if (!result.error) {
-                    setCoins(result.data);
+                    setCoins([
+                      ...result.data,
+                      {
+                        _id: "babelcoins",
+                        networks: [],
+                        currencyName: "BABELCOINS",
+                        symbol: "",
+                        __v: 0,
+                      },
+                    ]);
                     toggleAdd();
                   }
                   setLoading(false);
@@ -159,16 +193,12 @@ export default function Templates() {
       <div>
         {!loading ? (
           showAddTemplate && (
-            <div className="m-5 bg-slate-100/55 dark:bg-gray-600/55 mx-5 p-2 rounded-md shadow-md py-4">
-              <div className="flex justify-between">
-                <h1 className="text-lg w-fit">Add Template</h1>
+            <div className="my-5 mx-1 md:mx-5 bg-slate-100/55 dark:bg-gray-600/55 p-2 rounded-md shadow-md py-4">
+              <div className="flex justify-between border-b">
+                <h1 className="text-lg w-fit pl-1">Add Template</h1>
                 <IoIosCloseCircleOutline
                   onClick={() => {
-                    setShowAddTemplate(false);
-                    router.replace({
-                      pathname: router.pathname,
-                      query: { tab: "template", "add-template": false },
-                    });
+                    toggleAdd();
                   }}
                   className="h-6 w-6 cursor-pointer"
                   size={10}
@@ -214,7 +244,11 @@ export default function Templates() {
                             alt={item.data.currencyName}
                             className="flex-shrink-0 h-6 w-6"
                             size="sm"
-                            src={`/images/coins/${item.data.symbol}.png`}
+                            src={
+                              item.data.currencyName !== "BABELCOINS"
+                                ? `/images/coins/${item.data.symbol}.png`
+                                : "/images/logo/png/babelcoins-logo-64.png"
+                            }
                           />
                           <div className="flex flex-col">
                             <span>{item.data.validDepositeBalance}</span>
@@ -237,7 +271,11 @@ export default function Templates() {
                             alt={item["currencyName"]}
                             className="flex-shrink-0 h-6 w-6"
                             size="sm"
-                            src={`/images/coins/${item["symbol"]}.png`}
+                            src={
+                              item.currencyName !== "BABELCOINS"
+                                ? `/images/coins/${item.symbol}.png`
+                                : "/images/logo/png/babelcoins-logo-64.png"
+                            }
                           />
                           <div className="flex flex-col">
                             <span className="text-small">
@@ -253,40 +291,98 @@ export default function Templates() {
                   </Select>
                 </div>
                 {/* Network */}
-                <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
-                  <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
-                    Network
-                  </label>
-                  <Select
-                    isDisabled={loading || !coinSelected}
-                    disallowEmptySelection={true}
-                    items={networks}
-                    selectedKeys={networkSelected ? [networkSelected] : []}
-                    onChange={(e) => {
-                      setNetworkSelected(e.target.value);
-                    }}
-                    aria-label="none"
-                    classNames={{
-                      base: "mt-1 md:mt-3 max-w-sm peer w-36 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                      trigger: "h-8",
-                    }}
-                    size="sm"
-                    style={{ backgroundColor: "inherit" }}
-                    labelPlacement="outside-left"
-                    selectorIcon={
-                      <IoIosArrowDown color="var(--bg-primary-color)" />
-                    }
-                    placeholder="network"
-                  >
-                    {networks.map((network) => (
-                      <SelectItem key={network} value={network}>
-                        {network}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                </div>
-                <div></div>
+                {coinSelected !== "BABELCOINS" && (
+                  <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
+                    <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
+                      Network
+                    </label>
+                    <Select
+                      isDisabled={loading || !coinSelected}
+                      disallowEmptySelection={true}
+                      items={networks}
+                      selectedKeys={networkSelected ? [networkSelected] : []}
+                      onChange={(e) => {
+                        setNetworkSelected(e.target.value);
+                      }}
+                      aria-label="none"
+                      classNames={{
+                        base: "mt-1 md:mt-3 max-w-sm peer w-36 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                        trigger: "h-8",
+                      }}
+                      size="sm"
+                      style={{ backgroundColor: "inherit" }}
+                      labelPlacement="outside-left"
+                      selectorIcon={
+                        <IoIosArrowDown color="var(--bg-primary-color)" />
+                      }
+                      placeholder="network"
+                    >
+                      {networks.map((network) => (
+                        <SelectItem key={network} value={network}>
+                          {network}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
+                )}
+                {coinSelected && (
+                  <div>
+                    {/* Name Template */}
+                    <div className={`m-auto w-full gap-4 items-center flex`}>
+                      <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                        Template Name
+                      </label>
+                      <MyInput
+                        value={nameTemplate}
+                        onChange={(e) => {
+                          setNameTemplate(e.target.value);
+                        }}
+                        color="border-gray-500"
+                        className="w-full md:w-64 border-black mt-3"
+                        item={{
+                          label: screenSize ? undefined : "Template Name",
+                          name: "name_template",
+                          type: "text",
+                          placeholder: "John",
+                        }}
+                      />
+                    </div>
+                    {/* Address OR Account */}
+                    <div className={`m-auto w-full gap-4 items-center flex`}>
+                      <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
+                        {coinSelected === "BABELCOINS" ? "Account" : "Address"}
+                      </label>
+                      <MyInput
+                        value={address}
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                        }}
+                        color="border-gray-500"
+                        className="w-full md:w-64 border-black mt-3"
+                        item={{
+                          label: screenSize
+                            ? undefined
+                            : coinSelected === "BABELCOINS"
+                            ? "Account"
+                            : "Address",
+                          name: "address_account",
+                          type: "text",
+                          placeholder:
+                            coinSelected === "BABELCOINS"
+                              ? "Type account name"
+                              : "Type address",
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
+              <Button
+                size="sm"
+                className="bg-orange text-white block m-auto mt-5 px-7 rounded-full"
+              >
+                ADD TEMPLATE
+              </Button>
             </div>
           )
         ) : (
