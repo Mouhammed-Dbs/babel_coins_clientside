@@ -1,4 +1,4 @@
-import { Button, Select, SelectItem } from "@nextui-org/react";
+import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -17,6 +17,7 @@ export default function Templates() {
   const router = useRouter();
   const { query } = router;
   const [coins, setCoins] = useState([]);
+  const [networks, setNetworks] = useState([]);
   const [networkSelected, setNetworkSelected] = useState(null);
   const [coinSelected, setCoinSelected] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -79,7 +80,15 @@ export default function Templates() {
       ],
     },
   ]);
-
+  const getNetworks = (coinSelected, coins) => {
+    let coin = coins.filter((coin) => {
+      if (coin.currencyName === coinSelected) {
+        return coin;
+      }
+    });
+    if (coin.length > 0) return coin[0].networks;
+    return [];
+  };
   const toggleAdd = async () => {
     setShowAddTemplate(!showAddTemplate);
     await router.replace({
@@ -94,7 +103,7 @@ export default function Templates() {
       getNetworksCurrencies()
         .then((result) => {
           if (!result.error) {
-            setCoins(data);
+            setCoins(result.data);
             toggleAdd();
           }
           setLoading(false);
@@ -118,7 +127,6 @@ export default function Templates() {
           onClick={(e) => {
             if (coins.length > 0 || showAddTemplate) {
               toggleAdd();
-              console.log("no request");
             } else {
               if (showAddTemplate) {
                 toggleAdd();
@@ -166,39 +174,118 @@ export default function Templates() {
                   size={10}
                 />
               </div>
-
-              <div className="mt-8">
-                <Select
-                  defaultSelectedKeys={["never_send"]}
-                  disallowEmptySelection={true}
-                  label="Send verification code:"
-                  style={{ backgroundColor: "inherit" }}
-                  size="sm"
-                  labelPlacement="outside"
-                  selectorIcon={
-                    <IoIosArrowDown color="var(--bg-primary-color)" />
-                  }
-                  classNames={{
-                    base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                    trigger: "h-7",
-                  }}
-                >
-                  <SelectItem key="never_send" value="never_send">
-                    Never send verification code
-                  </SelectItem>
-                  <SelectItem
-                    key="subnet_change_send"
-                    value="subnet_change_send"
+              <div className="mt-8 px-5">
+                {/* System */}
+                <div className="md:flex m-auto w-full gap-4 items-center">
+                  <label className="text-right text-sm md:text-base w-36">
+                    Choose system
+                  </label>
+                  <Select
+                    disallowEmptySelection={true}
+                    isDisabled={loading}
+                    selectedKeys={coinSelected ? [coinSelected] : []}
+                    onChange={async (e) => {
+                      setCoinSelected(e.target.value);
+                      let net = getNetworks(e.target.value, coins);
+                      setNetworks(net);
+                      setNetworkSelected(net[0]);
+                    }}
+                    aria-label="none"
+                    style={{ backgroundColor: "inherit" }}
+                    size="sm"
+                    items={coins}
+                    labelPlacement="outside"
+                    placeholder="CHOOSE SYSTEM"
+                    selectorIcon={
+                      <IoIosArrowDown color="var(--bg-primary-color)" />
+                    }
+                    classNames={{
+                      base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                      trigger: "h-6",
+                    }}
+                    renderValue={(items) => {
+                      return items.map((item) => (
+                        <div
+                          key={item.data.currencyName}
+                          className="flex items-center gap-2"
+                        >
+                          <Avatar
+                            ImgComponent="img"
+                            alt={item.data.currencyName}
+                            className="flex-shrink-0 h-6 w-6"
+                            size="sm"
+                            src={`/images/coins/${item.data.symbol}.png`}
+                          />
+                          <div className="flex flex-col">
+                            <span>{item.data.validDepositeBalance}</span>
+                            <span className="text-default-500 text-tiny">
+                              {item.data.currencyName}
+                            </span>
+                          </div>
+                        </div>
+                      ));
+                    }}
                   >
-                    Send when subnet change
-                  </SelectItem>
-                  <SelectItem key="ip_address_change" value="ip_address_change">
-                    Send when IP-address change
-                  </SelectItem>
-                  <SelectItem key="always_send" value="always_send">
-                    Always send code
-                  </SelectItem>
-                </Select>
+                    {(item) => (
+                      <SelectItem
+                        key={item["currencyName"]}
+                        textValue={item["currencyName"]}
+                      >
+                        <div className="flex gap-2 items-center">
+                          <Avatar
+                            ImgComponent="img"
+                            alt={item["currencyName"]}
+                            className="flex-shrink-0 h-6 w-6"
+                            size="sm"
+                            src={`/images/coins/${item["symbol"]}.png`}
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-small">
+                              {item.validDepositeBalance}
+                            </span>
+                            <span className="text-tiny text-default-400">
+                              {item["currencyName"]}
+                            </span>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    )}
+                  </Select>
+                </div>
+                {/* Network */}
+                <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
+                  <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
+                    Network
+                  </label>
+                  <Select
+                    isDisabled={loading || !coinSelected}
+                    disallowEmptySelection={true}
+                    items={networks}
+                    selectedKeys={networkSelected ? [networkSelected] : []}
+                    onChange={(e) => {
+                      setNetworkSelected(e.target.value);
+                    }}
+                    aria-label="none"
+                    classNames={{
+                      base: "mt-1 md:mt-3 max-w-sm peer w-36 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                      trigger: "h-8",
+                    }}
+                    size="sm"
+                    style={{ backgroundColor: "inherit" }}
+                    labelPlacement="outside-left"
+                    selectorIcon={
+                      <IoIosArrowDown color="var(--bg-primary-color)" />
+                    }
+                    placeholder="network"
+                  >
+                    {networks.map((network) => (
+                      <SelectItem key={network} value={network}>
+                        {network}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </div>
+                <div></div>
               </div>
             </div>
           )
