@@ -49,7 +49,18 @@ export default function Settings() {
       >
         <Tabs
           selectedKey={tab}
-          onSelectionChange={setTab}
+          onSelectionChange={async (v) => {
+            setTab(v);
+            await router.replace({
+              pathname: router.pathname,
+              query: query["add-template"]
+                ? {
+                    tab: v.split("_")[0],
+                    "add-template": query["add-template"],
+                  }
+                : { tab: v.split("_")[0] },
+            });
+          }}
           aria-label="Options"
           variant="underlined"
           classNames={{

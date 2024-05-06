@@ -1,12 +1,25 @@
+import { Button, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoIosCloseCircleOutline,
+  IoMdAdd,
+  IoMdClose,
+} from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
+import { getNetworksCurrencies } from "../../../public/global_functions/coins";
+import MyLoading from "../MyLoading";
 
 export default function Templates() {
   const router = useRouter();
   const { query } = router;
+  const [coins, setCoins] = useState([]);
+  const [networkSelected, setNetworkSelected] = useState(null);
+  const [coinSelected, setCoinSelected] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [showAddTemplate, setShowAddTemplate] = useState(false);
   const [data, setData] = useState([
     {
@@ -67,8 +80,29 @@ export default function Templates() {
     },
   ]);
 
+  const toggleAdd = async () => {
+    setShowAddTemplate(!showAddTemplate);
+    await router.replace({
+      pathname: router.pathname,
+      query: { tab: "template", "add-template": !showAddTemplate },
+    });
+  };
+
   useEffect(() => {
-    if (query["add-template"]) setShowAddTemplate(true);
+    if (query["add-template"] === "true") {
+      setLoading(true);
+      getNetworksCurrencies()
+        .then((result) => {
+          if (!result.error) {
+            setCoins(data);
+            toggleAdd();
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+    }
   }, []);
 
   return (
@@ -76,13 +110,101 @@ export default function Templates() {
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
     >
       {/* Title */}
-      <div className="w-full border-b">
-        <h1 className="text-sm mb-3 font-bold">TEMPLATES</h1>
+      <div className="flex justify-between w-full border-b py-2">
+        <h1 className="w-fit flex self-center font-bold">TEMPLATES</h1>
+        <Button
+          size="sm"
+          className="w-24 md:w-28 border-2 border-primary rounded-lg text-primary text-sm backdrop-blur-md p-4"
+          onClick={(e) => {
+            if (coins.length > 0 || showAddTemplate) {
+              toggleAdd();
+              console.log("no request");
+            } else {
+              if (showAddTemplate) {
+                toggleAdd();
+              }
+              setLoading(true);
+              getNetworksCurrencies()
+                .then((result) => {
+                  if (!result.error) {
+                    setCoins(result.data);
+                    toggleAdd();
+                  }
+                  setLoading(false);
+                })
+                .catch((err) => {
+                  setLoading(false);
+                });
+            }
+          }}
+        >
+          {showAddTemplate ? "HIDE" : "ADD"}
+          {showAddTemplate ? (
+            <IoMdClose className="h-5 w-5 cursor-pointer" size={10} />
+          ) : (
+            <IoMdAdd className="h-5 w-5 cursor-pointer" size={10} />
+          )}
+        </Button>
       </div>
 
       {/* Content */}
       <div>
-        {showAddTemplate && <div>here is add templates</div>}
+        {!loading ? (
+          showAddTemplate && (
+            <div className="m-5 bg-slate-100/55 dark:bg-gray-600/55 mx-5 p-2 rounded-md shadow-md py-4">
+              <div className="flex justify-between">
+                <h1 className="text-lg w-fit">Add Template</h1>
+                <IoIosCloseCircleOutline
+                  onClick={() => {
+                    setShowAddTemplate(false);
+                    router.replace({
+                      pathname: router.pathname,
+                      query: { tab: "template", "add-template": false },
+                    });
+                  }}
+                  className="h-6 w-6 cursor-pointer"
+                  size={10}
+                />
+              </div>
+
+              <div className="mt-8">
+                <Select
+                  defaultSelectedKeys={["never_send"]}
+                  disallowEmptySelection={true}
+                  label="Send verification code:"
+                  style={{ backgroundColor: "inherit" }}
+                  size="sm"
+                  labelPlacement="outside"
+                  selectorIcon={
+                    <IoIosArrowDown color="var(--bg-primary-color)" />
+                  }
+                  classNames={{
+                    base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                    trigger: "h-7",
+                  }}
+                >
+                  <SelectItem key="never_send" value="never_send">
+                    Never send verification code
+                  </SelectItem>
+                  <SelectItem
+                    key="subnet_change_send"
+                    value="subnet_change_send"
+                  >
+                    Send when subnet change
+                  </SelectItem>
+                  <SelectItem key="ip_address_change" value="ip_address_change">
+                    Send when IP-address change
+                  </SelectItem>
+                  <SelectItem key="always_send" value="always_send">
+                    Always send code
+                  </SelectItem>
+                </Select>
+              </div>
+            </div>
+          )
+        ) : (
+          <MyLoading />
+        )}
         <ul className="mt-10">
           {data.map((item) => (
             <TemplateItem
