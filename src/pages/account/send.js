@@ -864,6 +864,23 @@ export default function Send(props) {
                     </div>
                     {isAddressORAccountInTemplates(address, account) && (
                       <Link
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "currencyData",
+                            JSON.stringify({
+                              name:
+                                transferType === "external"
+                                  ? coinSelected
+                                  : "BABELCOINS",
+                              network:
+                                transferType === "external"
+                                  ? networkSelected
+                                  : [],
+                              address:
+                                transferType === "external" ? address : account,
+                            })
+                          );
+                        }}
                         className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
                         href="/account/settings?tab=templates&add-template=true"
                       >

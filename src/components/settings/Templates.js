@@ -94,6 +94,11 @@ export default function Templates() {
     if (coin.length > 0) return coin[0].networks;
     return [];
   };
+
+  const isAddTemplateValid = () => {
+    return coinSelected && networkSelected && nameTemplate && address;
+  };
+
   const toggleAdd = async () => {
     setShowAddTemplate(!showAddTemplate);
     await router.replace({
@@ -118,7 +123,7 @@ export default function Templates() {
       getNetworksCurrencies()
         .then((result) => {
           if (!result.error) {
-            setCoins([
+            const arr = [
               ...result.data,
               {
                 _id: "babelcoins",
@@ -127,7 +132,19 @@ export default function Templates() {
                 symbol: "",
                 __v: 0,
               },
-            ]);
+            ];
+            setCoins(arr);
+            if (sessionStorage.getItem("currencyData")) {
+              const currencyData = JSON.parse(
+                sessionStorage.getItem("currencyData")
+              );
+              let net = getNetworks(currencyData.name, arr);
+              setNetworks(net);
+              setCoinSelected(currencyData.name);
+              setNetworkSelected(currencyData.network);
+              setAddress(currencyData.address);
+              sessionStorage.removeItem("currencyData");
+            }
             toggleAdd();
           }
           setLoading(false);
@@ -251,10 +268,7 @@ export default function Templates() {
                             }
                           />
                           <div className="flex flex-col">
-                            <span>{item.data.validDepositeBalance}</span>
-                            <span className="text-default-500 text-tiny">
-                              {item.data.currencyName}
-                            </span>
+                            <span>{item.data.currencyName}</span>
                           </div>
                         </div>
                       ));
@@ -278,12 +292,7 @@ export default function Templates() {
                             }
                           />
                           <div className="flex flex-col">
-                            <span className="text-small">
-                              {item.validDepositeBalance}
-                            </span>
-                            <span className="text-tiny text-default-400">
-                              {item["currencyName"]}
-                            </span>
+                            <span>{item["currencyName"]}</span>
                           </div>
                         </div>
                       </SelectItem>
@@ -378,6 +387,7 @@ export default function Templates() {
                 )}
               </div>
               <Button
+                isDisabled={!isAddTemplateValid()}
                 size="sm"
                 className="bg-orange text-white block m-auto mt-5 px-7 rounded-full"
               >
