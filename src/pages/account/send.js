@@ -40,6 +40,7 @@ export default function Send(props) {
   const [networkSelected, setNetworkSelected] = useState(null);
   const [templates, setTemplates] = useState([]);
   const [templatesAccount, setTemplatesAccount] = useState([]);
+  const [templatesAddress, setTemplatesAddress] = useState([]);
   const [templateSelected, setTemplateSelected] = useState(null);
   const [fiatAccounts, setFiateAccounts] = useState(["USD", "EUR", "RUB"]);
   const [screenSize, setScreenSize] = useState(false);
@@ -151,7 +152,7 @@ export default function Send(props) {
   const isAddressORAccountInTemplates = (address, account) => {
     if (transferType === "external" && address.length === 0) return false;
     if (transferType === "internal" && account.length === 1) return false;
-    if (templatesAccount.filter((item) => item.address === address).length > 0)
+    if (templatesAddress.filter((item) => item.address === address).length > 0)
       return false;
     else if (
       templatesAccount.filter((item) => item.address === account).length > 0
@@ -252,7 +253,6 @@ export default function Send(props) {
       },
     ];
     setTemplates(templates);
-
     getBalanceCoins()
       .then((result) => {
         if (result) {
@@ -265,7 +265,12 @@ export default function Send(props) {
               let net = getNetworks(query["curr"], result.data);
               setNetworks(net);
               setNetworkSelected(net[0]);
+              setPlaceholder(placeholdersAddresses[net[0]]);
+              getFeesAndLimits("crypto", transferType, query["curr"], net[0]);
               setTemplatesAccount(
+                getTemplateByCurrencyNameAndNetwork(templates, "internal")
+              );
+              setTemplatesAddress(
                 getTemplateByCurrencyNameAndNetwork(
                   templates,
                   "external",
@@ -273,8 +278,6 @@ export default function Send(props) {
                   net[0]
                 )
               );
-              setPlaceholder(placeholdersAddresses[net[0]]);
-              getFeesAndLimits("crypto", transferType, query["curr"], net[0]);
             } else {
               router.replace({
                 pathname: router.pathname,
@@ -289,6 +292,10 @@ export default function Send(props) {
         setPageLoading(false);
       });
   }, [query, router]);
+
+  useEffect(() => {
+    if (transferType === "external") initForTemplate();
+  }, [networkSelected]);
 
   if (!mounted)
     return (
@@ -472,7 +479,6 @@ export default function Send(props) {
                       net[0]
                     )
                   );
-                  initForTemplate();
                   setLoading(true);
                   await router.replace({
                     pathname: router.pathname,
@@ -562,7 +568,7 @@ export default function Send(props) {
                       e.target.value
                     )
                   );
-                  initForTemplate();
+
                   getFeesAndLimits(
                     "crypto",
                     transferType,
@@ -600,7 +606,7 @@ export default function Send(props) {
                   <input
                     defaultChecked
                     onChange={() => {
-                      setTemplatesAccount(
+                      setTemplatesAddress(
                         getTemplateByCurrencyNameAndNetwork(
                           templates,
                           "external",
@@ -708,7 +714,10 @@ export default function Send(props) {
               query["curr"] ? (
                 <>
                   {/* Templates */}
-                  {templatesAccount.length > 0 && (
+                  {((templatesAccount.length > 0 &&
+                    transferType === "internal") ||
+                    (templatesAddress.length > 0 &&
+                      transferType === "external")) && (
                     <div
                       className={`${
                         coinSelected && networkSelected ? "md:flex" : "hidden"
@@ -738,7 +747,11 @@ export default function Send(props) {
                         isDisabled={
                           loading || !(coinSelected && networkSelected)
                         }
-                        items={templatesAccount}
+                        items={
+                          transferType === "external"
+                            ? templatesAddress
+                            : templatesAccount
+                        }
                         style={{ backgroundColor: "inherit" }}
                         aria-label="none"
                         size="sm"

@@ -155,6 +155,9 @@ export default function Templates() {
     }
   }, []);
 
+  useEffect(() => {
+    setAddress("");
+  }, [networkSelected]);
   return (
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
