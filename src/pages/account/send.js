@@ -148,7 +148,7 @@ export default function Send(props) {
     setAddress("");
   };
 
-  const isAddressORAccountInTemplates = () => {
+  const isAddressORAccountInTemplates = (address, account) => {
     if (transferType === "external" && address.length === 0) return false;
     if (transferType === "internal" && account.length === 1) return false;
     if (templatesAccount.filter((item) => item.address === address).length > 0)
@@ -490,7 +490,7 @@ export default function Send(props) {
                 }
                 classNames={{
                   base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                  trigger: "h-6",
+                  trigger: "h-8",
                 }}
                 renderValue={(items) => {
                   return items.map((item) => (
@@ -748,8 +748,8 @@ export default function Send(props) {
                           <IoIosArrowDown color="var(--bg-primary-color)" />
                         }
                         classNames={{
-                          base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
-                          trigger: "h-7",
+                          base: "p-[2px] peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                          trigger: "h-8",
                         }}
                         renderValue={(items) => {
                           return items.map((item) => {
@@ -774,7 +774,9 @@ export default function Send(props) {
                           >
                             <div className="flex flex-col">
                               <span>{item.name}</span>
-                              <span>{item.address}</span>
+                              <span className="text-default-500 text-tiny">
+                                {item.address}
+                              </span>
                             </div>
                           </SelectItem>
                         )}
@@ -794,10 +796,20 @@ export default function Send(props) {
                         Address
                       </label>
                       <MyInput
-                        readOnly={templateSelected}
+                        // readOnly={templateSelected}
                         value={address}
                         onChange={(e) => {
                           setAddress(e.target.value);
+                          if (
+                            !isAddressORAccountInTemplates(
+                              e.target.value,
+                              account
+                            )
+                          ) {
+                            setTemplateSelected(e.target.value);
+                          } else {
+                            setTemplateSelected(null);
+                          }
                         }}
                         color="border-gray-500"
                         className="w-full md:w-64 border-black mt-3"
@@ -822,11 +834,23 @@ export default function Send(props) {
                       </label>
                       <MyInput
                         id="account_id"
-                        readOnly={templateSelected}
+                        // readOnly={templateSelected}
                         value={account}
                         onChange={(e) => {
-                          if (e.target.value.length >= 1)
+                          if (e.target.value.length >= 1) {
                             setAccount(e.target.value);
+                            if (
+                              !isAddressORAccountInTemplates(
+                                address,
+                                e.target.value
+                              ) &&
+                              e.target.value.length > 1
+                            ) {
+                              setTemplateSelected(e.target.value);
+                            } else {
+                              setTemplateSelected(null);
+                            }
+                          }
                         }}
                         color="border-gray-500"
                         className="w-full md:w-64 border-black mt-3"
@@ -838,7 +862,7 @@ export default function Send(props) {
                         }}
                       />
                     </div>
-                    {isAddressORAccountInTemplates() && (
+                    {isAddressORAccountInTemplates(address, account) && (
                       <Link
                         className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
                         href="/account/settings?tab=templates&add-template=true"

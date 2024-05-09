@@ -200,7 +200,7 @@ export default function Templates() {
                   onClick={() => {
                     toggleAdd();
                   }}
-                  className="h-6 w-6 cursor-pointer"
+                  className="h-6 w-6 cursor-pointer mr-1 md:mr-2"
                   size={10}
                 />
               </div>
