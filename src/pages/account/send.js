@@ -192,7 +192,6 @@ export default function Send(props) {
 
   useEffect(() => {
     setMount(true);
-
     //replace with real request
     const templates = [
       {
@@ -211,10 +210,13 @@ export default function Send(props) {
         symbol: "USDT",
         currencyName: "USDT",
         accounts: [
-          { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
-          { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
-          { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
-          { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
+          { name: "Ali", address: "PUSDTKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+          { name: "Ahmad", address: "PUSDTKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
+          {
+            name: "Mouhammed",
+            address: "PUSDTKHQbDCeENpkFqYjkACNVMrQDzEonKqRG",
+          },
+          { name: "Monir", address: "PUSDTKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
         ],
       },
       {
@@ -253,6 +255,7 @@ export default function Send(props) {
       },
     ];
     setTemplates(templates);
+
     getBalanceCoins()
       .then((result) => {
         if (result) {
@@ -292,10 +295,6 @@ export default function Send(props) {
         setPageLoading(false);
       });
   }, [query, router]);
-
-  useEffect(() => {
-    if (transferType === "external") initForTemplate();
-  }, [networkSelected]);
 
   if (!mounted)
     return (
@@ -471,14 +470,13 @@ export default function Send(props) {
                   let net = getNetworks(e.target.value, coins);
                   setNetworks(net);
                   setNetworkSelected(net[0]);
-                  setTemplatesAccount(
-                    getTemplateByCurrencyNameAndNetwork(
-                      templates,
-                      transferType,
-                      e.target.value,
-                      net[0]
-                    )
+                  setTemplatesAddress(
+                    templates,
+                    transferType,
+                    e.target.value,
+                    net[0]
                   );
+                  initForTemplate();
                   setLoading(true);
                   await router.replace({
                     pathname: router.pathname,
@@ -560,7 +558,7 @@ export default function Send(props) {
                 onChange={(e) => {
                   setPlaceholder(placeholdersAddresses[e.target.value]);
                   setNetworkSelected(e.target.value);
-                  setTemplatesAccount(
+                  setTemplatesAddress(
                     getTemplateByCurrencyNameAndNetwork(
                       templates,
                       transferType,
@@ -568,7 +566,7 @@ export default function Send(props) {
                       e.target.value
                     )
                   );
-
+                  initForTemplate();
                   getFeesAndLimits(
                     "crypto",
                     transferType,
