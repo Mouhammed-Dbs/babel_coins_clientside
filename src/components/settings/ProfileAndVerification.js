@@ -73,7 +73,7 @@ export default function ProfileAndVerification() {
                 labelPlacement="outside"
                 size="sm"
                 style={{ backgroundColor: "inherit" }}
-                classNames="max-w-xs peer w-full self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
+                className="max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
                 selectorIcon={<IoIosArrowDown />}
               >
                 {typeAccounts.map((account) => (
