@@ -15,6 +15,7 @@
     "@nextui-org/theme": "^2.1.17",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.7",
+    "countries-list": "^3.1.0",
     "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "next-themes": "^0.2.1",

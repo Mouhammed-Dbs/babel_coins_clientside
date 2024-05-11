@@ -9,6 +9,7 @@ export default function Canva(props) {
       const w = element.width;
       const h = element.height;
       const ctx = element.getContext("2d");
+      ctx.clearRect(0, 0, w, h);
       ctx.lineWidth = 3;
       // ctx.lineJoin= 'round';
       ctx.strokeStyle = props.color;

@@ -6,7 +6,7 @@ import Templates from "@/components/settings/Templates";
 import screenIs from "@/screen";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const CardIDContext = createContext();
 export { CardIDContext };

@@ -1,4 +1,4 @@
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
 import { GrFormNextLink } from "react-icons/gr";
@@ -12,7 +12,7 @@ import {
   registerUser,
   updateUserInfo,
 } from "../../public/global_functions/auth";
-
+import { countries } from "countries-list";
 import MyMessage from "@/components/utils/MyMessage";
 import {
   validateCode,
@@ -21,11 +21,12 @@ import {
   validatePassword,
   validateSecretCode,
 } from "../../public/global_functions/validation";
+import { IoIosArrowDown } from "react-icons/io";
 export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showSteps, setShowSteps] = useState(0);
+  const [showSteps, setShowSteps] = useState(3);
   const [inputEmail, setInputEmail] = useState("");
   const [inputCode, setInputCode] = useState("");
   const [seconds, setSeconds] = useState(30);
@@ -45,6 +46,8 @@ export default function Signup() {
     msg: "",
     error: false,
   });
+  const [myCountries, setMyCountries] = useState(Object.entries(countries));
+  const [selectedCountry, setSelectedCountry] = useState("SY");
 
   const reqCode = async () => {
     setLoading(true);
@@ -472,18 +475,40 @@ export default function Signup() {
                   label: "Last name",
                 }}
               />
-              <MyInput
-                textColor="text-white"
-                value="Syria"
-                readOnly
-                className={"w-64 mt-3"}
-                item={{
-                  name: "country",
-                  type: "text",
-                  placeholder: "Albania",
-                  label: "Country",
-                }}
-              />
+              <div className="mt-2">
+                <label className="text-sm pl-1">Country</label>
+                <Select
+                  onChange={(e) => {
+                    setSelectedCountry(e.target.value);
+                  }}
+                  disallowEmptySelection={true}
+                  selectedKeys={[selectedCountry]}
+                  style={{ backgroundColor: "inherit" }}
+                  label=""
+                  placeholder="Select a country"
+                  labelPlacement="outside"
+                  aria-label="none"
+                  size="sm"
+                  className="max-w-xs peer w-full self-center rounded-lg border-2 border-default-300 dark:border-default-600/70 border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
+                  selectorIcon={<IoIosArrowDown />}
+                  items={myCountries}
+                  renderValue={(items) => {
+                    return items.map((item) => (
+                      <div key={item.data[0]}>
+                        <span className="text-white">{item.data[1].name}</span>
+                      </div>
+                    ));
+                  }}
+                >
+                  {([code, country]) => (
+                    <SelectItem key={code} textValue={country.name}>
+                      <div>
+                        <span>{country.name}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
+              </div>
               <Button
                 type="submit"
                 isDisabled={

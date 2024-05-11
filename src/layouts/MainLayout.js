@@ -8,7 +8,7 @@ import { RiExchangeFundsLine } from "react-icons/ri";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import CallAlert from "@/components/utils/alerts/CallAlert";
 import PhoneVerificationAlert from "@/components/utils/alerts/PhoneVerificationAlert";
 import AccessLockedAlert from "@/components/utils/alerts/AccessLockedAlert";
@@ -19,7 +19,8 @@ import { FaMoon } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import BGShapes from "@/components/utils/BGShapes";
-
+const UserContext = createContext();
+export { UserContext };
 export default function MainLayout(props) {
   const router = useRouter();
   const currentRoute = router.asPath.slice(1);
@@ -39,7 +40,6 @@ export default function MainLayout(props) {
   }, []);
 
   useEffect(() => {
-    setMounted(true);
     setPageLoading(false);
     isUserLogged()
       .then((result) => {
@@ -49,6 +49,7 @@ export default function MainLayout(props) {
           setUserInfo(result.data);
           localStorage.setItem("babel-coins-user-id", result.data._id);
           setPageLoading(false);
+          setMounted(true);
         }
       })
       .catch(async (err) => {
@@ -170,7 +171,12 @@ export default function MainLayout(props) {
         </Sidebar>
         <div className="w-screen z-10">
           <Navbar accountName={userInfo.accountName} />
-          <div className="px-4 md:px-0 w-[92%] pt-2">{props.children}</div>
+
+          <div className="px-4 md:px-0 w-[92%] pt-2">
+            <UserContext.Provider value={{ userInfo, setUserInfo }}>
+              {props.children}
+            </UserContext.Provider>
+          </div>
         </div>
         {/* <CallAlert onSubmit={() => console.log("submit")} isShow={true} /> */}
         {/* <PhoneVerificationAlert isShow={true} /> */}

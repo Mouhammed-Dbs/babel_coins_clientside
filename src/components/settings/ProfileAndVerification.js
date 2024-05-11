@@ -6,13 +6,16 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useContext, useState } from "react";
 import { CardIDContext } from "@/pages/account/settings";
+import { UserContext } from "@/layouts/MainLayout";
+import { countries } from "countries-list";
 
 export default function ProfileAndVerification() {
   const [verificationSlide, setVerificationSlide] = useState(0);
   const [verificationMes, setVerificationMes] = useState(false);
   const { cardID, setCardID } = useContext(CardIDContext);
   const [typeAccounts, setTypeAccounts] = useState(["Personal"]);
-  const [countries, setCountries] = useState(["Syria", "United State"]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const { userInfo, setUserInfo } = useContext(UserContext);
   return (
     <>
       {/* Card Vervication Email and Number */}
@@ -85,6 +88,7 @@ export default function ProfileAndVerification() {
             </div>
             <div className="flex md:gap-4 gap-3 mt-3">
               <MyInput
+                defaultValue={userInfo.firstName}
                 color="border-gray-500"
                 className="w-28 md:w-64 border-black mb-3"
                 item={{
@@ -95,6 +99,7 @@ export default function ProfileAndVerification() {
                 }}
               />
               <MyInput
+                defaultValue={userInfo.lastName}
                 color="border-gray-500"
                 className="w-28 md:w-64 border-black mb-3"
                 item={{
@@ -139,6 +144,10 @@ export default function ProfileAndVerification() {
             </div>
             <div>
               <Select
+                onChange={(e) => {
+                  setSelectedCountry(e.target.value);
+                }}
+                value={selectedCountry}
                 style={{ backgroundColor: "inherit" }}
                 label="Country"
                 placeholder="Select a country"
@@ -147,9 +156,9 @@ export default function ProfileAndVerification() {
                 className="max-w-xs peer w-full self-center rounded-lg border-2 border-black dark:border-slate-400 border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300"
                 selectorIcon={<IoIosArrowDown />}
               >
-                {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
+                {Object.entries(countries).map(([code, country]) => (
+                  <SelectItem key={code} value={code}>
+                    {country.name}
                   </SelectItem>
                 ))}
               </Select>
