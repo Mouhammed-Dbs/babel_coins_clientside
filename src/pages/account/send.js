@@ -28,6 +28,7 @@ import { CopyButton } from "@/components/utils/CopyButton";
 import { FaInfoCircle } from "react-icons/fa";
 import Link from "next/link";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
+import { getAllTemplates } from "../../../public/global_functions/template";
 
 export default function Send(props) {
   const router = useRouter();
@@ -193,103 +194,117 @@ export default function Send(props) {
   useEffect(() => {
     setMount(true);
     //replace with real request
-    const templates = [
-      {
-        network: "TRON",
-        symbol: "USDT",
-        currencyName: "USDT",
-        accounts: [
-          { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
-          { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
-          { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
-          { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
-        ],
-      },
-      {
-        network: "POLYGON",
-        symbol: "USDT",
-        currencyName: "USDT",
-        accounts: [
-          { name: "Ali", address: "PUSDTKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
-          { name: "Ahmad", address: "PUSDTKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
-          {
-            name: "Mouhammed",
-            address: "PUSDTKHQbDCeENpkFqYjkACNVMrQDzEonKqRG",
-          },
-          { name: "Monir", address: "PUSDTKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
-        ],
-      },
-      {
-        network: "TRON",
-        symbol: "TRX",
-        currencyName: "TRX",
-        accounts: [
-          { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
-          { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
-          { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
-          { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
-        ],
-      },
-      {
-        currencyName: "MATIC",
-        network: "POLYGON",
-        symbol: "MATIC",
-        accounts: [
-          { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
-          { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
-          { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
-          { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
-        ],
-      },
-      {
-        currencyName: "BABELCOINS",
-        network: "Account",
-        symbol: "",
-        accounts: [
-          { name: "Alaa", address: "B1" },
-          { name: "Alaa", address: "B2" },
-          { name: "Alaa", address: "B3" },
-          { name: "Alaa", address: "B4" },
-          { name: "Alaa", address: "B5" },
-        ],
-      },
-    ];
-    setTemplates(templates);
-
-    getBalanceCoins()
-      .then((result) => {
-        if (result) {
-          setCoins(result.data);
-          if (query["curr"]) {
-            if (
-              result.data.map((c) => c.currencyName).includes(query["curr"])
-            ) {
-              setCoinSelected(query["curr"]);
-              let net = getNetworks(query["curr"], result.data);
-              setNetworks(net);
-              setNetworkSelected(net[0]);
-              setPlaceholder(placeholdersAddresses[net[0]]);
-              getFeesAndLimits("crypto", transferType, query["curr"], net[0]);
-              setTemplatesAccount(
-                getTemplateByCurrencyNameAndNetwork(templates, "internal")
-              );
-              setTemplatesAddress(
-                getTemplateByCurrencyNameAndNetwork(
-                  templates,
-                  "external",
-                  query["curr"],
-                  net[0]
-                )
-              );
-            } else {
-              router.replace({
-                pathname: router.pathname,
-                query: { curr: "USDT" },
-              });
+    // const templates = [
+    //   {
+    //     network: "TRON",
+    //     symbol: "USDT",
+    //     currencyName: "USDT",
+    //     accounts: [
+    //       { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
+    //       { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
+    //       { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
+    //       { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
+    //     ],
+    //   },
+    //   {
+    //     network: "POLYGON",
+    //     symbol: "USDT",
+    //     currencyName: "USDT",
+    //     accounts: [
+    //       { name: "Ali", address: "PUSDTKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+    //       { name: "Ahmad", address: "PUSDTKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
+    //       {
+    //         name: "Mouhammed",
+    //         address: "PUSDTKHQbDCeENpkFqYjkACNVMrQDzEonKqRG",
+    //       },
+    //       { name: "Monir", address: "PUSDTKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
+    //     ],
+    //   },
+    //   {
+    //     network: "TRON",
+    //     symbol: "TRX",
+    //     currencyName: "TRX",
+    //     accounts: [
+    //       { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
+    //       { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
+    //       { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+    //       { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
+    //     ],
+    //   },
+    //   {
+    //     currencyName: "MATIC",
+    //     network: "POLYGON",
+    //     symbol: "MATIC",
+    //     accounts: [
+    //       { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
+    //       { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
+    //       { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
+    //       { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+    //     ],
+    //   },
+    //   {
+    //     currencyName: "BABELCOINS",
+    //     network: "Account",
+    //     symbol: "",
+    //     accounts: [
+    //       { name: "Alaa", address: "B1" },
+    //       { name: "Alaa", address: "B2" },
+    //       { name: "Alaa", address: "B3" },
+    //       { name: "Alaa", address: "B4" },
+    //       { name: "Alaa", address: "B5" },
+    //     ],
+    //   },
+    // ];
+    // setTemplates(templates);
+    getAllTemplates()
+      .then((resTemplates) => {
+        setTemplates(resTemplates.data);
+        getBalanceCoins()
+          .then((result) => {
+            if (result) {
+              setCoins(result.data);
+              if (query["curr"]) {
+                if (
+                  result.data.map((c) => c.currencyName).includes(query["curr"])
+                ) {
+                  setCoinSelected(query["curr"]);
+                  let net = getNetworks(query["curr"], result.data);
+                  setNetworks(net);
+                  setNetworkSelected(net[0]);
+                  setPlaceholder(placeholdersAddresses[net[0]]);
+                  getFeesAndLimits(
+                    "crypto",
+                    transferType,
+                    query["curr"],
+                    net[0]
+                  );
+                  setTemplatesAccount(
+                    getTemplateByCurrencyNameAndNetwork(
+                      resTemplates.data,
+                      "internal"
+                    )
+                  );
+                  setTemplatesAddress(
+                    getTemplateByCurrencyNameAndNetwork(
+                      resTemplates.data,
+                      "external",
+                      query["curr"],
+                      net[0]
+                    )
+                  );
+                } else {
+                  router.replace({
+                    pathname: router.pathname,
+                    query: { curr: "USDT" },
+                  });
+                }
+              }
             }
-          }
-        }
-        setPageLoading(false);
+            setPageLoading(false);
+          })
+          .catch((err) => {
+            setPageLoading(false);
+          });
       })
       .catch((err) => {
         setPageLoading(false);

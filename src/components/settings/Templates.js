@@ -14,6 +14,12 @@ import { getNetworksCurrencies } from "../../../public/global_functions/coins";
 import MyLoading from "../MyLoading";
 import MyInput from "../utils/MyInput";
 import screenIs from "@/screen";
+import {
+  createNewTemplate,
+  deleteTemplateByTransferTemplateId,
+  getAllTemplates,
+} from "../../../public/global_functions/template";
+import MyMessage from "../utils/MyMessage";
 
 export default function Templates() {
   const [screenSize, setScreenSize] = useState(false);
@@ -23,67 +29,76 @@ export default function Templates() {
   const [networks, setNetworks] = useState([]);
   const [networkSelected, setNetworkSelected] = useState(null);
   const [coinSelected, setCoinSelected] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingReqADD, setLoadingReqADD] = useState(false);
+  const [loadingADD, setLoadingADD] = useState(false);
+  const [loadingGET, setLoadingGET] = useState(true);
+  const [loadingDELETE, setLoadingDELETE] = useState(false);
+  const [resADD, setResADD] = useState({ msg: "", error: false, show: false });
+  const [resDELETE, setResDELETE] = useState({
+    msg: "",
+    error: false,
+    show: false,
+  });
   const [showAddTemplate, setShowAddTemplate] = useState(false);
   const [address, setAddress] = useState("");
   const [nameTemplate, setNameTemplate] = useState("");
   const [data, setData] = useState([
-    {
-      network: "TRON",
-      symbol: "USDT",
-      currencyName: "USDT",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
-      ],
-    },
-    {
-      network: "POLYGON",
-      symbol: "USDT",
-      currencyName: "USDT",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
-        { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
-      ],
-    },
-    {
-      network: "TRON",
-      symbol: "TRX",
-      currencyName: "TRX",
-      accounts: [
-        { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
-        { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
-      ],
-    },
-    {
-      currencyName: "MATIC",
-      network: "POLYGON",
-      symbol: "MATIC",
-      accounts: [
-        { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
-        { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
-        { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
-        { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
-      ],
-    },
-    {
-      currencyName: "BABELCOINS",
-      network: "Account",
-      symbol: "",
-      accounts: [
-        { name: "Alaa", address: "B1" },
-        { name: "Alaa", address: "B2" },
-        { name: "Alaa", address: "B3" },
-        { name: "Alaa", address: "B4" },
-        { name: "Alaa", address: "B5" },
-      ],
-    },
+    // {
+    //   network: "TRON",
+    //   symbol: "USDT",
+    //   currencyName: "USDT",
+    //   accounts: [
+    //     { name: "Ali", address: "TKHQbDCENpkFqYjkACMnrQDzEonKqRG" },
+    //     { name: "Ahmad", address: "TKHQbDCENpksFqjkACCNVMnrQDzEonKqRG" },
+    //     { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQDzEonKqRG" },
+    //     { name: "Monir", address: "TKHQbDCdENpkFqjkACCNVMnrQDzEonKqRG" },
+    //   ],
+    // },
+    // {
+    //   network: "POLYGON",
+    //   symbol: "USDT",
+    //   currencyName: "USDT",
+    //   accounts: [
+    //     { name: "Ali", address: "TKHQbDCENpkFqYjekACMnrQDzEonKqRG" },
+    //     { name: "Ahmad", address: "TKHQbDdCENepkFqjkACCNVMnrQDzEonKqRG" },
+    //     { name: "Mouhammed", address: "TKHQbDCeENpkFqYjkACNVMrQDzEonKqRG" },
+    //     { name: "Monir", address: "TKHQbDCENpkFqjkdACCNVMnrQDzEeonKqRG" },
+    //   ],
+    // },
+    // {
+    //   network: "TRON",
+    //   symbol: "TRX",
+    //   currencyName: "TRX",
+    //   accounts: [
+    //     { name: "Ali", address: "TKHQbDeCENpkFqYjkACMnrQDzEonKqRG" },
+    //     { name: "Ahmad", address: "TKHQbDCENpkFqjekAfCCNVMnrQDzEonKqRG" },
+    //     { name: "Mouhammed", address: "TKsHQbDCENpkFqYjkACNVMrQDqzEonKqRG" },
+    //     { name: "Monir", address: "TKHQbeDCEfNpkFqjkACCNVMnrQDzEonKqRG" },
+    //   ],
+    // },
+    // {
+    //   currencyName: "MATIC",
+    //   network: "POLYGON",
+    //   symbol: "MATIC",
+    //   accounts: [
+    //     { name: "Ali", address: "TKHQbDCEwNpkFqfYjkACMnrQDzEonKqRG" },
+    //     { name: "Ahmad", address: "TKHQbDCENwpkFqjkACCNVMnrQDzEonKqRG" },
+    //     { name: "Mouhammed", address: "TKHQbDCENpkFqYjkACNVMrQt4DzEonKqRG" },
+    //     { name: "Monir", address: "TKHQsbDCENpkFqjkACCNV34MnrQDzEonKqRG" },
+    //   ],
+    // },
+    // {
+    //   currencyName: "BABELCOINS",
+    //   network: "Account",
+    //   symbol: "",
+    //   accounts: [
+    //     { name: "Alaa", address: "B1" },
+    //     { name: "Alaa", address: "B2" },
+    //     { name: "Alaa", address: "B3" },
+    //     { name: "Alaa", address: "B4" },
+    //     { name: "Alaa", address: "B5" },
+    //   ],
+    // },
   ]);
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
@@ -95,17 +110,75 @@ export default function Templates() {
     return [];
   };
 
+  const initFormTemplate = () => {
+    setResADD({ error: false, show: false, msg: "" });
+    setAddress("");
+    setNameTemplate("");
+  };
+
   const isAddTemplateValid = () => {
     return coinSelected && networkSelected && nameTemplate && address;
   };
 
   const toggleAdd = async () => {
+    if (showAddTemplate === true) {
+      initFormTemplate();
+    }
+
     setShowAddTemplate(!showAddTemplate);
     await router.replace({
       pathname: router.pathname,
       query: { tab: "template", "add-template": !showAddTemplate },
     });
   };
+
+  const addTemplate = async (currencyName, network, name, address) => {
+    setResADD({ show: false, error: false, msg: "" });
+    try {
+      setLoadingReqADD(true);
+      const res = await createNewTemplate(currencyName, network, name, address);
+      setResADD({ show: true, error: res.error, msg: res.msg });
+      if (!res.error) {
+        getTemplates();
+      }
+      setLoadingReqADD(false);
+    } catch (err) {
+      setLoadingReqADD(false);
+      if (err?.response?.data !== undefined)
+        setResADD({
+          show: true,
+          error: err?.response?.data.error,
+          msg: err?.response?.data.msg,
+        });
+    }
+  };
+
+  const getTemplates = async () => {
+    try {
+      const res = await getAllTemplates();
+      if (!res.error) {
+        setData(res.data);
+      }
+      setLoadingGET(false);
+    } catch (err) {
+      setLoadingGET(false);
+    }
+  };
+
+  const deleteTemplate = async (currencyName, network, transferTemplateId) => {
+    try {
+      const res = await deleteTemplateByTransferTemplateId(
+        currencyName,
+        network,
+        transferTemplateId
+      );
+      setResDELETE({ msg: res.data.msg, error: res.data.error, show: true });
+      setLoadingDELETE(false);
+    } catch (err) {
+      setLoadingDELETE(false);
+    }
+  };
+
   useEffect(() => {
     setScreenSize(screenIs("md"));
     const handleResize = () => {
@@ -118,46 +191,40 @@ export default function Templates() {
   }, [screenSize]);
 
   useEffect(() => {
+    getTemplates();
     if (query["add-template"] === "true") {
-      setLoading(true);
-      getNetworksCurrencies()
-        .then((result) => {
-          if (!result.error) {
-            const arr = [
-              ...result.data,
-              {
-                _id: "babelcoins",
-                networks: [],
-                currencyName: "BABELCOINS",
-                symbol: "",
-                __v: 0,
-              },
-            ];
-            setCoins(arr);
-            if (sessionStorage.getItem("currencyData")) {
-              const currencyData = JSON.parse(
-                sessionStorage.getItem("currencyData")
-              );
-              let net = getNetworks(currencyData.name, arr);
-              setNetworks(net);
-              setCoinSelected(currencyData.name);
-              setNetworkSelected(currencyData.network);
-              setAddress(currencyData.address);
-              sessionStorage.removeItem("currencyData");
-            }
-            toggleAdd();
+      setLoadingADD(true);
+      getNetworksCurrencies().then((result) => {
+        if (!result.error) {
+          const arr = [
+            ...result.data,
+            {
+              _id: "babelcoins",
+              networks: [],
+              currencyName: "BABELCOINS",
+              symbol: "",
+              __v: 0,
+            },
+          ];
+          setCoins(arr);
+          if (sessionStorage.getItem("currencyData")) {
+            const currencyData = JSON.parse(
+              sessionStorage.getItem("currencyData")
+            );
+            let net = getNetworks(currencyData.name, arr);
+            setNetworks(net);
+            setCoinSelected(currencyData.name);
+            setNetworkSelected(currencyData.network);
+            setAddress(currencyData.address);
+            sessionStorage.removeItem("currencyData");
           }
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-        });
+          toggleAdd();
+        }
+        setLoadingADD(false);
+      });
     }
   }, []);
 
-  useEffect(() => {
-    setAddress("");
-  }, [networkSelected]);
   return (
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
@@ -166,7 +233,7 @@ export default function Templates() {
       <div className="flex justify-between w-full border-b py-2">
         <h1 className="w-fit flex self-center font-bold">TEMPLATES</h1>
         <Button
-          isDisabled={loading}
+          isDisabled={loadingADD}
           size="sm"
           className="w-24 md:w-28 border-2 border-primary rounded-lg text-primary text-sm backdrop-blur-md p-4"
           onClick={(e) => {
@@ -176,7 +243,7 @@ export default function Templates() {
               if (showAddTemplate) {
                 toggleAdd();
               }
-              setLoading(true);
+              setLoadingADD(true);
               getNetworksCurrencies()
                 .then((result) => {
                   if (!result.error) {
@@ -192,10 +259,10 @@ export default function Templates() {
                     ]);
                     toggleAdd();
                   }
-                  setLoading(false);
+                  setLoadingADD(false);
                 })
                 .catch((err) => {
-                  setLoading(false);
+                  setLoadingADD(false);
                 });
             }
           }}
@@ -211,7 +278,7 @@ export default function Templates() {
 
       {/* Content */}
       <div>
-        {!loading ? (
+        {!loadingADD ? (
           showAddTemplate && (
             <div className="my-5 mx-1 md:mx-5 bg-slate-100/55 dark:bg-gray-600/55 p-2 rounded-md shadow-md py-4">
               <div className="flex justify-between border-b">
@@ -232,13 +299,20 @@ export default function Templates() {
                   </label>
                   <Select
                     disallowEmptySelection={true}
-                    isDisabled={loading}
+                    isDisabled={loadingADD}
                     selectedKeys={coinSelected ? [coinSelected] : []}
                     onChange={async (e) => {
-                      setCoinSelected(e.target.value);
+                      setCoinSelected(
+                        e.target.value === "BABELCOINS"
+                          ? "babelcoins"
+                          : e.target.value
+                      );
                       let net = getNetworks(e.target.value, coins);
                       setNetworks(net);
-                      setNetworkSelected(net[0]);
+                      setNetworkSelected(
+                        e.target.value === "BABELCOINS" ? "BABELCOINS" : net[0]
+                      );
+                      initFormTemplate();
                     }}
                     aria-label="none"
                     style={{ backgroundColor: "inherit" }}
@@ -309,12 +383,13 @@ export default function Templates() {
                       Network
                     </label>
                     <Select
-                      isDisabled={loading || !coinSelected}
+                      isDisabled={loadingADD || !coinSelected}
                       disallowEmptySelection={true}
                       items={networks}
                       selectedKeys={networkSelected ? [networkSelected] : []}
                       onChange={(e) => {
                         setNetworkSelected(e.target.value);
+                        initFormTemplate();
                       }}
                       aria-label="none"
                       classNames={{
@@ -389,29 +464,50 @@ export default function Templates() {
                   </div>
                 )}
               </div>
+              <div className="ml-6 md:ml-44">
+                <MyMessage
+                  show={resADD.show}
+                  message={resADD.msg}
+                  isSuccess={!resADD.error}
+                />
+              </div>
               <Button
-                isDisabled={!isAddTemplateValid()}
+                onClick={() =>
+                  addTemplate(
+                    coinSelected,
+                    networkSelected,
+                    nameTemplate,
+                    address
+                  )
+                }
+                isDisabled={!isAddTemplateValid() || loadingReqADD}
                 size="sm"
                 className="bg-orange text-white block m-auto mt-5 px-7 rounded-full"
               >
-                ADD TEMPLATE
+                {!loadingReqADD ? "ADD TEMPLATE" : "ADDING.."}
               </Button>
             </div>
           )
         ) : (
           <MyLoading />
         )}
-        <ul className="mt-10">
-          {data.map((item) => (
-            <TemplateItem
-              key={item.currencyName + "_" + item.network}
-              title={item.currencyName}
-              network={item.network}
-              accounts={item.accounts}
-              imgCoin={item.symbol}
-            />
-          ))}
-        </ul>
+        {!loadingGET ? (
+          <ul className="mt-10">
+            {data.map((item) => (
+              <TemplateItem
+                key={item.currencyName + "_" + item.network}
+                title={item.currencyName}
+                network={item.network}
+                accounts={item.accounts}
+                imgCoin={
+                  item.currencyName === "ETHER" ? "ETH" : item.currencyName
+                }
+              />
+            ))}
+          </ul>
+        ) : (
+          <MyLoading />
+        )}
       </div>
     </div>
   );
