@@ -1,4 +1,16 @@
-import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+  Spinner,
+  useDisclosure,
+} from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -20,6 +32,7 @@ import {
   getAllTemplates,
 } from "../../../public/global_functions/template";
 import MyMessage from "../utils/MyMessage";
+import { FaInfoCircle } from "react-icons/fa";
 
 export default function Templates() {
   const [screenSize, setScreenSize] = useState(false);
@@ -39,6 +52,7 @@ export default function Templates() {
     error: false,
     show: false,
   });
+  const [itemDelete, setItemDelete] = useState(null);
   const [showAddTemplate, setShowAddTemplate] = useState(false);
   const [address, setAddress] = useState("");
   const [nameTemplate, setNameTemplate] = useState("");
@@ -100,6 +114,8 @@ export default function Templates() {
     //   ],
     // },
   ]);
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+
   const getNetworks = (coinSelected, coins) => {
     let coin = coins.filter((coin) => {
       if (coin.currencyName === coinSelected) {
@@ -133,6 +149,7 @@ export default function Templates() {
   };
 
   const addTemplate = async (currencyName, network, name, address) => {
+    if (currencyName === "BABELCOINS") currencyName = "ANY";
     setResADD({ show: false, error: false, msg: "" });
     try {
       setLoadingReqADD(true);
@@ -166,6 +183,7 @@ export default function Templates() {
   };
 
   const deleteTemplate = async (currencyName, network, transferTemplateId) => {
+    setLoadingDELETE(true);
     try {
       const res = await deleteTemplateByTransferTemplateId(
         currencyName,
@@ -174,8 +192,17 @@ export default function Templates() {
       );
       setResDELETE({ msg: res.data.msg, error: res.data.error, show: true });
       setLoadingDELETE(false);
+      onClose();
+      if (!res.error) getTemplates();
     } catch (err) {
+      if (err?.response?.data !== undefined)
+        setResDELETE({
+          show: true,
+          error: err?.response?.data.error,
+          msg: err?.response?.data.msg,
+        });
       setLoadingDELETE(false);
+      onClose();
     }
   };
 
@@ -229,6 +256,58 @@ export default function Templates() {
     <div
       className={`w-[78%] md:11/12 mt-5 md:mt-5 rounded-md py-10 md:px-8 px-5 bg-white/55 dark:bg-default-100/55 backdrop-blur-md shadow-md`}
     >
+      <Modal
+        size="md"
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+        className="border-t-2 border-gray-400"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>
+                <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
+                  <FaInfoCircle
+                    className={`self-cente w-7 h-7 text-yellow-500`}
+                  />
+                  <p className="self-center text-xl">Delete Account</p>
+                  {loadingDELETE && <Spinner size="sm" />}
+                </span>
+              </ModalHeader>
+              <ModalBody>
+                <p className={`w-fit m-auto`}>
+                  Are you sure you want to delete this account?
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  isDisabled={loadingDELETE}
+                  color="primary"
+                  variant="light"
+                  onPress={onClose}
+                >
+                  Close
+                </Button>
+                <Button
+                  isDisabled={loadingDELETE}
+                  color="danger"
+                  variant="light"
+                  onPress={() => {
+                    deleteTemplate(
+                      itemDelete.currencyName,
+                      itemDelete.network,
+                      itemDelete.transferTemplateId
+                    );
+                  }}
+                >
+                  Confirm
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       {/* Title */}
       <div className="flex justify-between w-full border-b py-2">
         <h1 className="w-fit flex self-center font-bold">TEMPLATES</h1>
@@ -302,11 +381,7 @@ export default function Templates() {
                     isDisabled={loadingADD}
                     selectedKeys={coinSelected ? [coinSelected] : []}
                     onChange={async (e) => {
-                      setCoinSelected(
-                        e.target.value === "BABELCOINS"
-                          ? "babelcoins"
-                          : e.target.value
-                      );
+                      setCoinSelected(e.target.value);
                       let net = getNetworks(e.target.value, coins);
                       setNetworks(net);
                       setNetworkSelected(
@@ -491,17 +566,32 @@ export default function Templates() {
         ) : (
           <MyLoading />
         )}
+        {resDELETE.show && (
+          <MyMessage
+            show={resDELETE.show}
+            error={resDELETE.error}
+            message={resDELETE.msg}
+          />
+        )}
         {!loadingGET ? (
           <ul className="mt-10">
             {data.map((item) => (
               <TemplateItem
-                key={item.currencyName + "_" + item.network}
-                title={item.currencyName}
+                key={item._id}
+                title={
+                  item.currencyName === "ANY" ? "BABELCOINS" : item.currencyName
+                }
                 network={item.network}
                 accounts={item.accounts}
                 imgCoin={
-                  item.currencyName === "ETHER" ? "ETH" : item.currencyName
+                  item.currencyName === "ETHER"
+                    ? "ETH"
+                    : item.currencyName === "ANY"
+                    ? "BABELCOINS"
+                    : item.currencyName
                 }
+                onOpen={onOpen}
+                setItemDelete={setItemDelete}
               />
             ))}
           </ul>
@@ -513,7 +603,14 @@ export default function Templates() {
   );
 }
 
-function TemplateItem({ title, network, imgCoin, accounts }) {
+function TemplateItem({
+  title,
+  network,
+  imgCoin,
+  accounts,
+  onOpen,
+  setItemDelete,
+}) {
   const [open, setOpen] = useState(false);
   return (
     <li className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
@@ -561,7 +658,7 @@ function TemplateItem({ title, network, imgCoin, accounts }) {
         <ul className="md:ml-2 mt-4">
           {accounts.map((account) => (
             <li
-              key={account.address}
+              key={account._id}
               className="border-1 rounded-md w-fit p-2 mt-2"
             >
               <div className="flex gap-1 items-center mb-1">
@@ -577,8 +674,16 @@ function TemplateItem({ title, network, imgCoin, accounts }) {
                   {account.address}
                 </p>
                 <IoCloseSharp
+                  onClick={() => {
+                    onOpen();
+                    setItemDelete({
+                      currencyName: title === "BABELCOINS" ? "ANY" : title,
+                      network: network,
+                      transferTemplateId: account._id,
+                    });
+                  }}
                   color="red"
-                  className="rounded-full hover:bg-slate-400 p-1 w-6 h-6"
+                  className="rounded-full hover:bg-slate-400 p-1 w-6 h-6 cursor-pointer"
                 />
               </div>
             </li>
