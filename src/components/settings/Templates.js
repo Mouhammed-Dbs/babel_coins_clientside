@@ -384,9 +384,7 @@ export default function Templates() {
                       setCoinSelected(e.target.value);
                       let net = getNetworks(e.target.value, coins);
                       setNetworks(net);
-                      setNetworkSelected(
-                        e.target.value === "BABELCOINS" ? "BABELCOINS" : net[0]
-                      );
+                      setNetworkSelected(net[0]);
                       initFormTemplate();
                     }}
                     aria-label="none"
@@ -547,14 +545,22 @@ export default function Templates() {
                 />
               </div>
               <Button
-                onClick={() =>
-                  addTemplate(
-                    coinSelected,
-                    networkSelected,
-                    nameTemplate,
-                    address
-                  )
-                }
+                onClick={() => {
+                  if (coinSelected === "BABELCOINS")
+                    addTemplate(
+                      coinSelected,
+                      "BABELCOINS",
+                      nameTemplate,
+                      address
+                    );
+                  else
+                    addTemplate(
+                      coinSelected,
+                      networkSelected,
+                      nameTemplate,
+                      address
+                    );
+                }}
                 isDisabled={!isAddTemplateValid() || loadingReqADD}
                 size="sm"
                 className="bg-orange text-white block m-auto mt-5 px-7 rounded-full"
