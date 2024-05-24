@@ -26,7 +26,7 @@ export default function Signup() {
   const router = useRouter();
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showSteps, setShowSteps] = useState(3);
+  const [showSteps, setShowSteps] = useState(0);
   const [inputEmail, setInputEmail] = useState("");
   const [inputCode, setInputCode] = useState("");
   const [seconds, setSeconds] = useState(30);
@@ -40,14 +40,13 @@ export default function Signup() {
     accountName: "",
     firstName: "",
     lastName: "",
-    country: "",
     secretCode: "",
     password: "",
     msg: "",
     error: false,
   });
   const [myCountries, setMyCountries] = useState(Object.entries(countries));
-  const [selectedCountry, setSelectedCountry] = useState("SY");
+  const [selectedCountry, setSelectedCountry] = useState("US");
 
   const reqCode = async () => {
     setLoading(true);
@@ -79,7 +78,6 @@ export default function Signup() {
             password: result.data.password,
             firstName: "",
             lastName: "",
-            country: "",
             msg: result.msg,
             error: result.error,
           });
@@ -104,7 +102,7 @@ export default function Signup() {
         account?.secretCode,
         account?.firstName,
         account?.lastName,
-        account?.country
+        selectedCountry
       );
       if (!res.error) {
         await router.push("/");
