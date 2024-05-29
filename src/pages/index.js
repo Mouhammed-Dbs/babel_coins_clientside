@@ -237,15 +237,21 @@ export default function Home() {
           <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
             <CardBody>
               <div className="flex justify-between">
-                <p className="text-xs md:text-base self-center">
-                  Make beautiful websites regardless of your design experience.
+                <p className="text-xs md:text-base self-center px-4">
+                  Babelcoins provides a robust and user-friendly platform for
+                  exchanging and trading a wide variety of digital currencies.
+                  Whether you are a beginner or an experienced trader, our
+                  intuitive interface and powerful tools make it easy to buy,
+                  sell, and manage your cryptocurrency portfolio efficiently.
+                  Join Babelcoins today and take advantage of our seamless
+                  trading experience.
                 </p>
                 <Image
                   alt=""
                   width={5000}
                   height={5000}
                   src={"/images/3bb.png"}
-                  className="w-1/2"
+                  className="w-1/3"
                 />
               </div>
             </CardBody>
@@ -254,17 +260,21 @@ export default function Home() {
             <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
               <CardBody>
                 <div className="flex justify-between h-full">
-                  <p className="w-1/2 text-xs md:text-base self-center">
-                    Make beautiful websites regardless of your design
-                    experience.
+                  <p className="w-2/3 text-xs md:text-base self-center px-4">
+                    Trust is the foundation of Babelcoins. We employ advanced
+                    security measures, including encryption and multi-factor
+                    authentication, to protect your assets and personal
+                    information. Our commitment to security ensures that you can
+                    trade with peace of mind, knowing your investments are in
+                    safe hands.
                   </p>
-                  <div className="flex justify-end w-1/2">
+                  <div className="flex justify-center w-1/3">
                     <Image
                       alt=""
                       width={5000}
                       height={5000}
                       src={"/images/1bb.png"}
-                      className="w-2/3 self-end"
+                      className="w-full self-center"
                     />
                   </div>
                 </div>
@@ -273,17 +283,21 @@ export default function Home() {
             <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
               <CardBody>
                 <div className="flex justify-between h-full">
-                  <p className="w-1/2 text-xs md:text-base self-center">
-                    Make beautiful websites regardless of your design
-                    experience.
+                  <p className="w-2/3 text-xs md:text-base self-center  px-4">
+                    Experience cost-effective trading with Babelcoins. Our
+                    platform is designed to offer some of the lowest fees in the
+                    industry, ensuring that you can maximize your returns on
+                    every trade. With transparent pricing and no hidden costs,
+                    Babelcoins makes digital currency trading affordable and
+                    accessible for everyone.
                   </p>
-                  <div className="flex justify-end w-1/2">
+                  <div className="flex justify-end w-1/3">
                     <Image
                       alt=""
                       width={5000}
                       height={5000}
                       src={"/images/2bb.png"}
-                      className="w-2/3 h-48 md:h-full"
+                      className="w-full h-48 md:h-full"
                     />
                   </div>
                 </div>
