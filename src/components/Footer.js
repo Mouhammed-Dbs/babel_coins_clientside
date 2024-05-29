@@ -1,5 +1,4 @@
-import { FaPhone } from "react-icons/fa6";
-import { CiMail } from "react-icons/ci";
+import { CiLocationOn, CiMail } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
 export default function Footer() {
@@ -18,6 +17,9 @@ export default function Footer() {
             Babelcoins is your trusted platform for digital currency trading.
             Learn, trade, and grow with us.
           </p>
+          <span className="flex gap-1 items-center text-sm mt-4 font-bold">
+            <CiLocationOn /> Netherlands
+          </span>
         </div>
         <div className="w-fit grid grid-cols-1 md:grid-cols-3 md:gap-10 md:ml-40">
           <div className="py-2 md:py-8 mt-3 md:mt-10">
