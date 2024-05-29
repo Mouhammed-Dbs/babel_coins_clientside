@@ -6,10 +6,11 @@ export default function Fees() {
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
       <div className="section1 w-full text-left h-80">
         <div className="flex w-2/5 h-full text-xl ml-12 font-bold">
-          <h1 className="self-center">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s
+          <h1 className="self-center leading-8">
+            {`At Babelcoins, we believe in transparency and fairness. Our fee
+            structure is designed to be clear and straightforward, ensuring that
+            you know exactly what you're paying for. We offer competitive fees
+            for all transactions, including trading, deposits, and withdrawals.`}
           </h1>
         </div>
       </div>
