@@ -8,11 +8,11 @@ export default function PrivacyPolicy() {
       className={`relative max-h-screen bg-white dark:bg-black dark:text-white text-black flex`}
     >
       <aside
-        className={`hidden md:block w-64 bg-white dark:bg-black shadow-md p-4 sticky h-screen pt-16`}
+        className={`hidden md:block w-64 bg-white dark:bg-default-50/45 shadow-md p-4 sticky h-screen pt-16`}
       >
         <nav>
-          <ul>
-            <li className="mb-2">
+          <ul className="flex flex-col gap-3">
+            <li>
               <a
                 href="#general-information"
                 className={`text-primary hover:cursor-pointer hover:underline`}
@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
                 General Information
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#opening-account"
                 className={`text-primary hover:underline`}
@@ -28,7 +28,7 @@ export default function PrivacyPolicy() {
                 Opening of the electronic account
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#data-profile"
                 className={`text-primary hover:underline`}
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
                 Data and profile
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#account-security"
                 className={`text-primary hover:underline`}
@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
                 Account data security
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#transaction-info"
                 className={`text-primary hover:underline`}
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                 Information on account transaction
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#traffic-data"
                 className={`text-primary hover:underline`}
@@ -60,12 +60,8 @@ export default function PrivacyPolicy() {
                 About traffic data
               </a>
             </li>
-            <li className="mb-2">
-              <a href="#cookies" className={`text-primary hover:underline`}>
-                Cookies
-              </a>
-            </li>
-            <li className="mb-2">
+
+            <li>
               <a
                 href="#third-parties"
                 className={`text-primary hover:underline`}
@@ -73,7 +69,7 @@ export default function PrivacyPolicy() {
                 Information about third parties
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#customer-service"
                 className={`text-primary hover:underline`}
@@ -81,7 +77,7 @@ export default function PrivacyPolicy() {
                 Customer service
               </a>
             </li>
-            <li className="mb-2">
+            <li>
               <a
                 href="#ddos-protection"
                 className={`text-primary hover:underline`}
@@ -198,25 +194,6 @@ export default function PrivacyPolicy() {
             customers. The number of your card and bank account and other
             financial information will never be given to third parties, except
             as otherwise provided by law.
-          </p>
-        </section>
-        <section id="cookies" className="mb-10 section-privacy-policy">
-          <h2
-            className={`text-2xl font-semibold mb-2 dark:text-white text-black`}
-          >
-            Cookies
-          </h2>
-          <p className={`dark:text-gray-300 text-gray-700`}>
-            Cookies, which are small data files that are on your device, allow
-            us to recognize you as a customer of our system if you return to the
-            site Babelcoins.com, using the same device and browser. We send a
-            session cookie to your device when you make the entrance with your
-            email on account in Babelcoins system, while introducing your email
-            address and password. These files allow us to recognize you if you
-            visit multiple pages on our site during the same session, you will
-            not need to re-enter your password again. After you sign out of
-            Babelcoins system or close your browser, the cookie data session
-            expires and no longer have any effect.
           </p>
         </section>
         <section id="third-parties" className="mb-10 section-privacy-policy">
