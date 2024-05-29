@@ -15,8 +15,8 @@ export default function Footer() {
           ></Image>
           <h1 className="self-center text-xl font-bold mt-4">Babel coins</h1>
           <p className="text-sm mt-1">
-            it has functioned as a symbol of protection, of perfection, of the
-            Devil, and of humanity
+            Babelcoins is your trusted platform for digital currency trading.
+            Learn, trade, and grow with us.
           </p>
         </div>
         <div className="w-fit grid grid-cols-1 md:grid-cols-3 md:gap-10 md:ml-40">
