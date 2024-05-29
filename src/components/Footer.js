@@ -24,16 +24,24 @@ export default function Footer() {
             <h2 className="self-center text-xl font-bold">About</h2>
             <ul className="mt-3">
               <li className="my-2">
-                <Link href="/about-us">About Us</Link>
+                <Link className="hover:text-primary" href="/about-us">
+                  About Us
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/contact-us">Contact Us</Link>
+                <Link className="hover:text-primary" href="/contact-us">
+                  Contact Us
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/terms-and-service">Terms & Service</Link>
+                <Link className="hover:text-primary" href="/terms-and-service">
+                  Terms & Service
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/privacy-policy">Privacy policy</Link>
+                <Link className="hover:text-primary" href="/privacy-policy">
+                  Privacy policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -41,16 +49,24 @@ export default function Footer() {
             <h2 className="self-center text-xl font-bold">Service</h2>
             <ul className="mt-3">
               <li className="my-2">
-                <Link href="/fees">Fees</Link>
+                <Link className="hover:text-primary" href="/fees">
+                  Fees
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/affiliates">Affiliates</Link>
+                <Link className="hover:text-primary" href="/affiliates">
+                  Affiliates
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/exchange">Exchange</Link>
+                <Link className="hover:text-primary" href="/exchange">
+                  Exchange
+                </Link>
               </li>
               <li className="my-2">
-                <Link href="/solutions">Solutions</Link>
+                <Link className="hover:text-primary" href="/solutions">
+                  Solutions
+                </Link>
               </li>
             </ul>
           </div>
@@ -58,13 +74,15 @@ export default function Footer() {
             <h2 className="self-center text-xl font-bold">Learn</h2>
             <ul className="mt-3">
               <li>
-                <Link href="/blog">Blog</Link>
+                <Link className="hover:text-primary" href="/blog">
+                  Blog
+                </Link>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <p className="text-center py-5">2024 © Babel Coins</p>
+      <p className="text-center py-5">2024 © Babelcoins</p>
       {/* <div className="flex justify-self-center mb-6 pb-6 md:pb-0 order-1 md:order-none">
         <div className="w-full self-end">
           <div className="flex justify-between w-64">
