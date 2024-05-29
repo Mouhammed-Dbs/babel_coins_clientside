@@ -171,16 +171,17 @@ export default function ContactUs() {
                 We value your input and strive to provide excellent customer
                 service.
                 <br />
+                <br />
                 Our team will get back to you as soon as possible to assist you
                 with your inquiries.
               </p>
               <div className="w-full flex justify-center mt-8">
-                <Image
+                {/* <Image
                   src={"/images/logo.svg"}
                   alt=""
                   width={40}
                   height={40}
-                ></Image>
+                ></Image> */}
               </div>
             </div>
           </CardBody>

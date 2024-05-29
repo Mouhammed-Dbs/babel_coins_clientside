@@ -12,7 +12,9 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 export default function App({ Component, pageProps }) {
   const noMetaTags = ["login", "signup"];
   const currentRoute = useRouter().asPath;
-  const namePage = currentRoute.charAt(1).toUpperCase() + currentRoute.slice(2);
+  const namePage =
+    currentRoute.charAt(1).toUpperCase() +
+    currentRoute.slice(2).replaceAll("-", " ");
   const staticRoutes = ["signup", "contact-us", "login", "recovery"];
   const accountRoutes = ["account"];
 
@@ -20,7 +22,7 @@ export default function App({ Component, pageProps }) {
     <Providers>
       <Head>
         <title>{currentRoute === "/" ? "Babel Coins" : namePage}</title>
-        <meta name="description" content="page description" />
+        <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="/favicon.ico" />
         {/* PWA */}
@@ -64,8 +66,8 @@ export default function App({ Component, pageProps }) {
             <meta property="og:image:alt" content="main image alt" />
             <meta property="og:image:type" content="image/jpeg" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="page title" />
-            <meta name="twitter:description" content="page description" />
+            <meta name="twitter:title" content={namePage} />
+            <meta name="twitter:description" content="" />
             <meta name="twitter:site" content="@babelcoins" />
             <meta name="twitter:creator" content="@babelcoins" />
             <meta name="twitter:image" content="main image url" />

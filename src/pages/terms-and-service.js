@@ -4,15 +4,6 @@ import Link from "next/link";
 export default function TermsAndService() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-default-50 flex flex-col justify-center items-center">
-      <Head>
-        <title>Terms of Service - Babelcoins</title>
-        <meta
-          name="description"
-          content="Terms of service for Babelcoins website"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <div className="max-w-xl mx-2 px-6 py-8 bg-white dark:bg-default-100 dark:text-gray-200 shadow-lg rounded-lg my-5">
         <h1 className="text-3xl font-bold pb-2 mb-4 text-center text-primary border-b-1 border-default-300">
           Terms of Service
