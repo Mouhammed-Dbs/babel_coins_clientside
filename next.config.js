@@ -11,6 +11,10 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   },
 });
 const nextConfig = {
+  i18n: {
+    locales: ["en", "ar"],
+    defaultLocale: "en",
+  },
   reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

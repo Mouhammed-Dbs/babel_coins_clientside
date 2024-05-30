@@ -31,6 +31,7 @@ export default function HomeNavbare() {
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [screenSize, setScreenSize] = useState(false);
+  const [localLang, setLocalLang] = useState(router.locale);
   if (currentRoute == "/") currentRoute = "/home";
   const menuItems = [
     "HOME",
@@ -161,13 +162,22 @@ export default function HomeNavbare() {
             <Dropdown>
               <DropdownTrigger>
                 <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-primary">
-                  En
+                  {localLang.toUpperCase()}
                   <RiArrowDropDownLine />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="ar">Ar</DropdownItem>
-                <DropdownItem key="en">En</DropdownItem>
+              <DropdownMenu
+                selectedKeys={[localLang]}
+                aria-label="Static Actions"
+                onAction={(key) => {
+                  router.push(router.pathname, router.asPath, {
+                    locale: key,
+                  });
+                  setLocalLang(key);
+                }}
+              >
+                <DropdownItem key="ar">AR</DropdownItem>
+                <DropdownItem key="en">EN</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </NavbarItem>

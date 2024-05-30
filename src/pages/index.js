@@ -15,17 +15,18 @@ import axios from "axios";
 import MyLoading from "@/components/MyLoading.js";
 import { isUserLogged } from "../../public/global_functions/auth.js";
 import BGShapes from "@/components/utils/BGShapes.js";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations("Index");
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [coins, setCoins] = useState([
     { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
     { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
-    { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
-    { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
-    { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
+    { name: "USDT", symbol: "USDT", price: 1, change24d: 15 },
+    { name: "TRON", symbol: "TRX", price: 1.2, change24d: 20 },
   ]);
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
@@ -112,6 +113,7 @@ export default function Home() {
     <div className="relative mx-auto">
       <div className="section1 bg-white/85 dark:bg-gray-950 w-full h-fit text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
         <h1 className="font-bold text-xl md:text-2xl relative z-10">
+          {/* {t("title")} */}
           Send, Exchange or Accept fiat and Cryptocurrency
           <br />
           on your personal Account or Website.
@@ -416,4 +418,12 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
       </CardBody>
     </Card>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
 }

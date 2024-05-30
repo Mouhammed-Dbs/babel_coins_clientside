@@ -34,6 +34,7 @@ import Link from "next/link";
 
 export default function MainNavbare({ accountName }) {
   const router = useRouter();
+  const [localLang, setLocalLang] = useState(router.locale);
   const currentRoute = router.asPath.slice(1);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -261,13 +262,22 @@ export default function MainNavbare({ accountName }) {
           <Dropdown className="min-w-28 rounded-md">
             <DropdownTrigger>
               <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-primary">
-                English
+                {localLang.toUpperCase()}
                 <RiArrowDropDownLine />
               </Button>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="new">Arabic</DropdownItem>
-              <DropdownItem key="copy">English</DropdownItem>
+            <DropdownMenu
+              selectedKeys={[localLang]}
+              onAction={(key) => {
+                setLocalLang(key);
+                router.push(router.pathname, router.asPath, {
+                  locale: key,
+                });
+              }}
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="ar">AR</DropdownItem>
+              <DropdownItem key="en">EN</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
