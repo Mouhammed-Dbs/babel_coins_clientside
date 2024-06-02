@@ -1,5 +1,28 @@
 {
     "Index": {
-        "title": ""
-    }
+        "section1-p": "Send, Exchange or Accept fiat and Cryptocurrency on your personal Account or Website.",
+        "section1-btn-createAccount": "Create Account",
+        "section1-btn-login": "Login",
+        "section2-h-nameCoin": "Name Coin",
+        "section2-h-lastPrice": "Last Price",
+        "section2-h-24Change": "24 Change",
+        "section2-h-LastOrder": "Last Order",
+        "section2-h-7DaysChart": "7 days chart",
+        "section2-btn-rowCardTrade": "Trade",
+        "section3-p": "Experience Seamless Crypto Mangment with Babel Coins Where Trust Meets Technology!",
+        "section4-h": "Why Trade on Babel Coins",
+        "section4-p-card1": "Babelcoins provides a robust and user-friendly platform for exchanging and trading a wide variety of digital currencies. Whether you are a beginner or an experienced trader, our intuitive interface and powerful tools make it easy to buy, sell, and manage your cryptocurrency portfolio efficiently. Join Babelcoins today and take advantage of our seamless trading experience.",
+        "section4-p-card2": "Trust is the foundation of Babelcoins. We employ advanced security measures, including encryption and multi-factor authentication, to protect your assets and personal information. Our commitment to security ensures that you can trade with peace of mind, knowing your investments are in safe hands.",
+        "section4-p-card3": "Experience cost-effective trading with Babelcoins. Our platform is designed to offer some of the lowest fees in the industry, ensuring that you can maximize your returns on every trade. With transparent pricing and no hidden costs, Babelcoins makes digital currency trading affordable and accessible for everyone."
+    },
+    "HomeNavbar": {
+        "title": "Babel coins",
+        "home": "Home",
+        "exchange": "EXCHANGE",
+        "solutions": "SOLUTIONS",
+        "fees": "Fees",
+        "affiliates": "Affiliates",
+        "contacts": "Contacts"
+    },
+    "Footer": {}
 }
