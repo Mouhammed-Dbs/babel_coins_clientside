@@ -112,11 +112,8 @@ export default function Home() {
   return (
     <div className="relative mx-auto">
       <div className="section1 bg-white/85 dark:bg-gray-950 w-full h-fit text-center pt-16 pb-16 pl-2 pr-2 md:pr-4 md:pl-4">
-        <h1 className="font-bold text-xl md:text-2xl relative z-10">
-          {/* {t("title")} */}
-          Send, Exchange or Accept fiat and Cryptocurrency
-          <br />
-          on your personal Account or Website.
+        <h1 className="font-bold text-xl md:text-2xl relative z-10 whitespace-pre-line">
+          {t("section1-p")}
         </h1>
         {!loading ? (
           <div className="flex justify-center mt-6">
@@ -129,7 +126,7 @@ export default function Home() {
                   className="bg-orange font-bold rounded-full text-white"
                 >
                   <TbMoneybag />
-                  Create Account
+                  {t("section1-btn-createAccount")}
                 </Button>
                 <Button
                   onClick={() => {
@@ -138,7 +135,7 @@ export default function Home() {
                   className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
                 >
                   <MdLogin />
-                  Login
+                  {t("section1-btn-login")}
                 </Button>
               </div>
             ) : (
@@ -149,7 +146,7 @@ export default function Home() {
                 className="bg-orange font-bold rounded-full text-white"
               >
                 <LuWallet />
-                My Account
+                {t("section1-btn-myAccount")}
               </Button>
             )}
           </div>

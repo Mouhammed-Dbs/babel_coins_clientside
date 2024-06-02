@@ -1,8 +1,9 @@
 {
     "Index": {
-        "section1-p": "Send, Exchange or Accept fiat and Cryptocurrency on your personal Account or Website.",
+        "section1-p": "Send, Exchange or Accept fiat and Cryptocurrency \n on your personal Account or Website.",
         "section1-btn-createAccount": "Create Account",
         "section1-btn-login": "Login",
+        "section1-btn-myAccount": "My Account",
         "section2-h-nameCoin": "Name Coin",
         "section2-h-lastPrice": "Last Price",
         "section2-h-24Change": "24 Change",
