@@ -64,11 +64,9 @@ export default function HomeNavbare() {
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="lg:hidden"
-        />
         <NavbarBrand
+          justify="start"
+          style={{ direction: "ltr" }}
           className="cursor-pointer"
           onClick={() => router.replace("/")}
         >
@@ -182,6 +180,10 @@ export default function HomeNavbare() {
             </Dropdown>
           </NavbarItem>
         </div>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="lg:hidden"
+        />
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
