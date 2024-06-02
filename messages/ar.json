@@ -6,9 +6,9 @@
         "section1-btn-myAccount": " حسابي ",
         "section2-h-nameCoin": "اسم العملة",
         "section2-h-lastPrice": "آخر سعر",
-        "section2-h-24Change": "تغيير خلال 24 ساعة",
+        "section2-h-24Change": "تغيير 24 ساعة",
         "section2-h-LastOrder": "آخر طلب",
-        "section2-h-7DaysChart": "رسم بياني لسبعة أيام",
+        "section2-h-7DaysChart": "مخطط أسبوعي",
         "section2-btn-rowCardTrade": "تداول",
         "section3-p": "اختبر إدارة العملات المشفرة بسلاسة مع Babel Coins حيث الثقة تلتقي بالتكنولوجيا!",
         "section4-h": "لماذا تتداول على Babel Coins",
@@ -19,11 +19,11 @@
     "HomeNavbar": {
         "title": "عملات بابل",
         "home": "الصفحة الرئيسية",
-        "exchange": "التبادل",
+        "exchange": "التداول",
         "solutions": "الحلول",
         "fees": "الرسوم",
         "affiliates": "الشركاء",
-        "contacts": "الاتصالات"
+        "contacts": "تواصل معنا"
     },
     "Footer": {}
 }

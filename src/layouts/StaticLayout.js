@@ -17,9 +17,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function StaticLayout(props) {
+  const router = useRouter();
+  const [localLang, setLocalLang] = useState(router.locale);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
+
   useEffect(() => {
     setMounted(true);
     setScreenSize(screenIs("md"));
@@ -77,7 +79,10 @@ export default function StaticLayout(props) {
           className="w-screen h-screen rounded-none"
           style={{ position: "absolute", background: "unset" }}
         ></Card>
-        <Navbar isBlurred="false" style={{ backgroundColor: "unset" }}>
+        <Navbar
+          isBlurred="false"
+          style={{ backgroundColor: "unset", direction: "ltr" }}
+        >
           <NavbarContent>
             <NavbarBrand
               className="cursor-pointer"
@@ -99,13 +104,22 @@ export default function StaticLayout(props) {
               <Dropdown className="bg-white text-black">
                 <DropdownTrigger>
                   <Button className="border-2 text-xs gap-unit-1 h-unit-9 rounded-full border-white text-white">
-                    English
+                    {localLang === "ar" ? "Arabic" : "English"}
                     <RiArrowDropDownLine />
                   </Button>
                 </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                  <DropdownItem key="new">Arabic</DropdownItem>
-                  <DropdownItem key="copy">English</DropdownItem>
+                <DropdownMenu
+                  selectedKeys={[localLang]}
+                  aria-label="Static Actions"
+                  onAction={(key) => {
+                    router.push(router.pathname, router.asPath, {
+                      locale: key,
+                    });
+                    setLocalLang(key);
+                  }}
+                >
+                  <DropdownItem key="ar">Arabic</DropdownItem>
+                  <DropdownItem key="en">English</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </NavbarItem>

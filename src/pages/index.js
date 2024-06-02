@@ -25,7 +25,7 @@ export default function Home() {
   const [coins, setCoins] = useState([
     { name: "ETHERUM", symbol: "ETH", price: 25000, change24d: 15 },
     { name: "MATIC", symbol: "MATIC", price: 1.2, change24d: 20 },
-    { name: "USDT", symbol: "USDT", price: 1, change24d: 15 },
+    { name: "USDT", symbol: "USDT", price: 1, change24d: -15 },
     { name: "TRON", symbol: "TRX", price: 1.2, change24d: 20 },
   ]);
   const [isLogged, setIsLogged] = useState(false);
@@ -132,7 +132,7 @@ export default function Home() {
                   onClick={() => {
                     router.push("login");
                   }}
-                  className="bg-inherit ml-4 font-bold rounded-full border-2 border-primary"
+                  className="bg-inherit ltr:ml-4 rtl:mr-4 font-bold rounded-full border-2 border-primary"
                 >
                   <MdLogin />
                   {t("section1-btn-login")}
@@ -190,11 +190,11 @@ export default function Home() {
           className="w-[93%] h-fit"
         />
         <div className="md:w-5/6 py-1 w-full m-auto text-center grid grid-cols-4 sm:grid-cols-5 text-sm md:text-base lg:text-lg pl-4 dark:bg-slate-950/35 bg-slate-50/35 backdrop-blur-md rounded-md">
-          <h6 className="">Name Coin</h6>
-          <h6>Last Price</h6>
-          <h6 className="hidden sm:block">24 Change</h6>
-          <h6 className="hidden">Last Order</h6>
-          <h6>7 days chart</h6>
+          <h6 className="">{t("section2-h-nameCoin")}</h6>
+          <h6>{t("section2-h-lastPrice")}</h6>
+          <h6 className="hidden sm:block">{t("section2-h-24Change")}</h6>
+          <h6 className="hidden">{t("section2-h-LastOrder")}</h6>
+          <h6>{t("section2-h-7DaysChart")}</h6>
         </div>
         <ul className="flex flex-col gap-6 mt-3">
           {coins.map((value) => (
@@ -212,13 +212,12 @@ export default function Home() {
       <div className="section3 flex items-center h-[450px] bg-primary dark:bg-slate-900">
         {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
         <div className="md:flex items-center h-[300px] rounded-none py-3 dark:bg-slate-950/55">
-          <p className="md:w-1/2 pl-2 lg:pl-8 text-white md:text-left text-center my-3 md:my-0">
-            Experience Seamless Crypto Mangment with <b>Babel Coins</b> Where
-            Trust Meets Technology!
+          <p className="md:w-1/2 pl-2 lg:pl-8 text-white text-center my-3 md:my-0 text-xl">
+            {t("section3-p")}
           </p>
           <div className="flex md:w-1/2 justify-center md:justify-end p-1 md:p-3">
             <Image
-              className="w-11/12 md:w-3/4 rounded-lg border-3 border-black border-b-4"
+              className="w-3/4 rounded-lg border-3 border-black border-b-4"
               width={3000}
               height={3000}
               alt=""
@@ -230,20 +229,14 @@ export default function Home() {
 
       <div className="section4 bg-neutral-100 dark:bg-gray-950 pb-12 px-4 md:px-10">
         <h1 className="text-center text-3xl font-bold p-6 md:p-10">
-          Why Trade on Babel Coins
+          {t("section4-h")}
         </h1>
         <div className="grid grid-rows-1 gap-3">
-          <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
-            <CardBody>
+          <Card isBlurred className={`dark:bg-slate-800/55 bg-white/85 `}>
+            <CardBody className={router.locale === "ar" && "text-right"}>
               <div className="flex justify-between">
                 <p className="text-xs md:text-base self-center px-4">
-                  Babelcoins provides a robust and user-friendly platform for
-                  exchanging and trading a wide variety of digital currencies.
-                  Whether you are a beginner or an experienced trader, our
-                  intuitive interface and powerful tools make it easy to buy,
-                  sell, and manage your cryptocurrency portfolio efficiently.
-                  Join Babelcoins today and take advantage of our seamless
-                  trading experience.
+                  {t("section4-p-card1")}
                 </p>
                 <Image
                   alt=""
@@ -257,15 +250,10 @@ export default function Home() {
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
-              <CardBody>
+              <CardBody className={router.locale === "ar" && "text-right"}>
                 <div className="flex justify-between h-full">
                   <p className="w-2/3 text-xs md:text-base self-center px-4">
-                    Trust is the foundation of Babelcoins. We employ advanced
-                    security measures, including encryption and multi-factor
-                    authentication, to protect your assets and personal
-                    information. Our commitment to security ensures that you can
-                    trade with peace of mind, knowing your investments are in
-                    safe hands.
+                    {t("section4-p-card2")}
                   </p>
                   <div className="flex justify-center w-1/3">
                     <Image
@@ -280,15 +268,10 @@ export default function Home() {
               </CardBody>
             </Card>
             <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
-              <CardBody>
+              <CardBody className={router.locale === "ar" && "text-right"}>
                 <div className="flex justify-between h-full">
                   <p className="w-2/3 text-xs md:text-base self-center  px-4">
-                    Experience cost-effective trading with Babelcoins. Our
-                    platform is designed to offer some of the lowest fees in the
-                    industry, ensuring that you can maximize your returns on
-                    every trade. With transparent pricing and no hidden costs,
-                    Babelcoins makes digital currency trading affordable and
-                    accessible for everyone.
+                    {t("section4-p-card3")}
                   </p>
                   <div className="flex justify-end w-1/3">
                     <Image
@@ -345,6 +328,7 @@ function Slide({ coinPair, symbol, price, change }) {
       <Divider />
       <CardFooter className="p-2 flex justify-between">
         <p
+          style={{ direction: "ltr" }}
           className={`${
             change > 0 ? "text-green-500" : "text-red-600"
           } text-xs`}
@@ -359,6 +343,7 @@ function Slide({ coinPair, symbol, price, change }) {
 
 function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
   const [data, setData] = useState(null);
+  const t = useTranslations("Index");
 
   useEffect(() => {
     setData(screenIs("md"));
@@ -386,10 +371,13 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
               width={20}
               height={20}
             />
-            <p className="ml-2 md:ml-4 text-xs self-center">{name}</p>
+            <p className="rtl:mr-2 rtl:mr4 ltr:ml-2 ltr:md:ml-4 text-xs self-center">
+              {name}
+            </p>
           </div>
           <p className="self-center text-xs">{price}</p>
           <p
+            style={{ direction: "ltr" }}
             className={`${
               change > 0 ? "text-green-500" : "text-red-600"
             } self-center text-xs hidden sm:block`}
@@ -409,7 +397,7 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
             color="warning"
             variant="bordered"
           >
-            Trade
+            {t("section2-btn-rowCardTrade")}
           </Button>
         </div>
       </CardBody>

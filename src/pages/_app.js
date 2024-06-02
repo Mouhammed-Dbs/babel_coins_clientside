@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
   const accountRoutes = ["account"];
 
   return (
-    <Providers>
+    <Providers pageProps={pageProps}>
       <Head>
         <title>{currentRoute === "/" ? "Babel Coins" : namePage}</title>
         <meta name="description" content="" />
@@ -125,32 +125,27 @@ export default function App({ Component, pageProps }) {
           content="/images/logo/png/babelcoins-logo-270.png"
         />
       </Head>
-      <NextIntlClientProvider
-        locale={router.locale}
-        timeZone="Europe/Amsterdam"
-        messages={pageProps.messages}
+
+      <main
+        className={montserrat.className}
+        style={{ direction: router.locale === "ar" ? "rtl" : "ltr" }}
       >
-        <main
-          className={montserrat.className}
-          style={{ direction: router.locale === "ar" ? "rtl" : "ltr" }}
-        >
-          {staticRoutes.filter((router) => currentRoute.includes(router))
+        {staticRoutes.filter((router) => currentRoute.includes(router)).length >
+        0 ? (
+          <StaticLayout>
+            <Component {...pageProps} />
+          </StaticLayout>
+        ) : accountRoutes.filter((router) => currentRoute.includes(router))
             .length > 0 ? (
-            <StaticLayout>
-              <Component {...pageProps} />
-            </StaticLayout>
-          ) : accountRoutes.filter((router) => currentRoute.includes(router))
-              .length > 0 ? (
-            <MainLayout>
-              <Component {...pageProps} />
-            </MainLayout>
-          ) : (
-            <HomeLayout>
-              <Component {...pageProps} />
-            </HomeLayout>
-          )}
-        </main>
-      </NextIntlClientProvider>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        ) : (
+          <HomeLayout>
+            <Component {...pageProps} />
+          </HomeLayout>
+        )}
+      </main>
     </Providers>
   );
 }

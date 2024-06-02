@@ -23,8 +23,10 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router.js";
 import Link from "next/link.js";
+import { useTranslations } from "next-intl";
 
 export default function HomeNavbare() {
+  const t = useTranslations("HomeNavbar");
   const router = useRouter();
   let currentRoute = router.asPath;
   // const [mounted, setMounted] = useState(false);
@@ -57,6 +59,11 @@ export default function HomeNavbare() {
     };
   }, [screenSize]);
 
+  useEffect(() => {
+    document.documentElement.lang = localLang;
+    document.documentElement.dir = localLang === "ar" ? "rtl" : "ltr";
+  }, [localLang]);
+
   return (
     <Navbar
       className="backdrop-blur-md bg-opacity-65"
@@ -86,58 +93,58 @@ export default function HomeNavbare() {
         <div className="hidden md:flex gap-4 justify-end">
           <NavbarItem isActive={currentRoute === "/home"}>
             <Link
-              href={"/"}
+              href={router.locale + "/"}
               className="text-foreground me-3"
               style={currentRoute === "/home" ? styleActiveLink : {}}
             >
-              HOME
+              {t("home")}
             </Link>
           </NavbarItem>
           <NavbarItem isActive={currentRoute === "/exchange"}>
             <Link
-              href={"/exchange"}
+              href={router.locale + "/exchange"}
               className="text-foreground me-3"
               style={currentRoute === "/exchange" ? styleActiveLink : {}}
             >
-              EXCHANGE
+              {t("exchange")}
             </Link>
           </NavbarItem>
           <NavbarItem isActive={currentRoute === "/solutions"}>
             <Link
-              href={"/solutions"}
+              href={router.locale + "/solutions"}
               className="text-foreground me-3"
               style={currentRoute === "/solutions" ? styleActiveLink : {}}
             >
-              SOLUTIONS
+              {t("solutions")}
             </Link>
           </NavbarItem>
         </div>
         <div className="hidden lg:flex gap-4 justify-end">
           <NavbarItem isActive={currentRoute === "/fees"}>
             <Link
-              href={"/fees"}
+              href={router.locale + "/fees"}
               className="text-foreground me-2"
               style={currentRoute === "/fees" ? styleActiveLink : {}}
             >
-              Fees
+              {t("fees")}
             </Link>
           </NavbarItem>
           <NavbarItem isActive={currentRoute === "/affiliates"}>
             <Link
-              href={"/affiliates"}
+              href={router.locale + "/affiliates"}
               className="text-foreground me-2"
               style={currentRoute === "/affiliates" ? styleActiveLink : {}}
             >
-              Affiliates
+              {t("affiliates")}
             </Link>
           </NavbarItem>
           <NavbarItem isActive={currentRoute === "/contact-us"}>
             <Link
-              href={"/contact-us"}
+              href={router.locale + "/contact-us"}
               className="text-foreground me-4"
               style={currentRoute === "/contact-us" ? styleActiveLink : {}}
             >
-              Contacts
+              {t("contacts")}
             </Link>
           </NavbarItem>
         </div>
