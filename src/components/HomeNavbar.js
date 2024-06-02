@@ -65,9 +65,8 @@ export default function HomeNavbare() {
     >
       <NavbarContent>
         <NavbarBrand
-          justify="start"
           style={{ direction: "ltr" }}
-          className="cursor-pointer"
+          className="cursor-pointer justify-end"
           onClick={() => router.replace("/")}
         >
           <Image
