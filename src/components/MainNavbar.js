@@ -282,7 +282,7 @@ export default function MainNavbare({ accountName }) {
           </Dropdown>
         </NavbarItem>
         <Spacer className="hidden md:block" x={1} />
-        <NavbarItem className="hidden md:block">
+        <NavbarItem className="hidden md:block" style={{ direction: "ltr" }}>
           <Switch
             isSelected={theme === "dark"}
             size="sm"

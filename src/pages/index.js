@@ -212,7 +212,7 @@ export default function Home() {
       <div className="section3 flex items-center h-[450px] bg-primary dark:bg-slate-900">
         {/* <p className="absolute">xxxxxxxxxxxxxxxxxxxxx</p> */}
         <div className="md:flex items-center h-[300px] rounded-none py-3 dark:bg-slate-950/55">
-          <p className="md:w-1/2 pl-2 lg:pl-8 text-white text-center my-3 md:my-0 text-xl">
+          <p className="md:w-1/2 ltr:pl-2 ltr:lg:pl-8 rtl:pr-2 rtl:lg:pr-8 text-white text-center my-3 md:my-0 text-xl">
             {t("section3-p")}
           </p>
           <div className="flex md:w-1/2 justify-center md:justify-end p-1 md:p-3">

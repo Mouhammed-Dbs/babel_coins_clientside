@@ -150,7 +150,10 @@ export default function HomeNavbare() {
         </div>
         <div className="flex justify-end md:gap-4">
           {/* Theme */}
-          <NavbarItem className="sm:flex self-center">
+          <NavbarItem
+            className="sm:flex self-center"
+            style={{ direction: "ltr" }}
+          >
             <Switch
               isSelected={theme === "dark"}
               size="sm"

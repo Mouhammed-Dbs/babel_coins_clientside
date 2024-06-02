@@ -153,7 +153,7 @@ export default function MainLayout(props) {
                   />
                 </Button>
               </SidebarElement>
-              <SidebarElement text="Light/Dark">
+              <SidebarElement text="Light/Dark" style={{ direction: "ltr" }}>
                 <Switch
                   className="p-0 m-0"
                   style={{ maxWidth: "40px" }}
