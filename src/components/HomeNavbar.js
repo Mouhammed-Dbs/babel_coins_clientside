@@ -64,6 +64,10 @@ export default function HomeNavbare() {
     document.documentElement.dir = localLang === "ar" ? "rtl" : "ltr";
   }, [localLang]);
 
+  useEffect(() => {
+    setLocalLang(router.locale);
+  }, [router]);
+
   return (
     <Navbar
       className="backdrop-blur-md bg-opacity-65"
@@ -72,20 +76,21 @@ export default function HomeNavbare() {
     >
       <NavbarContent>
         <NavbarBrand
-          style={{ direction: "ltr" }}
-          className="cursor-pointer justify-end"
+          className="cursor-pointer rlt:justify-start"
           onClick={() => router.replace("/")}
         >
-          <Image
-            className="h-6 w-6 md:h-8 md:w-8"
-            src={"/images/logo/webp/babelcoins-logo-512.webp"}
-            alt="babelcoins logo"
-            width={25}
-            height={25}
-          ></Image>
-          <h1 className="self-center text-lg md:text-xl ml-2 font-bold">
-            Babel coins
-          </h1>
+          <div className="flex" style={{ direction: "ltr" }}>
+            <Image
+              className="h-6 w-6 md:h-8 md:w-8"
+              src={"/images/logo/webp/babelcoins-logo-512.webp"}
+              alt="babelcoins logo"
+              width={25}
+              height={25}
+            ></Image>
+            <h1 className="self-center text-lg md:text-xl ml-2 font-bold">
+              Babel coins
+            </h1>
+          </div>
         </NavbarBrand>
       </NavbarContent>
 

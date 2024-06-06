@@ -34,6 +34,15 @@ export default function StaticLayout(props) {
     };
   }, [screenSize]);
 
+  useEffect(() => {
+    document.documentElement.lang = localLang;
+    document.documentElement.dir = localLang === "ar" ? "rtl" : "ltr";
+  }, [localLang]);
+
+  useEffect(() => {
+    setLocalLang(router.locale);
+  }, [router]);
+
   if (!mounted) return null;
 
   return (
@@ -88,15 +97,20 @@ export default function StaticLayout(props) {
               className="cursor-pointer"
               onClick={() => router.push("/")}
             >
-              <Image
-                src={"/images/logo/webp/babelcoins-logo-512.webp"}
-                alt="babelcoins logo"
-                width={25}
-                height={25}
-              ></Image>
-              <h1 className="self-center text-xl ml-2 font-bold text-white">
-                Babel coins
-              </h1>
+              <div
+                className="flex backdrop-blur-md p-1 rounded-md"
+                style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
+              >
+                <Image
+                  src={"/images/logo/webp/babelcoins-logo-512.webp"}
+                  alt="babelcoins logo"
+                  width={25}
+                  height={25}
+                ></Image>
+                <h1 className="self-center text-xl ml-2 font-bold text-white">
+                  Babel coins
+                </h1>
+              </div>
             </NavbarBrand>
           </NavbarContent>
           <NavbarContent className="sm:flex gap-4" justify="end">

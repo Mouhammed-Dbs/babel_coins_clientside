@@ -39,7 +39,7 @@ export default function MyInput({
       {withLink !== undefined ? (
         <Link
           href={withLink.href}
-          className={`${linkColor} text-xs absolute -bottom-0 -right-0 mb-9 mr-2`}
+          className={`${linkColor} text-xs absolute -bottom-0 ltr:-right-0 rtl:-left-0 mb-9 mr-2`}
         >
           {withLink.nameLink}
         </Link>
@@ -47,7 +47,7 @@ export default function MyInput({
         ""
       )}
       <label
-        className={`absolute -top-0 -left-0 text-sm ml-1 mb-1 peer-focus:${selectedLabelColor} text-opacity-80 ${
+        className={`absolute -top-0 ltr:-left-0 rtl:-right-0 text-sm ltr:ml-1 rtl:mr-1 mb-1 peer-focus:${selectedLabelColor} text-opacity-80 ${
           value ? selectedLabelColor : color != undefined ? color : "text-white"
         } ${item.label ? "" : "hidden"}`}
       >

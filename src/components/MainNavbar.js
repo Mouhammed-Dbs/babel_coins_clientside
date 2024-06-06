@@ -58,6 +58,15 @@ export default function MainNavbare({ accountName }) {
     // };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = localLang;
+    document.documentElement.dir = localLang === "ar" ? "rtl" : "ltr";
+  }, [localLang]);
+
+  useEffect(() => {
+    setLocalLang(router.locale);
+  }, [router]);
+
   if (!mounted) return null;
 
   return (

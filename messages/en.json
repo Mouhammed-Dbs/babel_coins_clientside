@@ -1,4 +1,17 @@
 {
+    "Words": {
+        "Name": "Name",
+        "Email": "Email",
+        "Password": "Password",
+        "Send": "Send",
+        "Address": "Address",
+        "Message": "Message"
+    },
+    "Placeholder": {
+        "Message": "Enter your message",
+        "Email": "example@email.com",
+        "Name": "John"
+    },
     "Index": {
         "section1-p": "Send, Exchange or Accept fiat and Cryptocurrency \n on your personal Account or Website.",
         "section1-btn-createAccount": "Create Account",
@@ -25,5 +38,104 @@
         "affiliates": "Affiliates",
         "contacts": "Contact us"
     },
-    "Footer": {}
+    "Footer": {
+        "des": "Babelcoins is your trusted platform for digital currency trading.Learn, trade, and grow with us.",
+        "location": "Netherlands",
+        "h-About": "About",
+        "a-About": "About Us",
+        "a-Contact": "Contact us",
+        "a-TermsAndService": "Terms & Service",
+        "a-PrivacyPolicy": "Privacy Policy",
+        "h-Service": "Service",
+        "a-Fees": "Fees",
+        "a-Affiliates": "Affiliates",
+        "a-Exchange": "Exchange",
+        "a-Solutions": "Solutions",
+        "h-Learn": "Learn",
+        "a-Blog": "Blog"
+    },
+    "NotFoundPage": {
+        "h": "404 | Page Is Not Found!"
+    },
+    "Solutions": {
+        "span-small": "WE PROVIDE",
+        "span-large": "BABELCOINS® Solutions",
+        "span-medium": "for business and individuals",
+        "p-des": "BABELCOINS is ready to provide payment services for your personal needs and your business, we work with merchants and crypto services around the world.",
+        "btn-CreateAccount": "Create Account",
+        "btn-FindOut": "Find Out",
+        "h-Account": "Account",
+        "p-Account": "One wallet for all your Individual and Business needs",
+        "p-Account-Card1": "Multi-currency BABELCOINS Account",
+        "p-Account-Card2": "Internal transfers",
+        "p-Account-Card3": "Buy and Sell Crypto",
+        "p-Account-Card4": "Trading crypto platform",
+        "p-Account-Card5": "Payments accepting on website",
+        "p-Account-Card6": "25+ international payment methods",
+        "h-Exchange": "Babelcoins® Exchange",
+        "p-Exchange": "Trade and exchange various cryptocurrencies on our website or download applications for Android and IOS smartphones",
+        "btn-LearnMore": "Learn More",
+        "h-PaymentMethod": "Visa, MasterCard, Maestro/Cirrus Acquiring Babelcoins, Advcash, Spea",
+        "p-PaymentMethod": "for crypto-services and merchants",
+        "p-PaymentMethod-Card1": "127 countries accepted",
+        "p-PaymentMethod-Card2": "High\nLimits",
+        "p-PaymentMethod-Card3": "99.5%\nconversation",
+        "p-PaymentMethod-Card4": "no\nchargebacks",
+        "p-PaymentMethod-des": "You dont need a bank account, you will receive fiat to your Babelcoins account instantly, you can withdraw funds to crypto, mass payments to Babelcoins accounts or bank cards VISA, MasterCard from all over the world.",
+        "btn-PaymentMethod-DemoMerchant": "Demo Merchant",
+        "h-Cryptoacquiring": "Cryptoacquiring",
+        "p-Cryptoacquiring": "for Individuals and Business",
+        "p-Cryptoacquiring-Card1": "Instantly converted\nto USD, EUR.",
+        "p-Cryptoacquiring-Card2": "no risks\nwith rates",
+        "p-Cryptoacquiring-Card3": "no\nchargebacks",
+        "p-Cryptoacquiring-des": "Start accepting crypto on your website in few steps, all payments via BTC, LTC, ETH, USDT, DASH, XRP, BCH will be converted to USD, EUR or RUB (no risks with rates) and deposited to your Babelcoins account, instantly use balance for crypto payouts."
+    },
+    "Fees": {
+        "h-section1": "At Babelcoins, we believe in transparency and fairness. Our fee structure is designed to be clear and straightforward, ensuring that you know exactly what you're paying for. We offer competitive fees for all transactions, including trading, deposits, and withdrawals.",
+        "h-section-Fees": "Fees",
+        "h-section-Currencies": "Currencies",
+        "h-section-ADDFees": "ADD Fees",
+        "h-section-Personal": "Personal",
+        "h-section-Business": "Business",
+        "h-section-Withdrawals": "Withdrawals"
+    },
+    "Affiliates": {
+        "span-small": "PARTNER PROGRAM",
+        "span-large": "EARN WITH",
+        "p-section1": "6 levels of referrals, up to 25% off all transactions. Instant payments, a lot of withdrawal methods available.",
+        "btn-CreateAccount": "Create Account",
+        "h-section2": "PARTNER PROGRAM",
+        "span-section2": "How it works",
+        "p-section2": "Promote your personal link online and get up to 25% of the revenue from our fees! You can withdraw funds instantly using a variety of methods."
+    },
+    "Contacts": {
+        "title": "CONTACT US",
+        "des": "If you have any questions, suggestions, or feedback, please feel free to contact us using the form below. \n We value your input and strive to provide excellent customer service. \n\n Our team will get back to you as soon as possible to assist you with your inquiries.",
+        "agree": "I agree to the processing of the personal data provided"
+    },
+    "AboutUs": {
+        "Intro-title": "About",
+        "Intro-des": "At Babelcoins, we are dedicated to revolutionizing the way people engage with digital currencies. With a vision to democratize access to the world of cryptocurrencies, we've built a platform that offers seamless, secure, and transparent trading experiences for everyone, from seasoned traders to newcomers.",
+        "section1-title": "Our Mission",
+        "section1-des": "Our mission at Babelcoins is clear: to empower individuals and organizations worldwide to harness the full potential of digital currencies. Whether you're looking to diversify your investment portfolio, explore new financial opportunities, or simply learn more about this rapidly evolving space, we're here to support you every step of the way.",
+        "section2-title": "Our Commitment to Excellence",
+        "section2-des": "At Babelcoins, excellence is not just a goal; it's a standard we uphold in everything we do. Here's what sets us apart:",
+        "section2-card1-title": "Cutting-edge Technology",
+        "section2-card1-des": "We leverage the latest advancements in blockchain technology and security protocols to ensure that our platform is not only robust and reliable but also at the forefront of innovation.",
+        "section2-card2-title": "Security and Trust",
+        "section2-card2-des": "The security of your assets and personal information is our top priority. We employ industry-leading security measures, including encryption, multi-factor authentication, and cold storage solutions, to safeguard your funds and data.",
+        "section2-card3-title": "User-friendly Interface",
+        "section2-card3-des": "We believe that accessing the world of cryptocurrencies should be intuitive and straightforward. That's why we've designed our platform with a user-friendly interface, making it easy for anyone to buy, sell, and trade digital currencies with confidence.",
+        "section3-title": "Our Comprehensive Services",
+        "section3-des": "Babelcoins offers a comprehensive suite of services designed to meet the diverse needs of our users:",
+        "section3-card1-title": "Digital Currency Exchange",
+        "section3-card1-des": "Our exchange platform allows you to buy, sell, and trade a wide range of digital currencies, including Bitcoin, Ethereum, Litecoin, and more, with competitive fees and lightning-fast execution.",
+        "section3-card2-title": "Educational Resources",
+        "section3-card2-des": "Whether you're a novice or an experienced trader, our educational resources are here to help you deepen your understanding of cryptocurrencies and refine your trading strategies. From beginner's guides to advanced technical analysis tutorials, we've got you covered.",
+        "section3-card3-title": "Dedicated Customer Support",
+        "section3-card3-des": "Have a question or need assistance? Our dedicated customer support team is available 24/7 to provide you with prompt, personalized assistance whenever you need it.",
+        "section4-title": "Join the Babelcoins Community",
+        "section4-des": "Join thousands of traders and investors who have chosen Babelcoins as their preferred platform for accessing the world of digital currencies. Whether you're looking to build wealth, diversify your portfolio, or simply explore new opportunities, we invite you to join us on this exciting journey.\n\nThank you for choosing Babelcoins. We look forward to helping you achieve your financial goals and empowering you to unlock the full potential of digital currencies.\n\nThe Babelcoins Team",
+        "section5-title": "Our Logo"
+    }
 }

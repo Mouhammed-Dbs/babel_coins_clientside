@@ -1,7 +1,9 @@
 import { CiLocationOn, CiMail } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 export default function Footer() {
+  const t = useTranslations("Footer");
   return (
     <div className="border-t-4 border-indigo-500">
       <div className="md:flex mx-4 md:mx-16 border-b-1 border-gray-400 pb-5">
@@ -13,71 +15,69 @@ export default function Footer() {
             height={80}
           ></Image>
           <h1 className="self-center text-xl font-bold mt-4">Babel coins</h1>
-          <p className="text-sm mt-1">
-            Babelcoins is your trusted platform for digital currency trading.
-            Learn, trade, and grow with us.
-          </p>
+          <p className="text-sm mt-1"> {t("des")}</p>
           <span className="flex gap-1 items-center text-sm mt-4 font-bold">
-            <CiLocationOn /> Netherlands
+            <CiLocationOn />
+            {t("location")}
           </span>
         </div>
-        <div className="w-fit grid grid-cols-1 md:grid-cols-3 md:gap-10 md:ml-40">
+        <div className="w-fit grid grid-cols-1 md:grid-cols-3 md:gap-10 rtl:md:mr-40 ltr:md:ml-40">
           <div className="py-2 md:py-8 mt-3 md:mt-10">
-            <h2 className="self-center text-xl font-bold">About</h2>
+            <h2 className="self-center text-xl font-bold"> {t("h-About")}</h2>
             <ul className="mt-3">
               <li className="my-2">
                 <Link className="hover:text-primary" href="/about-us">
-                  About Us
+                  {t("a-About")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/contact-us">
-                  Contact Us
+                  {t("a-Contact")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/terms-and-service">
-                  Terms & Service
+                  {t("a-TermsAndService")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/privacy-policy">
-                  Privacy policy
+                  {t("a-PrivacyPolicy")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="py-2 md:py-8 mt-3 md:mt-10">
-            <h2 className="self-center text-xl font-bold">Service</h2>
+            <h2 className="self-center text-xl font-bold">{t("h-Service")}</h2>
             <ul className="mt-3">
               <li className="my-2">
                 <Link className="hover:text-primary" href="/fees">
-                  Fees
+                  {t("a-Fees")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/affiliates">
-                  Affiliates
+                  {t("a-Affiliates")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/exchange">
-                  Exchange
+                  {t("a-Exchange")}
                 </Link>
               </li>
               <li className="my-2">
                 <Link className="hover:text-primary" href="/solutions">
-                  Solutions
+                  {t("a-Solutions")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="py-2 md:py-8 mt-3 md:mt-10">
-            <h2 className="self-center text-xl font-bold">Learn</h2>
+            <h2 className="self-center text-xl font-bold">{t("h-Learn")}</h2>
             <ul className="mt-3">
               <li>
                 <Link className="hover:text-primary" href="/blog">
-                  Blog
+                  {t("a-Blog")}
                 </Link>
               </li>
             </ul>

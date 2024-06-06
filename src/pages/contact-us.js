@@ -15,8 +15,12 @@ import {
 } from "../../public/global_functions/validation";
 import MyMessage from "@/components/utils/MyMessage";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function ContactUs() {
+  const t = useTranslations("Contacts");
+  const t_placeholder = useTranslations("Placeholder");
+  const t_w = useTranslations("Words");
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [messValue, setMessValue] = useState("");
@@ -65,9 +69,9 @@ export default function ContactUs() {
           }}
         >
           <CardHeader>
-            <h1 className="w-full text-center text-xl">CONTACT US</h1>
+            <h1 className="w-full text-center text-xl">{t("title")}</h1>
           </CardHeader>
-          <CardBody className="grid md:grid-template-columns md:gap-x-4">
+          <CardBody className="grid md:grid-template-columns md:gap-x-4 rtl:text-right">
             <div className="w-full">
               <MyInput
                 textColor="text-white"
@@ -88,8 +92,8 @@ export default function ContactUs() {
                 item={{
                   name: "text",
                   type: "text",
-                  placeholder: "John",
-                  label: "Name",
+                  placeholder: t_placeholder("Name"),
+                  label: t_w("Name"),
                 }}
               />
               <MyInput
@@ -111,8 +115,8 @@ export default function ContactUs() {
                 item={{
                   name: "email",
                   type: "email",
-                  placeholder: "you@example.com",
-                  label: "Email",
+                  placeholder: t_placeholder("Email"),
+                  label: t_w("Email"),
                 }}
               />
 
@@ -131,23 +135,23 @@ export default function ContactUs() {
                       });
                     } else setValidate({ msg: "", error: false });
                   }}
-                  className={`peer/email w-full md:w-72 h-24 resize-none self-center text-white placeholder-slate-300 mt-6 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:border-cyan-300 scrollbar-hide ${
+                  className={`peer/email w-full h-24 resize-none self-center text-white placeholder-slate-300 mt-6 rounded-lg border-2 text-xs p-2 bg-inherit focus:outline-none focus:border-cyan-300 scrollbar-hide ${
                     messValue
                       ? "border-cyan-300"
                       : "border-white border-opacity-35"
                   }`}
                   type="text"
-                  placeholder="Enter your message"
+                  placeholder={t_placeholder("Message")}
                 ></textarea>
                 <label
-                  className={`absolute -top-0 -left-0 text-sm ml-1 mb-1 peer-focus/email:text-cyan-300 ${
+                  className={`absolute rtl:-right-0 -top-0 ltr:-left-0 text-sm ltr:ml-1 rtl:mr-1 mb-1 peer-focus/email:text-cyan-300 ${
                     messValue ? "text-cyan-300" : "text-white text-opacity-65"
                   }`}
                 >
-                  Your message
+                  {t_w("Message")}
                 </label>
               </div>
-              <div className="flex mt-3 ml-1">
+              <div className="flex mt-3 ltr:ml-1 rtl:mr-1">
                 <input
                   onChange={() => {
                     setAgreeValue(!agreeValue);
@@ -157,24 +161,14 @@ export default function ContactUs() {
                   type="checkbox"
                   className="peer accent-white"
                 ></input>
-                <label className="text-xs peer-checked:text-cyan-300 text-white text-opacity-65 ml-2">
-                  I agree to the processing of the personal data provided
+                <label className="text-xs peer-checked:text-cyan-300 text-white text-opacity-65 ltr:ml-2 rtl:mr-2">
+                  {t("agree")}
                 </label>
               </div>
               <MyMessage show={validate.error} message={validate.msg} />
             </div>
-            <div className="hidden md:block pl-1">
-              <p>
-                If you have any questions, suggestions, or feedback, please feel
-                free to contact us using the form below.
-                <br />
-                We value your input and strive to provide excellent customer
-                service.
-                <br />
-                <br />
-                Our team will get back to you as soon as possible to assist you
-                with your inquiries.
-              </p>
+            <div className="hidden md:block md:px-5 px-1">
+              <p>{t("des")}</p>
               <div className="w-full flex justify-center mt-8">
                 {/* <Image
                   src={"/images/logo.svg"}
@@ -194,11 +188,19 @@ export default function ContactUs() {
               }
               className="bg-orange rounded-full block m-auto text-white h-8 w-36 hover:bg-white hover:text-orange"
             >
-              SEND
+              {t_w("Send")}
             </Button>
           </CardFooter>
         </form>
       </Card>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
 }

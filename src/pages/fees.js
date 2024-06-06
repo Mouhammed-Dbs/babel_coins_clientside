@@ -1,27 +1,24 @@
+import { useTranslations } from "next-intl";
+
 export default function Fees() {
   // edit this when edit Number of rows
   // grid-rows-10
-
+  const t = useTranslations("Fees");
   return (
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
-      <div className="section1 w-full text-left h-80">
-        <div className="flex w-2/5 h-full text-xl ml-12 font-bold">
-          <h1 className="self-center leading-8">
-            {`At Babelcoins, we believe in transparency and fairness. Our fee
-            structure is designed to be clear and straightforward, ensuring that
-            you know exactly what you're paying for. We offer competitive fees
-            for all transactions, including trading, deposits, and withdrawals.`}
-          </h1>
+      <div className="section1 w-full ltr:text-left rtl:text-right h-80">
+        <div className="flex w-2/5 h-full text-xl ltr:ml-12 rtl:mr-12 font-bold">
+          <h1 className="self-center leading-8">{t("h-section1")}</h1>
         </div>
       </div>
       <div className="section2 py-8 lg:py-16 md:py-12">
         <div className="w-fit m-auto">
           <div className="w-min grid grid-flow-col gap-12 auto-cols-max mb-4">
             <h1 className="min-w-28 md:min-w-56 font-bold text-2xl self-end pl-2">
-              Fees
+              {t("h-section-Fees")}
             </h1>
-            <h1 className="md:min-w-56 font-bold text-sm self-end pl-2">
-              Currencies
+            <h1 className="md:min-w-56 font-bold self-end pl-2">
+              {t("h-section-Currencies")}
             </h1>
           </div>
           <div className="w-fit grid grid-flow-col auto-cols-max md:gap-12 gap-1 h-max p-4 md:font-bold text-xs backdrop-blur-xs bg-slate-300/10 dark:bg-black/25 rounded-md shadow-md">
@@ -57,16 +54,16 @@ export default function Fees() {
         <div className="w-fit m-auto">
           <div className="w-min grid grid-flow-col md:gap-12 gap-3 auto-cols-max mb-4">
             <h1 className="min-w-24 md:min-w-40 font-bold md:text-2xl self-end pl-2">
-              ADD Fees
+              {t("h-section-ADDFees")}
             </h1>
             <h1 className="md:min-w-40 font-bold md:text-sm text-xs self-end pl-2">
-              Currencies
+              {t("h-section-Currencies")}
             </h1>
             <h1 className="md:min-w-40 font-bold md:text-sm text-xs self-end pl-2">
-              Personal
+              {t("h-section-Personal")}
             </h1>
             <h1 className="font-bold md:text-sm text-xs self-end pl-2">
-              Business
+              {t("h-section-Business")}
             </h1>
           </div>
           <div className="w-fit grid grid-flow-col auto-cols-max md:gap-12 gap-2 h-max p-4 md:font-bold text-xs md:text-sm backdrop-blur-xs bg-slate-300/10 dark:bg-black/25 rounded-md shadow-md">
@@ -125,16 +122,16 @@ export default function Fees() {
         <div className="w-fit m-auto">
           <div className="w-min grid grid-flow-col md:gap-12 gap-3 auto-cols-max mb-4">
             <h1 className="min-w-24 md:min-w-40 font-bold md:text-2xl self-end pl-2">
-              Withdrawals
+              {t("h-section-Withdrawals")}
             </h1>
             <h1 className="md:min-w-40 font-bold md:text-sm text-xs self-end pl-2">
-              Currencies
+              {t("h-section-Currencies")}
             </h1>
             <h1 className="md:min-w-40 font-bold md:text-sm text-xs self-end pl-2">
-              Personal
+              {t("h-section-Personal")}
             </h1>
             <h1 className="font-bold md:text-sm text-xs self-end pl-2">
-              Business
+              {t("h-section-Business")}
             </h1>
           </div>
           <div className="w-fit grid grid-flow-col auto-cols-max md:gap-12 gap-2 h-max p-4 md:font-bold text-xs md:text-sm backdrop-blur-xs bg-slate-300/10 dark:bg-black/25 rounded-md shadow-md">

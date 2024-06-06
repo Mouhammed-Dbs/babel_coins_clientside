@@ -1,9 +1,11 @@
 import { Button } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function Solutions() {
   const router = useRouter();
+  const t = useTranslations("Solutions");
   const scrollSection = () => {
     const sectionId = "seconds_section";
     const element = document.getElementById(sectionId);
@@ -16,19 +18,11 @@ export default function Solutions() {
     <div className="mx-auto bg-slate-50 dark:bg-default-50">
       <div className="flex w-full p-8 md:p-20 border-b-2 bg-violet-800 md:py-28">
         <div className="w-3/5 md:1/2 text-white">
-          <div className="mb-4 w-3/4">
-            <span className="block text-sm">WE PROVIDE</span>
-            <span className="block text-4xl font-bold">
-              BABELCOINS® Solutions
-            </span>
-            <span className="block text-3xl font-bold">
-              for business and individuals
-            </span>
-            <p className="mt-5">
-              BABELCOINS is ready to provide payment services for your personal
-              needs and your business, we work with merchants and crypto
-              services around the world.
-            </p>
+          <div className=" flex flex-col gap-2 mb-4 w-3/4">
+            <span className="block">{t("span-small")}</span>
+            <span className="block text-4xl font-bold">{t("span-large")}</span>
+            <span className="block text-3xl font-bold">{t("span-medium")}</span>
+            <p className="mt-5">{t("p-des")}</p>
           </div>
           <div className="flex">
             <Button
@@ -37,15 +31,15 @@ export default function Solutions() {
               }}
               className="bg-white border-2 border-white rounded-full text-black text-lg py-7 px-8"
             >
-              Create Account
+              {t("btn-CreateAccount")}
             </Button>
             <Button
               onClick={() => {
                 scrollSection();
               }}
-              className="rounded-full border-2 border-white/40 text-white text-lg py-7 px-8 ml-4"
+              className="rounded-full border-2 border-white/40 text-white text-lg py-7 px-8 ltr:ml-4 rtl:mr-4"
             >
-              Find Out
+              {t("btn-FindOut")}
             </Button>
           </div>
         </div>
@@ -60,12 +54,10 @@ export default function Solutions() {
         </div>
       </div>
       <div id="seconds_section" className="pt-20 h-max mx-3 text-center">
-        <h1 className="text-3xl font-bold">
-          <span className="text-primary">BABELCOINS®</span> Account
+        <h1 className="text-3xl font-bold" style={{ direction: "ltr" }}>
+          <span className="text-primary">BABELCOINS®</span> {t("h-Account")}
         </h1>
-        <p className="text-2xl mt-4">
-          One wallet for all your Individual and Business needs
-        </p>
+        <p className="text-2xl mt-4">{t("p-Account")}</p>
       </div>
       <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5 lg:gap-7 justify-items-center py-14 text-center">
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
@@ -76,7 +68,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Multi-currency Payeer Account</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card1")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -86,7 +78,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Internal transfers</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card2")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -96,7 +88,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Buy and Sell Crypto</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card3")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -106,7 +98,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Trading crypto platform</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card4")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -116,7 +108,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">Payments accepting on website</p>
+          <p className="mt-4 font-bold">{t("p-Card5")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -126,7 +118,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">25+ international payment methods</p>
+          <p className="mt-4 font-bold">{t("p-Card6")}</p>
         </div>
       </div>
       <div className="from-orange-500 to-orange-300 bg-gradient-to-r w-full py-16 text-center text-white">
@@ -137,11 +129,8 @@ export default function Solutions() {
           width={1000}
           height={1000}
         />
-        <h1 className="mt-8 text-2xl font-bold">Babelcoins® Exchange</h1>
-        <p className="m-auto mt-5 text-xl w-3/5">
-          Trade and exchange various cryptocurrencies on our website or download
-          applications for Android and IOS smartphones
-        </p>
+        <h1 className="mt-8 text-2xl font-bold">{t("h-Exchange")}</h1>
+        <p className="m-auto mt-5 text-xl w-3/5">{t("p-Exchange")}</p>
         <Button
           onClick={() => {
             router.push("exchange");
@@ -153,9 +142,9 @@ export default function Solutions() {
       </div>
       <div className="py-20 text-center">
         <h1 className="m-auto text-2xl font-bold w-1/2">
-          Visa, MasterCard, Maestro/Cirrus Acquiring Babelcoins, Advcash, Spea
+          {t("h-PaymentMethod")}
         </h1>
-        <p className="text-lg mt-3">for crypto-services and merchants</p>
+        <p className="text-lg mt-3">{t("p-PaymentMethod")}</p>
         <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-7 justify-items-center py-11">
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
@@ -165,7 +154,7 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">127 countries accepted</p>
+            <p className="mt-4 font-bold">{t("p-PaymentMethod-Card1")}</p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
@@ -175,8 +164,8 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              High <br /> Limits
+            <p className="mt-4 font-bold whitespace-pre-line">
+              {t("p-PaymentMethod-Card2")}
             </p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
@@ -187,9 +176,8 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              99.5%
-              <br /> conversation
+            <p className="mt-4 font-bold whitespace-pre-line">
+              {t("p-PaymentMethod-Card3")}
             </p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
@@ -200,24 +188,17 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              no
-              <br />
-              chargebacks
+            <p className="mt-4 font-bold whitespace-pre-line">
+              {t("p-PaymentMethod-Card4")}
             </p>
           </div>
         </div>
-        <p className="w-2/3 m-auto">
-          You dont need a bank account, you will receive fiat to your Babelcoins
-          account instantly, you can withdraw funds to crypto, mass payments to
-          Babelcoins accounts or bank cards VISA, MasterCard from all over the
-          world.
-        </p>
+        <p className="w-2/3 m-auto">{t("p-PaymentMethod-des")}</p>
         <Button
           onClick={() => {}}
           className="my-12 rounded-full border-2 border-primary text-primary py-5 px-6 ml-4 hover:bg-primary hover:text-white"
         >
-          Demo Merchant
+          {t("btn-PaymentMethod-DemoMerchant")}
         </Button>
         <div className="relative flex justify-center mb-16 m-auto w-56">
           <Image
@@ -269,8 +250,10 @@ export default function Solutions() {
             height={100}
           />
         </div>
-        <h1 className="m-auto text-2xl font-bold w-1/2">Cryptoacquiring</h1>
-        <p className="text-lg mt-3">for Individuals and Business</p>
+        <h1 className="m-auto text-2xl font-bold w-1/2">
+          {t("h-Cryptoacquiring")}
+        </h1>
+        <p className="text-lg mt-3">{t("p-Cryptoacquiring")}</p>
         <div className="w-fit m-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-5 justify-items-center py-11">
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
@@ -280,10 +263,7 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              Instantly converted
-              <br /> to USD, EUR.
-            </p>
+            <p className="mt-4 font-bold">{t("p-Cryptoacquiring-Card1")}</p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
@@ -293,10 +273,7 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              no risks
-              <br /> with rates
-            </p>
+            <p className="mt-4 font-bold">{t("p-Cryptoacquiring-Card2")}</p>
           </div>
           <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
             <Image
@@ -306,23 +283,15 @@ export default function Solutions() {
               width={100}
               height={100}
             />
-            <p className="mt-4 font-bold">
-              no
-              <br /> chargebacks
-            </p>
+            <p className="mt-4 font-bold">{t("p-Cryptoacquiring-Card3")}</p>
           </div>
         </div>
-        <p className="w-2/3 m-auto">
-          Start accepting crypto on your website in few steps, all payments via
-          BTC, LTC, ETH, USDT, DASH, XRP, BCH will be converted to USD, EUR or
-          RUB (no risks with rates) and deposited to your Babelcoins account,
-          instantly use balance for crypto payouts.
-        </p>
+        <p className="w-2/3 m-auto">{t("p-Cryptoacquiring-des")}</p>
         <Button
           onClick={() => {}}
           className="my-14 rounded-full border-2 border-primary text-primary py-5 px-6 ml-4 hover:bg-primary hover:text-white"
         >
-          Demo Merchant
+          {t("btn-PaymentMethod-DemoMerchant")}
         </Button>
       </div>
     </div>
