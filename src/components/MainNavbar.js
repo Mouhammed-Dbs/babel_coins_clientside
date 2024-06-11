@@ -43,7 +43,7 @@ export default function MainNavbare({ accountName }) {
 
   const changeLanguage = (locale) => {
     localStorage.setItem("lang", locale);
-    router.push(router.pathname, router.asPath, { locale });
+    router.replace(router.pathname, router.asPath, { locale });
   };
 
   useEffect(() => {

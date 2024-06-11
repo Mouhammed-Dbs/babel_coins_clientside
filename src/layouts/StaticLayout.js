@@ -21,10 +21,12 @@ export default function StaticLayout(props) {
   const [localLang, setLocalLang] = useState(router.locale);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMounted] = useState(false);
+
   const changeLanguage = (locale) => {
     localStorage.setItem("lang", locale);
-    router.push(router.pathname, router.asPath, { locale });
+    router.replace(router.pathname, router.asPath, { locale });
   };
+
   useEffect(() => {
     setMounted(true);
     setScreenSize(screenIs("md"));
