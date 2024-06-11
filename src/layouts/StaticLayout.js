@@ -98,7 +98,7 @@ export default function StaticLayout(props) {
               onClick={() => router.push("/")}
             >
               <div
-                className="flex backdrop-blur-md p-1 rounded-md"
+                className="flex backdrop-blur-md p-1 rounded-md px-2"
                 style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
               >
                 <Image
