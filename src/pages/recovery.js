@@ -240,6 +240,13 @@ export default function Recovery() {
     </div>
   );
 }
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
+}
 
 {
   /* <div className="relative">

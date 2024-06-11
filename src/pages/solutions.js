@@ -108,7 +108,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">{t("p-Card5")}</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card5")}</p>
         </div>
         <div className="w-56 p-5 border-1 shadow-lg rounded-lg dark:border-none dark:shadow-none">
           <Image
@@ -118,7 +118,7 @@ export default function Solutions() {
             width={100}
             height={100}
           />
-          <p className="mt-4 font-bold">{t("p-Card6")}</p>
+          <p className="mt-4 font-bold">{t("p-Account-Card6")}</p>
         </div>
       </div>
       <div className="from-orange-500 to-orange-300 bg-gradient-to-r w-full py-16 text-center text-white">
