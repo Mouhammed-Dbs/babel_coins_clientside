@@ -163,11 +163,11 @@ function App({ Component, pageProps }) {
   );
 }
 
-App.getInitialProps = async ({ ctx }) => {
-  const locale = ctx.locale || ctx.defaultLocale;
-  const messages = await loadMessages(locale);
+// App.getInitialProps = async ({ ctx }) => {
+//   const locale = ctx.locale || ctx.defaultLocale;
+//   const messages = await loadMessages(locale);
 
-  return { pageProps: { messages } };
-};
+//   return { pageProps: { messages } };
+// };
 
 export default App;
