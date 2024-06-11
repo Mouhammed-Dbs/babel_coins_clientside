@@ -27,6 +27,7 @@ import {
 } from "../../public/global_functions/validation";
 import { IoIosArrowDown } from "react-icons/io";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function Signup(props) {
   const router = useRouter();
@@ -580,4 +581,12 @@ export default function Signup(props) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: await loadMessages(locale),
+    },
+  };
 }

@@ -29,6 +29,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import Link from "next/link";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 import { getAllTemplates } from "../../../public/global_functions/template";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function Send(props) {
   const router = useRouter();
@@ -1026,4 +1027,12 @@ export default function Send(props) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: await loadMessages(locale),
+    },
+  };
 }

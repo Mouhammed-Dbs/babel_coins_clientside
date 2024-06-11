@@ -11,6 +11,7 @@ import {
   getMinimumDepositLimits,
 } from "../../../public/global_functions/coins";
 import { CopyButton } from "@/components/utils/CopyButton";
+import { loadMessages } from "@/lib/loadMessages";
 import { useTranslations } from "next-intl";
 
 export default function Add(props) {
@@ -343,4 +344,12 @@ export default function Add(props) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: await loadMessages(locale),
+    },
+  };
 }

@@ -12,6 +12,7 @@ import {
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 import { validateAmount } from "../../../public/global_functions/validation";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function Exchange() {
   const router = useRouter();
@@ -339,4 +340,12 @@ export default function Exchange() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: await loadMessages(locale),
+    },
+  };
 }

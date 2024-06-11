@@ -16,6 +16,7 @@ import MyLoading from "@/components/MyLoading.js";
 import { isUserLogged } from "../../public/global_functions/auth.js";
 import BGShapes from "@/components/utils/BGShapes.js";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages.js";
 
 export default function Home() {
   const t = useTranslations("Index");
@@ -404,4 +405,12 @@ function RowCard({ name, symbol, price, change, lastOrder, weekly }) {
       </CardBody>
     </Card>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: await loadMessages(locale),
+    },
+  };
 }
