@@ -9,6 +9,7 @@ const StaticLayout = dynamic(() => import("@/layouts/StaticLayout"));
 import { Montserrat } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { useEffect } from "react";
+import { loadMessages } from "@/lib/loadMessages";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 function App({ Component, pageProps }) {
