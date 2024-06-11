@@ -16,7 +16,6 @@ import {
   getOperationsCount,
 } from "../../../public/global_functions/coins";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
-import { loadMessages } from "@/lib/loadMessages";
 
 export default function History() {
   const PAGE_SIZE = 4;
@@ -469,11 +468,4 @@ function ItemTransaction({ date, amount, ps, id, status, type }) {
       </div>
     </li>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

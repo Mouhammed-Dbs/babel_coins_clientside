@@ -1,4 +1,3 @@
-import { loadMessages } from "@/lib/loadMessages";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -74,11 +73,4 @@ export default function Affiliates() {
       </div>
     </div>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

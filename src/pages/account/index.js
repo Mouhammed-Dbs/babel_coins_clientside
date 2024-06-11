@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import MyLoading from "@/components/MyLoading";
 import { getBalanceCoins } from "../../../public/global_functions/coins";
 import { useTranslations } from "next-intl";
-import { loadMessages } from "@/lib/loadMessages";
 
 export default function Balance() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -123,12 +122,4 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
       </div>
     </div>
   );
-}
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

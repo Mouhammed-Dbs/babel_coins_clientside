@@ -1,5 +1,4 @@
 import MyInput from "@/components/utils/MyInput";
-import { loadMessages } from "@/lib/loadMessages";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { FaRegCopy } from "react-icons/fa6";
@@ -166,12 +165,4 @@ function ItemList({ date, user, profit }) {
       </div>
     </li>
   );
-}
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

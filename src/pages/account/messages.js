@@ -1,4 +1,3 @@
-import { loadMessages } from "@/lib/loadMessages";
 import { useRouter } from "next/router";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 export default function Messages(props) {
@@ -93,11 +92,4 @@ function ItemList({ date, data }) {
       </div>
     </li>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

@@ -1,4 +1,3 @@
-import { loadMessages } from "@/lib/loadMessages";
 import { CiLock, CiUnlock } from "react-icons/ci";
 
 export default function Log() {
@@ -100,11 +99,4 @@ function ItemList({ date, action, ip, status }) {
       </div>
     </li>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

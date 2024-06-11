@@ -3,7 +3,6 @@ import Password from "@/components/settings/Password";
 import ProfileAndVerification from "@/components/settings/ProfileAndVerification";
 import Security from "@/components/settings/Security";
 import Templates from "@/components/settings/Templates";
-import { loadMessages } from "@/lib/loadMessages";
 import screenIs from "@/screen";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -155,11 +154,4 @@ export default function Settings() {
       </div>
     </div>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }

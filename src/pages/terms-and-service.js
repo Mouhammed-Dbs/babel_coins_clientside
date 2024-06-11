@@ -1,4 +1,3 @@
-import { loadMessages } from "@/lib/loadMessages";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -77,12 +76,4 @@ export default function TermsAndService() {
       </div>
     </div>
   );
-}
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: await loadMessages(locale),
-    },
-  };
 }
