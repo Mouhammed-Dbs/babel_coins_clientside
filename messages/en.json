@@ -1,16 +1,26 @@
 {
     "Words": {
         "Name": "Name",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
         "Email": "Email",
         "Password": "Password",
         "Send": "Send",
         "Address": "Address",
-        "Message": "Message"
+        "Message": "Message",
+        "Code": "Code",
+        "SecretCode": "Secret code",
+        "AccountName": "Account name",
+        "Next": "Next",
+        "Country": "Country",
+        "Done": "Done"
     },
     "Placeholder": {
         "Message": "Enter your message",
         "Email": "example@email.com",
-        "Name": "John"
+        "Name": "John Smith",
+        "FirstName": "John",
+        "LastName": "Smith"
     },
     "Index": {
         "section1-p": "Send, Exchange or Accept fiat and Cryptocurrency \n on your personal Account or Website.",
@@ -137,5 +147,29 @@
         "section4-title": "Join the Babelcoins Community",
         "section4-des": "Join thousands of traders and investors who have chosen Babelcoins as their preferred platform for accessing the world of digital currencies. Whether you're looking to build wealth, diversify your portfolio, or simply explore new opportunities, we invite you to join us on this exciting journey.\n\nThank you for choosing Babelcoins. We look forward to helping you achieve your financial goals and empowering you to unlock the full potential of digital currencies.\n\nThe Babelcoins Team",
         "section5-title": "Our Logo"
+    },
+    "Login": {
+        "h-title": "Login",
+        "h-des": "Please check that you are visiting correct URL",
+        "forgetPassword": "forget password?",
+        "btn-createAccount": "Create account",
+        "dontHaveAccount": "Don't have an account?",
+        "btn-login": "Login"
+    },
+    "Signup": {
+        "h-title": "Create Your Account",
+        "Step": "Step",
+        "h-des-step0": "You can create an account in one minute!",
+        "p-userAgreementStart": "By confirming the registration, I accept the",
+        "p-userAgreementLast": "of the payment system",
+        "a-userAgreement": "user agreement",
+        "btn-createAccount": "Create account",
+        "btn-creating": "Creating..",
+        "btn-login": "Login",
+        "haveAccount": "Already have an account?",
+        "h-des-step1": "Check your email and enter confirmation code",
+        "span-codeCounter": "you can request new code after:",
+        "btn-sendCode": "Send Code",
+        "h-des-step2": "Please save it in a safe place"
     }
 }

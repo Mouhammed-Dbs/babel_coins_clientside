@@ -1,7 +1,11 @@
 import { Button, Card, CardBody, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { MdLogin, MdOutlineArrowCircleLeft } from "react-icons/md";
-import { GrFormNextLink } from "react-icons/gr";
+import {
+  MdLogin,
+  MdOutlineArrowCircleLeft,
+  MdOutlineArrowCircleRight,
+} from "react-icons/md";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { useRouter } from "next/router";
 import MyInput from "@/components/utils/MyInput";
 import Link from "next/link";
@@ -22,8 +26,13 @@ import {
   validateSecretCode,
 } from "../../public/global_functions/validation";
 import { IoIosArrowDown } from "react-icons/io";
-export default function Signup() {
+import { useTranslations } from "next-intl";
+
+export default function Signup(props) {
   const router = useRouter();
+  const t = useTranslations("Signup");
+  const t_w = useTranslations("Words");
+  const t_placeholder = useTranslations("Placeholder");
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showSteps, setShowSteps] = useState(0);
@@ -132,6 +141,7 @@ export default function Signup() {
   }, [seconds, timerOn]);
 
   useEffect(() => {
+    console.log(props);
     setMount(true);
     isUserLogged()
       .then((result) => {
@@ -165,25 +175,39 @@ export default function Signup() {
 
   return (
     <div className="text-white mt-14 md:mt-2">
-      <div className="flex justify-center">
-        <MdOutlineArrowCircleLeft
-          className={`w-6 h-6 self-center hover:text-secondary ${
-            showSteps == 1 || showSteps == 3 ? "" : "hidden"
-          }`}
-          onClick={() => {
-            setShowSteps(showSteps - 1);
-            setInputCode("");
-          }}
-        />
-        <h1 className="text-center text-2xl ml-2">Create Your Account</h1>
+      <div className="flex w-[320px] mx-auto">
+        {props.locale == "en" ? (
+          <MdOutlineArrowCircleLeft
+            className={`w-6 h-6 self-center hover:text-secondary ${
+              showSteps == 1 || showSteps == 3 ? "" : "hidden"
+            }`}
+            onClick={() => {
+              setShowSteps(showSteps - 1);
+              setInputCode("");
+            }}
+          />
+        ) : (
+          <MdOutlineArrowCircleRight
+            className={`w-6 h-6 self-center hover:text-secondary ${
+              showSteps == 1 || showSteps == 3 ? "" : "hidden"
+            }`}
+            onClick={() => {
+              setShowSteps(showSteps - 1);
+              setInputCode("");
+            }}
+          />
+        )}
+        <h1 className="text-center w-full text-2xl ltr:ml-2 rtl:mr-2">
+          {t("h-title")}
+        </h1>
       </div>
 
       <Card
         isBlurred
-        className="w-min m-auto mt-3 p-8 py-4 text-white"
+        className="w-min m-auto mt-1 p-8 py-4 text-white"
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
-        <CardBody>
+        <CardBody className="rtl:text-right">
           {/* line steps */}
           <div className="w-full justify-center">
             <div className="flex justify-center px-3">
@@ -191,8 +215,10 @@ export default function Signup() {
                 className={`rounded-full border-5 border-cyan-300 bg-white min-w-4 h-4`}
               ></div>
               <div
-                className={`w-full h-1 bg-gradient-to-r from-cyan-300 my-auto ${
-                  showSteps > 1 ? "to-cyan-300" : "to-gray-300"
+                className={`w-full h-1 bg-gradient-to-r my-auto ${
+                  showSteps > 1
+                    ? "from-cyan-300 to-cyan-300"
+                    : "ltr:from-cyan-300 ltr:to-gray-300 rtl:from-gray-300 rtl:to-cyan-300"
                 }`}
               ></div>
               <div
@@ -205,7 +231,7 @@ export default function Signup() {
                   showSteps > 2
                     ? "bg-gradient-to-r from-cyan-300 to-cyan-300"
                     : showSteps > 1
-                    ? "bg-gradient-to-r from-cyan-300 to-gray-300"
+                    ? "bg-gradient-to-r rtl:from-gray-300 rtl:to-cyan-300 ltr:from-cyan-300 ltr:to-gray-300"
                     : "bg-gray-300"
                 }`}
               ></div>
@@ -216,20 +242,22 @@ export default function Signup() {
               ></div>
             </div>
             <div className="grid grid-cols-3 text-sm text-gray-300 mt-2">
-              <div className="text-left text-cyan-300">
-                <p>STEP 1</p>
+              <div className="ltr:text-left rtl:text-right text-cyan-300">
+                <p>{t("Step")} 1</p>
               </div>
               <div
                 className={`text-center ${
                   showSteps > 1 ? "text-cyan-300" : ""
                 }`}
               >
-                <p>STEP 2</p>
+                <p>{t("Step")} 2</p>
               </div>
               <div
-                className={`text-right ${showSteps > 2 ? "text-cyan-300" : ""}`}
+                className={`rtl:text-left ltr:text-right ${
+                  showSteps > 2 ? "text-cyan-300" : ""
+                }`}
               >
-                <p>STEP 3</p>
+                <p>{t("Step")} 3</p>
               </div>
             </div>
           </div>
@@ -242,9 +270,7 @@ export default function Signup() {
             }}
             className={showSteps === 0 ? "contents" : "hidden"}
           >
-            <h1 className="text-center mt-6 mb-4">
-              You can create an account in one minute!
-            </h1>
+            <h1 className="text-center mt-6 mb-4">{t("h-des-step0")}</h1>
             <MyInput
               className="w-64"
               textColor="text-white"
@@ -262,22 +288,22 @@ export default function Signup() {
                 name: "email",
                 type: "email",
                 placeholder: "example@gmail.com",
-                label: "Email",
+                label: t_w("Email"),
               }}
             />
-            <p className="text-left text-xs mb-4 mt-2 opacity-75">
-              By confirming the registration, I accept the
+            <p className="ltr:text-left rtl:text-right text-xs mb-4 mt-2 opacity-75">
+              {t("p-userAgreementStart")}
               <Link className="text-cyan-300" href={""}>
-                {" user agreement "}
+                {" " + t("a-userAgreement") + " "}
               </Link>
-              of the payment system
+              {t("p-userAgreementLast")}
             </p>
             <Button
               type="submit"
               isDisabled={!inputEmail || validateAccount.error}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
-              {loading ? "Creating" : "Create Account"}
+              {loading ? t("btn-creating") : t("btn-createAccount")}
             </Button>
           </form>
           {/* Step 1 */}
@@ -288,9 +314,7 @@ export default function Signup() {
               createAccount(event);
             }}
           >
-            <h1 className="text-center mt-6 mb-4">
-              Check your email and enter confirmation code
-            </h1>
+            <h1 className="text-center mt-6 mb-4">{t("h-des-step1")}</h1>
             <MyInput
               className="w-64"
               textColor="text-white"
@@ -298,7 +322,7 @@ export default function Signup() {
                 name: "email",
                 type: "email",
                 placeholder: "example@gmail.com",
-                label: "Email",
+                label: t_w("Email"),
               }}
               value={inputEmail}
               readOnly
@@ -316,9 +340,9 @@ export default function Signup() {
                   placeholder="0000"
                 ></input>
                 <label
-                  className={`absolute -top-0 -left-0 text-sm ml-1 mb-1 peer-focus/code:text-cyan-300`}
+                  className={`absolute -top-0 ltr:-left-0 rtl:-right-0 text-sm ltr:ml-1 rtl:mr-1 mb-1 peer-focus/code:text-cyan-300`}
                 >
-                  Code
+                  {t_w("Code")}
                 </label>
               </div>
               <Button
@@ -330,11 +354,11 @@ export default function Signup() {
                 variant="bordered"
                 className="w-full h-8 text-sm font-bold self-end mb-[2px]"
               >
-                Send Code
+                {t("btn-sendCode")}
               </Button>
             </div>
             <span className={`text-xs ml-4 mt-2 ${timerOn ? "" : "hidden"}`}>
-              you can request new code after: {seconds}
+              {t("span-codeCounter")} {seconds}
             </span>
             <Button
               type="submit"
@@ -342,7 +366,7 @@ export default function Signup() {
               onClick={createAccount}
               className="mt-3 font-bold rounded-full bg-orange text-white h-9"
             >
-              Create Account
+              {t("btn-createAccount")}
             </Button>
           </form>
           {/* Step 2 */}
@@ -355,7 +379,7 @@ export default function Signup() {
                 setShowSteps(3);
               }}
             >
-              <p className="text-center my-2">Please save it in a save place</p>
+              <h1 className="text-center my-2">{t("h-des-step2")}</h1>
               <MyInput
                 textColor="text-white"
                 defaultValue={account?.password}
@@ -372,8 +396,8 @@ export default function Signup() {
                 item={{
                   name: "password",
                   type: "text",
-                  placeholder: "password",
-                  label: "Password",
+                  placeholder: t_w("Password"),
+                  label: t_w("Password"),
                 }}
               />
               <MyInput
@@ -393,7 +417,7 @@ export default function Signup() {
                   name: "secretcode",
                   type: "text",
                   placeholder: "000000",
-                  label: "Secret code",
+                  label: t_w("SecretCode"),
                 }}
               />
               <MyInput
@@ -405,7 +429,7 @@ export default function Signup() {
                   name: "accountname",
                   type: "text",
                   placeholder: "b0000000",
-                  label: "Account name",
+                  label: t_w("AccountName"),
                 }}
               />
               <Button
@@ -419,8 +443,12 @@ export default function Signup() {
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
-                Next
-                <GrFormNextLink />
+                {t_w("Next")}
+                {props.locale === "en" ? (
+                  <GrFormNextLink />
+                ) : (
+                  <GrFormPreviousLink />
+                )}
               </Button>
             </form>
           )}
@@ -433,7 +461,7 @@ export default function Signup() {
                 updateUserInformation(event);
               }}
             >
-              <p className="text-center my-2">Please save it in a save place</p>
+              <h1 className="text-center my-2">{t("h-des-step2")}</h1>
               <MyInput
                 defaultValue={account?.firstName}
                 textColor="text-white"
@@ -449,8 +477,8 @@ export default function Signup() {
                 item={{
                   name: "firstname",
                   type: "text",
-                  placeholder: "John",
-                  label: "First Name",
+                  placeholder: t_placeholder("FirstName"),
+                  label: t_w("FirstName"),
                 }}
               />
               <MyInput
@@ -469,12 +497,14 @@ export default function Signup() {
                 item={{
                   name: "lastname",
                   type: "text",
-                  placeholder: "Smith",
-                  label: "Last name",
+                  placeholder: t_placeholder("LastName"),
+                  label: t_w("LastName"),
                 }}
               />
               <div className="mt-2">
-                <label className="text-sm pl-1">Country</label>
+                <label className="text-sm rtl:pr-1 ltr:pl-1">
+                  {t_w("Country")}
+                </label>
                 <Select
                   onChange={(e) => {
                     setSelectedCountry(e.target.value);
@@ -516,8 +546,12 @@ export default function Signup() {
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
-                Done
-                <GrFormNextLink />
+                {t_w("Done")}
+                {props.locale === "en" ? (
+                  <GrFormNextLink />
+                ) : (
+                  <GrFormPreviousLink />
+                )}
               </Button>
             </form>
           )}
@@ -530,19 +564,28 @@ export default function Signup() {
       </div>
       {/* Under Card */}
       <div className="flex w-fit m-auto mt-4">
-        <p className="mt-1 text-sm opacity-75 text-white">
-          Already have an account?
+        <p className="flex items-center mt-1 text-sm opacity-75 text-white">
+          {t("haveAccount")}
         </p>
         <Button
           onClick={() => {
             router.push("login");
           }}
-          className="border-2 text-xs font-bold gap-unit-1 h-unit-9 rounded-full text-white border-white ml-3 hover:bg-white hover:text-primary"
+          className="border-2 text-xs font-bold gap-unit-1 h-unit-9 rounded-full text-white border-white ltr:ml-3 rtl:mr-3 hover:bg-white hover:text-primary"
         >
           <MdLogin />
-          Login
+          {t("btn-login")}
         </Button>
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      locale: locale,
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
 }

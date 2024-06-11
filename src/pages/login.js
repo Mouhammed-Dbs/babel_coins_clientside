@@ -12,6 +12,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../../public/global_functions/validation";
+import { useTranslations } from "next-intl";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,8 @@ export default function Signup() {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
+  const t = useTranslations("Login");
+  const t_w = useTranslations("Words");
   const router = useRouter();
 
   const login = (event) => {
@@ -81,13 +84,11 @@ export default function Signup() {
         style={{ backgroundColor: "rgb(255,255,255,0.1)" }}
       >
         <CardHeader className="justify-center">
-          <h1 className="text-center text-2xl">Login</h1>
+          <h1 className="text-center text-2xl">{t("h-title")}</h1>
         </CardHeader>
         <CardBody>
           <form onSubmit={login} className="contents">
-            <h1 className="text-center text-xs mb-2">
-              Please check that you are visiting correct URL
-            </h1>
+            <h1 className="text-center text-sm mb-2">{t("h-des")}</h1>
             <a className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed">
               <FaLock className="mr-1" />
               https://babelcoins.com
@@ -109,7 +110,7 @@ export default function Signup() {
                 name: "email",
                 type: "email",
                 placeholder: "example@gmail.com",
-                label: "Email",
+                label: t_w("Email"),
               }}
               // withLink={{ nameLink: "forget login?", href: "" }}
             />
@@ -130,10 +131,10 @@ export default function Signup() {
               item={{
                 name: "password",
                 type: "text",
-                placeholder: "password",
-                label: "Password",
+                placeholder: t_w("Password"),
+                label: t_w("Password"),
               }}
-              withLink={{ nameLink: "forget password?", href: "/recovery" }}
+              withLink={{ nameLink: t("forgetPassword"), href: "/recovery" }}
             />
             <Button
               type="submit"
@@ -142,7 +143,7 @@ export default function Signup() {
               }
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
-              {loading ? "login.." : "Login"}
+              {loading ? t("btn-login") + "..." : t("btn-login")}
             </Button>
           </form>
         </CardBody>
@@ -152,17 +153,22 @@ export default function Signup() {
         <MyMessage show={validateLogin.error} message={validateLogin.msg} />
       </div>
       <div className="flex w-fit m-auto mt-4">
-        <p className="text-sm opacity-75 text-white">
-          {`Don't have an account?`}
-        </p>
+        <p className="text-sm opacity-75 text-white">{t("dontHaveAccount")}</p>
         <Link
           href={"signup"}
           className="flex items-center text-sm text-orange ml-2 hover:underline"
         >
           <TbMoneybag className="mr-1" />
-          Create account
+          {t("btn-createAccount")}
         </Link>
       </div>
     </div>
   );
+}
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
 }
