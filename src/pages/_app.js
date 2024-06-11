@@ -149,3 +149,10 @@ export default function App({ Component, pageProps }) {
     </Providers>
   );
 }
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../messages/${locale}.json`)).default,
+    },
+  };
+}
