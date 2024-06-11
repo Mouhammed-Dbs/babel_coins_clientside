@@ -40,6 +40,12 @@ export default function MainNavbare({ accountName }) {
   const { theme, setTheme } = useTheme();
   const [infoAccountIsOpen, setInfoAccountIsOpen] = useState(false);
   const [settingsIsOpen, setSettingsIsOpen] = useState(false);
+
+  const changeLanguage = (locale) => {
+    localStorage.setItem("lang", locale);
+    router.push(router.pathname, router.asPath, { locale });
+  };
+
   useEffect(() => {
     setMounted(true);
 
@@ -279,9 +285,7 @@ export default function MainNavbare({ accountName }) {
               selectedKeys={[localLang]}
               onAction={(key) => {
                 setLocalLang(key);
-                router.push(router.pathname, router.asPath, {
-                  locale: key,
-                });
+                changeLanguage(key);
               }}
               aria-label="Static Actions"
             >

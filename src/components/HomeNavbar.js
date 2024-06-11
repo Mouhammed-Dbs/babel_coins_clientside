@@ -48,6 +48,12 @@ export default function HomeNavbare() {
     fontWeight: "bold",
     borderBottom: "3px solid var(--secondary-color)",
   };
+
+  const changeLanguage = (locale) => {
+    localStorage.setItem("lang", locale);
+    router.push(router.pathname, router.asPath, { locale });
+  };
+
   useEffect(() => {
     setScreenSize(screenIs("md"));
     const handleResize = () => {
@@ -182,9 +188,7 @@ export default function HomeNavbare() {
                 selectedKeys={[localLang]}
                 aria-label="Static Actions"
                 onAction={(key) => {
-                  router.push(router.pathname, router.asPath, {
-                    locale: key,
-                  });
+                  changeLanguage(key);
                   setLocalLang(key);
                 }}
               >

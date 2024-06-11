@@ -21,7 +21,10 @@ export default function StaticLayout(props) {
   const [localLang, setLocalLang] = useState(router.locale);
   const [screenSize, setScreenSize] = useState(false);
   const [mounted, setMounted] = useState(false);
-
+  const changeLanguage = (locale) => {
+    localStorage.setItem("lang", locale);
+    router.push(router.pathname, router.asPath, { locale });
+  };
   useEffect(() => {
     setMounted(true);
     setScreenSize(screenIs("md"));
@@ -126,9 +129,7 @@ export default function StaticLayout(props) {
                   selectedKeys={[localLang]}
                   aria-label="Static Actions"
                   onAction={(key) => {
-                    router.push(router.pathname, router.asPath, {
-                      locale: key,
-                    });
+                    changeLanguage(key);
                     setLocalLang(key);
                   }}
                 >

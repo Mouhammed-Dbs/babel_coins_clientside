@@ -8,6 +8,7 @@ const HomeLayout = dynamic(() => import("@/layouts/HomeLayout"));
 const StaticLayout = dynamic(() => import("@/layouts/StaticLayout"));
 import { Montserrat } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
+import { useEffect } from "react";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 export default function App({ Component, pageProps }) {
@@ -19,6 +20,16 @@ export default function App({ Component, pageProps }) {
     currentRoute.slice(2).replaceAll("-", " ");
   const staticRoutes = ["signup", "contact-us", "login", "recovery"];
   const accountRoutes = ["account"];
+  const changeLanguage = (locale) => {
+    localStorage.setItem("lang", locale);
+    router.push(router.pathname, router.asPath, { locale });
+  };
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("lang");
+    if (savedLanguage && savedLanguage !== router.locale) {
+      changeLanguage(savedLanguage);
+    }
+  }, [router]);
 
   return (
     <Providers pageProps={pageProps}>
