@@ -1,3 +1,4 @@
+import { loadMessages } from "@/lib/loadMessages";
 import { useTranslations } from "next-intl";
 
 export default function Fees() {
@@ -249,7 +250,7 @@ export default function Fees() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

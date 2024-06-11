@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages";
 export default function AboutUs() {
   const t = useTranslations("AboutUs");
   return (
@@ -239,7 +240,7 @@ export default function AboutUs() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

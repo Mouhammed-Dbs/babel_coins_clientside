@@ -1,3 +1,5 @@
+import { loadMessages } from "@/lib/loadMessages";
+
 export default function blog() {
   return <div></div>;
 }
@@ -5,7 +7,7 @@ export default function blog() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

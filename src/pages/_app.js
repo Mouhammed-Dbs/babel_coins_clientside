@@ -8,10 +8,11 @@ const HomeLayout = dynamic(() => import("@/layouts/HomeLayout"));
 const StaticLayout = dynamic(() => import("@/layouts/StaticLayout"));
 import { Montserrat } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
+import { loadMessages } from "../lib/loadMessages";
 import { useEffect } from "react";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const router = useRouter();
   const noMetaTags = ["login", "signup"];
   const currentRoute = router.asPath;
@@ -162,3 +163,12 @@ export default function App({ Component, pageProps }) {
     </Providers>
   );
 }
+
+App.getInitialProps = async ({ ctx }) => {
+  const locale = ctx.locale || ctx.defaultLocale;
+  const messages = await loadMessages(locale);
+
+  return { pageProps: { messages } };
+};
+
+export default App;

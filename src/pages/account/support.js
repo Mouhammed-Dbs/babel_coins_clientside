@@ -1,5 +1,6 @@
 import SupportList from "@/components/support/SupportList";
 import SupportNewTicket from "@/components/support/SupportNewTicket";
+import { loadMessages } from "@/lib/loadMessages";
 import { Tab, Tabs } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -65,7 +66,7 @@ export default function Support() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

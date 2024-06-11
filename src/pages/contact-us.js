@@ -16,6 +16,7 @@ import {
 import MyMessage from "@/components/utils/MyMessage";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function ContactUs() {
   const t = useTranslations("Contacts");
@@ -200,7 +201,7 @@ export default function ContactUs() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

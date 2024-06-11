@@ -27,6 +27,7 @@ import {
 } from "../../public/global_functions/validation";
 import { IoIosArrowDown } from "react-icons/io";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function Signup(props) {
   const router = useRouter();
@@ -176,7 +177,7 @@ export default function Signup(props) {
   return (
     <div className="text-white mt-14 md:mt-2">
       <div className="flex w-[320px] mx-auto">
-        {props.locale == "en" ? (
+        {router.locale == "en" ? (
           <MdOutlineArrowCircleLeft
             className={`w-6 h-6 self-center hover:text-secondary ${
               showSteps == 1 || showSteps == 3 ? "" : "hidden"
@@ -444,7 +445,7 @@ export default function Signup(props) {
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
                 {t_w("Next")}
-                {props.locale === "en" ? (
+                {router.locale === "en" ? (
                   <GrFormNextLink />
                 ) : (
                   <GrFormPreviousLink />
@@ -548,7 +549,7 @@ export default function Signup(props) {
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
                 {t_w("Done")}
-                {props.locale === "en" ? (
+                {router.locale === "en" ? (
                   <GrFormNextLink />
                 ) : (
                   <GrFormPreviousLink />
@@ -585,8 +586,7 @@ export default function Signup(props) {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      locale: locale,
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

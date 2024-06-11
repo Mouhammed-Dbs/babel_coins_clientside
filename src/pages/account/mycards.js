@@ -1,3 +1,4 @@
+import { loadMessages } from "@/lib/loadMessages";
 import { useRouter } from "next/router";
 
 export default function Referrals() {
@@ -28,7 +29,7 @@ export default function Referrals() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

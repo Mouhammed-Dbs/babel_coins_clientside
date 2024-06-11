@@ -1,3 +1,4 @@
+import { loadMessages } from "@/lib/loadMessages";
 import { CiLock, CiUnlock } from "react-icons/ci";
 
 export default function Log() {
@@ -103,7 +104,7 @@ function ItemList({ date, action, ip, status }) {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

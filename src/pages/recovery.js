@@ -15,6 +15,7 @@ import {
   recoveryPassword,
 } from "../../public/global_functions/auth";
 import { useRouter } from "next/router";
+import { loadMessages } from "@/lib/loadMessages";
 
 export default function Recovery() {
   const router = useRouter();
@@ -243,11 +244,10 @@ export default function Recovery() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }
-
 {
   /* <div className="relative">
               <input

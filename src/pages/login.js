@@ -13,6 +13,7 @@ import {
   validatePassword,
 } from "../../public/global_functions/validation";
 import { useTranslations } from "next-intl";
+import { loadMessages } from "@/lib/loadMessages";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -168,7 +169,7 @@ export default function Signup() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

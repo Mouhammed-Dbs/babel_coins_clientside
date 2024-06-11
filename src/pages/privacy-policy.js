@@ -1,3 +1,4 @@
+import { loadMessages } from "@/lib/loadMessages";
 import { useRef } from "react";
 
 export default function PrivacyPolicy() {
@@ -253,7 +254,7 @@ export default function PrivacyPolicy() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }

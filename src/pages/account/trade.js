@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { FaInfoCircle } from "react-icons/fa";
 import GraphTrade from "@/components/trade/GraphTrage";
+import { loadMessages } from "@/lib/loadMessages";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
@@ -608,7 +609,7 @@ export default function Trade() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../../messages/${locale}.json`)).default,
+      messages: await loadMessages(locale),
     },
   };
 }
