@@ -20,10 +20,12 @@ export default function App({ Component, pageProps }) {
     currentRoute.slice(2).replaceAll("-", " ");
   const staticRoutes = ["signup", "contact-us", "login", "recovery"];
   const accountRoutes = ["account"];
+
   const changeLanguage = (locale) => {
     localStorage.setItem("lang", locale);
     router.push(router.pathname, router.asPath, { locale });
   };
+
   useEffect(() => {
     const savedLanguage = localStorage.getItem("lang");
     if (savedLanguage && savedLanguage !== router.locale) {
@@ -159,11 +161,4 @@ export default function App({ Component, pageProps }) {
       </main>
     </Providers>
   );
-}
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: (await import(`../../messages/${locale}.json`)).default,
-    },
-  };
 }
