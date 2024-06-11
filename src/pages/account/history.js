@@ -469,3 +469,10 @@ function ItemTransaction({ date, amount, ps, id, status, type }) {
     </li>
   );
 }
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../messages/${locale}.json`)).default,
+    },
+  };
+}

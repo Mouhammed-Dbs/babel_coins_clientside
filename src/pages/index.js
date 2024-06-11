@@ -19,6 +19,7 @@ import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("Index");
+  const t_w = useTranslations("Words");
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -94,7 +95,7 @@ export default function Home() {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading BabelCoins.."
+        msg={t_w("Loading")}
         color="primary"
         className={`h-screen text-black dark:text-white mt-24`}
       />
@@ -103,7 +104,7 @@ export default function Home() {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading BabelCoins.."
+        msg={t_w("Loading")}
         color="primary"
         className={`h-screen text-black dark:text-white mt-24`}
       />

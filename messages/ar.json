@@ -13,7 +13,16 @@
         "AccountName": "اسم الحساب",
         "Next": "التالي",
         "Country": "الدولة",
-        "Done": "انتهى"
+        "Done": "انتهى",
+        "Loading": "الرجاء الانتظار..",
+        "Balance": "الرصيد",
+        "Add": "أضف",
+        "Transfer": "تحويل",
+        "Trade": "تداول",
+        "Exchange": "تبديل",
+        "History": "السجل",
+        "Support": "الدعم",
+        "Logout": "تسجيل الخروج"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -171,5 +180,15 @@
         "span-codeCounter": "يمكنك طلب رمز جديد بعد:",
         "btn-sendCode": "إرسال الرمز",
         "h-des-step2": "يرجى حفظ بياناتك في مكان آمن"
+    },
+    "AccountIndex": {
+        "title": "جميع الحسابات",
+        "des": "الحسابات المتاحة",
+        "Withdrawal": "السحب",
+        "Deposit": "الإيداع"
+    },
+    "AccountAdd": {
+        "label-chooseAccount": "اختر حساباً",
+        "p-msgLimit": "الحد الأدنى للإيداع "
     }
 }

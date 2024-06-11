@@ -13,7 +13,16 @@
         "AccountName": "Account name",
         "Next": "Next",
         "Country": "Country",
-        "Done": "Done"
+        "Done": "Done",
+        "Loading": "Loading..",
+        "Balance": "BALANCE",
+        "Add": "ADD",
+        "Transfer": "TRANSFER",
+        "Trade": "TRADE",
+        "Exchange": "EXCHANGE",
+        "History": "HISTORY",
+        "Support": "Support",
+        "Logout": "Logout"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -171,5 +180,15 @@
         "span-codeCounter": "you can request new code after:",
         "btn-sendCode": "Send Code",
         "h-des-step2": "Please save it in a safe place"
+    },
+    "AccountIndex": {
+        "title": "All Accounts",
+        "des": "Available accounts",
+        "Withdrawal": "Withdrawal",
+        "Deposit": "Deposit"
+    },
+    "AccountAdd": {
+        "label-chooseAccount": "Choose account",
+        "p-msgLimit": "Minimum deposit limit for"
     }
 }

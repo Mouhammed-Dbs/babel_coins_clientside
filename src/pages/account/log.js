@@ -100,3 +100,10 @@ function ItemList({ date, action, ip, status }) {
     </li>
   );
 }
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../messages/${locale}.json`)).default,
+    },
+  };
+}

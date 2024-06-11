@@ -44,9 +44,15 @@ export default function Sidebar({ children }) {
             className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700"
           >
             {expanded ? (
-              <IoIosArrowDropleft size={25} />
-            ) : (
+              router.locale === "en" ? (
+                <IoIosArrowDropleft size={25} />
+              ) : (
+                <IoIosArrowDropright size={25} />
+              )
+            ) : router.locale === "en" ? (
               <IoIosArrowDropright size={25} />
+            ) : (
+              <IoIosArrowDropleft size={25} />
             )}
           </button>
         </div>
@@ -65,7 +71,7 @@ export function SidebarElement({ children, text }) {
       <div className="self-center">{children}</div>
       <span
         className={`overflow-hidden transition-all text-gray-600 dark:text-gray-400 self-center ${
-          expanded ? "w-fit ml-2 pb-[2px]" : "w-0"
+          expanded ? "w-fit ltr:ml-2 rtl:mr-4 pb-[2px]" : "w-0"
         }`}
       >
         {text}
@@ -103,14 +109,14 @@ export function SidebarItem({
       {icon}
       <span
         className={`overflow-hidden transition-all ${
-          expanded ? "w-40 ml-3" : "w-0"
+          expanded ? "w-40 ltr:ml-3 rtl:mr-3" : "w-0"
         }`}
       >
         {text}
       </span>
       {alert && (
         <div
-          className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${
+          className={`absolute ltr:right-2 rtl:left-2 w-2 h-2 rounded bg-indigo-400 ${
             expanded ? "" : "top-2"
           }`}
         ></div>
@@ -118,7 +124,7 @@ export function SidebarItem({
       {!expanded && toast && (
         <div
           className={`
-          absolute left-full rounded-md px-2 py-1 ml-6 z-10
+          absolute rtl:right-full ltr:left-full rounded-md px-2 py-1 ltr:ml-6 rtl:mr-6 z-10
           bg-indigo-100 text-indigo-800 text-sm
           invisible opacity-20 -translate-x-3 transition-all
           group-hover:visible group-hover:opacity-100 group-hover:translate-x-0

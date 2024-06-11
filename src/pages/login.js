@@ -62,7 +62,7 @@ export default function Signup() {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading BabelCoins.."
+        msg={t_w("Loading")}
         color="warning"
         className={`text-white mt-24`}
       />
@@ -70,7 +70,7 @@ export default function Signup() {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading BabelCoins.."
+        msg={t_w("Loading")}
         color="warning"
         className={`text-white mt-24`}
       />

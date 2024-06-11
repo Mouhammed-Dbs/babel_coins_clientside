@@ -11,10 +11,13 @@ import {
   getMinimumDepositLimits,
 } from "../../../public/global_functions/coins";
 import { CopyButton } from "@/components/utils/CopyButton";
+import { useTranslations } from "next-intl";
 
 export default function Add(props) {
   const router = useRouter();
   const { query } = router;
+  const t = useTranslations("AccountAdd");
+  const t_w = useTranslations("Words");
   const [mounted, setMount] = useState(false);
   const [coins, setCoins] = useState([]);
   const [coinSelected, setCoinSelected] = useState(null);
@@ -91,7 +94,7 @@ export default function Add(props) {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white mt-24`}
       />
@@ -99,7 +102,7 @@ export default function Add(props) {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white bg-white/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
@@ -110,17 +113,18 @@ export default function Add(props) {
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3 md:m-auto">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
-            ADD
+            {t_w("Add")}
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
       </div>
       <div className="p-4 py-10 md:px-8 mt-6 md:m-auto md:mt-10 w-11/12 md:w-[520px] lg:w-[790px] md:text-center bg-white/55 dark:bg-default-100/55 rounded-lg shadow-md backdrop-blur-md">
         <div className="md:flex w-full m-auto gap-4 items-center">
-          <label className="text-right text-sm md:text-base w-36">
-            Choose account
+          <label className="ltr:text-right rtl:text-left text-sm md:text-base w-36">
+            {t("label-chooseAccount")}
           </label>
           <Select
+            dir="ltr"
             disallowEmptySelection={true}
             isDisabled={addressesLoading}
             selectedKeys={coinSelected ? [coinSelected] : []}
@@ -306,8 +310,8 @@ export default function Add(props) {
         {!addressesLoading ? (
           addressesByCoinName.map((item) => (
             <div key={item.network}>
-              <div className="lg:flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
-                <label className="block text-left lg:text-right text-sm md:text-base w-full lg:w-36">
+              <div className="md:flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
+                <label className="block ltr:text-left rtl:text-right ltr:md:text-right rtl:md:text-left text-sm md:text-base w-full md:w-36">
                   {item.network}:
                 </label>
                 <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm self-end mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
@@ -318,12 +322,12 @@ export default function Add(props) {
                   />
                 </p>
               </div>
-              <p className="text-xs w-fit text-left lg:ml-40 lg:mt-[2px]">
-                Minimum deposit limit for {minimumLimitsByCoinName.currencyName}
+              <p className="text-xs w-fit ltr:text-left rtl:text-right ltr:md:ml-40 rtl:md:mr-40 md:mt-[2px]">
+                {t("p-msgLimit")} {minimumLimitsByCoinName.currencyName}
                 {minimumLimitsByCoinName.currencyName !== "USDT"
-                  ? " on " + minimumLimitsByCoinName.network + " "
-                  : " "}
-                is {" " + minimumLimitsByCoinName.amount}
+                  ? " on " + minimumLimitsByCoinName.network + " ="
+                  : " ="}
+                {" " + minimumLimitsByCoinName.amount}
               </p>
             </div>
           ))
@@ -339,4 +343,12 @@ export default function Add(props) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../messages/${locale}.json`)).default,
+    },
+  };
 }

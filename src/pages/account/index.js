@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import MyLoading from "@/components/MyLoading";
 import { getBalanceCoins } from "../../../public/global_functions/coins";
+import { useTranslations } from "next-intl";
 
 export default function Balance() {
   const [pageLoading, setPageLoading] = useState(true);
   const [coins, setCoins] = useState([]);
-
+  const t_w = useTranslations("Words");
+  const t = useTranslations("AccountIndex");
   useEffect(() => {
     getBalanceCoins()
       .then((result) => {
@@ -24,7 +26,7 @@ export default function Balance() {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white bg-white/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
@@ -35,18 +37,18 @@ export default function Balance() {
       <div className="w-full md:w-[520px] lg:w-[790px] m-auto mt-4 pb-3 md:m-auto">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
-            BALANCE
+            {t_w("Balance")}
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
-        <p className="text-xs opacity-75 mt-1">Available accounts</p>
+        <p className="text-xs opacity-75 mt-1">{t("des")}</p>
       </div>
 
       <div className="w-full pb-44 md:m-auto md:w-full text-center">
         <div className="w-full">
           <div className="w-fit m-auto my-4 pb-[2px]">
             <h1 className="w-fit text-xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-sm">
-              All Accounts
+              {t("title")}
             </h1>
             <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
           </div>
@@ -70,9 +72,10 @@ export default function Balance() {
 
 function Card({ symbol, currencyName, network, validDepositeBalance }) {
   const router = useRouter();
+  const t = useTranslations("AccountIndex");
   useEffect(() => {}, []);
   return (
-    <div className="relative w-64 h-min mt-2 mr-2 p-4 border-1 dark:border-default-100 border-gray-200 bg-white/55 dark:bg-black/55 text-center rounded-md shadow-lg backdrop-blur-sm">
+    <div className="relative w-64 h-min mt-2 ltr:mr-2 rtl:ml2 p-4 border-1 dark:border-default-100 border-gray-200 bg-white/55 dark:bg-black/55 text-center rounded-md shadow-lg backdrop-blur-sm">
       <div className="absolute shadow-inner overflow-hidden bg-slate-50/55 dark:bg-default-50/55 border-t-1 border-default-100 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <div className="absolute w-full h-1/2 top-1/2 bg-white/55 dark:bg-black/15"></div>
       </div>
@@ -101,9 +104,9 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
               query: { curr: currencyName },
             })
           }
-          className="text-primary dark:text-secondary text-xs mr-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
+          className="text-primary dark:text-secondary text-xs ltr:mr-2 rtl:ml-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
         >
-          Deposit
+          {t("Deposit")}
         </Button>
         <Button
           onClick={() =>
@@ -112,11 +115,19 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
               query: { curr: currencyName },
             })
           }
-          className="text-primary dark:text-secondary text-xs ml-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
+          className="text-primary dark:text-secondary text-xs ltr:ml-2 rtl:mr-2 px-2 border-1 border-primary dark:border-secondary rounded-full h-7 hover:bg-primary dark:hover:bg-secondary hover:text-white"
         >
-          Withdrawal
+          {t("Withdrawal")}
         </Button>
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../messages/${locale}.json`)).default,
+    },
+  };
 }

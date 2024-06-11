@@ -415,6 +415,7 @@ export default function Send(props) {
                 Choose system
               </label>
               <Select
+                dir="ltr"
                 disallowEmptySelection={true}
                 isDisabled={loading}
                 selectedKeys={coinSelected ? [coinSelected] : []}
@@ -503,6 +504,7 @@ export default function Send(props) {
                 Network
               </label>
               <Select
+                dir="ltr"
                 isDisabled={loading || !coinSelected}
                 disallowEmptySelection={true}
                 items={networks}
@@ -639,6 +641,7 @@ export default function Send(props) {
                 }}
               />
               <Select
+                dir="ltr"
                 aria-label="none"
                 classNames={{
                   base: "max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
@@ -677,6 +680,7 @@ export default function Send(props) {
                         Templates
                       </label>
                       <Select
+                        dir="ltr"
                         onChange={(e) => {
                           if (e.target.value.length > 0) {
                             setTemplateSelected(e.target.value);
@@ -913,6 +917,7 @@ export default function Send(props) {
                         }}
                       />
                       <Select
+                        dir="ltr"
                         aria-label="none"
                         classNames={{
                           base: "hidden max-w-xs min-w-20 peer mt-3 w-24 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
@@ -1021,4 +1026,12 @@ export default function Send(props) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../messages/${locale}.json`)).default,
+    },
+  };
 }
