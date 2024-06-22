@@ -377,7 +377,7 @@ export default function History() {
         {data.length > 0 ? ( // Operations Table
           <div className="mx-1 md:mx-4">
             <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
-              <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
+              <h3 className="w-3/12 text-xs md:text-sm text-center pl-2 md:pl-4">
                 {t("Date")}
               </h3>
               <h3 className="w-3/12 text-xs md:text-sm">

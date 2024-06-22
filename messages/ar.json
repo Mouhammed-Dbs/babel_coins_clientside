@@ -206,7 +206,7 @@
     },
     "Send": {
         "Templates": "القوالب",
-        "ChooseSystem": "اختر نظام",
+        "ChooseSystem": "اختر عملة",
         "TransferType": "نوع التحويل",
         "ChooseTemplate": "اختر قالب",
         "AddAddressToTemplates": "إضافة العنوان إلى القوالب؟",
