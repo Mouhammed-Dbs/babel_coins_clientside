@@ -6,7 +6,9 @@
         "Email": "البريد الإلكتروني",
         "Password": "كلمة المرور",
         "Send": "إرسال",
+        "Sending": "إرسال..",
         "Address": "العنوان",
+        "Account": "الحساب",
         "Message": "الرسالة",
         "Code": "الرمز",
         "SecretCode": "الرمز السري",
@@ -22,7 +24,15 @@
         "Exchange": "تبديل",
         "History": "السجل",
         "Support": "الدعم",
-        "Logout": "تسجيل الخروج"
+        "Logout": "تسجيل الخروج",
+        "Total": "إجمالي",
+        "Amount": "الكمية",
+        "Network": "الشبكة",
+        "Coin": "العملة",
+        "Status": "الحالة",
+        "Close": "إغلاق",
+        "Go": "اذهب",
+        "Fee": "الرسوم"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -190,5 +200,26 @@
     "AccountAdd": {
         "label-chooseAccount": "اختر حساباً",
         "p-msgLimit": "الحد الأدنى للإيداع "
+    },
+    "Send": {
+        "Templates": "القوالب",
+        "ChooseSystem": "اختر نظام",
+        "TransferType": "نوع التحويل",
+        "ChooseTemplate": "اختر قالب",
+        "AddAddressToTemplates": "إضافة العنوان إلى القوالب؟",
+        "AddAccountToTemplates": "إضافة الحساب إلى القوالب",
+        "Internal": "داخلي",
+        "External": "خارجي",
+        "TransferBabelCoins": "التحويل إلى محفظة BabelCoins",
+        "MinTransaction": "الحد الأدنى لكل عملية تحويل",
+        "MaxTransaction": "الحد الأعلى لكل عملية تحويل",
+        "TransferTerm": "مدة التحويل",
+        "Instantly": "فوري",
+        "Modal-title-info": "معلومات الإرسال",
+        "Modal-title-failure": "فشل الإرسال",
+        "Modal-ReceiverAddress": "عنوان المستلم",
+        "Modal-ReceiverAccountName": "حساب المستلم",
+        "Modal-OperationID": "معرف العملية",
+        "Modal-DateTime": "التاريخ والوقت"
     }
 }

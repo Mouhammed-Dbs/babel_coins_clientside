@@ -30,10 +30,13 @@ import Link from "next/link";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 import { getAllTemplates } from "../../../public/global_functions/template";
 import { loadMessages } from "@/lib/loadMessages";
+import { useTranslations } from "next-intl";
 
 export default function Send(props) {
   const router = useRouter();
   const { query } = router;
+  const t = useTranslations("Send");
+  const t_w = useTranslations("Words");
   const [mounted, setMount] = useState(false);
   const [transferType, setTransferType] = useState("external");
   const [coins, setCoins] = useState([]);
@@ -269,7 +272,7 @@ export default function Send(props) {
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <Modal
         size="md"
-        isOpen={isOpen}
+        isOpen={onOpen}
         onClose={onClose}
         onOpenChange={onOpenChange}
         className="border-t-2 border-gray-400"
@@ -279,13 +282,15 @@ export default function Send(props) {
             <>
               <ModalHeader>
                 {resData.error && (
-                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
                     <BiSolidError className="self-cente w-7 h-7 text-red-400" />
-                    <p className="self-center text-xl">Sending failure</p>
+                    <p className="self-center text-xl">
+                      {t("Modal-title-failure")}
+                    </p>
                   </span>
                 )}
                 {!resData.error && (
-                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400">
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
                     <FaInfoCircle
                       className={`self-cente w-7 h-7 ${
                         resData.data?.status === "pending"
@@ -293,7 +298,9 @@ export default function Send(props) {
                           : ""
                       }`}
                     />
-                    <p className="self-center text-xl">Sending Info</p>
+                    <p className="self-center text-xl">
+                      {t("Modal-title-info")}
+                    </p>
                   </span>
                 )}
               </ModalHeader>
@@ -304,38 +311,42 @@ export default function Send(props) {
                 {!resData.error && (
                   <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
                     <div className="flex gap-2">
-                      <p className="font-bold self-center">Coin:</p>
+                      <p className="font-bold self-center">{t_w("Coin")}:</p>
                       <p className="self-center">
                         {resData.data?.currencyName}
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Network:</p>
+                      <p className="font-bold">{t_w("Network")}:</p>
                       <p className="">{resData.data?.network}</p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Amount:</p>
+                      <p className="font-bold">{t_w("Amount")}:</p>
                       <p className="">{resData.data?.amount}</p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Fee:</p>
+                      <p className="font-bold">{t_w("Fee")}:</p>
                       <p className="">{resData.data?.fee}</p>
                     </div>
                     {resData.data.transferType === "external" ? (
                       <div className="flex flex-col gap-1">
-                        <p className="font-bold">Receiver address:</p>
+                        <p className="font-bold">
+                          {t("Modal-ReceiverAddress")}:
+                        </p>
                         <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
                           {resData.data?.receiverAddress}
                         </p>
                       </div>
                     ) : (
                       <div className="flex gap-2">
-                        <p className="font-bold">Receiver Account Name:</p>
+                        <p className="font-bold">
+                          {t("Modal-ReceiverAccountName")}:
+                        </p>
                         <p className="">{resData.data?.receiverAccountName}</p>
                       </div>
                     )}
                     <div className="flex flex-col gap-1">
-                      <p className="font-bold">Operation ID:</p>
+                      <p className="font-bold">{t("Modal-OperationID")}:</p>
                       <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
                         {resData.data?._id}
                         <CopyButton
@@ -345,7 +356,7 @@ export default function Send(props) {
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Status:</p>
+                      <p className="font-bold"> {t_w("Status")}:</p>
                       <p
                         className={
                           resData.data?.status === "pending"
@@ -357,7 +368,7 @@ export default function Send(props) {
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Date & Time:</p>
+                      <p className="font-bold">{t("Modal-DateTime")}:</p>
                       <p className="">
                         {getDateTimeFormated(resData.data?.dateOfTransfer)}
                       </p>
@@ -368,13 +379,13 @@ export default function Send(props) {
               <ModalFooter>
                 {resData.error && (
                   <Button color="danger" variant="light" onPress={onClose}>
-                    Close
+                    {t_w("Close")}
                   </Button>
                 )}
                 {!resData.error && (
                   <>
                     <Button color="danger" variant="light" onPress={onClose}>
-                      Close
+                      {t_w("Close")}
                     </Button>
                     {resData.data.transferType === "external" && (
                       <Button className="text-white" color="primary">
@@ -388,7 +399,9 @@ export default function Send(props) {
                               : ""
                           }
                         >
-                          Go {sitesScan[resData.data?.network]?.title}
+                          {t_w("Go") + " "}
+                          {""}
+                          {sitesScan[resData.data?.network]?.title}
                         </Link>
                       </Button>
                     )}
@@ -402,7 +415,7 @@ export default function Send(props) {
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
-            TRANSFER
+            {t_w("Transfer")}
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
@@ -413,7 +426,7 @@ export default function Send(props) {
             {/* System */}
             <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="text-right text-sm md:text-base w-36">
-                Choose system
+                {t("ChooseSystem")}
               </label>
               <Select
                 dir="ltr"
@@ -442,7 +455,7 @@ export default function Send(props) {
                 size="sm"
                 items={coins}
                 labelPlacement="outside"
-                placeholder="CHOOSE SYSTEM"
+                placeholder={t("ChooseSystem")}
                 selectorIcon={
                   <IoIosArrowDown color="var(--bg-primary-color)" />
                 }
@@ -501,8 +514,8 @@ export default function Send(props) {
             </div>
             {/* Network */}
             <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
-              <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
-                Network
+              <label className="block ltr:ml-1 rtl:mr-1 ltr:md:ml-0 rtl:md:mr-0 text-right text-sm md:text-base w-36 md:mt-3">
+                {t_w("Network")}
               </label>
               <Select
                 dir="ltr"
@@ -540,7 +553,7 @@ export default function Send(props) {
                 selectorIcon={
                   <IoIosArrowDown color="var(--bg-primary-color)" />
                 }
-                placeholder="network"
+                placeholder={t_w("Network")}
               >
                 {networks.map((network) => (
                   <SelectItem key={network} value={network}>
@@ -551,8 +564,8 @@ export default function Send(props) {
             </div>
             {/* Type Transfer */}
             <div className="md:flex m-auto w-full gap-4 items-center mt-4">
-              <label className="block ml-1 md:ml-0 md:text-right text-base w-36">
-                Transfer type
+              <label className="block ltr:ml-1 rtl:mr-1 ltr:md:ml-0 rtl:md:mr-0 md:text-right text-base w-36">
+                {t("TransferType")}
               </label>
               <div className="flex gap-4 mt-1 md:mt-0 pl-2 md:pl-0 text-sm">
                 <div className="flex gap-1">
@@ -581,7 +594,7 @@ export default function Send(props) {
                     name="transfer"
                     type="radio"
                   />
-                  <label htmlFor="external_transfer">External</label>
+                  <label htmlFor="external_transfer">{t("External")}</label>
                 </div>
                 <div className="flex gap-1">
                   <input
@@ -606,7 +619,7 @@ export default function Send(props) {
                     type="radio"
                     className="accent-primary"
                   />
-                  <label htmlFor="internal_transfer">Internal</label>
+                  <label htmlFor="internal_transfer">{t("Internal")}</label>
                 </div>
               </div>
             </div>
@@ -665,7 +678,7 @@ export default function Send(props) {
             </div>
 
             {!loading ? (
-              query["curr"] ? (
+              coinSelected ? (
                 <>
                   {/* Templates */}
                   {((templatesAccount.length > 0 &&
@@ -678,7 +691,7 @@ export default function Send(props) {
                       } m-auto w-full gap-4 items-center mt-2`}
                     >
                       <label className="text-right text-sm md:text-base w-36">
-                        Templates
+                        {t("Templates")}
                       </label>
                       <Select
                         dir="ltr"
@@ -711,7 +724,7 @@ export default function Send(props) {
                         aria-label="none"
                         size="sm"
                         labelPlacement="outside"
-                        placeholder="CHOOSE TEMPLATE"
+                        placeholder={t("ChooseTemplate")}
                         selectorIcon={
                           <IoIosArrowDown color="var(--bg-primary-color)" />
                         }
@@ -761,7 +774,7 @@ export default function Send(props) {
                       }`}
                     >
                       <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                        Address
+                        {t_w("Address")}
                       </label>
                       <MyInput
                         // readOnly={templateSelected}
@@ -782,7 +795,7 @@ export default function Send(props) {
                         color="border-gray-500"
                         className="w-full md:w-64 border-black mt-3"
                         item={{
-                          label: screenSize ? undefined : "Address",
+                          label: screenSize ? undefined : t_w("Address"),
                           name: "address",
                           type: "text",
                           placeholder: placeholder,
@@ -798,7 +811,7 @@ export default function Send(props) {
                       }`}
                     >
                       <label className="hidden md:block text-right text-sm md:text-base w-36 mt-3">
-                        Account
+                        {t_w("Account")}
                       </label>
                       <MyInput
                         id="account_id"
@@ -823,7 +836,7 @@ export default function Send(props) {
                         color="border-gray-500"
                         className="w-full md:w-64 border-black mt-3"
                         item={{
-                          label: screenSize ? undefined : "Account",
+                          label: screenSize ? undefined : t_w("Account"),
                           name: "account",
                           type: "text",
                           placeholder: "B000000",
@@ -849,14 +862,12 @@ export default function Send(props) {
                             })
                           );
                         }}
-                        className="text-secondary text-xs text-start pl-2 mt-1 md:ml-40"
+                        className="text-secondary text-xs text-start ltr:pl-2 rtl:pr-2 mt-1 ltr:md:ml-40 rtl:md:mr-40"
                         href="/account/settings?tab=templates&add-template=true"
                       >
-                        Add
                         {transferType === "external"
-                          ? " address "
-                          : " account "}
-                        to templates?
+                          ? t("AddAddressToTemplates")
+                          : t("AddAccountToTemplates")}
                       </Link>
                     )}
                   </div>
@@ -864,7 +875,7 @@ export default function Send(props) {
                     {/* Amount */}
                     <div className="flex m-auto w-full md:gap-4 gap-2 items-end ">
                       <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36">
-                        Amount
+                        {t_w("Amount")}
                       </label>
                       <MyInput
                         color="border-gray-500"
@@ -889,7 +900,7 @@ export default function Send(props) {
                           }
                         }}
                         item={{
-                          label: screenSize ? undefined : "Amount",
+                          label: screenSize ? undefined : t_w("Amount"),
                           name: "amount",
                           type: "text",
                           placeholder: "0",
@@ -903,7 +914,7 @@ export default function Send(props) {
                     {/* Total */}
                     <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
                       <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                        Total
+                        {t_w("Total")}
                       </label>
                       <MyInput
                         value={amount.length > 0 ? parseFloat(amount) + fee : 0}
@@ -911,7 +922,7 @@ export default function Send(props) {
                         color="border-gray-500"
                         className="w-full md:w-48 border-black mb-3 mt-3"
                         item={{
-                          label: screenSize ? undefined : "Total",
+                          label: screenSize ? undefined : t_w("Total"),
                           name: "amount",
                           type: "text",
                           placeholder: "$0",
@@ -960,22 +971,20 @@ export default function Send(props) {
               <MyLoading />
             )}
           </div>
-          {!loading && query["curr"] ? (
-            <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
-              <h1 className="font-bold text-sm">
-                Transfer to BabelCoins Wallet
-              </h1>
+          {!loading && coinSelected ? (
+            <div className="block w-full h-fit text-start border-l ltr:lg:border-l-2 rtl:lg:border-r-2 ltr:pl-3 rtl:pr-3 mt-4">
+              <h1 className="font-bold text-sm">{t("TransferBabelCoins")}</h1>
               <div className="my-4 text-xs">
                 <p>{limits?.minInOneTime}</p>
-                <p className="text-gray-400">Min. per transaction</p>
+                <p className="text-gray-400">{t("MinTransaction")}</p>
               </div>
               <div className="my-4 text-xs">
                 <p>{limits?.maxInOneTime}</p>
-                <p className="text-gray-400">Max. per transaction</p>
+                <p className="text-gray-400">{t("MaxTransaction")}</p>
               </div>
               <div className="my-4 text-xs">
-                <p>Instantly</p>
-                <p className="text-gray-400">Transfer term</p>
+                <p>{t("Instantly")}</p>
+                <p className="text-gray-400">{t("TransferTerm")}</p>
               </div>
             </div>
           ) : (
@@ -983,7 +992,7 @@ export default function Send(props) {
           )}
         </div>
 
-        <div className="w-fit m-auto lg:m-0 lg:ml-44 mt-4">
+        <div className="w-fit m-auto lg:m-0 ltr:lg:ml-44 rtl:mr-44 mt-4">
           <Button
             isDisabled={!isDataValid() || sendLoading}
             className="bg-orange text-white rounded-full mt-5 px-10"
@@ -1021,7 +1030,7 @@ export default function Send(props) {
               }
             }}
           >
-            {sendLoading ? "SENDING.." : "SEND"}
+            {sendLoading ? t_w("Sending") : t_w("Send")}
           </Button>
         </div>
       </div>

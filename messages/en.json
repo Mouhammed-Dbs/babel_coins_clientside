@@ -6,7 +6,9 @@
         "Email": "Email",
         "Password": "Password",
         "Send": "Send",
+        "Sending": "Sending..",
         "Address": "Address",
+        "Account": "Account",
         "Message": "Message",
         "Code": "Code",
         "SecretCode": "Secret code",
@@ -22,7 +24,15 @@
         "Exchange": "EXCHANGE",
         "History": "HISTORY",
         "Support": "Support",
-        "Logout": "Logout"
+        "Logout": "Logout",
+        "Total": "Total",
+        "Amount": "Amount",
+        "Network": "Network",
+        "Coin": "Coin",
+        "Status": "Status",
+        "Close": "Close",
+        "Go": "Go",
+        "Fee": "Fee"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -190,5 +200,26 @@
     "AccountAdd": {
         "label-chooseAccount": "Choose account",
         "p-msgLimit": "Minimum deposit limit for"
+    },
+    "Send": {
+        "Templates": "Templates",
+        "ChooseSystem": "Choose system",
+        "TransferType": "Transfer type",
+        "ChooseTemplate": "Choose Template",
+        "AddAddressToTemplates": "Add address to templates?",
+        "AddAccountToTemplates": "Add account to templates?",
+        "Internal": "Internal",
+        "External": "External",
+        "TransferBabelCoins": "Transfer to BabelCoins Wallet",
+        "MinTransaction": "Min. per transaction",
+        "MaxTransaction": "Max. per transaction",
+        "TransferTerm": "Transfer term",
+        "Instantly": "Instantly",
+        "Modal-title-info": "Sending info",
+        "Modal-title-failure": "Sending failure",
+        "Modal-ReceiverAddress": "Receiver address",
+        "Modal-ReceiverAccountName": "Receiver Account Name",
+        "Modal-OperationID": "Operation ID",
+        "Modal-DateTime": "Date & Time"
     }
 }
