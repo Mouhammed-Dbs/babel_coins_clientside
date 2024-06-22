@@ -90,7 +90,10 @@ export default function Signup() {
         <CardBody>
           <form onSubmit={login} className="contents">
             <h1 className="text-center text-sm mb-2">{t("h-des")}</h1>
-            <a className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed">
+            <a
+              className="w-fit flex justify-center items-center self-center text-xs p-1 px-2 rounded-full text-cyan-300 underline bg-slate-100 bg-opacity-25 cursor-not-allowed"
+              style={{ direction: "ltr" }}
+            >
               <FaLock className="mr-1" />
               https://babelcoins.com
             </a>

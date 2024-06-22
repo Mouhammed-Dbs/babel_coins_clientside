@@ -272,7 +272,7 @@ export default function Send(props) {
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
       <Modal
         size="md"
-        isOpen={onOpen}
+        isOpen={isOpen}
         onClose={onClose}
         onOpenChange={onOpenChange}
         className="border-t-2 border-gray-400"
