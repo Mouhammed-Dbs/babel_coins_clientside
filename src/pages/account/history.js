@@ -17,8 +17,11 @@ import {
 } from "../../../public/global_functions/coins";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 import { loadMessages } from "@/lib/loadMessages";
+import { useTranslations } from "next-intl";
 
 export default function History() {
+  const t = useTranslations("History");
+  const t_w = useTranslations("Words");
   const PAGE_SIZE = 4;
   const [tab, setTab] = useState("CREDIT");
   const [loading, setLoading] = useState(false);
@@ -122,7 +125,7 @@ export default function History() {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white mt-24`}
       />
@@ -134,7 +137,7 @@ export default function History() {
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
-            HISTORY
+            {t("History")}
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
@@ -191,7 +194,7 @@ export default function History() {
               getData("deposits", 1, PAGE_SIZE, filters);
             }}
           >
-            CREDIT
+            {t("Credit")}
           </Button>
           <Button
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none ${
@@ -204,7 +207,7 @@ export default function History() {
               getData("transfers", 1, PAGE_SIZE, filters);
             }}
           >
-            DEBIT
+            {t("Debit")}
           </Button>
         </div>
         {/* Export To CSV & Show Filter */}
@@ -215,7 +218,7 @@ export default function History() {
               size={!screenSize ? "sm" : ""}
             >
               <FaFileCsv />
-              EXPORT TO CSV
+              {t("ExportCSV")}
             </Button>
             {itemSelected === "TRANSACTIONS" && (
               <Button
@@ -225,7 +228,7 @@ export default function History() {
                 }}
                 size={!screenSize ? "sm" : ""}
               >
-                SHOW FILTER
+                {t("ShowFilter")}
               </Button>
             )}
           </div>
@@ -241,15 +244,19 @@ export default function History() {
                     color="border-gray-500"
                     className="w-40 border-black"
                     item={{
-                      label: "Operation ID:",
+                      label: t("OperationID") + ":",
                       name: "operation_id",
                       type: "text",
                       placeholder: "",
                     }}
                   />
-                  <div className="mt-7">
+
+                  <div className="mt-1">
+                    <label className="block w-full ltr:text-left rtl:text-right text-sm px-1">
+                      {t_w("Type")}:
+                    </label>
                     <Select
-                      label="Type:"
+                      dir="ltr"
                       selectedKeys={[tab]}
                       onChange={(e) => {
                         setTab(e.target.value);
@@ -274,44 +281,47 @@ export default function History() {
                       }
                     >
                       <SelectItem key="DEBIT" value="DEBIT">
-                        DEBIT
+                        {t("Debit")}
                       </SelectItem>
                       <SelectItem key="CREDIT" value="CREDIT">
-                        CREDIT
+                        {t("Credit")}
                       </SelectItem>
                     </Select>
                   </div>
                 </div>
                 <div className="w-full px-1 md:px-4">
                   <div className="w-full">
-                    <label className="block w-full text-left text-sm mb-[2.5px]">
-                      From
+                    <label className="block w-full ltr:text-left rtl:text-right text-sm mb-[2.5px] px-1">
+                      {t("From")}
                     </label>
                     <DatePicker
-                      className="bg-inherit w-40 outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
+                      className="bg-inherit w-40 md:w-full outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
                       selected={fromDate}
                       onChange={(date) => setFromDate(date)}
                     />
                   </div>
                   <div className="w-full mt-2">
-                    <label className="block w-full text-left text-sm mb-1">
-                      Till
+                    <label className="block w-full ltr:text-left rtl:text-right text-sm mb-1 px-1">
+                      {t("Till")}
                     </label>
                     <DatePicker
-                      className="bg-inherit w-40 outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
+                      className="bg-inherit w-40 md:w-full outline-none rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 px-4 py-[3px]"
                       selected={tillDate}
                       onChange={(date) => setTillDate(date)}
                     />
                   </div>
                 </div>
-                <div className="w-full text-left px-1 md:px-4">
+                <div className="w-full ltr:text-left rtl:text-right px-1 md:px-4">
+                  <label className="block w-full ltr:text-left rtl:text-right text-xs px-1">
+                    {t_w("Currency")}:
+                  </label>
                   <Select
-                    label="Currency:"
+                    dir="ltr"
                     defaultSelectedKeys={["all"]}
                     disallowEmptySelection={true}
                     aria-label="none"
                     classNames={{
-                      base: "w-40 peer mt-3 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+                      base: "w-40 peer self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
                       trigger: "h-8",
                     }}
                     size="sm"
@@ -339,7 +349,7 @@ export default function History() {
                     size="md"
                     className="bg-orange text-white rounded-full mt-4"
                   >
-                    {loading ? "Sending.." : "Apply"}
+                    {loading ? t_w("Sending") : t_w("Apply")}
                   </Button>
                 </div>
               </div>
@@ -368,14 +378,18 @@ export default function History() {
           <div className="mx-1 md:mx-4">
             <div className="flex md:px-2 py-2 mt-3 font-bold text-gray-700 dark:text-gray-300 text-center">
               <h3 className="w-3/12 text-xs md:text-sm text-start pl-2 md:pl-4">
-                DATE
+                {t("Date")}
               </h3>
-              <h3 className="w-3/12 text-xs md:text-sm">{tab}</h3>
+              <h3 className="w-3/12 text-xs md:text-sm">
+                {tab === "DEBIT" ? t("Debit") : t("Credit")}
+              </h3>
               <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
-                PS
+                {t("PS")}
               </h3>
-              <h3 className="w-4/12 text-xs md:text-sm">ID</h3>
-              <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">STATUS</h3>
+              <h3 className="w-4/12 text-xs md:text-sm">{t("ID")}</h3>
+              <h3 className="md:w-1/12 w-2/12 text-xs md:text-sm">
+                {t("Status")}
+              </h3>
             </div>
             <ul className="w-full">
               {data.map((item) => (

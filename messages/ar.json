@@ -32,7 +32,10 @@
         "Status": "الحالة",
         "Close": "إغلاق",
         "Go": "اذهب",
-        "Fee": "الرسوم"
+        "Fee": "الرسوم",
+        "Currency": "العملة",
+        "Type": "النوع",
+        "Apply": "تنفيذ"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -221,5 +224,19 @@
         "Modal-ReceiverAccountName": "حساب المستلم",
         "Modal-OperationID": "معرف العملية",
         "Modal-DateTime": "التاريخ والوقت"
+    },
+    "History": {
+        "History": "السجل",
+        "Credit": "المستلمة",
+        "Debit": "المرسلة",
+        "ShowFilter": "عرض الفلتر",
+        "ExportCSV": "تصدير كملف CSV",
+        "Date": "التاريخ",
+        "Status": "الحالة",
+        "ID": "المعرف",
+        "PS": "الرمز",
+        "From": "من",
+        "Till": "إلى",
+        "OperationID": "معرف العملية"
     }
 }

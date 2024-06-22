@@ -32,7 +32,10 @@
         "Status": "Status",
         "Close": "Close",
         "Go": "Go",
-        "Fee": "Fee"
+        "Fee": "Fee",
+        "Currency": "Currency",
+        "Type": "Type",
+        "Apply": "Apply"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -221,5 +224,19 @@
         "Modal-ReceiverAccountName": "Receiver Account Name",
         "Modal-OperationID": "Operation ID",
         "Modal-DateTime": "Date & Time"
+    },
+    "History": {
+        "History": "History",
+        "Credit": "Credit",
+        "Debit": "Debit",
+        "ShowFilter": "Show filter",
+        "ExportCSV": "EXPORT TO CSV",
+        "Date": "Date",
+        "Status": "Date",
+        "ID": "ID",
+        "PS": "PS",
+        "From": "From",
+        "Till": "Till",
+        "OperationID": "Operation ID"
     }
 }
