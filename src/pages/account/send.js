@@ -255,7 +255,7 @@ export default function Send(props) {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white mt-24`}
       />
@@ -263,7 +263,7 @@ export default function Send(props) {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white bg-white/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
