@@ -311,7 +311,7 @@ export default function History() {
                     />
                   </div>
                 </div>
-                <div className="w-full ltr:text-left rtl:text-right px-1 md:px-4">
+                <div className="w-full ltr:text-left rtl:text-right px-1 md:px-4 mt-2">
                   <label className="block w-full ltr:text-left rtl:text-right text-xs px-1">
                     {t_w("Currency")}:
                   </label>
