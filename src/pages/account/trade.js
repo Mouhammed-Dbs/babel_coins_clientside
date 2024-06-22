@@ -48,7 +48,7 @@ export default function Trade() {
       />
     );
   return (
-    <div className="flex w-screen h-screen pt-3 pr-24 gap-3 overflow-y-scroll">
+    <div className="flex h-screen w-screen pt-3 rtl:pl-24 ltr:pr-24 gap-3 overflow-y-scroll overflow-x-hidden no-scrollbar pb-20">
       {/* First Col */}
       <div className="w-1/5 min-w-max h-fit">
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
@@ -62,7 +62,7 @@ export default function Trade() {
           {/* Tabs */}
           <div className="flex bg-white/85 dark:bg-default-200/50 rounded-md w-[93%] m-auto mt-1">
             <button
-              className={`w-1/3 p-1 border-1 rounded-l-md hover:border-sky-500 ${
+              className={`w-1/3 p-1 border-1 ltr:rounded-l-md rtl:rounded-r-md hover:border-sky-500 ${
                 showOrders === "buy" ? "border-sky-500" : ""
               }`}
               onClick={() => setShowOrdes("buy")}
@@ -90,7 +90,7 @@ export default function Trade() {
               />
             </button>
             <button
-              className={`w-1/3 p-1 border-1 rounded-r-md hover:border-sky-500 ${
+              className={`w-1/3 p-1 border-1 ltr:rounded-r-md rtl:rounded-l-md hover:border-sky-500 ${
                 showOrders === "sell" ? "border-sky-500" : ""
               }`}
               onClick={() => setShowOrdes("sell")}
@@ -382,7 +382,7 @@ export default function Trade() {
 
       {/* Second Col */}
       <div
-        className="w-3/5 md:min-w-[360px] lg:min-w-[400px]"
+        className="w-3/5 min-w-[360px] lg:min-w-[400px]"
         style={{ height: heightWindow + 340 + "px" }}
       >
         {/* Price Graph */}
