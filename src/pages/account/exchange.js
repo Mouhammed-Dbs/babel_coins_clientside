@@ -90,7 +90,7 @@ export default function Exchange() {
 
   // Socket.IO connection
   useEffect(() => {
-    const socket = io("https://api.babelcoins.com", {
+    const socket = io(process.env.BASE_API_URL, {
       transports: ["polling"],
     });
     socket.on("connect", () => {
