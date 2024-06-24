@@ -204,6 +204,31 @@ const getOperations = async (operationType, pageNumber, pageSize, filters) => {
   }
 };
 
+const exchange = async (
+  sellCurrencyName,
+  buyCurrencyName,
+  sellCurrencyAmount
+) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.post(
+        `${process.env.BASE_API_URL}/exchanges/add-new-exchange`,
+        { sellCurrencyName, buyCurrencyName, sellCurrencyAmount },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
 export {
   getBalanceCoins,
   getAddressesByCoinName,
@@ -214,4 +239,5 @@ export {
   transferMoney,
   getOperationsCount,
   getOperations,
+  exchange,
 };

@@ -1,21 +1,36 @@
-import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@nextui-org/react";
+import { useRouter } from "next/router";
 import { IoIosArrowDown } from "react-icons/io";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import {
-  getFeesByCoinNameAndNetwork,
+  exchange,
   getNetworksCurrencies,
-  getTransferLimitsByCoinNameAndNetwork,
-  transferMoney,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
 import { validateAmount } from "../../../public/global_functions/validation";
 import { loadMessages } from "@/lib/loadMessages";
+import io from "socket.io-client";
+import { BiSolidError } from "react-icons/bi";
+import { FaInfoCircle } from "react-icons/fa";
+import { CopyButton } from "@/components/utils/CopyButton";
+import { getDateTimeFormated } from "../../../public/global_functions/helpers";
+import { useTranslations } from "next-intl";
 
 export default function Exchange() {
-  const router = useRouter();
+  const t_w = useTranslations("Words");
   const [mounted, setMount] = useState(false);
   const [debitAccounts, setDebitAccounts] = useState([]);
   const [creditAccounts, setCreditAccounts] = useState([]);
@@ -25,6 +40,23 @@ export default function Exchange() {
   const [pageLoading, setPageLoading] = useState(true);
   const [debit, setDebit] = useState(0);
   const [credit, setCredit] = useState(0);
+  const [exchangeRate, setExchangeRate] = useState(null);
+  const [response, setResponse] = useState({ error: false, data: {} });
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+
+  const exchangeCoin = async (
+    sellCurrencyName,
+    buyCurrencyName,
+    sellCurrencyAmount
+  ) => {
+    const res = await exchange(
+      sellCurrencyName,
+      buyCurrencyName,
+      sellCurrencyAmount
+    );
+    setResponse(res);
+    onOpen();
+  };
 
   useEffect(() => {
     setScreenSize(screenIs("md"));
@@ -56,6 +88,28 @@ export default function Exchange() {
       });
   }, []);
 
+  // Socket.IO connection
+  useEffect(() => {
+    const socket = io("https://api.babelcoins.com", {
+      transports: ["polling"],
+    });
+    socket.on("connect", () => {
+      console.log("Socket.IO connected");
+    });
+
+    socket.on("change currency rates", (data) => {
+      setExchangeRate(data); // update exchange rate
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket.IO disconnected");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   if (!mounted)
     return (
       <MyLoading
@@ -74,6 +128,105 @@ export default function Exchange() {
     );
   return (
     <div className="h-screen container m-auto no-scrollbar overflow-y-scroll pb-[150px]">
+      <Modal
+        size="md"
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+        className="border-t-2 border-gray-400"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>
+                {response.error && (
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
+                    <BiSolidError className="self-cente w-7 h-7 text-red-400" />
+                    <p className="self-center text-xl">Error</p>
+                  </span>
+                )}
+                {!response.error && (
+                  <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
+                    <FaInfoCircle className={`self-cente w-7 h-7`} />
+                    <p className="self-center text-xl">Info</p>
+                  </span>
+                )}
+              </ModalHeader>
+              <ModalBody>
+                {response.error && (
+                  <p className={`w-fit m-auto`}>{response.msg}</p>
+                )}
+                {!response.error && (
+                  <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
+                    <div className="flex gap-2">
+                      <p className="font-bold self-center">Sell Currency:</p>
+                      <p className="self-center">
+                        {response.data?.sellCurrencyName}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Buy Currency:</p>
+                      <p className="">{response.data?.buyCurrencyName}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Sell Amount:</p>
+                      <p className="">{response.data?.sellCurrencyAmount}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Buy Amount:</p>
+                      <p className="">{response.data?.buyCurrencyAmount}</p>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <p className="font-bold">Rate:</p>
+                      <p className="">{response.data?.rate}</p>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <p className="font-bold">Fee:</p>
+                      <p className="">{response.data?.fee}</p>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <p className="font-bold">Operation ID:</p>
+                      <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
+                        {response.data?._id}
+                        <CopyButton
+                          className="self-center ml-2 text-primary hover:text-opacity-70"
+                          copy={response.data?._id}
+                        />
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold"> Status:</p>
+                      <p
+                        className={
+                          response.data?.status === "success"
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        {response.data.status?.toUpperCase()}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-bold">Date & Time:</p>
+                      <p className="">
+                        {getDateTimeFormated(response.data?.dateOfExchange)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  {t_w("Close")}
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
@@ -100,11 +253,26 @@ export default function Exchange() {
                     e.target.value !== "USDT"
                   ) {
                     setCreditSelected("USDT");
+                    setCredit(
+                      Number(debit) *
+                        Number(exchangeRate[e.target.value]["USDT"].rate)
+                    );
                   } else if (
                     e.target.value === creditSelected &&
                     e.target.value === "USDT"
                   ) {
                     setCreditSelected("TRX");
+                    setCredit(
+                      Number(debit) *
+                        Number(exchangeRate[e.target.value]["TRX"].rate)
+                    );
+                  } else {
+                    setCredit(
+                      Number(debit) *
+                        Number(
+                          exchangeRate[e.target.value][creditSelected].rate
+                        )
+                    );
                   }
                   setDebitSelected(e.target.value);
                 }}
@@ -188,11 +356,24 @@ export default function Exchange() {
                     e.target.value !== "USDT"
                   ) {
                     setDebitSelected("USDT");
+                    setCredit(
+                      Number(debit) *
+                        Number(exchangeRate["USDT"][e.target.value].rate)
+                    );
                   } else if (
                     e.target.value === debitSelected &&
                     e.target.value === "USDT"
                   ) {
                     setDebitSelected("TRX");
+                    setCredit(
+                      Number(debit) *
+                        Number(exchangeRate["TRX"][e.target.value].rate)
+                    );
+                  } else {
+                    setCredit(
+                      Number(debit) *
+                        Number(exchangeRate[debitSelected][e.target.value].rate)
+                    );
                   }
                   setCreditSelected(e.target.value);
                 }}
@@ -269,9 +450,14 @@ export default function Exchange() {
               <MyInput
                 color="border-gray-500"
                 className="w-36 border-black mt-3"
+                value={debit}
                 onChange={(e) => {
                   let value = validateAmount(e.target.value);
                   setDebit(value);
+                  setCredit(
+                    Number(e.target.value) *
+                      Number(exchangeRate[debitSelected][creditSelected].rate)
+                  );
                 }}
                 item={{
                   label: screenSize ? undefined : "Debit",
@@ -282,11 +468,15 @@ export default function Exchange() {
               />
             </div>
             {/* Rate */}
-            <div className="flex m-auto w-full md:gap-4 gap-2 items-end mt-4">
-              <label className="block text-left md:text-right text-sm md:text-base w-14 md:w-36">
+            <div className="flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
+              <label className="block text-left md:text-right text-sm md:text-base w-14 md:w-36 ">
                 Rate{!screenSize ? " :" : null}
               </label>
-              <p className="text-red-500">{50}</p>
+              <p className="text-red-500 text-sm md:text-base">
+                {exchangeRate
+                  ? exchangeRate[debitSelected][creditSelected].rate
+                  : 0}
+              </p>
             </div>
             {/* Credit */}
             <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
@@ -296,9 +486,14 @@ export default function Exchange() {
               <MyInput
                 color="border-gray-500"
                 className="w-36 border-black mb-3 mt-3"
+                value={credit}
                 onChange={(e) => {
                   let value = validateAmount(e.target.value);
                   setCredit(value);
+                  setDebit(
+                    Number(e.target.value) /
+                      Number(exchangeRate[debitSelected][creditSelected].rate)
+                  );
                 }}
                 item={{
                   label: screenSize ? undefined : "Total",
@@ -330,9 +525,11 @@ export default function Exchange() {
 
         <div className="w-fit m-auto lg:m-0 lg:ml-44">
           <Button
-            isDisabled={true}
+            isDisabled={!debit}
             className="bg-orange text-white rounded-full mt-5 px-8"
-            onClick={() => {}}
+            onClick={() => {
+              exchangeCoin(debitSelected, creditSelected, Number(debit));
+            }}
           >
             {"EXCHANGE"}
           </Button>
