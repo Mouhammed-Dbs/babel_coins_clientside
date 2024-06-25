@@ -37,6 +37,7 @@ export default function Exchange() {
   const [debitSelected, setDebitSelected] = useState("TRX");
   const [screenSize, setScreenSize] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [exchLoading, setExchLoading] = useState(false);
   const [debit, setDebit] = useState(0);
   const [credit, setCredit] = useState(0);
   const [exchangeRate, setExchangeRate] = useState(null);
@@ -49,11 +50,13 @@ export default function Exchange() {
     buyCurrencyName,
     sellCurrencyAmount
   ) => {
+    setExchLoading(true);
     const res = await exchange(
       sellCurrencyName,
       buyCurrencyName,
       sellCurrencyAmount
     );
+    setExchLoading(false);
     setResponse(res);
     onOpen();
   };
@@ -553,13 +556,13 @@ export default function Exchange() {
 
         <div className="w-fit m-auto lg:m-0 lg:ml-44">
           <Button
-            isDisabled={!debit}
+            isDisabled={!debit || exchLoading}
             className="bg-orange text-white rounded-full mt-5 px-8"
             onClick={() => {
               exchangeCoin(debitSelected, creditSelected, Number(debit));
             }}
           >
-            {"EXCHANGE"}
+            {exchLoading ? "EXCHANGING" : "EXCHANGE"}
           </Button>
         </div>
       </div>
