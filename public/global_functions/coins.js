@@ -229,6 +229,26 @@ const exchange = async (
   return null;
 };
 
+const getExchangeFee = async (sellCurrencyName, buyCurrencyName) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/exchange-fees/fee-by-exchange-info?sellCurrencyName=${sellCurrencyName}&buyCurrencyName=${buyCurrencyName}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  return null;
+};
+
 export {
   getBalanceCoins,
   getAddressesByCoinName,
@@ -240,4 +260,5 @@ export {
   getOperationsCount,
   getOperations,
   exchange,
+  getExchangeFee,
 };

@@ -11,12 +11,12 @@ import {
   SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
-import { useRouter } from "next/router";
 import { IoIosArrowDown } from "react-icons/io";
 import MyInput from "@/components/utils/MyInput";
 import screenIs from "@/screen";
 import {
   exchange,
+  getExchangeFee,
   getNetworksCurrencies,
 } from "../../../public/global_functions/coins";
 import MyLoading from "@/components/MyLoading";
@@ -25,7 +25,6 @@ import { loadMessages } from "@/lib/loadMessages";
 import io from "socket.io-client";
 import { BiSolidError } from "react-icons/bi";
 import { FaInfoCircle } from "react-icons/fa";
-import { CopyButton } from "@/components/utils/CopyButton";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 import { useTranslations } from "next-intl";
 
@@ -42,6 +41,7 @@ export default function Exchange() {
   const [credit, setCredit] = useState(0);
   const [exchangeRate, setExchangeRate] = useState(null);
   const [response, setResponse] = useState({ error: false, data: {} });
+  const [fee, setFee] = useState(0);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
   const exchangeCoin = async (
@@ -56,6 +56,27 @@ export default function Exchange() {
     );
     setResponse(res);
     onOpen();
+  };
+
+  const getFee = async (sellCurrencyName, buyCurrencyName) => {
+    const res = await getExchangeFee(sellCurrencyName, buyCurrencyName);
+    if (!res.error) {
+      setFee(res.data.fee);
+      if (exchangeRate)
+        setCredit(
+          calculateCredit(
+            debit,
+            exchangeRate[sellCurrencyName][buyCurrencyName].rate
+          )
+        );
+    }
+  };
+
+  const calculateCredit = (amount, rate) => {
+    return (
+      Number(amount) * Number(rate) -
+      (Number(amount) * Number(rate) * fee) / 100
+    );
   };
 
   useEffect(() => {
@@ -80,6 +101,7 @@ export default function Exchange() {
           );
           setCreditAccounts(data);
           setDebitAccounts(data);
+          getFee("TRX", "USDT");
         }
         setPageLoading(false);
       })
@@ -98,7 +120,10 @@ export default function Exchange() {
     });
 
     socket.on("change currency rates", (data) => {
-      setExchangeRate(data); // update exchange rate
+      setExchangeRate(data);
+      setCredit(
+        calculateCredit(debit, data[debitSelected][creditSelected].rate)
+      );
     });
 
     socket.on("disconnect", () => {
@@ -183,21 +208,6 @@ export default function Exchange() {
                     </div>
 
                     <div className="flex gap-2">
-                      <p className="font-bold">Fee:</p>
-                      <p className="">{response.data?.fee}</p>
-                    </div>
-
-                    <div className="flex flex-col gap-1">
-                      <p className="font-bold">Operation ID:</p>
-                      <p className="flex item-center text-sky-800 dark:text-sky-600 text-xs md:text-sm mb-[2px] border-2 dark:border-slate-400 border-black border-opacity-55 rounded-md p-2 w-fit break-all">
-                        {response.data?._id}
-                        <CopyButton
-                          className="self-center ml-2 text-primary hover:text-opacity-70"
-                          copy={response.data?._id}
-                        />
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
                       <p className="font-bold"> Status:</p>
                       <p
                         className={
@@ -254,24 +264,31 @@ export default function Exchange() {
                   ) {
                     setCreditSelected("USDT");
                     setCredit(
-                      Number(debit) *
-                        Number(exchangeRate[e.target.value]["USDT"].rate)
+                      calculateCredit(
+                        debit,
+                        exchangeRate[e.target.value]["USDT"].rate
+                      )
                     );
+                    getFee(e.target.value, "USDT");
                   } else if (
                     e.target.value === creditSelected &&
                     e.target.value === "USDT"
                   ) {
                     setCreditSelected("TRX");
                     setCredit(
-                      Number(debit) *
-                        Number(exchangeRate[e.target.value]["TRX"].rate)
+                      calculateCredit(
+                        debit,
+                        exchangeRate[e.target.value]["TRX"].rate
+                      )
                     );
+                    getFee(e.target.value, "TRX");
                   } else {
+                    getFee(e.target.value, creditSelected);
                     setCredit(
-                      Number(debit) *
-                        Number(
-                          exchangeRate[e.target.value][creditSelected].rate
-                        )
+                      calculateCredit(
+                        debit,
+                        exchangeRate[e.target.value][creditSelected].rate
+                      )
                     );
                   }
                   setDebitSelected(e.target.value);
@@ -357,23 +374,32 @@ export default function Exchange() {
                   ) {
                     setDebitSelected("USDT");
                     setCredit(
-                      Number(debit) *
-                        Number(exchangeRate["USDT"][e.target.value].rate)
+                      calculateCredit(
+                        debit,
+                        exchangeRate["USDT"][e.target.value].rate
+                      )
                     );
+                    getFee("USDT", e.target.value);
                   } else if (
                     e.target.value === debitSelected &&
                     e.target.value === "USDT"
                   ) {
                     setDebitSelected("TRX");
                     setCredit(
-                      Number(debit) *
-                        Number(exchangeRate["TRX"][e.target.value].rate)
+                      calculateCredit(
+                        debit,
+                        exchangeRate["TRX"][e.target.value].rate
+                      )
                     );
+                    getFee("TRX", e.target.value);
                   } else {
                     setCredit(
-                      Number(debit) *
-                        Number(exchangeRate[debitSelected][e.target.value].rate)
+                      calculateCredit(
+                        debit,
+                        exchangeRate[debitSelected][e.target.value].rate
+                      )
                     );
+                    getFee(debitSelected, e.target.value);
                   }
                   setCreditSelected(e.target.value);
                 }}
@@ -455,8 +481,10 @@ export default function Exchange() {
                   let value = validateAmount(e.target.value);
                   setDebit(value);
                   setCredit(
-                    Number(e.target.value) *
-                      Number(exchangeRate[debitSelected][creditSelected].rate)
+                    calculateCredit(
+                      e.target.value,
+                      exchangeRate[debitSelected][creditSelected].rate
+                    )
                   );
                 }}
                 item={{
