@@ -30,6 +30,7 @@ import { useTranslations } from "next-intl";
 
 export default function Exchange() {
   const t_w = useTranslations("Words");
+  const t = useTranslations("Exchange");
   const [mounted, setMount] = useState(false);
   const [debitAccounts, setDebitAccounts] = useState([]);
   const [creditAccounts, setCreditAccounts] = useState([]);
@@ -141,7 +142,7 @@ export default function Exchange() {
   if (!mounted)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white mt-24`}
       />
@@ -149,7 +150,7 @@ export default function Exchange() {
   if (pageLoading)
     return (
       <MyLoading
-        msg="Loading.."
+        msg={t_w("Loading")}
         color="primary"
         className={`text-black dark:text-white bg-slate-200/55 dark:bg-default-100/55 backdrop-blur-md mt-24`}
       />
@@ -170,13 +171,17 @@ export default function Exchange() {
                 {response.error && (
                   <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
                     <BiSolidError className="self-cente w-7 h-7 text-red-400" />
-                    <p className="self-center text-xl">Error</p>
+                    <p className="self-center text-xl">
+                      {t("Modal-title-failure")}
+                    </p>
                   </span>
                 )}
                 {!response.error && (
                   <span className="flex gap-3 text-lg text-gray-700 dark:text-gray-400 w-full pr-4">
                     <FaInfoCircle className={`self-cente w-7 h-7`} />
-                    <p className="self-center text-xl">Info</p>
+                    <p className="self-center text-xl">
+                      {t("Modal-title-info")}
+                    </p>
                   </span>
                 )}
               </ModalHeader>
@@ -187,31 +192,33 @@ export default function Exchange() {
                 {!response.error && (
                   <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
                     <div className="flex gap-2">
-                      <p className="font-bold self-center">Sell Currency:</p>
+                      <p className="font-bold self-center">
+                        {t("Modal-SellCurrency")}:
+                      </p>
                       <p className="self-center">
                         {response.data?.sellCurrencyName}
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Buy Currency:</p>
+                      <p className="font-bold">{t("Modal-BuyCurrency")}:</p>
                       <p className="">{response.data?.buyCurrencyName}</p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Sell Amount:</p>
+                      <p className="font-bold">{t("Modal-SellAmount")}:</p>
                       <p className="">{response.data?.sellCurrencyAmount}</p>
                     </div>
                     <div className="flex gap-2">
-                      <p className="font-bold">Buy Amount:</p>
+                      <p className="font-bold">{t("Modal-BuyAmount")}:</p>
                       <p className="">{response.data?.buyCurrencyAmount}</p>
                     </div>
 
                     <div className="flex gap-2">
-                      <p className="font-bold">Rate:</p>
+                      <p className="font-bold">{t("Modal-Rate")}:</p>
                       <p className="">{response.data?.rate}</p>
                     </div>
 
                     <div className="flex gap-2">
-                      <p className="font-bold"> Status:</p>
+                      <p className="font-bold">{t_w("Status")}:</p>
                       <p
                         className={
                           response.data?.status === "success"
@@ -243,7 +250,7 @@ export default function Exchange() {
       <div className="w-full md:w-[720px] lg:w-[950px] m-auto mt-4 pb-3">
         <div className="w-fit pb-[2px]">
           <h1 className="w-fit text-lg md:text-2xl font-bold bg-slate-50/15 dark:bg-default-50/15 backdrop-blur-xs">
-            EXCHANGE
+            {t_w("Exchange")}
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-black dark:from-slate-300 via-gray-600 to-default-300 dark:bg-default-50 pb-[2px]"></div>
         </div>
@@ -254,9 +261,10 @@ export default function Exchange() {
             {/* Debit Account */}
             <div className="md:flex m-auto w-full gap-4 items-center">
               <label className="text-right text-sm md:text-base w-36">
-                Select account
+                {t("SelectAccount")}
               </label>
               <Select
+                dir="ltr"
                 selectedKeys={[debitSelected]}
                 defaultSelectedKeys={[debitSelected]}
                 disallowEmptySelection={true}
@@ -301,7 +309,7 @@ export default function Exchange() {
                 size="sm"
                 items={debitAccounts}
                 labelPlacement="outside"
-                placeholder="CHOOSE ACCOUNT"
+                placeholder={t("SelectAccount")}
                 selectorIcon={
                   <IoIosArrowDown color="var(--bg-primary-color)" />
                 }
@@ -364,9 +372,10 @@ export default function Exchange() {
             {/* Credit Account */}
             <div className="md:flex m-auto w-full gap-4 items-center mt-4">
               <label className="text-right text-sm md:text-base w-36">
-                Select account
+                {t("SelectAccount")}
               </label>
               <Select
+                dir="ltr"
                 selectedKeys={[creditSelected]}
                 defaultSelectedKeys={[creditSelected]}
                 disallowEmptySelection={true}
@@ -411,7 +420,7 @@ export default function Exchange() {
                 size="sm"
                 items={creditAccounts}
                 labelPlacement="outside"
-                placeholder="CHOOSE ACCOUNT"
+                placeholder={t("SelectAccount")}
                 selectorIcon={
                   <IoIosArrowDown color="var(--bg-primary-color)" />
                 }
@@ -474,7 +483,7 @@ export default function Exchange() {
             {/* Debit */}
             <div className="flex m-auto w-full md:gap-4 gap-2 items-end mt-2">
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mb-1">
-                Debit
+                {t_w("Debit")}
               </label>
               <MyInput
                 color="border-gray-500"
@@ -501,7 +510,8 @@ export default function Exchange() {
             {/* Rate */}
             <div className="flex m-auto w-full md:gap-4 gap-2 items-center mt-4">
               <label className="block text-left md:text-right text-sm md:text-base w-14 md:w-36 ">
-                Rate{!screenSize ? " :" : null}
+                {t("Modal-Rate")}
+                {!screenSize ? " :" : null}
               </label>
               <p className="text-red-500 text-sm md:text-base">
                 {exchangeRate
@@ -512,7 +522,7 @@ export default function Exchange() {
             {/* Credit */}
             <div className="flex m-auto w-full md:gap-4 gap-2 md:items-center items-end">
               <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36">
-                Credit
+                {t_w("Credit")}
               </label>
               <MyInput
                 color="border-gray-500"
@@ -536,25 +546,20 @@ export default function Exchange() {
             </div>
           </div>
           <div className="block w-full h-fit text-start border-l lg:border-l-2 pl-3 mt-4">
-            <h1 className="font-bold text-sm">
-              Money exchange to BABELCOINS Wallet
-            </h1>
+            <h1 className="font-bold text-sm">{t("Des-title")}</h1>
             <div className="my-4 text-xs">
-              <p>Instantly</p>
-              <p className="text-gray-400">Transfer term</p>
+              <p>{t("Instantly")}</p>
+              <p className="text-gray-400">{t("TransferTerm")}</p>
             </div>
 
             <div className="my-4 text-xs">
-              <p>
-                Сurrency is exchanged on the currency exchange market in live
-                mode.
-              </p>
-              <p className="text-gray-400">Floating exchange rate</p>
+              <p>{t("Des-p-info")}</p>
+              <p className="text-gray-400">{t("Des-p-rate")}</p>
             </div>
           </div>
         </div>
 
-        <div className="w-fit m-auto lg:m-0 lg:ml-44">
+        <div className="w-fit m-auto lg:m-0 ltr:lg:ml-44 rtl:lg:mr-44">
           <Button
             isDisabled={!debit || exchLoading}
             className="bg-orange text-white rounded-full mt-5 px-8"
@@ -562,7 +567,7 @@ export default function Exchange() {
               exchangeCoin(debitSelected, creditSelected, Number(debit));
             }}
           >
-            {exchLoading ? "EXCHANGING" : "EXCHANGE"}
+            {exchLoading ? t_w("Exchanging") : t_w("Exchange")}
           </Button>
         </div>
       </div>

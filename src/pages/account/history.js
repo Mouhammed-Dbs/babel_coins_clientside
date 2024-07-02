@@ -194,7 +194,7 @@ export default function History() {
               getData("deposits", 1, PAGE_SIZE, filters);
             }}
           >
-            {t("Credit")}
+            {t_w("Credit")}
           </Button>
           <Button
             className={`w-1/2 bg-gray-200/55 dark:bg-gray-600/55 rounded-none ${
@@ -207,7 +207,7 @@ export default function History() {
               getData("transfers", 1, PAGE_SIZE, filters);
             }}
           >
-            {t("Debit")}
+            {t_w("Debit")}
           </Button>
         </div>
         {/* Export To CSV & Show Filter */}
@@ -281,10 +281,10 @@ export default function History() {
                       }
                     >
                       <SelectItem key="DEBIT" value="DEBIT">
-                        {t("Debit")}
+                        {t_w("Debit")}
                       </SelectItem>
                       <SelectItem key="CREDIT" value="CREDIT">
-                        {t("Credit")}
+                        {t_w("Credit")}
                       </SelectItem>
                     </Select>
                   </div>
@@ -381,7 +381,7 @@ export default function History() {
                 {t("Date")}
               </h3>
               <h3 className="w-3/12 text-xs md:text-sm">
-                {tab === "DEBIT" ? t("Debit") : t("Credit")}
+                {tab === "DEBIT" ? t_w("Debit") : t_w("Credit")}
               </h3>
               <h3 className="hidden md:block md:w-1/12 text-xs md:text-sm">
                 {t("PS")}
@@ -430,7 +430,7 @@ export default function History() {
           <MyLoading />
         ) : (
           <div className="flex justify-center">
-            <p className="text-sm py-5">No {tab.toLowerCase()} operations</p>
+            <p className="text-sm py-5">{t("NoOperations")}</p>
           </div>
         )}
       </div>

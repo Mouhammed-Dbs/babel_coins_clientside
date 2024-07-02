@@ -35,7 +35,9 @@
         "Fee": "الرسوم",
         "Currency": "العملة",
         "Type": "النوع",
-        "Apply": "تنفيذ"
+        "Apply": "تنفيذ",
+        "Credit": "المستلمة",
+        "Debit": "المرسلة"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -227,8 +229,6 @@
     },
     "History": {
         "History": "السجل",
-        "Credit": "المستلمة",
-        "Debit": "المرسلة",
         "ShowFilter": "عرض الفلتر",
         "ExportCSV": "تصدير كملف CSV",
         "Date": "التاريخ",
@@ -237,6 +237,23 @@
         "PS": "الرمز",
         "From": "من",
         "Till": "إلى",
-        "OperationID": "معرف العملية"
+        "OperationID": "معرف العملية",
+        "NoOperations": "لايوجد عمليات"
+    },
+    "Exchange": {
+        "Modal-title-info": "معلومات التبادل",
+        "Modal-title-failure": "فشل التبادل",
+        "Modal-ReceiverAddress": "عنوان المستلم",
+        "Modal-SellCurrency": "العملة المباعة",
+        "Modal-BuyCurrency": "العملة المشترية",
+        "Modal-SellAmount": "المبلغ المبيع",
+        "Modal-BuyAmount": "المبلغ المشترى",
+        "Modal-Rate": "السعر",
+        "SelectAccount": "اختر الحساب",
+        "Des-title": "تبادل الأموال إلى محفظة BABELCOINS",
+        "TransferTerm": "مدة التحويل",
+        "Instantly": "فوراً",
+        "Des-p-info": "يتم تبادل العملات في سوق الصرف في الوقت الحقيقي.",
+        "Des-p-rate": "سعر الصرف العائم"
     }
 }

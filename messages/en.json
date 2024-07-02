@@ -22,6 +22,7 @@
         "Transfer": "TRANSFER",
         "Trade": "TRADE",
         "Exchange": "EXCHANGE",
+        "Exchanging": "EXCHANGING",
         "History": "HISTORY",
         "Support": "Support",
         "Logout": "Logout",
@@ -35,7 +36,9 @@
         "Fee": "Fee",
         "Currency": "Currency",
         "Type": "Type",
-        "Apply": "Apply"
+        "Apply": "Apply",
+        "Credit": "Credit",
+        "Debit": "Debit"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -227,8 +230,6 @@
     },
     "History": {
         "History": "History",
-        "Credit": "Credit",
-        "Debit": "Debit",
         "ShowFilter": "Show filter",
         "ExportCSV": "EXPORT TO CSV",
         "Date": "Date",
@@ -237,6 +238,23 @@
         "PS": "PS",
         "From": "From",
         "Till": "Till",
-        "OperationID": "Operation ID"
+        "OperationID": "Operation ID",
+        "NoOperations": "No operations"
+    },
+    "Exchange": {
+        "Modal-title-info": "Exchange info",
+        "Modal-title-failure": "Exchange failure",
+        "Modal-ReceiverAddress": "Receiver address",
+        "Modal-SellCurrency": "Sell Currency",
+        "Modal-BuyCurrency": "Buy Currency",
+        "Modal-SellAmount": "Sell Amount",
+        "Modal-BuyAmount": "Buy Amount",
+        "Modal-Rate": "Rate",
+        "SelectAccount": "Select account",
+        "Des-title": "Money exchange to BABELCOINS Wallet",
+        "TransferTerm": "Transfer term",
+        "Instantly": "Instantly",
+        "Des-p-info": "Сurrency is exchanged on the currency exchange market in live mode.",
+        "Des-p-rate": "Floating exchange rate"
     }
 }
