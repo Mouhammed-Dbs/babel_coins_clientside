@@ -992,7 +992,7 @@ export default function Send(props) {
           )}
         </div>
 
-        <div className="w-fit m-auto lg:m-0 ltr:lg:ml-44 rtl:mr-44 mt-4">
+        <div className="w-fit m-auto lg:m-0 ltr:lg:ml-44 rtl:lg:mr-44 mt-4">
           <Button
             isDisabled={!isDataValid() || sendLoading}
             className="bg-orange text-white rounded-full mt-5 px-10"
