@@ -8,8 +8,8 @@ export default function BGShapes({
 }) {
   return (
     <div
-      style={style}
-      className={`absolute z-0 flex md:flex-col pt-48 md:pt-20 ${className}`}
+      style={{ direction: "ltr", ...style }}
+      className={`absolute z-0 flex md:flex-col pt-48 md:pt-20 overflow-hidden ${className}`}
     >
       {showThree && (
         <div
