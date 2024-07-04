@@ -60,10 +60,11 @@ export default function Sidebar({ children }) {
     </aside>
   );
 }
-export function SidebarElement({ children, text }) {
+export function SidebarElement({ children, text, style }) {
   const { expanded } = useContext(SidebarContext);
   return (
     <li
+      style={style}
       className={`flex transition-colors group my-4 ${
         expanded ? "justify-start px-3" : "justify-center"
       }`}
