@@ -138,7 +138,7 @@ export default function MainNavbare({ accountName }) {
                 />
 
                 <div className="dropxxxblure ml-1 text-xs text-gray-500">
-                  <label className="dropxxxblure">Account No.</label>
+                  <label className="dropxxxblure">{t("AccountNo")}.</label>
                   <p className="dropxxxblure text-center text-black dark:text-white">
                     {accountName}
                   </p>
@@ -150,6 +150,7 @@ export default function MainNavbare({ accountName }) {
               </Button>
             </DropdownTrigger>
             <DropdownMenu
+              className="min-w-44"
               aria-label="Static Actions"
               onMouseEnter={() => {
                 setInfoAccountIsOpen(true);
@@ -183,7 +184,7 @@ export default function MainNavbare({ accountName }) {
                     className="dropxxxblure min-w-10 p-0 ml-2 h-4 text-primary self-end"
                     onClick={(e) => {
                       e.target.style.color = "green";
-                      e.target.innerText = "copied";
+                      e.target.innerText = t_w("Copied");
                       navigator.clipboard.writeText(accountName);
                     }}
                   >
