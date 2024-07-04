@@ -181,7 +181,7 @@ export default function MainNavbare({ accountName }) {
 
                   <Button
                     size="md"
-                    className="dropxxxblure min-w-10 p-0 ml-2 h-4 text-primary self-end"
+                    className="dropxxxblure min-w-10 p-0 ml-2 pl-1 h-5 text-primary self-end"
                     onClick={(e) => {
                       e.target.style.color = "green";
                       e.target.innerText = t_w("Copied");
