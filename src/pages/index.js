@@ -186,7 +186,7 @@ export default function Home() {
       </div>
       <div className="section2 h-fit dark:bg-slate-950/75 bg-slate-50/95 p-3 md:p-6 pt-20 md:py-28 pb-24">
         <BGShapes
-          style={{ paddingTop: "0px" }}
+          style={{ paddingTop: "15px" }}
           showThree={true}
           fillColor="dark:bg-slate-950 bg-slate-50"
           className="w-[93%] h-fit"
