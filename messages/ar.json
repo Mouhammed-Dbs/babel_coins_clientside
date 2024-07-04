@@ -32,12 +32,17 @@
         "Status": "الحالة",
         "Close": "إغلاق",
         "Go": "اذهب",
+        "Copy": "نسخ",
         "Fee": "الرسوم",
         "Currency": "العملة",
         "Type": "النوع",
         "Apply": "تنفيذ",
         "Credit": "المستلمة",
-        "Debit": "المرسلة"
+        "Debit": "المرسلة",
+        "Profile": "الملف الشخصي",
+        "Logs": "السجلات",
+        "MyReferrals": "الإحالات الخاصة بي",
+        "MyCards": "بطاقاتي"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -255,5 +260,14 @@
         "Instantly": "فوراً",
         "Des-p-info": "يتم تبادل العملات في سوق الصرف في الوقت الحقيقي.",
         "Des-p-rate": "سعر الصرف العائم"
+    },
+    "MainNavbar": {
+        "AccountNo": "رقم الحساب",
+        "Verification": "التحقق",
+        "AccountType": "نوع الحساب",
+        "Registered": "مسجل",
+        "Registration": "التسجيل",
+        "IPSecurity": "أمان IP",
+        "SMSSecurity": "أمان SMS"
     }
 }

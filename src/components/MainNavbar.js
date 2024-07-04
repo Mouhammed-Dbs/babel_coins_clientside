@@ -31,9 +31,13 @@ import {
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiCardsFill } from "react-icons/pi";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function MainNavbare({ accountName }) {
   const router = useRouter();
+  const t = useTranslations("MainNavbar");
+  const t_w = useTranslations("Words");
+
   const [localLang, setLocalLang] = useState(router.locale);
   const currentRoute = router.asPath.slice(1);
   const [mounted, setMounted] = useState(false);
@@ -167,7 +171,7 @@ export default function MainNavbare({ accountName }) {
                 <div className="flex justify-between h-8">
                   <div className="self-center">
                     <span className="block text-xs text-gray-500">
-                      Account No.
+                      {t("AccountNo")}.
                     </span>
                     <span className="block text-xs font-bold mt-[2px]">
                       {accountName}
@@ -183,7 +187,7 @@ export default function MainNavbare({ accountName }) {
                       navigator.clipboard.writeText(accountName);
                     }}
                   >
-                    copy
+                    {t_w("Copy")}
                   </Button>
                 </div>
               </DropdownItem>
@@ -198,7 +202,7 @@ export default function MainNavbare({ accountName }) {
                 <div className="flex justify-between h-8">
                   <div className="self-center">
                     <span className="block text-xs text-gray-500">
-                      Verification
+                      {t("Verification")}
                     </span>
                     <span className="block text-xs font-bold mt-[2px]">No</span>
                   </div>
@@ -210,7 +214,7 @@ export default function MainNavbare({ accountName }) {
                       setInfoAccountIsOpen(false);
                     }}
                   >
-                    Go
+                    {t_w("Go")}
                   </Button>
                 </div>
               </DropdownItem>
@@ -225,10 +229,10 @@ export default function MainNavbare({ accountName }) {
                 <div className="flex justify-between h-8">
                   <div className="self-center">
                     <span className="block text-xs text-gray-500">
-                      Account Type
+                      {t("AccountType")}
                     </span>
                     <span className="block text-xs font-bold mt-[2px]">
-                      Registered
+                      {t("Registered")}
                     </span>
                   </div>
                 </div>
@@ -244,7 +248,7 @@ export default function MainNavbare({ accountName }) {
                 <div className="flex justify-between h-8">
                   <div className="self-center">
                     <span className="block text-xs text-gray-500">
-                      Registration
+                      {t("Registration")}
                     </span>
                     <span className="block text-xs font-bold mt-[2px]">
                       4/3/2024
@@ -258,12 +262,12 @@ export default function MainNavbare({ accountName }) {
               >
                 <div className="flex justify-around gap-4">
                   <ToggelItemMenue
-                    label="IP Security"
+                    label={t("IPSecurity")}
                     value={true}
                     link="/account/settings?tab=security"
                   />
                   <ToggelItemMenue
-                    label="SMS Security"
+                    label={t("SMSSecurity")}
                     value={false}
                     link="/account/settings?tab=security"
                   />
@@ -371,7 +375,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="Profile"
                 key="m_profile"
               >
-                <span className="text-xs font-bold">Profile</span>
+                <span className="text-xs font-bold">{t_w("Profile")}</span>
               </DropdownItem>
               <DropdownItem
                 onClick={() => {
@@ -389,7 +393,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="Logs"
                 key="my_logs"
               >
-                <span className="text-xs font-bold">Logs</span>
+                <span className="text-xs font-bold">{t_w("Logs")}</span>
               </DropdownItem>
               <DropdownItem
                 onClick={() => {
@@ -407,7 +411,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="My Referrals"
                 key="my_myreferrals"
               >
-                <span className="text-xs font-bold">My Referrals</span>
+                <span className="text-xs font-bold">{t_w("MyReferrals")}</span>
               </DropdownItem>
               <DropdownItem
                 onClick={() => {
@@ -425,7 +429,7 @@ export default function MainNavbare({ accountName }) {
                 textValue="My Cards"
                 key="my_mycards"
               >
-                <span className="text-xs font-bold">My Cards</span>
+                <span className="text-xs font-bold">{t_w("MyCards")}</span>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

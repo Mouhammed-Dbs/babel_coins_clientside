@@ -33,12 +33,17 @@
         "Status": "Status",
         "Close": "Close",
         "Go": "Go",
+        "Copy": "Copy",
         "Fee": "Fee",
         "Currency": "Currency",
         "Type": "Type",
         "Apply": "Apply",
         "Credit": "Credit",
-        "Debit": "Debit"
+        "Debit": "Debit",
+        "Profile": "Profile",
+        "Logs": "Logs",
+        "MyReferrals": "My Referrals",
+        "MyCards": "My Cards"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -256,5 +261,14 @@
         "Instantly": "Instantly",
         "Des-p-info": "Сurrency is exchanged on the currency exchange market in live mode.",
         "Des-p-rate": "Floating exchange rate"
+    },
+    "MainNavbar": {
+        "AccountNo": "Account No",
+        "Verification": "Verification",
+        "AccountType": "Account Type",
+        "Registered": "Registered",
+        "Registration": "Registration",
+        "IPSecurity": "IP Security",
+        "SMSSecurity": "SMS Security"
     }
 }
