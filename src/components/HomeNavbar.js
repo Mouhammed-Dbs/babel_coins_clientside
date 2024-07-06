@@ -159,7 +159,7 @@ export default function HomeNavbare() {
             </Link>
           </NavbarItem>
         </div>
-        <div className="flex justify-end md:gap-4">
+        <div className="flex justify-end gap-3 md:gap-4">
           {/* Theme */}
           <NavbarItem
             className="sm:flex self-center"

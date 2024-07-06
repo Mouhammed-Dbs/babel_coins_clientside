@@ -233,11 +233,14 @@ export default function Home() {
         <h1 className="text-center text-3xl font-bold p-6 md:p-10">
           {t("section4-h")}
         </h1>
-        <div className="grid grid-rows-1 gap-3">
-          <Card isBlurred className={`dark:bg-slate-800/55 bg-white/85 `}>
+        <div className="grid grid-rows-1 gap-5">
+          <Card
+            isBlurred
+            className={`dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary`}
+          >
             <CardBody className={router.locale === "ar" && "text-right"}>
-              <div className="flex justify-between">
-                <p className="text-xs md:text-base self-center px-4">
+              <div className="md:flex justify-between items-center">
+                <p className="md:text-base self-center px-4 pb-2">
                   {t("section4-p-card1")}
                 </p>
                 <Image
@@ -245,19 +248,22 @@ export default function Home() {
                   width={5000}
                   height={5000}
                   src={"/images/3bb.png"}
-                  className="w-1/3"
+                  className="w-2/3 md:w-1/3 md:h-[65%] m-auto"
                 />
               </div>
             </CardBody>
           </Card>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card
+              isBlurred
+              className="dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary"
+            >
               <CardBody className={router.locale === "ar" && "text-right"}>
-                <div className="flex justify-between h-full">
-                  <p className="w-2/3 text-xs md:text-base self-center px-4">
+                <div className="md:flex justify-between h-full">
+                  <p className="md:w-2/3 md:text-base self-center px-4 pb-2">
                     {t("section4-p-card2")}
                   </p>
-                  <div className="flex justify-center w-1/3">
+                  <div className="flex justify-center w-1/2 md:w-1/3 m-auto">
                     <Image
                       alt=""
                       width={5000}
@@ -269,13 +275,16 @@ export default function Home() {
                 </div>
               </CardBody>
             </Card>
-            <Card isBlurred className="dark:bg-slate-800/55 bg-white/85">
+            <Card
+              isBlurred
+              className="dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary"
+            >
               <CardBody className={router.locale === "ar" && "text-right"}>
                 <div className="flex justify-between h-full">
-                  <p className="w-2/3 text-xs md:text-base self-center  px-4">
+                  <p className="w-2/3 md:text-base self-center px-4">
                     {t("section4-p-card3")}
                   </p>
-                  <div className="flex justify-end w-1/3">
+                  <div className="flex justify-end items-center w-1/3">
                     <Image
                       alt=""
                       width={5000}
