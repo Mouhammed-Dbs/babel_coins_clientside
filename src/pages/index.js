@@ -239,8 +239,8 @@ export default function Home() {
             className={`dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary`}
           >
             <CardBody className={router.locale === "ar" && "text-right"}>
-              <div className="md:flex justify-between items-center">
-                <p className="md:text-base self-center px-4 pb-2">
+              <div className="md:flex justify-between items-center py-4">
+                <p className="md:text-lg self-center px-4 pb-8 md:pb-0">
                   {t("section4-p-card1")}
                 </p>
                 <Image
@@ -259,8 +259,8 @@ export default function Home() {
               className="dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary"
             >
               <CardBody className={router.locale === "ar" && "text-right"}>
-                <div className="md:flex justify-between h-full">
-                  <p className="md:w-2/3 md:text-base self-center px-4 pb-2">
+                <div className="md:flex justify-between h-full py-4">
+                  <p className="md:w-2/3 md:text-lg self-center px-4 pb-8 md:pb-0">
                     {t("section4-p-card2")}
                   </p>
                   <div className="flex justify-center w-1/2 md:w-1/3 m-auto">
@@ -280,8 +280,8 @@ export default function Home() {
               className="dark:bg-slate-800/55 bg-white/85 md:border-1 ltr:border-l-2 rtl:border-r-2 border-primary"
             >
               <CardBody className={router.locale === "ar" && "text-right"}>
-                <div className="flex justify-between h-full">
-                  <p className="w-2/3 md:text-base self-center px-4">
+                <div className="flex justify-between h-full py-4">
+                  <p className="w-2/3 md:text-lg self-center px-4">
                     {t("section4-p-card3")}
                   </p>
                   <div className="flex justify-end items-center w-1/3">
