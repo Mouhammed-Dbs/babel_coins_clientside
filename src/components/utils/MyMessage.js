@@ -1,4 +1,4 @@
-import { IoWarning } from "react-icons/io5";
+import { IoCheckmarkDoneCircleSharp, IoWarning } from "react-icons/io5";
 
 export default function MyMessage({ show, message, isSuccess = false }) {
   return (
@@ -7,7 +7,11 @@ export default function MyMessage({ show, message, isSuccess = false }) {
         !isSuccess ? "text-red-700" : "text-green-600"
       } ${show ? "block" : "hidden"}`}
     >
-      <IoWarning className="self-center mr-1 text-base w-5 h-5" />
+      {isSuccess ? (
+        <IoCheckmarkDoneCircleSharp className="self-center mr-1 text-base w-5 h-5" />
+      ) : (
+        <IoWarning className="self-center mr-1 text-base w-5 h-5" />
+      )}
       <p className="self-center">{message}</p>
     </div>
   );

@@ -133,7 +133,9 @@ export default function Templates() {
   };
 
   const isAddTemplateValid = () => {
-    return coinSelected && networkSelected && nameTemplate && address;
+    return coinSelected === "BABELCOINS"
+      ? coinSelected && nameTemplate && address
+      : coinSelected && networkSelected && nameTemplate && address;
   };
 
   const toggleAdd = async () => {
@@ -144,7 +146,7 @@ export default function Templates() {
     setShowAddTemplate(!showAddTemplate);
     await router.replace({
       pathname: router.pathname,
-      query: { tab: "template", "add-template": !showAddTemplate },
+      query: { tab: "templates", "add-template": !showAddTemplate },
     });
   };
 

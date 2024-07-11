@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import axios from "axios";
 
 const isUserLogged = async () => {
@@ -82,6 +83,8 @@ const updateUserInfo = async (
   }
 };
 
+// SETTING PAGE //
+
 const changePassword = async (currentPassword, newPassword) => {
   let token = localStorage.getItem("babel-coins-user-token");
   if (token) {
@@ -128,6 +131,99 @@ const recoveryPassword = async (email, code, newPassword) => {
   }
 };
 
+const getSecurityOrNotificationsSettings = async (settingsType) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.get(
+        `${process.env.BASE_API_URL}/users/settings-info?settingsType=${settingsType}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
+const changeSecuritySettings = async (
+  whenSendVerificationCode2FA,
+  methodOfSendingCode2FA,
+  methodOfSendingCodeRestorePass,
+  isEnabledMasterKey
+) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.put(
+        `${process.env.BASE_API_URL}/users/change-security-settings`,
+        {
+          authenticationBy2FA: {
+            whenSendVerificationCode: whenSendVerificationCode2FA,
+            methodOfSendingCode: methodOfSendingCode2FA,
+          },
+          restorePasswords: {
+            methodOfSendingCode: methodOfSendingCodeRestorePass,
+          },
+          isEnabledMasterKey,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (res.error) {
+        return null;
+      }
+      return res.data;
+    } catch (error) {
+      return error.response?.data;
+    }
+  }
+  return { error: true, msg: "Unauthorized Error", data: {} };
+};
+
+const changeNotificationsSettings = async (
+  isSendingMsgOnSuccessfulAuthorization,
+  methodOfSendingNotificationOnIncomingPayment,
+  minimumAmountForSendingNotification,
+  isEnabledMasterKey
+) => {
+  let token = localStorage.getItem("babel-coins-user-token");
+  if (token) {
+    try {
+      const res = await axios.put(
+        `${process.env.BASE_API_URL}/users/change-notifications-settings`,
+        {
+          authentication: {
+            isSendingMsgOnSuccessfulAuthorization,
+          },
+          internalTransfers: {
+            methodOfSendingNotificationOnIncomingPayment,
+            minimumAmountForSendingNotification,
+          },
+          isEnabledMasterKey,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (res.error) return null;
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
 export {
   isUserLogged,
   loginUser,
@@ -137,4 +233,7 @@ export {
   changePassword,
   getForRecoveryPassword,
   recoveryPassword,
+  changeSecuritySettings,
+  getSecurityOrNotificationsSettings,
+  changeNotificationsSettings,
 };
