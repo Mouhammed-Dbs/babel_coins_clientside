@@ -76,7 +76,7 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
   const t = useTranslations("AccountIndex");
   useEffect(() => {}, []);
   return (
-    <div className="relative w-64 h-min mt-2 ltr:mr-2 rtl:ml2 p-4 border-1 dark:border-default-100 border-gray-200 bg-white/55 dark:bg-black/55 text-center rounded-md shadow-lg backdrop-blur-sm">
+    <div className="relative w-64 h-min mt-2 ltr:mr-2 rtl:ml-2 p-4 border-1 dark:border-default-100 border-gray-200 bg-white/55 dark:bg-black/55 text-center rounded-md shadow-lg backdrop-blur-sm">
       <div className="absolute shadow-inner overflow-hidden bg-slate-50/55 dark:bg-default-50/55 border-t-1 border-default-100 rounded-full w-14 h-14 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm">
         <div className="absolute w-full h-1/2 top-1/2 bg-white/55 dark:bg-black/15"></div>
       </div>
