@@ -143,12 +143,15 @@ const getSecurityOrNotificationsSettings = async (settingsType) => {
           },
         }
       );
-      if (res.error) return null;
+      if (res.error) {
+        return null;
+      }
       return res.data;
     } catch (error) {
-      throw error;
+      return error.response?.data;
     }
   }
+  return { error: true, msg: "Unauthorized Error", data: {} };
 };
 
 const changeSecuritySettings = async (
@@ -216,12 +219,15 @@ const changeNotificationsSettings = async (
           },
         }
       );
-      if (res.error) return null;
+      if (res.error) {
+        return null;
+      }
       return res.data;
     } catch (error) {
-      throw error;
+      return error.response?.data;
     }
   }
+  return { error: true, msg: "Unauthorized Error", data: {} };
 };
 
 export {
