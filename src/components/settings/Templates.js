@@ -33,8 +33,12 @@ import {
 } from "../../../public/global_functions/template";
 import MyMessage from "../utils/MyMessage";
 import { FaInfoCircle } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 export default function Templates() {
+  const t_w = useTranslations("Words");
+  const t = useTranslations("Templates");
+  const t_placeholder = useTranslations("Placeholder");
   const [screenSize, setScreenSize] = useState(false);
   const router = useRouter();
   const { query } = router;
@@ -316,7 +320,9 @@ export default function Templates() {
       </Modal>
       {/* Title */}
       <div className="flex justify-between w-full border-b py-2">
-        <h1 className="w-fit flex self-center font-bold">TEMPLATES</h1>
+        <h1 className="w-fit flex self-center font-bold">
+          {t_w("Templates").toUpperCase()}
+        </h1>
         <Button
           isDisabled={loadingADD}
           size="sm"
@@ -352,7 +358,7 @@ export default function Templates() {
             }
           }}
         >
-          {showAddTemplate ? "HIDE" : "ADD"}
+          {showAddTemplate ? t_w("Close") : t_w("Add")}
           {showAddTemplate ? (
             <IoMdClose className="h-5 w-5 cursor-pointer" size={10} />
           ) : (
@@ -367,12 +373,14 @@ export default function Templates() {
           showAddTemplate && (
             <div className="my-5 mx-1 md:mx-5 bg-slate-100/55 dark:bg-gray-600/55 p-2 rounded-md shadow-md py-4">
               <div className="flex justify-between border-b">
-                <h1 className="text-lg w-fit pl-1">Add Template</h1>
+                <h1 className="text-lg w-fit ltr:pl-1 rtl:pr-1">
+                  {t("AddTemplate")}
+                </h1>
                 <IoIosCloseCircleOutline
                   onClick={() => {
                     toggleAdd();
                   }}
-                  className="h-6 w-6 cursor-pointer mr-1 md:mr-2"
+                  className="h-6 w-6 cursor-pointer ltr:mr-1 ltr:md:mr-2 rtl:ml-1 rtl:md:ml-2"
                   size={10}
                 />
               </div>
@@ -380,9 +388,10 @@ export default function Templates() {
                 {/* System */}
                 <div className="md:flex m-auto w-full gap-4 items-center">
                   <label className="text-right text-sm md:text-base w-36">
-                    Choose system
+                    {t("ChooseSystem")}
                   </label>
                   <Select
+                    dir="ltr"
                     disallowEmptySelection={true}
                     isDisabled={loadingADD}
                     selectedKeys={coinSelected ? [coinSelected] : []}
@@ -398,7 +407,7 @@ export default function Templates() {
                     size="sm"
                     items={coins}
                     labelPlacement="outside"
-                    placeholder="CHOOSE SYSTEM"
+                    placeholder={t("ChooseSystem").toUpperCase()}
                     selectorIcon={
                       <IoIosArrowDown color="var(--bg-primary-color)" />
                     }
@@ -458,10 +467,11 @@ export default function Templates() {
                 {/* Network */}
                 {coinSelected !== "BABELCOINS" && (
                   <div className="md:flex m-auto w-full gap-4 items-center mt-4 md:mt-0">
-                    <label className="block ml-1 md:ml-0 md:text-right text-sm md:text-base w-36 md:mt-3">
-                      Network
+                    <label className="block ltr:ml-1 ltr:md:ml-0 rtl:mr-1 rtl:md:mr-0 md:text-right text-sm md:text-base w-36 md:mt-3">
+                      {t_w("Network")}
                     </label>
                     <Select
+                      dir="ltr"
                       isDisabled={loadingADD || !coinSelected}
                       disallowEmptySelection={true}
                       items={networks}
@@ -481,7 +491,7 @@ export default function Templates() {
                       selectorIcon={
                         <IoIosArrowDown color="var(--bg-primary-color)" />
                       }
-                      placeholder="network"
+                      placeholder={t_w("Network")}
                     >
                       {networks.map((network) => (
                         <SelectItem key={network} value={network}>
@@ -496,7 +506,7 @@ export default function Templates() {
                     {/* Name Template */}
                     <div className={`m-auto w-full gap-4 items-center flex`}>
                       <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                        Template Name
+                        {t("TemplateName")}
                       </label>
                       <MyInput
                         value={nameTemplate}
@@ -506,17 +516,19 @@ export default function Templates() {
                         color="border-gray-500"
                         className="w-full md:w-64 border-black mt-3"
                         item={{
-                          label: screenSize ? undefined : "Template Name",
+                          label: screenSize ? undefined : t("TemplateName"),
                           name: "name_template",
                           type: "text",
-                          placeholder: "John",
+                          placeholder: t_placeholder("Name"),
                         }}
                       />
                     </div>
                     {/* Address OR Account */}
                     <div className={`m-auto w-full gap-4 items-center flex`}>
                       <label className="hidden md:block text-right text-sm md:text-base w-14 md:w-36 mt-3">
-                        {coinSelected === "BABELCOINS" ? "Account" : "Address"}
+                        {coinSelected === "BABELCOINS"
+                          ? t_w("Account")
+                          : t_w("Address")}
                       </label>
                       <MyInput
                         value={address}
@@ -529,21 +541,21 @@ export default function Templates() {
                           label: screenSize
                             ? undefined
                             : coinSelected === "BABELCOINS"
-                            ? "Account"
-                            : "Address",
+                            ? t_w("Account")
+                            : t_w("Address"),
                           name: "address_account",
                           type: "text",
                           placeholder:
                             coinSelected === "BABELCOINS"
-                              ? "Type account name"
-                              : "Type address",
+                              ? t("TypeAccountName") + " (B00)"
+                              : t("TypeAddress"),
                         }}
                       />
                     </div>
                   </div>
                 )}
               </div>
-              <div className="ml-6 md:ml-44">
+              <div className="ltr:ml-6 ltr:md:ml-44 rtl:mr-6 rtl:md:mr-44">
                 <MyMessage
                   show={resADD.show}
                   message={resADD.msg[router.locale]}
@@ -568,10 +580,9 @@ export default function Templates() {
                     );
                 }}
                 isDisabled={!isAddTemplateValid() || loadingReqADD}
-                size="sm"
-                className="bg-orange text-white block m-auto mt-5 px-7 rounded-full"
+                className="bg-orange text-white block m-auto mt-5 px-7 rounded-full uppercase"
               >
-                {!loadingReqADD ? "ADD TEMPLATE" : "ADDING.."}
+                {!loadingReqADD ? t("AddTemplate") : t_w("Adding")}
               </Button>
             </div>
           )
@@ -657,7 +668,7 @@ function TemplateItem({
             )}
           </div>
 
-          <h1 className="text-lg ml-3">
+          <h1 className="text-lg ltr:ml-3 rtl:mr-3">
             {title + " (" + accounts.length + ")"}
           </h1>
         </div>
@@ -668,24 +679,20 @@ function TemplateItem({
         )}
       </div>
       {open && (
-        <ul className="md:ml-2 mt-4">
+        <ul
+          className="ltr:md:ml-2 rtl:md:mr-2 mt-4"
+          style={{ direction: "ltr" }}
+        >
           {accounts.map((account) => (
             <li
               key={account._id}
               className="border-1 rounded-md w-fit p-2 mt-2"
             >
-              <div className="flex gap-1 items-center mb-1">
-                <span className="font-bold">Name:</span>
-                <span>{account.name}</span>
-              </div>
-
-              <div className="flex gap-1 items-center">
-                <label className="text-xs md:text-base font-bold">
-                  {network + ":"}
-                </label>
-                <p className="text-xs md:text-base break-all">
-                  {account.address}
-                </p>
+              <div className="flex gap-1 justify-between mb-1">
+                <div className="flex gap-1 items-center">
+                  <span className="font-bold">Name:</span>
+                  <span>{account.name}</span>
+                </div>
                 <IoCloseSharp
                   onClick={() => {
                     onOpen();
@@ -698,6 +705,15 @@ function TemplateItem({
                   color="red"
                   className="rounded-full hover:bg-slate-400 p-1 w-6 h-6 cursor-pointer"
                 />
+              </div>
+
+              <div className="flex gap-1">
+                <label className="text-xs md:text-base font-bold">
+                  {network + ":"}
+                </label>
+                <p className="text-xs md:text-base break-all">
+                  {account.address}
+                </p>
               </div>
             </li>
           ))}

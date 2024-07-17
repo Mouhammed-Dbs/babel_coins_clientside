@@ -19,6 +19,7 @@
         "Loading": "Loading..",
         "Balance": "BALANCE",
         "Add": "ADD",
+        "Adding": "Adding",
         "Transfer": "TRANSFER",
         "Trade": "TRADE",
         "Exchange": "EXCHANGE",
@@ -44,7 +45,8 @@
         "Profile": "Profile",
         "Logs": "Logs",
         "MyReferrals": "My Referrals",
-        "MyCards": "My Cards"
+        "MyCards": "My Cards",
+        "Templates": "Templates"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -278,5 +280,14 @@
         "password_tab": "PASSWORD",
         "notifications_tab": "NOTIFICATIONS",
         "templates_tab": "TEMPLATES"
+    },
+    "Templates": {
+        "AddTemplate": "Add Template",
+        "ChooseSystem": "Choose system",
+        "TemplateName": "Template name",
+        "TypeAccountName": "Type account name",
+        "TypeAddress": "Type address",
+        "QuesDeleteTemplate": "Are you sure you want to delete this account?",
+        "DeleteAccount": "Delete Account"
     }
 }

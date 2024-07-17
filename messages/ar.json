@@ -19,6 +19,7 @@
         "Loading": "الرجاء الانتظار..",
         "Balance": "الرصيد",
         "Add": "أضف",
+        "Adding": "جاري الإضافة",
         "Transfer": "تحويل",
         "Trade": "تداول",
         "Exchange": "تبديل",
@@ -44,7 +45,8 @@
         "Profile": "الملف الشخصي",
         "Logs": "السجلات",
         "MyReferrals": "الإحالات الخاصة بي",
-        "MyCards": "بطاقاتي"
+        "MyCards": "بطاقاتي",
+        "Templates": "القوالب"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -278,5 +280,14 @@
         "password_tab": "كلمة المرور",
         "notifications_tab": "الإشعارات",
         "templates_tab": "القوالب"
+    },
+    "Templates": {
+        "AddTemplate": "إضافة قالب",
+        "ChooseSystem": "اختر النظام",
+        "TemplateName": "اسم القالب",
+        "TypeAccountName": "اكتب اسم الحساب",
+        "TypeAddress": "اكتب العنوان",
+        "QuesDeleteTemplate": "هل أنت متأكد أنك تريد حذف هذا الحساب؟",
+        "DeleteAccount": "حذف الحساب"
     }
 }
