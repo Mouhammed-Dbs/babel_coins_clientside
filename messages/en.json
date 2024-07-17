@@ -46,7 +46,9 @@
         "Logs": "Logs",
         "MyReferrals": "My Referrals",
         "MyCards": "My Cards",
-        "Templates": "Templates"
+        "Templates": "Templates",
+        "Modify": "Modify",
+        "Modifying": "Modifying"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -289,5 +291,11 @@
         "TypeAddress": "Type address",
         "QuesDeleteTemplate": "Are you sure you want to delete this account?",
         "DeleteAccount": "Delete Account"
+    },
+    "Password": {
+        "changePassword": "Change password",
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "repeatNewPassword": "Repeat new password"
     }
 }

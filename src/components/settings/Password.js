@@ -4,8 +4,11 @@ import { useState } from "react";
 import MyMessage from "../utils/MyMessage";
 import { validateInputs } from "../../../public/global_functions/validation";
 import { changePassword } from "../../../public/global_functions/auth";
+import { useTranslations } from "next-intl";
 
 export default function Password() {
+  const t = useTranslations("Password");
+  const t_w = useTranslations("Words");
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputRepeatNewPassword, setInputRepeatNewPassword] = useState("");
@@ -47,7 +50,9 @@ export default function Password() {
     >
       {/* Title */}
       <div className="w-full border-b">
-        <h1 className="text-sm mb-3 font-bold">CHANGE PASSWORD</h1>
+        <h1 className="text-sm mb-3 font-bold">
+          {t("changePassword").toUpperCase()}
+        </h1>
       </div>
 
       {/* Content */}
@@ -77,7 +82,7 @@ export default function Password() {
             name: "current_pass",
             type: "text",
             placeholder: "",
-            label: "Current password:",
+            label: t("currentPassword") + ":",
           }}
         />
         <MyInput
@@ -106,7 +111,7 @@ export default function Password() {
             name: "new_pass",
             type: "text",
             placeholder: "",
-            label: "New password:",
+            label: t("newPassword") + ":",
           }}
         />
         <MyInput
@@ -135,7 +140,7 @@ export default function Password() {
             name: "repeat_new_pass",
             type: "text",
             placeholder: "",
-            label: "Repeat new password:",
+            label: t("repeatNewPassword") + ":",
           }}
         />
       </div>
@@ -170,7 +175,7 @@ export default function Password() {
         size="sm"
         className="bg-orange text-sm rounded-full mt-10 p-4 text-white"
       >
-        {loading ? "modifying.." : "MODIFY"}
+        {loading ? t_w("Modifying") + ".." : t_w("Modify")}
       </Button>
     </div>
   );

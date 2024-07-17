@@ -46,7 +46,9 @@
         "Logs": "السجلات",
         "MyReferrals": "الإحالات الخاصة بي",
         "MyCards": "بطاقاتي",
-        "Templates": "القوالب"
+        "Templates": "القوالب",
+        "Modify": "تعديل",
+        "Modifying": "جارٍ التعديل"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -289,5 +291,11 @@
         "TypeAddress": "اكتب العنوان",
         "QuesDeleteTemplate": "هل أنت متأكد أنك تريد حذف هذا الحساب؟",
         "DeleteAccount": "حذف الحساب"
+    },
+    "Password": {
+        "changePassword": "تغيير كلمة المرور",
+        "currentPassword": "كلمة المرور الحالية",
+        "newPassword": "كلمة المرور الجديدة",
+        "repeatNewPassword": "أعد كتابة كلمة المرور الجديدة"
     }
 }
