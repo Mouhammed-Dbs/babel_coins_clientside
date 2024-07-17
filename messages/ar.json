@@ -271,5 +271,12 @@
         "Registration": "التسجيل",
         "IPSecurity": "أمان IP",
         "SMSSecurity": "أمان SMS"
+    },
+    "Settings": {
+        "profileAndVerification_tab": "الملف الشخصي والتحقق",
+        "security_tab": "الأمان",
+        "password_tab": "كلمة المرور",
+        "notifications_tab": "الإشعارات",
+        "templates_tab": "القوالب"
     }
 }

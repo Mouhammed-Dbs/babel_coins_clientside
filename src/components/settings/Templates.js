@@ -46,9 +46,13 @@ export default function Templates() {
   const [loadingADD, setLoadingADD] = useState(false);
   const [loadingGET, setLoadingGET] = useState(true);
   const [loadingDELETE, setLoadingDELETE] = useState(false);
-  const [resADD, setResADD] = useState({ msg: "", error: false, show: false });
+  const [resADD, setResADD] = useState({
+    msg: { en: "", ar: "" },
+    error: false,
+    show: false,
+  });
   const [resDELETE, setResDELETE] = useState({
-    msg: "",
+    msg: { en: "", ar: "" },
     error: false,
     show: false,
   });
@@ -127,7 +131,7 @@ export default function Templates() {
   };
 
   const initFormTemplate = () => {
-    setResADD({ error: false, show: false, msg: "" });
+    setResADD({ error: false, show: false, msg: { en: "", ar: "" } });
     setAddress("");
     setNameTemplate("");
   };
@@ -152,7 +156,7 @@ export default function Templates() {
 
   const addTemplate = async (currencyName, network, name, address) => {
     if (currencyName === "BABELCOINS") currencyName = "ANY";
-    setResADD({ show: false, error: false, msg: "" });
+    setResADD({ show: false, error: false, msg: { en: "", ar: "" } });
     try {
       setLoadingReqADD(true);
       const res = await createNewTemplate(currencyName, network, name, address);
@@ -192,7 +196,7 @@ export default function Templates() {
         network,
         transferTemplateId
       );
-      setResDELETE({ msg: res.data.msg, error: res.data.error, show: true });
+      setResDELETE({ msg: res.msg, error: res.error, show: true });
       setLoadingDELETE(false);
       onClose();
       if (!res.error) getTemplates();
@@ -201,7 +205,7 @@ export default function Templates() {
         setResDELETE({
           show: true,
           error: err?.response?.data.error,
-          msg: err?.response?.data.msg,
+          msg: { en: err?.response?.data.msg, ar: "" },
         });
       setLoadingDELETE(false);
       onClose();
@@ -542,7 +546,7 @@ export default function Templates() {
               <div className="ml-6 md:ml-44">
                 <MyMessage
                   show={resADD.show}
-                  message={resADD.msg}
+                  message={resADD.msg[router.locale]}
                   isSuccess={!resADD.error}
                 />
               </div>
@@ -577,8 +581,8 @@ export default function Templates() {
         {resDELETE.show && (
           <MyMessage
             show={resDELETE.show}
-            error={resDELETE.error}
-            message={resDELETE.msg}
+            message={resDELETE.msg[router.locale]}
+            isSuccess={resDELETE.error === false}
           />
         )}
         {!loadingGET ? (
@@ -620,6 +624,7 @@ function TemplateItem({
   setItemDelete,
 }) {
   const [open, setOpen] = useState(false);
+  if (accounts.length === 0) return <></>;
   return (
     <li className="p-1 md:p-3 mt-2 border-b-1 w-full md:w-3/4">
       <div

@@ -6,12 +6,17 @@ import Templates from "@/components/settings/Templates";
 import { loadMessages } from "@/lib/loadMessages";
 import screenIs from "@/screen";
 import { Tab, Tabs } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { getLangDir } from "rtl-detect";
+
 const CardIDContext = createContext();
-export { CardIDContext };
-export default function Settings() {
+
+export default function Settings(props) {
+  const pageDirection = getLangDir(props.locale); // Get the language direction
+  const t = useTranslations("Settings");
   const router = useRouter();
   const { query } = router;
   const [tab, setTab] = useState("profile_tab");
@@ -79,7 +84,11 @@ export default function Settings() {
             key="first_tab"
             title={
               <div className="flex items-center">
-                <IoIosArrowBack className="text-primary w-7 h-7" />
+                {pageDirection === "rtl" ? (
+                  <IoIosArrowForward className="text-primary w-7 h-7" />
+                ) : (
+                  <IoIosArrowBack className="text-primary w-7 h-7" />
+                )}
               </div>
             }
           />
@@ -88,7 +97,7 @@ export default function Settings() {
             key="profile_tab"
             title={
               <div className="flex items-center space-x-2">
-                <span>PROFILE AND VERIFICATION</span>
+                <span>{t("profileAndVerification_tab")}</span>
               </div>
             }
           >
@@ -101,7 +110,7 @@ export default function Settings() {
             onSelect={() => setTab("security_tab")}
             title={
               <div className="flex items-center space-x-2">
-                <span>SECURITY</span>
+                <span>{t("security_tab")}</span>
               </div>
             }
           >
@@ -112,7 +121,7 @@ export default function Settings() {
             onSelect={() => setTab("password_tab")}
             title={
               <div className="flex items-center space-x-2">
-                <span>PASSWORD</span>
+                <span>{t("password_tab")}</span>
               </div>
             }
           >
@@ -123,7 +132,7 @@ export default function Settings() {
             onSelect={() => setTab("notification_tab")}
             title={
               <div className="flex items-center space-x-2">
-                <span>NOTIFICATIONS</span>
+                <span>{t("notifications_tab")}</span>
               </div>
             }
           >
@@ -134,7 +143,7 @@ export default function Settings() {
             onSelect={() => setTab("templates_tab")}
             title={
               <div className="flex items-center space-x-2">
-                <span>TEMPLATES</span>
+                <span>{t("templates_tab")}</span>
               </div>
             }
           >
@@ -146,7 +155,11 @@ export default function Settings() {
             key="nomore_tab"
             title={
               <div className="flex items-center">
-                <IoIosArrowForward className="text-primary w-7 h-7" />
+                {pageDirection === "rtl" ? (
+                  <IoIosArrowBack className="text-primary w-7 h-7" />
+                ) : (
+                  <IoIosArrowForward className="text-primary w-7 h-7" />
+                )}
                 <div className="w-28"></div>
               </div>
             }
@@ -156,10 +169,14 @@ export default function Settings() {
     </div>
   );
 }
+
 export async function getStaticProps({ locale }) {
   return {
     props: {
       messages: await loadMessages(locale),
+      locale,
     },
   };
 }
+
+export { CardIDContext };

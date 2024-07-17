@@ -271,5 +271,12 @@
         "Registration": "Registration",
         "IPSecurity": "IP Security",
         "SMSSecurity": "SMS Security"
+    },
+    "Settings": {
+        "profileAndVerification_tab": "ROFILE AND VERIFICATION",
+        "security_tab": "SECURITY",
+        "password_tab": "PASSWORD",
+        "notifications_tab": "NOTIFICATIONS",
+        "templates_tab": "TEMPLATES"
     }
 }
