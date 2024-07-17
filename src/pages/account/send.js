@@ -56,7 +56,7 @@ export default function Send(props) {
   const [limits, setLimits] = useState({});
   const [resData, setResData] = useState({
     error: false,
-    msg: "",
+    msg: { en: "", ar: "" },
     data: {},
   });
   const [msg, setMsg] = useState({ error: false, data: "" });
@@ -1012,7 +1012,7 @@ export default function Send(props) {
                     setResData({
                       data: result.data,
                       error: result.error,
-                      msg: result.msg,
+                      msg: result.msg[router.locale],
                     });
                     setSendLoading(false);
                     onOpen();

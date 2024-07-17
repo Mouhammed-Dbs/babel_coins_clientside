@@ -69,7 +69,10 @@ export default function Recovery() {
                 setLoading(true);
                 getForRecoveryPassword(inputEmail, inputSecret)
                   .then((res) => {
-                    setResMsg({ error: res.error, msg: res.msg });
+                    setResMsg({
+                      error: res.error[router.locale],
+                      msg: res.msg,
+                    });
                     if (!res.error) {
                       setShow(true);
                     }

@@ -71,7 +71,7 @@ export default function Settings(props) {
           variant="underlined"
           classNames={{
             tabList:
-              "md:ml-2 gap-6 relative rounded-none p-0 md:w-full w-screen overflow-x-scroll no-scrollbar",
+              "ltr:md:ml-2 rtl:md:mr-2 gap-6 relative rounded-none p-0 md:w-full w-screen overflow-x-scroll no-scrollbar",
             cursor: "w-full bg-[var(--primary-color)]",
             tab: "max-w-fit px-0 h-12",
             tabContent:

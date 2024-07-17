@@ -9,8 +9,10 @@ import {
   getSecurityOrNotificationsSettings,
 } from "../../../public/global_functions/auth";
 import MyMessage from "../utils/MyMessage";
+import { useRouter } from "next/router";
 
 export default function Notifications() {
+  const router = useRouter();
   const t_w = useTranslations("Words");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
@@ -226,12 +228,12 @@ export default function Notifications() {
       </Button>
       <MyMessage
         show={resUpdate.error === false && resUpdate.show}
-        message={resUpdate.msg}
+        message={resUpdate.msg[router.locale]}
         isSuccess={resUpdate.error === false}
       />
       <MyMessage
         show={resUpdate.error === true && resUpdate.show}
-        message={resUpdate.msg}
+        message={resUpdate.msg[router.locale]}
         isSuccess={resUpdate.error === false}
       />
     </div>

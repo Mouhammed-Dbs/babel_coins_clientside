@@ -8,8 +8,10 @@ import {
 import MyLoading from "../MyLoading";
 import { useTranslations } from "next-intl";
 import MyMessage from "../utils/MyMessage";
+import { useRouter } from "next/router";
 
 export default function Security() {
+  const router = useRouter();
   const t_w = useTranslations("Words");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
@@ -254,12 +256,12 @@ export default function Security() {
       </Button>
       <MyMessage
         show={resUpdate.error === false && resUpdate.show}
-        message={resUpdate.msg}
+        message={resUpdate.msg[router.locale]}
         isSuccess={resUpdate.error === false}
       />
       <MyMessage
         show={resUpdate.error === true && resUpdate.show}
-        message={resUpdate.msg}
+        message={resUpdate.msg[router.locale]}
         isSuccess={resUpdate.error === false}
       />
     </div>

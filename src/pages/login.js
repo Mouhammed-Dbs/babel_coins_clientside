@@ -17,7 +17,10 @@ import { loadMessages } from "@/lib/loadMessages";
 export default function Signup() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [resLogin, setResLogin] = useState({ msg: "", error: false });
+  const [resLogin, setResLogin] = useState({
+    msg: { en: "", ar: "" },
+    error: false,
+  });
   const [validateLogin, setValidateLogin] = useState({ msg: "", error: false });
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
@@ -32,7 +35,7 @@ export default function Signup() {
     setLoading(true);
     loginUser(inputEmail, inputPass)
       .then((result) => {
-        setResLogin({ msg: result.msg, error: result.error });
+        setResLogin({ msg: result.msg[router.locale], error: result.error });
         if (!result.error) {
           localStorage.setItem("babel-coins-user-token", result.data.token);
           router.push("/");
@@ -153,7 +156,10 @@ export default function Signup() {
         </CardBody>
       </Card>
       <div className="w-fit m-auto">
-        <MyMessage show={resLogin.error} message={resLogin.msg} />
+        <MyMessage
+          show={resLogin.error}
+          message={resLogin.msg[router.locale]}
+        />
         <MyMessage show={validateLogin.error} message={validateLogin.msg} />
       </div>
       <div className="flex w-fit m-auto mt-4">

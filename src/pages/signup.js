@@ -52,7 +52,7 @@ export default function Signup(props) {
     lastName: "",
     secretCode: "",
     password: "",
-    msg: "",
+    msg: { en: "", ar: "" },
     error: false,
   });
   const [myCountries, setMyCountries] = useState(Object.entries(countries));
@@ -67,7 +67,10 @@ export default function Signup(props) {
         } else {
           setAccount({
             error: result.error,
-            msg: result.msg + " " + result.data.receiveBlockingExpirationDate,
+            msg:
+              result.msg[router.locale] +
+              " " +
+              result.data.receiveBlockingExpirationDate,
           });
         }
         setLoading(false);
@@ -88,7 +91,7 @@ export default function Signup(props) {
             password: result.data.password,
             firstName: "",
             lastName: "",
-            msg: result.msg,
+            msg: result.msg[router.locale],
             error: result.error,
           });
           localStorage.setItem("babel-coins-user-token", result.data.token);
@@ -96,7 +99,7 @@ export default function Signup(props) {
           setLoading(false);
         } else {
           setLoading(false);
-          setAccount({ error: result.error, msg: result.msg });
+          setAccount({ error: result.error, msg: result.msg[router.locale] });
         }
       })
       .catch((err) => {
@@ -142,7 +145,6 @@ export default function Signup(props) {
   }, [seconds, timerOn]);
 
   useEffect(() => {
-    console.log(props);
     setMount(true);
     isUserLogged()
       .then((result) => {
@@ -561,7 +563,7 @@ export default function Signup(props) {
       </Card>
       <div className="w-fit m-auto">
         {/* Error Message */}
-        <MyMessage show={account.error} message={account.msg} />
+        <MyMessage show={account.error} message={account.msg[router.locale]} />
         <MyMessage show={validateAccount.error} message={validateAccount.msg} />
       </div>
       {/* Under Card */}

@@ -27,10 +27,12 @@ import { BiSolidError } from "react-icons/bi";
 import { FaInfoCircle } from "react-icons/fa";
 import { getDateTimeFormated } from "../../../public/global_functions/helpers";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 
 export default function Exchange() {
   const t_w = useTranslations("Words");
   const t = useTranslations("Exchange");
+  const router = useRouter();
   const [mounted, setMount] = useState(false);
   const [debitAccounts, setDebitAccounts] = useState([]);
   const [creditAccounts, setCreditAccounts] = useState([]);
@@ -187,7 +189,9 @@ export default function Exchange() {
               </ModalHeader>
               <ModalBody>
                 {response.error && (
-                  <p className={`w-fit m-auto`}>{response.msg}</p>
+                  <p className={`w-fit m-auto`}>
+                    {response.msg[router.locale]}
+                  </p>
                 )}
                 {!response.error && (
                   <div className="flex flex-col gap-1 md:gap-2 p-3 text-lg">
