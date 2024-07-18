@@ -281,14 +281,12 @@ export default function Templates() {
                   <FaInfoCircle
                     className={`self-cente w-7 h-7 text-yellow-500`}
                   />
-                  <p className="self-center text-xl">Delete Account</p>
+                  <p className="self-center text-xl">{t("DeleteAccount")}</p>
                   {loadingDELETE && <Spinner size="sm" />}
                 </span>
               </ModalHeader>
               <ModalBody>
-                <p className={`w-fit m-auto`}>
-                  Are you sure you want to delete this account?
-                </p>
+                <p className={`w-fit m-auto`}>{t("QuesDeleteTemplate")}</p>
               </ModalBody>
               <ModalFooter>
                 <Button
@@ -297,7 +295,7 @@ export default function Templates() {
                   variant="light"
                   onPress={onClose}
                 >
-                  Close
+                  {t_w("Close")}
                 </Button>
                 <Button
                   isDisabled={loadingDELETE}
@@ -311,7 +309,7 @@ export default function Templates() {
                     );
                   }}
                 >
-                  Confirm
+                  {t_w("Confirm")}
                 </Button>
               </ModalFooter>
             </>
