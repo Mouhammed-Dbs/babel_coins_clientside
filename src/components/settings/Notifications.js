@@ -148,7 +148,7 @@ export default function Notifications() {
           labelPlacement="outside"
           selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
           classNames={{
-            base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+            base: "p-[2px] max-w-xs peer w-full md:w-48 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
             trigger: "h-7",
           }}
         >
@@ -190,7 +190,7 @@ export default function Notifications() {
           labelPlacement="outside"
           selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
           classNames={{
-            base: "p-[2px] mb-4 max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+            base: "p-[2px] mb-4 max-w-xs peer w-full md:w-48 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
             trigger: "h-7",
           }}
         >
@@ -212,7 +212,7 @@ export default function Notifications() {
               setMinimumAmountForSendingNotification(e.target.value);
             }}
             color="border-gray-500"
-            className="w-64 border-black"
+            className="w-48 border-black"
             item={{
               name: "minimum_amount",
               type: "number",

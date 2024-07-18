@@ -141,7 +141,7 @@ export default function Security() {
             labelPlacement="none"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] self-auto max-w-xs peer w-full md:w-74 rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] self-auto max-w-xs peer w-full md:w-64 rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-7",
             }}
           >
@@ -179,7 +179,7 @@ export default function Security() {
             labelPlacement="outside"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-7",
             }}
           >
@@ -221,7 +221,7 @@ export default function Security() {
           labelPlacement="outside"
           selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
           classNames={{
-            base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+            base: "p-[2px] max-w-xs peer w-full md:w-64 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
             trigger: "h-7",
           }}
         >
