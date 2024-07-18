@@ -21,13 +21,10 @@ const validatePassword = async (password) => {
       .string()
       .required("Password is required")
       .matches(/^.{8,}$/, "Password should has minimum 8 characters")
-      .matches(
-        /(?=.*[a-z].*[a-z].*[a-z])/,
-        "Password should has 3 lowercase letters"
-      )
-      .matches(/(?=.*[A-Z].*[A-Z])/, "Password should has 2 uppercase letters")
+      .matches(/(?=.*[a-z].*[a-z])/, "Password should has 2 lowercase letters")
+      .matches(/(?=.*[A-Z])/, "Password should has one uppercase letters")
       .matches(/(?=.*[!@$&*-_])/, "Password should has one special case letter")
-      .matches(/(?=.*[0-9].*[0-9])/, "Password should has two digits"),
+      .matches(/(?=.*[0-9])/, "Password should has one digit"),
   });
 
   try {
