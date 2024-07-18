@@ -51,6 +51,10 @@
         "Modifying": "جارٍ التعديل",
         "Confirm": "تأكيد",
         "Confirming": "جارٍ التأكيد",
+        "Enabled": "مفعل",
+        "Disabled": "معطّل",
+        "E-mail": "البريد الإلكتروني",
+        "SMS": "رسالة نصية",
         "ErrorGettingData": "حدث خطأ أثناء تحميل البيانات!"
     },
     "Placeholder": {
@@ -312,8 +316,13 @@
         "NeverSendVerificationCode": "لا ترسل رمز التحقق أبداً",
         "SendWhenSubnetChange": "إرسال عند تغيير الشبكة الفرعية",
         "SendWhenIP-addressChange": "إرسال عند تغيير عنوان IP",
-        "AlwaysSendCode": "إرسال الرمز دائماً",
-        "E-mail": "البريد الإلكتروني",
-        "SMS": "رسالة نصية"
+        "AlwaysSendCode": "إرسال الرمز دائماً"
+    },
+    "Notifications": {
+        "Authentication": "المصادقة",
+        "InternalTransfers": "التحويلات الداخلية",
+        "NotificationOfSuccessfulAuthorization": "إشعار بالترخيص الناجح",
+        "IncomingPaymentNotification": "إشعار بدفع وارد",
+        "MinimumAmountForNotification": "الحد الأدنى للمبلغ للإشعار"
     }
 }

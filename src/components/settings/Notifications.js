@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 export default function Notifications() {
   const router = useRouter();
   const t_w = useTranslations("Words");
+  const t = useTranslations("Notifications");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -112,7 +113,7 @@ export default function Notifications() {
   if (!isDataLoaded)
     return (
       <div className="text-red-500 font-bold bg-white/55 dark:bg-default-100/55 backdrop-blur-md py-10 px-16 w-fit m-auto mt-10 rounded-md">
-        <p className="text-lg text-center">Error Getting Data!</p>
+        <p className="text-lg text-center">{t_w("ErrorGettingData")}</p>
       </div>
     );
   return (
@@ -121,12 +122,16 @@ export default function Notifications() {
     >
       {/* Title 1 */}
       <div className="w-full border-b">
-        <h1 className="text-sm mb-3 font-bold">AUTHENTICATION</h1>
+        <h1 className="text-sm mb-3 font-bold">{t("Authentication")}</h1>
       </div>
 
       {/* Content 1 */}
       <div className="mt-10">
+        <label className="text-right text-sm md:text-base w-fit">
+          {t("NotificationOfSuccessfulAuthorization") + ":"}
+        </label>
         <Select
+          dir="ltr"
           defaultSelectedKeys={["disabled"]}
           selectedKeys={
             isSendingMsgOnSuccessfulAuthorization ? ["enabled"] : ["disabled"]
@@ -137,7 +142,7 @@ export default function Notifications() {
             );
           }}
           disallowEmptySelection={true}
-          label="Notification of successful authorization:"
+          aria-label="none"
           style={{ backgroundColor: "inherit" }}
           size="sm"
           labelPlacement="outside"
@@ -148,22 +153,27 @@ export default function Notifications() {
           }}
         >
           <SelectItem key="enabled" value="enabled">
-            Enabled
+            {t_w("Enabled")}
           </SelectItem>
           <SelectItem key="disabled" value="disabled">
-            Disabled
+            {t_w("Disabled")}
           </SelectItem>
         </Select>
       </div>
 
       {/* Title 2 */}
       <div className="w-full border-b mt-9">
-        <h1 className="text-sm mb-3 font-bold">INTERNAL TRANSFERS</h1>
+        <h1 className="text-sm mb-3 font-bold">{t("InternalTransfers")}</h1>
       </div>
 
       {/* Content 2 */}
       <div className="mt-10">
+        <label className="text-right text-sm md:text-base w-fit">
+          {t("IncomingPaymentNotification") + ":"}
+        </label>
+
         <Select
+          dir="ltr"
           defaultSelectedKeys={["never"]}
           selectedKeys={
             methodOfSendingNotificationOnIncomingPayment
@@ -174,7 +184,7 @@ export default function Notifications() {
             setMethodOfSendingNotificationOnIncomingPayment(e.target.value);
           }}
           disallowEmptySelection={true}
-          label="Incoming payment notification:"
+          aria-label="none"
           style={{ backgroundColor: "inherit" }}
           size="sm"
           labelPlacement="outside"
@@ -185,18 +195,16 @@ export default function Notifications() {
           }}
         >
           <SelectItem key="never" value="never">
-            Disabled
+            {t_w("Disabled")}
           </SelectItem>
           <SelectItem key="email" value="email">
-            Send to email
+            {t_w("E-mail")}
           </SelectItem>
           <SelectItem key="sms" value="sms">
-            Send via SMS
+            {t_w("SMS")}
           </SelectItem>
         </Select>
-        <label className="text-xs md:text-sm pl-1">
-          Minimum amount for notification:
-        </label>
+        <label className="pl-1">{t("MinimumAmountForNotification")}:</label>
         <div className="flex items-end gap-1">
           <MyInput
             value={minimumAmountForSendingNotification}
@@ -224,7 +232,7 @@ export default function Notifications() {
         size="sm"
         className="bg-orange text-sm rounded-full mt-10 p-4 text-white"
       >
-        {updateLoading ? "CONFIRMING.." : "CONFIRM"}
+        {updateLoading ? t_w("Confirming") + ".." : t_w("Confirm")}
       </Button>
       <MyMessage
         show={resUpdate.error === false && resUpdate.show}

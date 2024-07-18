@@ -51,6 +51,10 @@
         "Modifying": "Modifying",
         "Confirm": "Confirm",
         "Confirming": "Confirming",
+        "Enabled": "Enabled",
+        "Disabled": "Disabled",
+        "E-mail": "E-mail",
+        "SMS": "SMS",
         "ErrorGettingData": "Error Getting Data!"
     },
     "Placeholder": {
@@ -312,8 +316,13 @@
         "NeverSendVerificationCode": "Never send verification code",
         "SendWhenSubnetChange": "Send when subnet change",
         "SendWhenIP-addressChange": "Send when IP-address change",
-        "AlwaysSendCode": "Always send code",
-        "E-mail": "E-mail",
-        "SMS": "SMS"
+        "AlwaysSendCode": "Always send code"
+    },
+    "Notifications": {
+        "Authentication": "AUTHENTICATION",
+        "InternalTransfers": "INTERNAL TRANSFERS",
+        "NotificationOfSuccessfulAuthorization": "Notification of successful authorization",
+        "IncomingPaymentNotification": "Incoming payment notification",
+        "MinimumAmountForNotification": "Minimum amount for notification"
     }
 }

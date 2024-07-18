@@ -184,10 +184,10 @@ export default function Security() {
             }}
           >
             <SelectItem key="email" value="email">
-              {t("E-mail")}
+              {t_w("E-mail")}
             </SelectItem>
             <SelectItem key="sms" value="sms">
-              {t("SMS")}
+              {t_w("SMS")}
             </SelectItem>
           </Select>
         </div>
@@ -229,10 +229,10 @@ export default function Security() {
             {t("NeverSendVerificationCode")}
           </SelectItem>
           <SelectItem key="email" value="email">
-            {t("E-mail")}
+            {t_w("E-mail")}
           </SelectItem>
           <SelectItem key="sms" value="sms">
-            {t("SMS")}
+            {t_w("SMS")}
           </SelectItem>
         </Select>
       </div>
