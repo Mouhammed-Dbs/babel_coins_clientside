@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 export default function Security() {
   const router = useRouter();
   const t_w = useTranslations("Words");
+  const t = useTranslations("Security");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -106,7 +107,7 @@ export default function Security() {
   if (!isDataLoaded)
     return (
       <div className="text-red-500 font-bold bg-white/55 dark:bg-default-100/55 backdrop-blur-md py-10 px-16 w-fit m-auto mt-10 rounded-md">
-        <p className="text-lg text-center">Error Getting Data!</p>
+        <p className="text-lg text-center">{t_w("ErrorGettingData")}</p>
       </div>
     );
   return (
@@ -115,13 +116,17 @@ export default function Security() {
     >
       {/* Title 1 */}
       <div className="w-full border-b">
-        <h1 className="text-sm mb-3 font-bold">{"AUTHENTICATION (2FA)"}</h1>
+        <h1 className="text-sm mb-3 font-bold">{t("Authentication2FA")}</h1>
       </div>
 
       {/* Content 1 */}
       <div className="mt-10">
-        <div>
+        <div className="text-right flex flex-col items-start">
+          <label className="text-right text-sm md:text-base w-fit">
+            {t("SendVerificationCode") + ":"}
+          </label>
           <Select
+            dir="ltr"
             defaultSelectedKeys={["never"]}
             selectedKeys={
               whenVerificationCode ? [whenVerificationCode] : ["never"]
@@ -130,32 +135,36 @@ export default function Security() {
               setWhenVerificationCode(e.target.value);
             }}
             disallowEmptySelection={true}
-            label="Send verification code:"
+            aria-label="none"
             style={{ backgroundColor: "inherit" }}
             size="sm"
-            labelPlacement="outside"
+            labelPlacement="none"
             selectorIcon={<IoIosArrowDown color="var(--bg-primary-color)" />}
             classNames={{
-              base: "p-[2px] max-w-xs peer w-full md:w-74 self-center rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
+              base: "p-[2px] self-auto max-w-xs peer w-full md:w-74 rounded-lg border-2 dark:border-slate-400 border-black border-opacity-55 text-xs bg-inherit focus:outline-none focus:border-cyan-300",
               trigger: "h-7",
             }}
           >
             <SelectItem key="never" value="never">
-              Never send verification code
+              {t("NeverSendVerificationCode")}
             </SelectItem>
             <SelectItem key="on subnet change" value="on subnet change">
-              Send when subnet change
+              {t("SendWhenSubnetChange")}
             </SelectItem>
             <SelectItem key="on ip address change" value="on ip address change">
-              Send when IP-address change
+              {t("SendWhenIP-addressChange")}
             </SelectItem>
             <SelectItem key="always" value="always">
-              Always send code
+              {t("AlwaysSendCode")}
             </SelectItem>
           </Select>
         </div>
         <div className="mt-8">
+          <label className="text-right text-sm md:text-base w-fit">
+            {t("ConfirmationMethod") + ":"}
+          </label>
           <Select
+            dir="ltr"
             defaultSelectedKeys={["email"]}
             selectedKeys={
               methodOfSendingCode2FA ? [methodOfSendingCode2FA] : ["email"]
@@ -164,7 +173,7 @@ export default function Security() {
               setMethodOfSendingCode2FA(e.target.value);
             }}
             disallowEmptySelection={true}
-            label="Confirmation method:"
+            aria-label="none"
             style={{ backgroundColor: "inherit" }}
             size="sm"
             labelPlacement="outside"
@@ -175,10 +184,10 @@ export default function Security() {
             }}
           >
             <SelectItem key="email" value="email">
-              E-mail
+              {t("E-mail")}
             </SelectItem>
             <SelectItem key="sms" value="sms">
-              SMS
+              {t("SMS")}
             </SelectItem>
           </Select>
         </div>
@@ -186,12 +195,16 @@ export default function Security() {
 
       {/* Title 2 */}
       <div className="w-full border-b mt-9">
-        <h1 className="text-sm mb-3 font-bold">RESTORE PASSWORDS</h1>
+        <h1 className="text-sm mb-3 font-bold">{t("RestorePassword")}</h1>
       </div>
 
       {/* Content 2 */}
       <div className="mt-10">
+        <label className="text-right text-sm md:text-base w-fit">
+          {t("MethodOfSendingCode") + ":"}
+        </label>
         <Select
+          dir="ltr"
           defaultSelectedKeys={["never"]}
           selectedKeys={
             methodOfSendingCodeRestorePass
@@ -202,7 +215,7 @@ export default function Security() {
             setMethodOfSendingCodeRestorePass(e.target.value);
           }}
           disallowEmptySelection={true}
-          label="Method of sending code:"
+          aria-label="none"
           style={{ backgroundColor: "inherit" }}
           size="sm"
           labelPlacement="outside"
@@ -213,20 +226,20 @@ export default function Security() {
           }}
         >
           <SelectItem key="never" value="never">
-            Never Send verification code
+            {t("NeverSendVerificationCode")}
           </SelectItem>
           <SelectItem key="email" value="email">
-            E-mail
+            {t("E-mail")}
           </SelectItem>
           <SelectItem key="sms" value="sms">
-            SMS
+            {t("SMS")}
           </SelectItem>
         </Select>
       </div>
 
       {/* Title 2 */}
       <div className="w-full border-b mt-9">
-        <h1 className="text-sm mb-3 font-bold">MASTER KEY</h1>
+        <h1 className="text-sm mb-3 font-bold">{t("MasterKey")}</h1>
       </div>
 
       {/* Content 3 */}
@@ -240,8 +253,8 @@ export default function Security() {
           type="checkbox"
           className="accent-primary h-4 w-4"
         ></input>
-        <label className="text-sm text-opacity-65 ml-2">
-          ENABLE MASTER KEY
+        <label className="text-sm text-opacity-65 ltr:ml-2 rtl:mr-2">
+          {t("EnableMasterKey")}
         </label>
       </div>
       <Button
@@ -252,7 +265,7 @@ export default function Security() {
         size="sm"
         className="bg-orange text-sm rounded-full mt-10 p-4 text-white"
       >
-        {updateLoading ? "CONFIRMING.." : "CONFIRM"}
+        {updateLoading ? t_w("Confirming") + ".." : t_w("Confirm")}
       </Button>
       <MyMessage
         show={resUpdate.error === false && resUpdate.show}

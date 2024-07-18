@@ -48,7 +48,10 @@
         "MyCards": "بطاقاتي",
         "Templates": "القوالب",
         "Modify": "تعديل",
-        "Modifying": "جارٍ التعديل"
+        "Modifying": "جارٍ التعديل",
+        "Confirm": "تأكيد",
+        "Confirming": "جارٍ التأكيد",
+        "ErrorGettingData": "حدث خطأ أثناء تحميل البيانات!"
     },
     "Placeholder": {
         "Message": "اكتب رسالتك",
@@ -297,5 +300,20 @@
         "currentPassword": "كلمة المرور الحالية",
         "newPassword": "كلمة المرور الجديدة",
         "repeatNewPassword": "أعد كتابة كلمة المرور الجديدة"
+    },
+    "Security": {
+        "Authentication2FA": "المصادقة (2FA)",
+        "RestorePassword": "استعادة كلمة المرور",
+        "SendVerificationCode": "إرسال رمز التحقق",
+        "ConfirmationMethod": "طريقة التأكيد",
+        "MethodOfSendingCode": "طريقة إرسال الرمز",
+        "MasterKey": "المفتاح الرئيسي",
+        "EnableMasterKey": "تمكين المفتاح الرئيسي",
+        "NeverSendVerificationCode": "لا ترسل رمز التحقق أبداً",
+        "SendWhenSubnetChange": "إرسال عند تغيير الشبكة الفرعية",
+        "SendWhenIP-addressChange": "إرسال عند تغيير عنوان IP",
+        "AlwaysSendCode": "إرسال الرمز دائماً",
+        "E-mail": "البريد الإلكتروني",
+        "SMS": "رسالة نصية"
     }
 }

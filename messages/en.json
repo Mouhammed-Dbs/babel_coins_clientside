@@ -48,7 +48,10 @@
         "MyCards": "My Cards",
         "Templates": "Templates",
         "Modify": "Modify",
-        "Modifying": "Modifying"
+        "Modifying": "Modifying",
+        "Confirm": "Confirm",
+        "Confirming": "Confirming",
+        "ErrorGettingData": "Error Getting Data!"
     },
     "Placeholder": {
         "Message": "Enter your message",
@@ -297,5 +300,20 @@
         "currentPassword": "Current password",
         "newPassword": "New password",
         "repeatNewPassword": "Repeat new password"
+    },
+    "Security": {
+        "Authentication2FA": "AUTHENTICATION (2FA)",
+        "RestorePassword": "Restor password",
+        "SendVerificationCode": "Send verification code",
+        "ConfirmationMethod": "Confirmation method",
+        "MethodOfSendingCode": "Method of sending code",
+        "MasterKey": "Master key",
+        "EnableMasterKey": "Enable master key",
+        "NeverSendVerificationCode": "Never send verification code",
+        "SendWhenSubnetChange": "Send when subnet change",
+        "SendWhenIP-addressChange": "Send when IP-address change",
+        "AlwaysSendCode": "Always send code",
+        "E-mail": "E-mail",
+        "SMS": "SMS"
     }
 }
