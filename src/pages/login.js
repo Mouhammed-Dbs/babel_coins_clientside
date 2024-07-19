@@ -35,7 +35,7 @@ export default function Signup() {
     setLoading(true);
     loginUser(inputEmail, inputPass)
       .then((result) => {
-        setResLogin({ msg: result.msg[router.locale], error: result.error });
+        setResLogin({ msg: result.msg, error: result.error });
         if (!result.error) {
           localStorage.setItem("babel-coins-user-token", result.data.token);
           router.push("/");

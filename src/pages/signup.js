@@ -91,7 +91,7 @@ export default function Signup(props) {
             password: result.data.password,
             firstName: "",
             lastName: "",
-            msg: result.msg[router.locale],
+            msg: result.msg,
             error: result.error,
           });
           localStorage.setItem("babel-coins-user-token", result.data.token);
