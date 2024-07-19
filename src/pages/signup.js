@@ -67,10 +67,7 @@ export default function Signup(props) {
         } else {
           setAccount({
             error: result.error,
-            msg:
-              result.msg[router.locale] +
-              " " +
-              result.data.receiveBlockingExpirationDate,
+            msg: result.msg + " " + result.data.receiveBlockingExpirationDate,
           });
         }
         setLoading(false);
@@ -99,7 +96,7 @@ export default function Signup(props) {
           setLoading(false);
         } else {
           setLoading(false);
-          setAccount({ error: result.error, msg: result.msg[router.locale] });
+          setAccount({ error: result.error, msg: result.msg });
         }
       })
       .catch((err) => {
