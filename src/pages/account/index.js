@@ -62,7 +62,7 @@ export default function Balance() {
               symbol={coin.symbol}
               currencyName={coin.currencyName}
               network={coin.network}
-              validDepositeBalance={coin.validDepositeBalance}
+              validBalance={coin.validBalance}
             />
           ))}
         </div>
@@ -71,7 +71,7 @@ export default function Balance() {
   );
 }
 
-function Card({ symbol, currencyName, network, validDepositeBalance }) {
+function Card({ symbol, currencyName, network, validBalance }) {
   const router = useRouter();
   const t = useTranslations("AccountIndex");
   useEffect(() => {}, []);
@@ -94,7 +94,7 @@ function Card({ symbol, currencyName, network, validDepositeBalance }) {
         <h1 className="text-lg">{currencyName}</h1>
         <h1 className="text-sm">{network.includes(",") ? "-" : network}</h1>
         <h1 className="font-bold text-lg mt-1 mb-3">
-          {validDepositeBalance.toFixed(2)}
+          {validBalance.toFixed(2)}
         </h1>
       </div>
       <div className="grid grid-cols-2 gap-3 mt-1 mb-2">

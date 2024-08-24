@@ -127,7 +127,7 @@ const transferMoney = async (
   if (token) {
     try {
       const res = await axios.post(
-        `${process.env.BASE_API_URL}/users/send-money`,
+        `${process.env.BASE_API_URL}/transfers/send-money`,
         transferCurrencyType === "crypto"
           ? getDataByTransferType({
               transferCurrencyType,
