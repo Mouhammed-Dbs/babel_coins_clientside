@@ -16,8 +16,21 @@ const getTimeFormated = (date) => {
   return orderedTimeInDateFormat;
 };
 
+const getTimeHMFormated = (date) => {
+  let orderedTimeInDateFormat = new Date(date);
+  const hours = orderedTimeInDateFormat.getHours();
+  const minutes = orderedTimeInDateFormat.getMinutes();
+  orderedTimeInDateFormat = `${hours}:${minutes}`;
+  return orderedTimeInDateFormat;
+};
+
 const getDateTimeFormated = (date) => {
   return getDateFormated(date) + " " + getTimeFormated(date);
 };
 
-export { getDateFormated, getTimeFormated, getDateTimeFormated };
+export {
+  getDateFormated,
+  getTimeFormated,
+  getDateTimeFormated,
+  getTimeHMFormated,
+};
