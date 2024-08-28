@@ -160,7 +160,7 @@ export default function Add(props) {
                     src={`/images/coins/${item.data.symbol}.png`}
                   />
                   <div className="flex flex-col">
-                    <span>{item.data.validDepositeBalance.toFixed(2)}</span>
+                    <span>{item.data.validBalance.toFixed(2)}</span>
                     <span className="text-default-500 text-tiny">
                       {item.data.currencyName}
                     </span>
@@ -184,7 +184,7 @@ export default function Add(props) {
                   />
                   <div className="flex flex-col">
                     <span className="text-small">
-                      {item["validDepositeBalance"].toFixed(2)}
+                      {item["validBalance"].toFixed(2)}
                     </span>
                     <span className="text-tiny text-default-400">
                       {item["currencyName"]}
