@@ -84,6 +84,7 @@ export default function MarketTrade({ firstSymbol, secondSymbol }) {
           <MyCoinInput
             symbol={secondSymbol}
             label={"PRICE PER " + firstSymbol}
+            readOnly={true}
           />
           <MyCoinInput symbol={secondSymbol} label={"I GET"} />
         </div>

@@ -52,6 +52,19 @@ export default function Trade() {
     });
     socket.on("connect", () => {
       console.log("Socket.IO connected");
+      socket.emit("join to trade room");
+    });
+
+    socket.on("success join to trade room", () => {
+      console.log("success join to trade room");
+    });
+
+    socket.on("new executed order", (order) => {
+      console.log(order);
+    });
+
+    socket.on("new pending order", (order) => {
+      console.log(order);
     });
 
     socket.on("change currency rates", (data) => {
