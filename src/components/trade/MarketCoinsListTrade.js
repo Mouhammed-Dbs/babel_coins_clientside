@@ -4,7 +4,7 @@ import { FaSortUp, FaStar } from "react-icons/fa6";
 import SortUpDown from "../utils/SortUpDown";
 import { useState } from "react";
 
-export default function MarketCoinsListTrade() {
+export default function MarketCoinsListTrade({ prices, onItemClick }) {
   const [sortByPair, setSortByPair] = useState(0);
   const [sortByLastPrice, setSortByLastPrice] = useState(0);
   const [sortByChange, setSortByChange] = useState(0);
@@ -12,12 +12,12 @@ export default function MarketCoinsListTrade() {
   return (
     <div className="px-2 h-full">
       <div className="bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[290px]">
-        <div className="flex flex-wrap gap-2 text-[9px] p-1 cursor-pointer">
+        {/* <div className="flex flex-wrap gap-2 text-[9px] p-1 cursor-pointer">
           <span className="text-primary font-bold">USDT</span>
           <span>MATIC</span>
           <span>ETH</span>
         </div>
-        <Divider />
+        <Divider /> */}
         <div className="flex gap-3 text-[9px] p-1 font-bold text-gray-600 dark:text-gray-400">
           <span
             className="flex min-w-24 cursor-pointer select-none"
@@ -48,27 +48,42 @@ export default function MarketCoinsListTrade() {
         </div>
         <Divider />
         <ul className="h-[180px] overflow-scroll no-scrollbar">
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={10} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
-          <ItemPair pair={"BTC/USDT"} change={-20} lastPrice={43432.32} />
+          <ItemPair
+            pair={"ETHER/USDT"}
+            change={-20}
+            lastPrice={prices ? prices["ETHER"]["USDT"].rate : ""}
+            onClick={onItemClick}
+          />
+          <ItemPair
+            pair={"BNB/USDT"}
+            change={-20}
+            lastPrice={prices ? prices["BNB"]["USDT"].rate : ""}
+            onClick={onItemClick}
+          />
+          <ItemPair
+            pair={"TRX/USDT"}
+            change={-20}
+            lastPrice={prices ? prices["TRX"]["USDT"].rate : ""}
+            onClick={onItemClick}
+          />
+          <ItemPair
+            pair={"MATIC/USDT"}
+            change={-20}
+            lastPrice={prices ? prices["MATIC"]["USDT"].rate : ""}
+            onClick={onItemClick}
+          />
         </ul>
       </div>
     </div>
   );
 }
 
-function ItemPair({ pair, lastPrice, change }) {
+function ItemPair({ pair, lastPrice, change, onClick }) {
   return (
-    <li className="flex gap-3 text-[10px] p-1 cursor-pointer hover:bg-slate-200">
+    <li
+      className="flex gap-3 text-[10px] p-1 cursor-pointer hover:bg-slate-200"
+      onClick={() => onClick(pair)}
+    >
       <span className="flex min-w-24">
         <FaStar className="text-gray-600 self-center mx-1" />
         <p className="self-center">{pair}</p>

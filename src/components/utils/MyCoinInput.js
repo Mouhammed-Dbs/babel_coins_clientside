@@ -5,6 +5,7 @@ export default function MyCoinInput({
   label,
   onChange,
   readOnly = false,
+  type = "number",
 }) {
   const [selected, setSelected] = useState(false);
   return (
@@ -23,6 +24,7 @@ export default function MyCoinInput({
         }`}
       >
         <input
+          type={type}
           readOnly={readOnly}
           onChange={onChange}
           className="peer outline-none w-full px-2 rounded-l-md text-black dark:text-white"

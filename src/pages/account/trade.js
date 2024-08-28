@@ -1,3 +1,4 @@
+import io from "socket.io-client";
 import { Button, Divider, Tab, Tabs, Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import screenIs from "@/screen";
@@ -16,8 +17,14 @@ import Image from "next/image";
 import { FaInfoCircle } from "react-icons/fa";
 import GraphTrade from "@/components/trade/GraphTrage";
 import { loadMessages } from "@/lib/loadMessages";
+import {
+  getInitialTrageOrders,
+  getOrders,
+} from "../../../public/global_functions/trade";
+import { getTimeHMFormated } from "../../../public/global_functions/helpers";
 export default function Trade() {
   const [mounted, setMount] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
   const [screenSize, setScreenSize] = useState(false);
   const [tabForm, setTabForm] = useState("limit_tab");
@@ -25,7 +32,11 @@ export default function Trade() {
     useState("coinslist_tab");
   const [showOrders, setShowOrdes] = useState("all");
   const [numSellOrders, setNumSellOrders] = useState(35);
-  const [pairSelected, setPairSelected] = useState("ETH/USDT");
+  const [pairSelected, setPairSelected] = useState("ETHER/USDT");
+  const [pendingSellOrders, setPendingSellOrders] = useState([]);
+  const [pendingBuyOrders, setPendingBuyOrders] = useState([]);
+  const [historyOrders, setHistoryOrders] = useState([]);
+  const [globalPrice, setGlobalPrice] = useState(0);
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
@@ -39,7 +50,101 @@ export default function Trade() {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenSize]);
+
+  // Socket.IO connection
+  useEffect(() => {
+    const socket = io(process.env.BASE_API_URL, {
+      transports: ["polling"],
+    });
+    socket.on("connect", () => {
+      console.log("Socket.IO connected");
+    });
+
+    socket.on("change currency rates", (data) => {
+      console.log(data);
+      setGlobalPrice(data);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket.IO disconnected");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const getFilteringString = (filters) => {
+    let filteringString = "";
+    if (filters.pageNumber)
+      filteringString += `pageNumber=${filters.pageNumber}&`;
+    if (filters.pageSize) filteringString += `pageSize=${filters.pageSize}&`;
+    if (filters.status) filteringString += `status=${filters.status}&`;
+    if (filters.destination)
+      filteringString += `destination=${filters.destination}&`;
+    if (filters.orderAction)
+      filteringString += `orderAction=${filters.orderAction}&`;
+    if (filters.firstCurrencyName)
+      filteringString += `firstCurrencyName=${filters.firstCurrencyName}&`;
+    if (filters.secondCurrencyName)
+      filteringString += `secondCurrencyName=${filters.secondCurrencyName}&`;
+    if (filteringString)
+      filteringString = filteringString.substring(
+        0,
+        filteringString.length - 1
+      );
+    return filteringString;
+  };
+
+  const getInitOrders = async (firstCurrencyName, secondCurrencyName) => {
+    setPageLoading(true);
+    try {
+      const initOrders = await getInitialTrageOrders(
+        firstCurrencyName,
+        secondCurrencyName
+      );
+      setPendingBuyOrders(initOrders.data.pendingBuyOrders.orders);
+      setPendingSellOrders(initOrders.data.pendingSellOrders.orders);
+      setHistoryOrders(initOrders.data.historyOrders.orders);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  const getTradeOrders = async (filters) => {
+    try {
+      const initOrders = await getOrders(getFilteringString(filters));
+      if (!initOrders.error) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const calculateAmountPrice = (amount, price) => {
+    return Math.round(amount * price * 10000) / 10000;
+  };
+
+  useEffect(() => {
+    const pair = pairSelected.split("/");
+    getInitOrders(pair[0], pair[1]);
+  }, [pairSelected]);
+
+  const handleChangePair = (pair) => {
+    setPairSelected(pair);
+  };
+
   if (!mounted)
+    return (
+      <MyLoading
+        msg="Loading.."
+        color="primary"
+        className={`text-black dark:text-white mt-24`}
+      />
+    );
+  if (pageLoading)
     return (
       <MyLoading
         msg="Loading.."
@@ -50,7 +155,7 @@ export default function Trade() {
   return (
     <div className="flex h-screen w-screen pt-3 rtl:pl-24 ltr:pr-24 gap-3 overflow-y-scroll overflow-x-hidden no-scrollbar pb-20">
       {/* First Col */}
-      <div className="w-1/5 min-w-max h-fit">
+      <div className="w-1/4 min-w-max h-fit">
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
           {/* Header */}
           <div className="text-sm flex justify-between p-2">
@@ -61,7 +166,7 @@ export default function Trade() {
           <Divider />
           {/* Tabs */}
           <div className="flex bg-white/85 dark:bg-default-200/50 rounded-md w-[93%] m-auto mt-1">
-            <button
+            <Button
               className={`w-1/3 p-1 border-1 ltr:rounded-l-md rtl:rounded-r-md hover:border-sky-500 ${
                 showOrders === "buy" ? "border-sky-500" : ""
               }`}
@@ -74,8 +179,8 @@ export default function Trade() {
                 width={20}
                 height={20}
               />
-            </button>
-            <button
+            </Button>
+            <Button
               className={`w-1/3 p-1 border-1 hover:border-sky-500 ${
                 showOrders === "all" ? "border-sky-500" : ""
               }`}
@@ -88,8 +193,8 @@ export default function Trade() {
                 width={20}
                 height={20}
               />
-            </button>
-            <button
+            </Button>
+            <Button
               className={`w-1/3 p-1 border-1 ltr:rounded-r-md rtl:rounded-l-md hover:border-sky-500 ${
                 showOrders === "sell" ? "border-sky-500" : ""
               }`}
@@ -102,7 +207,7 @@ export default function Trade() {
                 width={20}
                 height={20}
               />
-            </button>
+            </Button>
           </div>
           <div className="p-2 h-full]">
             <div className="flex justify-between text-[11px] gap-2 mb-1">
@@ -119,140 +224,34 @@ export default function Trade() {
                   : "h-[382px]"
               } flex flex-col-reverse bg-white/85 dark:bg-default-200/50 rounded-sm w-full overflow-scroll no-scrollbar py-1`}
             >
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer">
-                <span className="text-red-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-red-500">200.3223414</span>
-              </li>
+              {pendingSellOrders.map((pendingOrder) => (
+                <li
+                  key={pendingOrder._id}
+                  className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer"
+                >
+                  <span className="w-1/3 text-red-500">
+                    {pendingOrder.price}
+                  </span>
+                  <span className="w-1/3 text-center">
+                    {pendingOrder.amount}
+                  </span>
+                  <span className="w-1/3 text-end text-red-500">
+                    {calculateAmountPrice(
+                      pendingOrder.amount,
+                      pendingOrder.price
+                    )}
+                  </span>
+                </li>
+              ))}
             </ul>
             <div className="h-9 bg-white/85 dark:bg-default-200/50 flex border-y-1">
-              <p className="text-[12px] self-center px-1">64,759.90</p>
+              <p className="text-[12px] self-center px-1">
+                {globalPrice
+                  ? globalPrice[pairSelected.split("/")[0].toUpperCase()][
+                      pairSelected.split("/")[1].toUpperCase()
+                    ].rate
+                  : 0}
+              </p>
               <span className="self-center flex">
                 <HiOutlineArrowNarrowUp className={`text-red-500 hidden`} />
                 <HiOutlineArrowNarrowDown className={`text-green-500`} />
@@ -265,116 +264,25 @@ export default function Trade() {
               } bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[332px] overflow-scroll no-scrollbar py-1`}
               // style={{ height: heightWindow - 100 + "px" }}
             >
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
-              <li className="flex justify-between text-[11px] px-1 border-black dark:border-gray-300 hover:border-b-2 border-dotted cursor-pointer">
-                <span className="text-green-500">44231.22</span>
-                <span className="">0.000213</span>
-                <span className="text-green-500">200.3223414</span>
-              </li>
+              {pendingBuyOrders.map((pendingOrder) => (
+                <li
+                  key={pendingOrder._id}
+                  className="flex justify-between text-[11px] px-1 hover:border-t-2 border-dotted border-black dark:border-gray-300 cursor-pointer"
+                >
+                  <span className="w-1/3 text-green-500">
+                    {pendingOrder.price}
+                  </span>
+                  <span className="w-1/3 text-center">
+                    {pendingOrder.amount}
+                  </span>
+                  <span className="w-1/3 text-end text-green-500">
+                    {calculateAmountPrice(
+                      pendingOrder.amount,
+                      pendingOrder.price
+                    )}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -382,7 +290,7 @@ export default function Trade() {
 
       {/* Second Col */}
       <div
-        className="w-3/5 min-w-[360px] lg:min-w-[400px]"
+        className="w-1/2 min-w-[360px] lg:min-w-[400px]"
         style={{ height: heightWindow + 340 + "px" }}
       >
         {/* Price Graph */}
@@ -430,8 +338,8 @@ export default function Trade() {
                 }
               >
                 <LimitTrade
-                  currencyName={pairSelected.split("/")[0]}
-                  symbol={pairSelected.split("/")[0]}
+                  firstSymbol={pairSelected.split("/")[0]}
+                  secondSymbol={pairSelected.split("/")[1]}
                 />
               </Tab>
               <Tab
@@ -452,8 +360,8 @@ export default function Trade() {
                 }
               >
                 <MarketTrade
-                  currencyName={pairSelected.split("/")[0]}
-                  symbol={pairSelected.split("/")[0]}
+                  firstSymbol={pairSelected.split("/")[0]}
+                  secondSymbol={pairSelected.split("/")[1]}
                 />
               </Tab>
               <Tab
@@ -492,7 +400,7 @@ export default function Trade() {
       </div>
 
       {/* Third Col */}
-      <div className="w-1/5 min-w-[300px]">
+      <div className="w-1/4 min-w-[300px]">
         {/* Chat & Market */}
         <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[348px] shadow-md">
           <Tabs
@@ -517,7 +425,10 @@ export default function Trade() {
                 </div>
               }
             >
-              <MarketCoinsListTrade />
+              <MarketCoinsListTrade
+                prices={globalPrice}
+                onItemClick={handleChangePair}
+              />
             </Tab>
             <Tab
               key="chat_tab"
@@ -550,54 +461,40 @@ export default function Trade() {
                 className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[463px] overflow-scroll no-scrollbar py-1`}
                 // style={{ height: heightWindow - 100 + "px" }}
               >
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
-                <li className="flex justify-between text-[11px] px-1 hover:bg-slate-200">
-                  <span className="">21:35</span>
-                  <span className="text-red-500">44231.22</span>
-                  <span className="">0.000213</span>
-                  <span className="text-red-500">200.32</span>
-                </li>
+                {historyOrders.map((historyOrder) => (
+                  <li
+                    key={historyOrder._id}
+                    className="flex justify-between text-[11px] px-1 hover:bg-slate-200"
+                  >
+                    <span className="w-2/12">
+                      {getTimeHMFormated(historyOrder.execuationDate)}
+                    </span>
+                    <span
+                      className={
+                        (historyOrder.orderAction == "sell"
+                          ? `text-red-500`
+                          : `text-green-500`) + " w-4/12 text-start"
+                      }
+                    >
+                      {historyOrder.price}
+                    </span>
+                    <span className="w-2/12 text-center">
+                      {historyOrder.initalAmount}
+                    </span>
+                    <span
+                      className={
+                        (historyOrder.orderAction == "sell"
+                          ? `text-red-500`
+                          : `text-green-500`) + " w-4/12 text-end"
+                      }
+                    >
+                      {calculateAmountPrice(
+                        historyOrder.initalAmount,
+                        historyOrder.price
+                      )}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
