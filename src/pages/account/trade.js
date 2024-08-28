@@ -381,7 +381,10 @@ export default function Trade() {
                   </div>
                 }
               >
-                <TriggerTrade />
+                <TriggerTrade
+                  firstSymbol={pairSelected.split("/")[0]}
+                  secondSymbol={pairSelected.split("/")[1]}
+                />
               </Tab>
             </Tabs>
           </div>
