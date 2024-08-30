@@ -18,10 +18,12 @@ import {
 } from "../../../public/global_functions/trade";
 import QueueOrders from "@/components/trade/QueueOrders";
 import TradeHistory from "@/components/trade/TradeHistory";
+
 export default function Trade() {
   const [mounted, setMount] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
   const [heightWindow, setHeightWindow] = useState("100%");
+  const [widthWindow, setWidthWindow] = useState("100%");
   const [screenSize, setScreenSize] = useState(false);
   const [tabForm, setTabForm] = useState("limit_tab");
   const [tabChatAndCoinsList, setTabChatAndCoinsList] =
@@ -31,13 +33,16 @@ export default function Trade() {
   const [pendingBuyOrders, setPendingBuyOrders] = useState([]);
   const [historyOrders, setHistoryOrders] = useState([]);
   const [globalPrice, setGlobalPrice] = useState(0);
+
   useEffect(() => {
     setMount(true);
     setScreenSize(screenIs("md"));
     setHeightWindow(window.innerHeight);
+    setWidthWindow(window.innerWidth);
     const handleResize = () => {
       setScreenSize(screenIs("md"));
       setHeightWindow(window.innerHeight);
+      setWidthWindow(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
     return () => {
@@ -124,6 +129,7 @@ export default function Trade() {
     try {
       const initOrders = await getOrders(getFilteringString(filters));
       if (!initOrders.error) {
+        // Handle successful fetching of trade orders
       }
     } catch (err) {
       console.log(err);
@@ -155,30 +161,14 @@ export default function Trade() {
         className={`text-black dark:text-white mt-24`}
       />
     );
-  return (
-    <div className="flex h-screen w-screen pt-3 rtl:pl-24 ltr:pr-24 gap-3 overflow-y-scroll overflow-x-hidden no-scrollbar pb-20">
-      {/* First Col */}
-      <div className="w-1/4 min-w-max h-fit">
-        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
-          {/* Header */}
-          <div className="text-sm flex justify-between p-2">
-            <h1 className="font-bold self-end">{pairSelected}</h1>
-            <span className="text-xs self-end text-gray-500">68312.12</span>
-            <span className="text-xs self-end text-green-500">+5.1%</span>
-          </div>
-          <Divider />
-          <QueueOrders
-            globalPrice={globalPrice}
-            pairSelected={pairSelected}
-            pendingBuyOrders={pendingBuyOrders}
-            pendingSellOrders={pendingSellOrders}
-          />
-        </div>
-      </div>
 
-      {/* Second Col */}
+  return (
+    <div
+      className={`flex flex-col md:flex-row h-screen w-[${widthWindow}px] md:w-screen pt-3 rtl:pl-24 ltr:pr-24 gap-4 overflow-y-scroll overflow-x-hidden no-scrollbar pb-20`}
+    >
+      {/* Show Price Graph First on Mobile */}
       <div
-        className="w-1/2 min-w-[360px] lg:min-w-[400px]"
+        className={`order-1 md:order-2 w-full md:w-1/2 min-w-[310px] lg:min-w-[400px]`}
         style={{ height: heightWindow + 340 + "px" }}
       >
         {/* Price Graph */}
@@ -192,7 +182,7 @@ export default function Trade() {
           </div>
         </div>
         {/* Trade Form */}
-        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[540px] shadow-md mt-5 p-2">
+        <div className="flex flex-col rounded-md bg-gray-100 dark:bg-default-100 w-full h-[600px] shadow-md mt-5 p-2">
           <div className="relative w-full h-[500px]">
             <Tabs
               selectedKey={tabForm}
@@ -276,13 +266,13 @@ export default function Trade() {
               </Tab>
             </Tabs>
           </div>
-          <div className="flex justify-center gap-3 text-sm">
-            <p className="text-gray-500">Balance:</p>
-            <span className="flex gap-1">
+          <div className="h-full flex justify-center gap-3 text-sm">
+            <p className="self-end text-gray-500">Balance:</p>
+            <span className="self-end flex gap-1">
               <FaBitcoin className="self-center text-red-500" />
               <p className="self-center">0.00</p>
             </span>
-            <span className="flex gap-1 text-sm">
+            <span className="self-end flex gap-1 text-sm">
               <FaDollarSign className="self-center text-green-500" />
               <p className="self-center">0.00</p>
             </span>
@@ -290,10 +280,22 @@ export default function Trade() {
         </div>
       </div>
 
-      {/* Third Col */}
-      <div className="w-1/4 min-w-[300px]">
+      {/* First Column (Queue Orders) */}
+      <div
+        className={`order-2 md:order-1 w-full md:w-1/4 min-w-[310px] md:min-w-max h-fit`}
+      >
+        <QueueOrders
+          globalPrice={globalPrice}
+          pairSelected={pairSelected}
+          pendingBuyOrders={pendingBuyOrders}
+          pendingSellOrders={pendingSellOrders}
+        />
+      </div>
+
+      {/* Third Column (Chat & Market) */}
+      <div className={`order-3 w-full md:w-1/4 min-w-[310px]`}>
         {/* Chat & Market */}
-        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[348px] shadow-md">
+        <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-[350px] shadow-md">
           <Tabs
             selectedKey={tabChatAndCoinsList}
             onSelectionChange={setTabChatAndCoinsList}
@@ -301,7 +303,7 @@ export default function Trade() {
             variant="underlined"
             classNames={{
               tabList:
-                "ml-4 gap-6 relative rounded-none p-0 w-full w-screen overflow-x-scroll no-scrollbar",
+                "ml-4 gap-6 relative rounded-none p-0 w-full overflow-x-scroll no-scrollbar",
               cursor: "w-full bg-[var(--primary-color)]",
               tab: "max-w-fit px-0 h-8",
               tabContent:
@@ -334,14 +336,18 @@ export default function Trade() {
           </Tabs>
         </div>
         {/* Trade History */}
-        <TradeHistory
-          pairSelected={pairSelected}
-          historyOrders={historyOrders}
-        />
+        <div className={`min-w-max`}>
+          <TradeHistory
+            pairSelected={pairSelected}
+            historyOrders={historyOrders}
+          />
+        </div>
+        <div className="min-h-24 block"></div>
       </div>
     </div>
   );
 }
+
 export async function getStaticProps({ locale }) {
   return {
     props: {

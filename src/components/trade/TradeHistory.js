@@ -12,7 +12,7 @@ export default function TradeHistory({ pairSelected, historyOrders }) {
           <h1 className="font-bold self-end">Trade History</h1>
         </div>
         <Divider />
-        <div className="p-2 h-full md:text-[8px] lg:text-[10px]">
+        <div className="p-2 h-full text-[10px] md:text-[8px] lg:text-[10px]">
           <div className="flex justify-between bg-white/85 dark:bg-default-200/50 font-bold gap-2 p-1">
             <span>Time</span>
             <span>PRICE({pairSelected.split("/")[1]})</span>
@@ -21,7 +21,7 @@ export default function TradeHistory({ pairSelected, historyOrders }) {
           </div>
           <Divider />
           <ul
-            className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[463px] overflow-scroll no-scrollbar py-1`}
+            className={`bg-white/85 dark:bg-default-200/50 rounded-sm w-full h-[200px] md:h-[521px] overflow-scroll no-scrollbar py-1`}
             // style={{ height: heightWindow - 100 + "px" }}
           >
             {historyOrders.map((historyOrder) => (
