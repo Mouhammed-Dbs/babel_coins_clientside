@@ -43,9 +43,9 @@ export default function QueueOrders({
 
     if (type === "sell") {
       content = `
-        I GET: ${order.amount} ${pairSelected?.firstCurrencyName} <br />
+        I GET: ${order.restAmount} ${pairSelected?.firstCurrencyName} <br />
         AVG PRICE: ${order.price} <br />
-        I GIVE: ${calculateAmountPrice(order.amount, order.price)} ${
+        I GIVE: ${calculateAmountPrice(order.restAmount, order.price)} ${
         pairSelected?.secondCurrencyName
       }
       `;
@@ -53,7 +53,7 @@ export default function QueueOrders({
       content = `
         I GIVE: ${order.amount} ${pairSelected?.firstCurrencyName}<br />
         AVG PRICE: ${order.price} USD <br />
-        I GET: ${calculateAmountPrice(order.amount, order.price)} ${
+        I GET: ${calculateAmountPrice(order.restAmount, order.price)} ${
         pairSelected?.secondCurrencyName
       }
       `;
@@ -145,9 +145,14 @@ export default function QueueOrders({
               onMouseLeave={hideTooltip}
             >
               <span className="w-1/3 text-red-500">{pendingOrder.price}</span>
-              <span className="w-1/3 text-center">{pendingOrder.amount}</span>
+              <span className="w-1/3 text-center">
+                {pendingOrder.restAmount}
+              </span>
               <span className="w-1/3 text-end text-red-500">
-                {calculateAmountPrice(pendingOrder.amount, pendingOrder.price)}
+                {calculateAmountPrice(
+                  pendingOrder.restAmount,
+                  pendingOrder.price
+                )}
               </span>
             </li>
           ))}
@@ -175,9 +180,14 @@ export default function QueueOrders({
               onMouseLeave={hideTooltip}
             >
               <span className="w-1/3 text-green-500">{pendingOrder.price}</span>
-              <span className="w-1/3 text-center">{pendingOrder.amount}</span>
+              <span className="w-1/3 text-center">
+                {pendingOrder.restAmount}
+              </span>
               <span className="w-1/3 text-end text-green-500">
-                {calculateAmountPrice(pendingOrder.amount, pendingOrder.price)}
+                {calculateAmountPrice(
+                  pendingOrder.restAmount,
+                  pendingOrder.price
+                )}
               </span>
             </li>
           ))}

@@ -42,7 +42,7 @@ export default function TradeHistory({ pairSelected, historyOrders }) {
                   {historyOrder.price}
                 </span>
                 <span className="w-2/12 text-center">
-                  {historyOrder.initalAmount}
+                  {historyOrder.restAmount}
                 </span>
                 <span
                   className={
@@ -52,7 +52,7 @@ export default function TradeHistory({ pairSelected, historyOrders }) {
                   }
                 >
                   {calculateAmountPrice(
-                    historyOrder.initalAmount,
+                    historyOrder.restAmount,
                     historyOrder.price
                   )}
                 </span>
