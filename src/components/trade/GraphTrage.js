@@ -279,7 +279,7 @@ export default function GraphTrade({ pair }) {
       type: "line",
     },
     title: {
-      text: pair,
+      text: pair.firstCurrencyName + "/" + pair.secondCurrencyName,
       align: "left",
     },
     stroke: {

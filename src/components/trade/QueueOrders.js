@@ -11,7 +11,7 @@ export default function QueueOrders({
   pairSelected,
   pendingBuyOrders,
   pendingSellOrders,
-  globalPrice,
+  getSpecificPair,
 }) {
   const [showOrders, setShowOrdes] = useState("all");
   const [numSellOrders, setNumSellOrders] = useState(35);
@@ -21,13 +21,17 @@ export default function QueueOrders({
 
   useEffect(() => {
     setPriceForPair(
-      globalPrice
-        ? globalPrice[pairSelected.split("/")[0].toUpperCase()][
-            pairSelected.split("/")[1].toUpperCase()
-          ].rate
+      getSpecificPair(
+        pairSelected.firstCurrencyName,
+        pairSelected.secondCurrencyName
+      )
+        ? getSpecificPair(
+            pairSelected.firstCurrencyName,
+            pairSelected.secondCurrencyName
+          )
         : 0
     );
-  }, [globalPrice, pairSelected]);
+  }, [pairSelected, getSpecificPair]);
 
   const calculateAmountPrice = (amount, price) => {
     return Math.round(amount * price * 10000) / 10000;
@@ -39,18 +43,18 @@ export default function QueueOrders({
 
     if (type === "sell") {
       content = `
-        I GET: ${order.amount} ${pairSelected?.split("/")[0]} <br />
+        I GET: ${order.amount} ${pairSelected?.firstCurrencyName} <br />
         AVG PRICE: ${order.price} <br />
         I GIVE: ${calculateAmountPrice(order.amount, order.price)} ${
-        pairSelected?.split("/")[1]
+        pairSelected?.secondCurrencyName
       }
       `;
     } else if (type === "buy") {
       content = `
-        I GIVE: ${order.amount} ${pairSelected?.split("/")[0]}<br />
+        I GIVE: ${order.amount} ${pairSelected?.firstCurrencyName}<br />
         AVG PRICE: ${order.price} USD <br />
         I GET: ${calculateAmountPrice(order.amount, order.price)} ${
-        pairSelected?.split("/")[1]
+        pairSelected?.secondCurrencyName
       }
       `;
     }
@@ -67,7 +71,9 @@ export default function QueueOrders({
     <div className="rounded-md bg-gray-100 dark:bg-default-100 w-full h-full shadow-md">
       {/* Header */}
       <div className="text-sm flex justify-between p-2">
-        <h1 className="font-bold self-end">{pairSelected}</h1>
+        <h1 className="font-bold self-end">
+          {pairSelected.firstCurrencyName}/{pairSelected.secondCurrencyName}
+        </h1>
         <span className="text-xs self-end text-gray-500">{priceForPair}</span>
         <span className="text-xs self-end text-green-500">+5.1%</span>
       </div>
@@ -120,9 +126,9 @@ export default function QueueOrders({
       {/* Queue Orders */}
       <div className="p-2 h-full">
         <div className="flex justify-between text-[11px] gap-2 mb-1">
-          <span>PRICE({pairSelected.split("/")[1]})</span>
-          <span>AMOUNT({pairSelected.split("/")[0]})</span>
-          <span>VALUE({pairSelected.split("/")[1]})</span>
+          <span>PRICE({pairSelected.secondCurrencyName})</span>
+          <span>AMOUNT({pairSelected.firstCurrencyName})</span>
+          <span>VALUE({pairSelected.secondCurrencyName})</span>
         </div>
         <ul
           className={`${showOrders === "buy" ? "hidden" : ""} ${

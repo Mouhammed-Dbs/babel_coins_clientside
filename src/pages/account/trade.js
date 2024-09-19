@@ -28,7 +28,13 @@ export default function Trade() {
   const [tabForm, setTabForm] = useState("limit_tab");
   const [tabChatAndCoinsList, setTabChatAndCoinsList] =
     useState("coinslist_tab");
-  const [pairSelected, setPairSelected] = useState("ETHER/USDT");
+  const [pairSelected, setPairSelected] = useState({
+    firstCurrencyName: "ETHER",
+    rate: 3666.08,
+    secondCurrencyName: "USDT",
+    _v: 0,
+    _id: "66eaedf190472fa912f2b2df",
+  });
   const [pendingSellOrders, setPendingSellOrders] = useState([]);
   const [pendingBuyOrders, setPendingBuyOrders] = useState([]);
   const [historyOrders, setHistoryOrders] = useState([]);
@@ -72,9 +78,9 @@ export default function Trade() {
       console.log(order);
     });
 
-    socket.on("change currency rates", (data) => {
-      console.log(data);
-      setGlobalPrice(data);
+    socket.on("change trade currency rates", (res) => {
+      console.log(res.data);
+      setGlobalPrice(res.data);
     });
 
     socket.on("disconnect", () => {
@@ -137,14 +143,32 @@ export default function Trade() {
   };
 
   useEffect(() => {
-    const pair = pairSelected.split("/");
-    getInitOrders(pair[0], pair[1]);
+    getInitOrders(
+      pairSelected.firstCurrencyName,
+      pairSelected.secondCurrencyName
+    );
   }, [pairSelected]);
 
-  const handleChangePair = (pair) => {
-    setPairSelected(pair);
+  const handleChangePair = (firstCurrencyName, secondCurrencyName) => {
+    const infoPair = globalPrice.find(
+      (pair) =>
+        pair.firstCurrencyName === firstCurrencyName &&
+        pair.secondCurrencyName === secondCurrencyName
+    );
+    setPairSelected(infoPair);
   };
 
+  const getSpecificPair = (firstCurrencyName, secondCurrencyName) => {
+    if (globalPrice) {
+      const specificPair = globalPrice.find(
+        (pair) =>
+          pair.firstCurrencyName === firstCurrencyName &&
+          pair.secondCurrencyName === secondCurrencyName
+      );
+      return specificPair ? specificPair.rate : null;
+    }
+  };
+  // return <></>;
   if (!mounted)
     return (
       <MyLoading
@@ -216,8 +240,8 @@ export default function Trade() {
                 }
               >
                 <LimitTrade
-                  firstSymbol={pairSelected.split("/")[0]}
-                  secondSymbol={pairSelected.split("/")[1]}
+                  firstSymbol={pairSelected.firstCurrencyName}
+                  secondSymbol={pairSelected.secondCurrencyName}
                 />
               </Tab>
               <Tab
@@ -238,8 +262,8 @@ export default function Trade() {
                 }
               >
                 <MarketTrade
-                  firstSymbol={pairSelected.split("/")[0]}
-                  secondSymbol={pairSelected.split("/")[1]}
+                  firstSymbol={pairSelected.firstCurrencyName}
+                  secondSymbol={pairSelected.secondCurrencyName}
                 />
               </Tab>
               <Tab
@@ -260,8 +284,8 @@ export default function Trade() {
                 }
               >
                 <TriggerTrade
-                  firstSymbol={pairSelected.split("/")[0]}
-                  secondSymbol={pairSelected.split("/")[1]}
+                  firstSymbol={pairSelected.firstCurrencyName}
+                  secondSymbol={pairSelected.secondCurrencyName}
                 />
               </Tab>
             </Tabs>
@@ -285,10 +309,10 @@ export default function Trade() {
         className={`order-2 md:order-1 w-full md:w-1/4 min-w-[310px] md:min-w-max h-fit`}
       >
         <QueueOrders
-          globalPrice={globalPrice}
           pairSelected={pairSelected}
           pendingBuyOrders={pendingBuyOrders}
           pendingSellOrders={pendingSellOrders}
+          getSpecificPair={getSpecificPair}
         />
       </div>
 
@@ -319,8 +343,8 @@ export default function Trade() {
               }
             >
               <MarketCoinsListTrade
-                prices={globalPrice}
                 onItemClick={handleChangePair}
+                getSpecificPair={getSpecificPair}
               />
             </Tab>
             <Tab

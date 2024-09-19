@@ -4,7 +4,7 @@ import { FaSortUp, FaStar } from "react-icons/fa6";
 import SortUpDown from "../utils/SortUpDown";
 import { useState } from "react";
 
-export default function MarketCoinsListTrade({ prices, onItemClick }) {
+export default function MarketCoinsListTrade({ onItemClick, getSpecificPair }) {
   const [sortByPair, setSortByPair] = useState(0);
   const [sortByLastPrice, setSortByLastPrice] = useState(0);
   const [sortByChange, setSortByChange] = useState(0);
@@ -49,27 +49,47 @@ export default function MarketCoinsListTrade({ prices, onItemClick }) {
         <Divider />
         <ul className="h-[180px] overflow-scroll no-scrollbar">
           <ItemPair
-            pair={"ETHER/USDT"}
+            firstCurrencyName="ETHER"
+            secondCurrencyName="USDT"
             change={-20}
-            lastPrice={prices ? prices["ETHER"]["USDT"].rate : ""}
+            lastPrice={
+              getSpecificPair("ETHER", "USDT")
+                ? getSpecificPair("ETHER", "USDT")
+                : ""
+            }
             onClick={onItemClick}
           />
           <ItemPair
-            pair={"BNB/USDT"}
+            firstCurrencyName="BNB"
+            secondCurrencyName="USDT"
             change={-20}
-            lastPrice={prices ? prices["BNB"]["USDT"].rate : ""}
+            lastPrice={
+              getSpecificPair("BNB", "USDT")
+                ? getSpecificPair("BNB", "USDT")
+                : ""
+            }
             onClick={onItemClick}
           />
           <ItemPair
-            pair={"TRX/USDT"}
+            firstCurrencyName="TRX"
+            secondCurrencyName="USDT"
             change={-20}
-            lastPrice={prices ? prices["TRX"]["USDT"].rate : ""}
+            lastPrice={
+              getSpecificPair("TRX", "USDT")
+                ? getSpecificPair("TRX", "USDT")
+                : ""
+            }
             onClick={onItemClick}
           />
           <ItemPair
-            pair={"MATIC/USDT"}
+            firstCurrencyName="MATIC"
+            secondCurrencyName="USDT"
             change={-20}
-            lastPrice={prices ? prices["MATIC"]["USDT"].rate : ""}
+            lastPrice={
+              getSpecificPair("MATIC", "USDT")
+                ? getSpecificPair("MATIC", "USDT")
+                : ""
+            }
             onClick={onItemClick}
           />
         </ul>
@@ -78,15 +98,23 @@ export default function MarketCoinsListTrade({ prices, onItemClick }) {
   );
 }
 
-function ItemPair({ pair, lastPrice, change, onClick }) {
+function ItemPair({
+  firstCurrencyName,
+  secondCurrencyName,
+  lastPrice,
+  change,
+  onClick,
+}) {
   return (
     <li
       className="flex gap-3 text-[10px] p-1 cursor-pointer hover:bg-slate-200"
-      onClick={() => onClick(pair)}
+      onClick={() => onClick(firstCurrencyName, secondCurrencyName)}
     >
       <span className="flex min-w-24">
         <FaStar className="text-gray-600 self-center mx-1" />
-        <p className="self-center">{pair}</p>
+        <p className="self-center">
+          {firstCurrencyName} /{secondCurrencyName}
+        </p>
       </span>
       <p className="min-w-24 pl-1">{lastPrice}</p>
       <p

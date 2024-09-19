@@ -15,9 +15,9 @@ export default function TradeHistory({ pairSelected, historyOrders }) {
         <div className="p-2 h-full text-[10px] md:text-[8px] lg:text-[10px]">
           <div className="flex justify-between bg-white/85 dark:bg-default-200/50 font-bold gap-2 p-1">
             <span>Time</span>
-            <span>PRICE({pairSelected.split("/")[1]})</span>
-            <span>AMOUNT({pairSelected.split("/")[0]})</span>
-            <span>VALUE({pairSelected.split("/")[1]})</span>
+            <span>PRICE({pairSelected.secondCurrencyName})</span>
+            <span>AMOUNT({pairSelected.firstCurrencyName})</span>
+            <span>VALUE({pairSelected.secondCurrencyName})</span>
           </div>
           <Divider />
           <ul
