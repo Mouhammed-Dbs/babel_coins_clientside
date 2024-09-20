@@ -77,12 +77,12 @@ export default function Trade() {
         if (order.orderAction === "sell") {
           setPendingSellOrders((prevSellOrders) => {
             const updatedSellOrders = [...prevSellOrders, order];
-            return updatedSellOrders.sort((a, b) => a.price - b.price);
+            return updatedSellOrders.sort((a, b) => a.price - b.price); //Ascending
           });
         } else if (order.orderAction === "buy") {
           setPendingBuyOrders((prevBuyOrders) => {
             const updatedBuyOrders = [...prevBuyOrders, order];
-            return updatedBuyOrders.sort((a, b) => b.price - a.price);
+            return updatedBuyOrders.sort((a, b) => b.price - a.price); //Descending
           });
         }
       }
@@ -94,7 +94,7 @@ export default function Trade() {
         setHistoryOrders((prevHistoryOrders) => {
           const updatedHistoryOrders = [...prevHistoryOrders, order];
           return updatedHistoryOrders.sort(
-            (a, b) => new Date(b.execuationDate) - new Date(a.execuationDate)
+            (a, b) => new Date(b.execuationDate) - new Date(a.execuationDate) //Descending
           );
         });
       }
