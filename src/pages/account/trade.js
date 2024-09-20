@@ -61,6 +61,7 @@ export default function Trade() {
     const socket = io(process.env.BASE_API_URL, {
       transports: ["polling"],
     });
+
     socket.on("connect", () => {
       console.log("Socket.IO connected");
       socket.emit("join to trade room");
@@ -70,12 +71,33 @@ export default function Trade() {
       console.log("success join to trade room");
     });
 
-    socket.on("new executed order", (order) => {
-      console.log(order);
-    });
-
     socket.on("new pending order", (order) => {
       console.log(order);
+      if (order.orderType == "limit") {
+        if (order.orderAction === "sell") {
+          setPendingSellOrders((prevSellOrders) => {
+            const updatedSellOrders = [...prevSellOrders, order];
+            return updatedSellOrders.sort((a, b) => a.price - b.price);
+          });
+        } else if (order.orderAction === "buy") {
+          setPendingBuyOrders((prevBuyOrders) => {
+            const updatedBuyOrders = [...prevBuyOrders, order];
+            return updatedBuyOrders.sort((a, b) => b.price - a.price);
+          });
+        }
+      }
+    });
+
+    socket.on("new executed order", (order) => {
+      console.log(order);
+      if (order.orderType == "limit") {
+        setHistoryOrders((prevHistoryOrders) => {
+          const updatedHistoryOrders = [...prevHistoryOrders, order];
+          return updatedHistoryOrders.sort(
+            (a, b) => new Date(b.execuationDate) - new Date(a.execuationDate)
+          );
+        });
+      }
     });
 
     socket.on("change trade currency rates", (res) => {
