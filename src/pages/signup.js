@@ -42,9 +42,21 @@ export default function Signup(props) {
   const [seconds, setSeconds] = useState(30);
   const [timerOn, setTimerOn] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [validateAccount, setValidateAccount] = useState({
+  const [validateFirstStep, setValidateFirstStep] = useState({
     error: false,
     msg: "",
+  });
+  const [validateStep2, setValidateStep2] = useState({
+    errorPassword: false,
+    errorSecret: false,
+    msgPassword: "",
+    msgSecret: "",
+  });
+  const [validateStep3, setValidateStep3] = useState({
+    errorFirstName: false,
+    errorLastName: false,
+    msgFirstName: "",
+    msgLastName: "",
   });
   const [account, setAccount] = useState({
     accountName: "",
@@ -280,8 +292,8 @@ export default function Signup(props) {
                   email: event.target.value,
                 });
                 if (err.length > 0)
-                  setValidateAccount({ error: true, msg: err[0] });
-                else setValidateAccount({ error: false, msg: "" });
+                  setValidateFirstStep({ error: true, msg: err[0] });
+                else setValidateFirstStep({ error: false, msg: "" });
               }}
               value={inputEmail}
               item={{
@@ -300,7 +312,7 @@ export default function Signup(props) {
             </p>
             <Button
               type="submit"
-              isDisabled={!inputEmail || validateAccount.error}
+              isDisabled={!inputEmail || validateFirstStep.error}
               className="w-full h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-3"
             >
               {loading ? t("btn-creating") : t("btn-createAccount")}
@@ -389,8 +401,17 @@ export default function Signup(props) {
                     password: e.target.value,
                   });
                   if (err.length > 0)
-                    setValidateAccount({ error: true, msg: err[0] });
-                  else setValidateAccount({ error: false, msg: "" });
+                    setValidateStep2({
+                      ...validateStep2,
+                      errorPassword: true,
+                      msgPassword: err[0],
+                    });
+                  else
+                    setValidateStep2({
+                      ...validateStep2,
+                      errorPassword: false,
+                      msgPassword: "",
+                    });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -409,8 +430,17 @@ export default function Signup(props) {
                     secretCode: e.target.value,
                   });
                   if (err.length > 0)
-                    setValidateAccount({ error: true, msg: err[0] });
-                  else setValidateAccount({ error: false, msg: "" });
+                    setValidateStep2({
+                      ...validateStep2,
+                      errorSecret: true,
+                      msgSecret: err[0],
+                    });
+                  else
+                    setValidateStep2({
+                      ...validateStep2,
+                      errorSecret: false,
+                      msgSecret: "",
+                    });
                 }}
                 className="w-64 mt-3"
                 item={{
@@ -439,7 +469,9 @@ export default function Signup(props) {
                     account.accountName &&
                     account.secretCode &&
                     account.password
-                  ) || validateAccount.error
+                  ) ||
+                  validateStep2.errorPassword ||
+                  validateStep2.errorSecret
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
               >
@@ -471,8 +503,17 @@ export default function Signup(props) {
                     name: e.target.value,
                   });
                   if (err.length > 0)
-                    setValidateAccount({ error: true, msg: err[0] });
-                  else setValidateAccount({ error: false, msg: "" });
+                    setValidateStep3({
+                      ...validateStep3,
+                      errorFirstName: true,
+                      msgFirstName: err[0],
+                    });
+                  else
+                    setValidateStep3({
+                      ...validateStep3,
+                      errorFirstName: false,
+                      msgFirstName: "",
+                    });
                 }}
                 item={{
                   name: "firstname",
@@ -490,8 +531,17 @@ export default function Signup(props) {
                     name: e.target.value,
                   });
                   if (err.length > 0)
-                    setValidateAccount({ error: true, msg: err[0] });
-                  else setValidateAccount({ error: false, msg: "" });
+                    setValidateStep3({
+                      ...validateStep3,
+                      errorLastName: true,
+                      msgLastName: err[0],
+                    });
+                  else
+                    setValidateStep3({
+                      ...validateStep3,
+                      errorLastName: false,
+                      msgLastName: "",
+                    });
                 }}
                 className={"w-64 mt-3"}
                 item={{
@@ -542,7 +592,8 @@ export default function Signup(props) {
                 type="submit"
                 isDisabled={
                   !(account.firstName && account.lastName) ||
-                  validateAccount.error ||
+                  validateStep3.errorFirstName ||
+                  validateStep3.errorLastName ||
                   loading
                 }
                 className="w-max h-8 self-center text-sm font-bold rounded-full bg-orange text-white mt-3"
@@ -561,7 +612,26 @@ export default function Signup(props) {
       <div className="w-fit m-auto">
         {/* Error Message */}
         <MyMessage show={account.error} message={account.msg[router.locale]} />
-        <MyMessage show={validateAccount.error} message={validateAccount.msg} />
+        <MyMessage
+          show={
+            validateFirstStep.error ||
+            validateStep2.errorPassword ||
+            validateStep2.errorSecret ||
+            validateStep3.errorFirstName ||
+            validateStep3.errorLastName
+          }
+          message={
+            validateFirstStep.msg +
+            "&-&" +
+            validateStep2.msgPassword +
+            "&-&" +
+            validateStep2.msgSecret +
+            "&-&" +
+            validateStep3.msgFirstName +
+            "&-&" +
+            validateStep3.msgLastName
+          }
+        />
       </div>
       {/* Under Card */}
       <div className="flex w-fit m-auto mt-4">

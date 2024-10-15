@@ -14,14 +14,19 @@ import {
 } from "../../public/global_functions/validation";
 import { useTranslations } from "next-intl";
 import { loadMessages } from "@/lib/loadMessages";
-export default function Signup() {
+export default function Login() {
   const [mounted, setMount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resLogin, setResLogin] = useState({
     msg: { en: "", ar: "" },
     error: false,
   });
-  const [validateLogin, setValidateLogin] = useState({ msg: "", error: false });
+  const [validateLogin, setValidateLogin] = useState({
+    msgEmail: "",
+    msgPassword: "",
+    errorEmail: false,
+    errorPassword: false,
+  });
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
@@ -109,8 +114,17 @@ export default function Signup() {
                   email: event.target.value,
                 });
                 if (err.length > 0)
-                  setValidateLogin({ error: true, msg: err[0] });
-                else setValidateLogin({ error: false, msg: "" });
+                  setValidateLogin({
+                    ...validateLogin,
+                    errorEmail: true,
+                    msgEmail: err[0],
+                  });
+                else
+                  setValidateLogin({
+                    ...validateLogin,
+                    errorEmail: false,
+                    msgEmail: "",
+                  });
               }}
               value={inputEmail}
               item={{
@@ -130,8 +144,17 @@ export default function Signup() {
                   password: event.target.value,
                 });
                 if (err.length > 0)
-                  setValidateLogin({ error: true, msg: err[0] });
-                else setValidateLogin({ error: false, msg: "" });
+                  setValidateLogin({
+                    ...validateLogin,
+                    errorPassword: true,
+                    msgPassword: err[0],
+                  });
+                else
+                  setValidateLogin({
+                    ...validateLogin,
+                    errorPassword: false,
+                    msgPassword: validateLogin.msg,
+                  });
                 setResLogin({ error: false, msg: "" });
               }}
               value={inputPass}
@@ -146,7 +169,10 @@ export default function Signup() {
             <Button
               type="submit"
               isDisabled={
-                !(inputEmail && inputPass) || loading || validateLogin.error
+                !(inputEmail && inputPass) ||
+                loading ||
+                validateLogin.errorEmail ||
+                validateLogin.errorPassword
               }
               className="w-2/5 h-8 mx-auto text-sm font-bold rounded-full bg-orange text-white mt-6"
             >
@@ -160,7 +186,14 @@ export default function Signup() {
           show={resLogin.error}
           message={resLogin.msg[router.locale]}
         />
-        <MyMessage show={validateLogin.error} message={validateLogin.msg} />
+        <MyMessage
+          show={validateLogin.errorEmail || validateLogin.errorPassword}
+          message={
+            validateLogin.msgEmail
+              ? validateLogin.msgEmail + "&-&" + validateLogin.msgPassword
+              : validateLogin.msgPassword
+          }
+        />
       </div>
       <div className="flex w-fit m-auto mt-4">
         <p className="text-sm opacity-75 text-white">{t("dontHaveAccount")}</p>

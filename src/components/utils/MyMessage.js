@@ -12,7 +12,18 @@ export default function MyMessage({ show, message, isSuccess = false }) {
       ) : (
         <IoWarning className="self-center mr-1 text-base w-5 h-5" />
       )}
-      <p className="self-center">{message}</p>
+      {message && (
+        <p className="flex flex-col gap-1">
+          {message.split("&-&").map((msg) => {
+            if (msg.length <= 0) return <></>;
+            return (
+              <span key={msg} className="h-fit">
+                {msg}
+              </span>
+            );
+          })}
+        </p>
+      )}
     </div>
   );
 }
